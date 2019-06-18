@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="mainItem">
+        <attr name="itemName" format="string" />
+        <attr name="itemDes" format="string" />
+        <attr name="leftImg" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="CircleImageView">
+        <attr name="civ_border_width" format="dimension" />
+        <attr name="civ_border_color" format="color" />
+        <attr name="civ_border_overlay" format="boolean" />
+        <attr name="civ_fill_color" format="color" />
+    </declare-styleable>
+
+    <style name="Base.Widget.Design.TabLayout" parent="android:Widget">
+        <item name="tabIndicatorColor">@color/colorPrimary</item>
+        <item name="tabIndicatorHeight">2dp</item>
+    </style>
+
+</resources>
