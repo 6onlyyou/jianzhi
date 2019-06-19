@@ -5,6 +5,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
 import android.view.LayoutInflater
 import android.widget.ImageView
+import android.widget.TextView
 import fu.com.parttimejob.R
 import fu.com.parttimejob.adapter.FragmentAdapter
 import fu.com.parttimejob.base.BaseActivity
@@ -36,13 +37,13 @@ class MainActivity : BaseActivity() {
 
         for (i in titles.indices) {
             val tabView = LayoutInflater.from(this).inflate(R.layout.item_tab_main, null)
-            val tabImg = tabView.findViewById(R.id.tabImg)
-            val tabTitle = tabView.findViewById(R.id.tab)
+            val tabImg = tabView.findViewById<ImageView>(R.id.tabImg)
+            val tabTitle = tabView.findViewById<TextView>(R.id.tab)
             tabImg.setImageResource(selectImgs[i])
             if (i == 0) {
                 tabImg.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary))
             } else {
-                tabImg.setColorFilter(ContextCompat.getColor(this, R.color.unAuthGray))
+                tabImg.setColorFilter(ContextCompat.getColor(this, R.color.colorAccent))
             }
             tabTitle.setText(titles[i])
             val tab = main_tab.newTab().setCustomView(tabView)

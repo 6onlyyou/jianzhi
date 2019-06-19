@@ -25,7 +25,7 @@ import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-import daichao.make.com.parttimejob.R;
+import fu.com.parttimejob.R;
 
 
 public class CircleImageView extends android.support.v7.widget.AppCompatImageView {

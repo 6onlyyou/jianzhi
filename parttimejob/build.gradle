@@ -12,6 +12,7 @@ android {
         versionCode 1
         versionName "1.0"
 
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
@@ -45,7 +46,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 //    implementation 'com.google.code.gson:gson:2.8.0'
 
-
+    compile 'com.android.support:multidex:1.0.1'
     implementation 'com.youth.banner:banner:1.4.10'
     implementation 'com.android.support:design:26.1.0'
 }
