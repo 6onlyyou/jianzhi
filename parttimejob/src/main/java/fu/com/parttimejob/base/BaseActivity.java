@@ -23,7 +23,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void startActivity(Class activity, boolean isFinish) {
-        Intent intent = new Intent(this, activity.getClass());
+        Intent intent = new Intent(this,activity);
         startActivity(intent);
         if (isFinish) {
             finish();

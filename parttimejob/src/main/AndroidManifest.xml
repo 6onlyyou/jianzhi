@@ -18,7 +18,9 @@
         </activity>
         <activity android:name=".activity.ChooseProfessionActivity" />
         <activity android:name=".activity.MainActivity" />
-        <activity android:name=".activity.LoginActivity"></activity>
+        <activity
+            android:name=".activity.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
