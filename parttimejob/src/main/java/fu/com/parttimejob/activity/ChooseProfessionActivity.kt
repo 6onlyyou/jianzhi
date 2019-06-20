@@ -16,11 +16,11 @@ class ChooseProfessionActivity : BaseActivity() {
 
     override fun initViewClick() {
         job_hunter_img.setOnClickListener {
-            
+            startActivity(LoginActivity::class.java, true)
         }
 
         interviewer_img.setOnClickListener {
-
+            startActivity(LoginActivity::class.java, true)
         }
     }
 

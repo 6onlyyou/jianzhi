@@ -19,35 +19,45 @@ import java.util.*
 class MainActivity : BaseActivity() {
     private lateinit var adapter: FragmentAdapter
     private val titles = ArrayList<String>()
-    private val selectImgs = ArrayList<Int>()
+    private val imgs = ArrayList<Int>()
+
+
+    override fun getLayoutId(): Int {
+        return R.layout.activity_main
+    }
+
 
     override fun initViewParams() {
         adapter = FragmentAdapter(supportFragmentManager)
 
-        selectImgs.add(R.mipmap.ic_launcher)
-        selectImgs.add(R.mipmap.ic_launcher)
-        selectImgs.add(R.mipmap.ic_launcher)
-        selectImgs.add(R.mipmap.ic_launcher)
+        imgs.add(R.mipmap.ic_home_select)
+        imgs.add(R.mipmap.ic_shop_unselect)
+        imgs.add(R.mipmap.ic_message_unselect)
+        imgs.add(R.mipmap.ic_mine_unselect)
 
         adapter.addFragments(HomeFragment())
         adapter.addFragments(SquareFragment())
         adapter.addFragments(MessageFragment())
         adapter.addFragments(MineFragment())
 
+        titles.add("首页")
+        titles.add("商城")
+        titles.add("消息")
+        titles.add("我的")
 
         for (i in titles.indices) {
             val tabView = LayoutInflater.from(this).inflate(R.layout.item_tab_main, null)
-            val tabImg:ImageView = tabView.findViewById(R.id.tabImg)
-            val tabTitle:TextView = tabView.findViewById(R.id.tab)
-            tabImg.setImageResource(selectImgs[i])
+            val tabImg: ImageView = tabView.findViewById(R.id.tabImg)
+            val tabTitle: TextView = tabView.findViewById(R.id.tab)
+            tabImg.setImageResource(imgs[i])
             if (i == 0) {
                 tabImg.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary))
             } else {
                 tabImg.setColorFilter(ContextCompat.getColor(this, R.color.colorLine))
             }
-            tabTitle.setText(titles[i])
+            tabTitle.text = titles[i]
             val tab = main_tab.newTab().setCustomView(tabView)
-            tab.setTag(tabImg)
+            tab.tag = tabImg
 
             main_tab.addTab(tab)
         }
@@ -66,7 +76,7 @@ class MainActivity : BaseActivity() {
                         selectTab!!.select()
                         (selectTab.tag as ImageView).setColorFilter(ContextCompat.getColor(this@MainActivity, R.color.colorPrimary))
                     } else {
-                        (selectTab!!.tag as ImageView).setColorFilter(ContextCompat.getColor(this@MainActivity, R.color.colorWhite))
+                        (selectTab!!.tag as ImageView).setColorFilter(ContextCompat.getColor(this@MainActivity, R.color.colorMenuWhite))
                     }
                 }
             }
@@ -92,10 +102,6 @@ class MainActivity : BaseActivity() {
 
     override fun initViewClick() {
 
-    }
-
-    override fun getLayoutId(): Int {
-        return R.layout.activity_main
     }
 
 

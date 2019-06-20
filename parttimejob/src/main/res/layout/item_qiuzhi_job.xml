@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/jobName"
+            android:layout_width="73dp"
+            android:layout_height="25dp"
+            android:background="@drawable/item_qiuzhi_job"
+            android:gravity="center"
+            android:textColor="@color/colorGray"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+</layout>

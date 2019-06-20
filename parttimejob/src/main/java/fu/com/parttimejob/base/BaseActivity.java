@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
+
 /**
  * Created by PVer on 2019/6/15.
  */
@@ -20,6 +22,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(getLayoutId());
         initViewParams();
         initViewClick();
+        QMUIStatusBarHelper.translucent(this);
     }
 
     public void startActivity(Class activity, boolean isFinish) {

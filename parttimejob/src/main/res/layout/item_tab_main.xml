@@ -7,23 +7,20 @@
 
     <ImageView
         android:id="@+id/tabImg"
-        android:layout_weight="1"
-        android:scaleType="centerInside"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+        android:layout_width="18dp"
+        android:layout_height="22dp"
+        android:layout_marginTop="7dp"
+        android:scaleType="centerInside" />
 
     <TextView
         android:id="@+id/tab"
-        android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="1111"
         android:layout_gravity="center"
         android:layout_marginTop="2dp"
-        android:textSize="12sp"
         android:gravity="center"
-        />
-        <!--android:textColor="@color/custom_tab"-->
+        android:text="1111"
+        android:textColor="@color/custom_tab"
+        android:textSize="12sp" />
 
 </LinearLayout>

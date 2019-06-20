@@ -8,4 +8,5 @@ public class SPContants {
     public final static String isLogin = "isLogin";
     public final static String phone = "phone";
     public final static String id = "id";
+    public static final String WX_APP_ID = "";
 }
