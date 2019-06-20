@@ -1,8 +1,10 @@
 package fu.com.parttimejob.activity
 
+import android.net.Uri
 import android.support.design.widget.TabLayout
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.TextView
@@ -13,6 +15,10 @@ import fu.com.parttimejob.fragment.HomeFragment
 import fu.com.parttimejob.fragment.MessageFragment
 import fu.com.parttimejob.fragment.MineFragment
 import fu.com.parttimejob.fragment.SquareFragment
+import fu.com.parttimejob.utils.SPUtil
+import io.rong.imkit.RongIM
+import io.rong.imlib.RongIMClient
+import io.rong.imlib.model.UserInfo
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
@@ -103,6 +109,24 @@ class MainActivity : BaseActivity() {
     override fun initViewClick() {
 
     }
+    private fun connect(token: String) {
+        RongIM.connect(token, object : RongIMClient.ConnectCallback() {
+            override fun onTokenIncorrect() {
+                Log.e("MainActivity", "--onTokenIncorrect")
 
+            }
+
+            override fun onSuccess(userid: String) {
+                Log.e("MainActivity", "--onSuccess--" + userid)
+                RongIM.getInstance().setCurrentUserInfo(UserInfo(userid, SPUtil.getString("nickname", ""), Uri.parse(SPUtil.getString("headurl", ""))))
+                RongIM.getInstance().setMessageAttachedUserInfo(true)
+            }
+
+            override fun onError(errorCode: RongIMClient.ErrorCode) {
+                Log.e("MainActivity", "--onError")
+                showToast("融云登录失败，请检查网络")
+            }
+        })
+    }
 
 }
