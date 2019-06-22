@@ -3,11 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="fu.com.parttimejob.fragment.SquareFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <fu.com.parttimejob.view.bezier.RedPacketsLayout
+        android:id="@+id/packets_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:background="@mipmap/bg">
+
+    </fu.com.parttimejob.view.bezier.RedPacketsLayout>
+
+
+
+
 
 </FrameLayout>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_round_white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:gravity="center_horizontal"
+        android:padding="2dp"
+        android:text="提示"
+        android:textColor="#222222"
+        android:textSize="23sp" />
+
+    <TextView
+        android:id="@+id/mine_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="13dp"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="3dp"
+        android:text="生宿舍首都卢萨卡记得啦时间快到了卡机大大撒旦"
+        android:textColor="#8B8B8B"
+        android:textSize="14sp" />
+
+
+    <TextView
+        android:id="@+id/submit"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginBottom="32dp"
+        android:background="#71C9C0"
+        android:textColor="@color/colorWhite"
+        android:textSize="15sp"
+        android:text="查看详情"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+
+    </TextView>
+
+</LinearLayout>

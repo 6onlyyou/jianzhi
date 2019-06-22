@@ -64,7 +64,7 @@ class CommunicateHistoryActivity : BaseActivity() {
             // 任何操作必须先关闭菜单，否则可能出现Item菜单打开状态错乱。
             menuBridge.closeMenu()
         }
-        swipeList.setOnItemMenuClickListener(mItemMenuClickListener)
+//        swipeList.setOnItemMenuClickListener(mItemMenuClickListener)
     }
 
     override fun initViewClick() {

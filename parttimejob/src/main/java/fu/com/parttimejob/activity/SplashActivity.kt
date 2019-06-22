@@ -20,7 +20,7 @@ class SplashActivity : BaseActivity() {
                 runOnUiThread {
                     time_txt.text = time--.toString()
                     if (time == -1) {
-                        startActivity(ChooseProfessionActivity::class.java, true)
+                        startActivity(MainActivity::class.java, true)
                     }
                 }
             }
@@ -32,7 +32,7 @@ class SplashActivity : BaseActivity() {
 
     override fun initViewClick() {
         go_experience_txt.setOnClickListener {
-            startActivity(ChooseProfessionActivity::class.java, true)
+            startActivity(MainActivity::class.java, true)
         }
     }
 

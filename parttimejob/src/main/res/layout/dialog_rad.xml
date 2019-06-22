@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="315dp"
+    android:layout_height="wrap_content"
+    android:background="@mipmap/radlog"
+    android:orientation="vertical">
+<RelativeLayout
+    android:layout_width="315dp"
+    android:layout_height="398dp">
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:gravity="center_horizontal"
+        android:padding="2dp"
+        android:text=""
+        android:textColor="#222222"
+
+        android:textSize="23sp" />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:gravity="center"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/mine_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="3dp"
+        android:text="10金豆"
+        android:textStyle="bold"
+        android:textColor="#FFD800"
+        android:layout_marginBottom="24dp"
+        android:textSize="26sp" />
+
+
+    <TextView
+        android:id="@+id/submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/radlogsum"
+        android:textColor="@color/colorWhite"
+        android:textSize="20sp"
+        android:text="立即领取"
+        android:gravity="center"
+        android:layout_marginBottom="50dp"
+        android:orientation="horizontal">
+
+
+    </TextView>
+</LinearLayout>
+</RelativeLayout>
+</LinearLayout>
