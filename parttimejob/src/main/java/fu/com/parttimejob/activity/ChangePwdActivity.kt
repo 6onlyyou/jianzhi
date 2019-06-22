@@ -68,5 +68,7 @@ class ChangePwdActivity : BaseActivity() {
         }
     }
 
-
+    override fun isTranslucent(): Boolean {
+        return true
+    }
 }

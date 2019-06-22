@@ -40,4 +40,8 @@ class SplashActivity : BaseActivity() {
         super.onDestroy()
         timer.cancel()
     }
+
+    override fun isTranslucent(): Boolean {
+        return true
+    }
 }

@@ -76,4 +76,7 @@ class LoginActivity : BaseActivity() {
         val result = mIwxapi.sendReq(req)
     }
 
+    override fun isTranslucent(): Boolean {
+        return true
+    }
 }

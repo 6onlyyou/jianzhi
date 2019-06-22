@@ -18,15 +18,17 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        if (isTranslucent()) {
+            QMUIStatusBarHelper.translucent(this);
+        }
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
         initViewParams();
         initViewClick();
-        QMUIStatusBarHelper.translucent(this);
     }
 
     public void startActivity(Class activity, boolean isFinish) {
-        Intent intent = new Intent(this,activity);
+        Intent intent = new Intent(this, activity);
         startActivity(intent);
         if (isFinish) {
             finish();
@@ -44,6 +46,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract void initViewParams();
 
     protected abstract void initViewClick();
+
+    protected boolean isTranslucent() {
+        return false;
+    }
 
 
 }

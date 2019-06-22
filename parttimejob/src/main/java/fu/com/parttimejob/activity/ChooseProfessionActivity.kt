@@ -24,4 +24,7 @@ class ChooseProfessionActivity : BaseActivity() {
         }
     }
 
+    override fun isTranslucent(): Boolean {
+        return true
+    }
 }
