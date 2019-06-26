@@ -44,6 +44,16 @@ class CommunicateHistoryActivity : BaseActivity() {
 
         swipeList.setSwipeMenuCreator(mSwipeMenuCreator)
         swipeList.addItemDecoration(SpaceItemDecoration(24, 45, 45))
+
+
+// 菜单点击监听。
+
+        val mItemMenuClickListener = OnItemMenuClickListener { menuBridge, position ->
+            // 任何操作必须先关闭菜单，否则可能出现Item菜单打开状态错乱。
+            menuBridge.closeMenu()
+        }
+        swipeList.setOnItemMenuClickListener(mItemMenuClickListener)
+
         swipeList.adapter = adapter
 
         var list: ArrayList<BaseRecyclerModel> = ArrayList()
@@ -57,14 +67,6 @@ class CommunicateHistoryActivity : BaseActivity() {
         list.add(BaseRecyclerModel())
         list.add(BaseRecyclerModel())
         adapter.addAll(list)
-
-// 菜单点击监听。
-
-        val mItemMenuClickListener = OnItemMenuClickListener { menuBridge, position ->
-            // 任何操作必须先关闭菜单，否则可能出现Item菜单打开状态错乱。
-            menuBridge.closeMenu()
-        }
-//        swipeList.setOnItemMenuClickListener(mItemMenuClickListener)
     }
 
     override fun initViewClick() {
