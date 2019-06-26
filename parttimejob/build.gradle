@@ -56,6 +56,7 @@ dependencies {
     implementation 'com.yanzhenjie.recyclerview:support:1.3.2'
     implementation 'com.amap.api:map2d:latest.integration'
     implementation 'com.amap.api:location:latest.integration'
+    implementation files('libs/open_sdk_r6019_lite.jar')
 }
 
 apply plugin: 'kotlin-android'
