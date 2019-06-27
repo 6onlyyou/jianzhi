@@ -31,7 +31,7 @@ class LoginActivity : BaseActivity() {
 
     override fun initViewClick() {
         //初始化qq主操作对象
-        mTencent = Tencent.createInstance("1109483400",  this.getApplicationContext());
+
         forgetPwd.setOnClickListener({
             startActivity(ChangePwdActivity::class.java, false)
         })
@@ -53,8 +53,7 @@ class LoginActivity : BaseActivity() {
                 startPwdLogin()
             }
         }
-
-
+        mTencent = Tencent.createInstance("1109483400", this.getApplicationContext());
         mIwxapi = WXAPIFactory.createWXAPI(this, SPContants.WX_APP_ID, true)
         mIwxapi.registerApp(SPContants.WX_APP_ID)
         inView()
@@ -77,40 +76,15 @@ class LoginActivity : BaseActivity() {
 
             }
 
-            /**
-             * 返回json数据样例
-             *
-             * {"ret":0,"pay_token":"D3D678728DC580FBCDE15722B72E7365",
-             * "pf":"desktop_m_qq-10000144-android-2002-",
-             * "query_authority_cost":448,
-             * "authority_cost":-136792089,
-             * "openid":"015A22DED93BD15E0E6B0DDB3E59DE2D",
-             * "expires_in":7776000,
-             * "pfkey":"6068ea1c4a716d4141bca0ddb3df1bb9",
-             * "msg":"",
-             * "access_token":"A2455F491478233529D0106D2CE6EB45",
-             * "login_cost":499}
-             */
             override fun onComplete(value: Any?) {
-                // TODO Auto-generated method stub
-
-                println("有数据返回..")
                 if (value == null) {
                     return
                 }
-
                 try {
                     val jo = value as JSONObject?
-
                     val ret = jo!!.getInt("ret")
-
                     println("json=" + jo.toString())
-
                     if (ret == 0) {
-
-//                        Toast.makeText(LoginActivity::class.java, "登录成功",
-//                                Toast.LENGTH_LONG).show()
-
                         val openID = jo.getString("openid")
                         val accessToken = jo.getString("access_token")
                         val expires = jo.getString("expires_in")
@@ -121,13 +95,11 @@ class LoginActivity : BaseActivity() {
                     }
 
                 } catch (e: Exception) {
-                    // TODO: handle exception
                 }
 
             }
 
             override fun onCancel() {
-                // TODO Auto-generated method stub
 
             }
         }
@@ -139,21 +111,6 @@ class LoginActivity : BaseActivity() {
 
             }
 
-            /**
-             * 返回用户信息样例
-             *
-             * {"is_yellow_year_vip":"0","ret":0,
-             * "figureurl_qq_1":"http:\/\/q.qlogo.cn\/qqapp\/1104732758\/015A22DED93BD15E0E6B0DDB3E59DE2D\/40",
-             * "figureurl_qq_2":"http:\/\/q.qlogo.cn\/qqapp\/1104732758\/015A22DED93BD15E0E6B0DDB3E59DE2D\/100",
-             * "nickname":"攀爬←蜗牛","yellow_vip_level":"0","is_lost":0,"msg":"",
-             * "city":"黄冈","
-             * figureurl_1":"http:\/\/qzapp.qlogo.cn\/qzapp\/1104732758\/015A22DED93BD15E0E6B0DDB3E59DE2D\/50",
-             * "vip":"0","level":"0",
-             * "figureurl_2":"http:\/\/qzapp.qlogo.cn\/qzapp\/1104732758\/015A22DED93BD15E0E6B0DDB3E59DE2D\/100",
-             * "province":"湖北",
-             * "is_yellow_vip":"0","gender":"男",
-             * "figureurl":"http:\/\/qzapp.qlogo.cn\/qzapp\/1104732758\/015A22DED93BD15E0E6B0DDB3E59DE2D\/30"}
-             */
             override fun onComplete(arg0: Any?) {
                 // TODO Auto-generated method stub
                 if (arg0 == null) {
@@ -162,7 +119,6 @@ class LoginActivity : BaseActivity() {
                 try {
                     val jo = arg0 as JSONObject?
                     val ret = jo!!.getInt("ret")
-                    println("json=" + jo.toString())
                     val nickName = jo.getString("nickname")
                     val gender = jo.getString("gender")
                     val figureurl = jo.getString("figureurl").toString()
@@ -204,18 +160,18 @@ class LoginActivity : BaseActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         Tencent.onActivityResultData(requestCode, resultCode, data, loginListener);
 
-}
+    }
 
-lateinit var mIwxapi: IWXAPI
+    lateinit var mIwxapi: IWXAPI
 
-public fun startWxLogin() {
-    val req = SendAuth.Req()
-    req.scope = "snsapi_userinfo"
-    req.state = "wechat_login"
-    val result = mIwxapi.sendReq(req)
-}
+    public fun startWxLogin() {
+        val req = SendAuth.Req()
+        req.scope = "snsapi_userinfo"
+        req.state = "wechat_login"
+        val result = mIwxapi.sendReq(req)
+    }
 
-override fun isTranslucent(): Boolean {
-    return true
-}
+    override fun isTranslucent(): Boolean {
+        return true
+    }
 }
