@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="fu.com.parttimejob">
-    <!--允许程序打开网络套接字-->
+
+    <!-- 允许程序打开网络套接字 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <!--允许程序设置内置sd卡的写权限-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -20,7 +21,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="请输入您的用户Key" />
@@ -28,13 +28,11 @@
         <activity
             android:name=".activity.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-             <intent-filter>
-             <action android:name="android.intent.action.MAIN" />
-
-
-             <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".activity.ChooseProfessionActivity"
@@ -80,9 +78,14 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.CommunicateHistoryActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".activity.JobInfoActivity" />
+        <activity android:name=".activity.DisplayJianLiActivity"
             android:theme="@style/AppTheme.NoActionBar">
+            >
 
         </activity>
+
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:noHistory="true"
