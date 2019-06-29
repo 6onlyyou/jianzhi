@@ -82,7 +82,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.DisplayJianLiActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
@@ -118,6 +118,7 @@
         <activity
             android:name=".activity.RechargeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.MyJianLiActivity"></activity>
     </application>
 
 </manifest>
