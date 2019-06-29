@@ -180,7 +180,7 @@
                 android:layout_height="91dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="7dp"
-                android:background="@drawable/gray_squre" />
+                android:background="@mipmap/ic_add_photo" />
 
         </LinearLayout>
 
