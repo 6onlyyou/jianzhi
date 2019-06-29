@@ -12,40 +12,40 @@
         android:layout_height="33dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="56dp"
-        android:text="选择自己的标签"
+        android:text="请选择您想干什么"
         android:textColor="#ff222222"
         android:textSize="23sp" />
 
 
     <ImageView
-        android:id="@+id/job_hunter_img"
-        android:layout_width="104dp"
-        android:layout_height="105dp"
-        android:layout_marginTop="57dp"
-        android:src="@mipmap/ic_job_hunter_img" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="22dp"
-        android:layout_marginTop="8dp"
-        android:text="我是求职者"
-        android:textColor="@color/colorBlack"
-        android:textSize="15sp" />
-
-    <ImageView
         android:id="@+id/interviewer_img"
         android:layout_width="104dp"
         android:layout_height="105dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="57dp"
         android:src="@mipmap/ic_interviewer_img" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="22dp"
         android:layout_marginTop="8dp"
-        android:text="我是应聘者"
+        android:text="我想找工作"
         android:textColor="@color/colorBlack"
         android:textSize="15sp" />
+    <ImageView
+        android:id="@+id/job_hunter_img"
+        android:layout_width="104dp"
+        android:layout_height="105dp"
+        android:layout_marginTop="50dp"
+        android:src="@mipmap/ic_job_hunter_img" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="22dp"
+        android:layout_marginTop="8dp"
+        android:text="我想招人才"
+        android:textColor="@color/colorBlack"
+        android:textSize="15sp" />
+
 
     <TextView
         android:layout_width="141dp"

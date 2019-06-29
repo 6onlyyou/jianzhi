@@ -12,7 +12,7 @@
         android:layout_height="33dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="56dp"
-        android:text="选择求职意向"
+        android:text="选择想要找的工作"
         android:textColor="@color/colorBlack"
         android:textSize="23sp" />
 
@@ -21,7 +21,7 @@
         android:layout_height="25dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp"
-        android:text="兼职类型"
+        android:text="工作类型"
         android:textColor="@color/colorGray"
         android:textSize="18sp" />
 
@@ -39,7 +39,7 @@
         android:layout_height="22dp"
         android:layout_marginLeft="38dp"
         android:layout_marginTop="63dp"
-        android:text="自定义职位"
+        android:text="其他职位"
         android:textColor="@color/colorBlack"
         android:textSize="15sp" />
 

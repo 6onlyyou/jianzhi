@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import fu.com.parttimejob.R
 import fu.com.parttimejob.activity.CommunicateHistoryActivity
 import fu.com.parttimejob.activity.ExchangeShopActivity
+import fu.com.parttimejob.activity.JobActivity
 import fu.com.parttimejob.adapter.HomeJobListAdapter
 import fu.com.parttimejob.base.baseadapter.BaseRecyclerModel
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -52,7 +53,7 @@ class HomeFragment : Fragment() {
 
     private fun initClickListener() {
         same_city_iv.setOnClickListener({
-
+            startActivity(Intent(context, JobActivity::class.java))
         })
 
 
