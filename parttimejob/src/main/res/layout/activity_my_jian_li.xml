@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="fu.com.parttimejob.activity.MyMoneyActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:padding="8dp"
+            android:src="@mipmap/ic_back" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="我的简历"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        app:cardCornerRadius="6dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/myPhoto"
+                android:layout_width="345dp"
+                android:layout_height="216dp"
+                android:src="" />
+
+            <LinearLayout
+                android:id="@+id/nameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/myPhoto"
+                android:layout_marginLeft="15dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="张三"
+                    android:textColor="#ff222222"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="2dp"
+                    android:src="@mipmap/ic_location" />
+
+                <TextView
+                    android:id="@+id/myLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="余杭区"
+                    android:textColor="#ff8b8b8b"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/sex"
+                android:layout_width="57dp"
+                android:layout_height="22dp"
+                android:layout_below="@+id/nameLayout"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="9dp"
+                android:text="男 30岁"
+                android:textColor="#ff8b8b8b"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/myInfo"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_below="@+id/sex"
+                android:layout_margin="15dp"
+                android:text="我是一个活泼开朗，我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗。"
+                android:textColor="#ffcfcfcf"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/jobYixiang"
+                android:layout_width="57dp"
+                android:layout_height="22dp"
+                android:layout_below="@+id/myInfo"
+                android:layout_marginLeft="15dp"
+                android:text="求职意向"
+                android:textColor="#ff8b8b8b"
+                android:textSize="14sp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/jobYixiangList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/jobYixiang"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="8dp" />
+
+            <TextView
+                android:id="@+id/phone"
+                android:layout_width="72dp"
+                android:layout_height="22dp"
+                android:layout_below="@+id/jobYixiangList"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:text="联系电话："
+                android:textColor="#ff8b8b8b"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+    <TextView
+        android:layout_width="252dp"
+        android:layout_height="36dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/bg_round_bq"
+        android:gravity="center"
+        android:text="立即修改"
+        android:textColor="#ffffffff"
+        android:textSize="15sp" />
+</LinearLayout>
