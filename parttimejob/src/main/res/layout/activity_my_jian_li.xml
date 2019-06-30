@@ -47,7 +47,7 @@
                 android:id="@+id/myPhoto"
                 android:layout_width="345dp"
                 android:layout_height="216dp"
-                android:src="" />
+                />
 
             <LinearLayout
                 android:id="@+id/nameLayout"
