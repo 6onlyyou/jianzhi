@@ -11,6 +11,7 @@ import android.view.ViewGroup
 
 import fu.com.parttimejob.R
 import fu.com.parttimejob.activity.CommunicateHistoryActivity
+import fu.com.parttimejob.activity.DisplayJianLiActivity
 import fu.com.parttimejob.activity.ExchangeShopActivity
 import fu.com.parttimejob.activity.JobActivity
 import fu.com.parttimejob.adapter.HomeJobListAdapter
@@ -63,7 +64,7 @@ class HomeFragment : Fragment() {
         })
 
         brief_iv.setOnClickListener({
-
+            startActivity(Intent(context, DisplayJianLiActivity::class.java))
         })
 
         make_money_iv.setOnClickListener({

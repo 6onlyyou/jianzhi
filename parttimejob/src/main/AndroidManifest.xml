@@ -13,6 +13,13 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!--允许程序访问CellID或WiFi热点来获取粗略的位置-->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -23,18 +30,18 @@
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="请输入您的用户Key" />
+            android:value="c6f88c504400959908421f756a4d318f" />
 
         <activity
             android:name=".activity.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
 
-             <intent-filter>
-             <action android:name="android.intent.action.MAIN" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
 
-             <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".activity.ChooseProfessionActivity"
@@ -49,7 +56,6 @@
         <meta-data
             android:name="RONG_CLOUD_APP_KEY"
             android:value="c9kqb3rdc43mj" />
-
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.FileProvider"
@@ -85,12 +91,14 @@
         </activity>
         <activity
             android:name="com.tencent.tauth.AuthActivity"
-            android:noHistory="true"
-            android:launchMode="singleTask" >
+            android:launchMode="singleTask"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="tencent1109483400" />
             </intent-filter>
         </activity>
@@ -117,9 +125,16 @@
             android:name=".activity.RechargeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.MyJianLiActivity"></activity>
-        <activity android:name=".activity.JobInfoActivity" />
-        <activity android:name=".activity.JobActivity"
+        <activity
+            android:name=".activity.DisplayJianLiActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activity.JobActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <!-- 全面屏-->
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="2.1" />
     </application>
 
 </manifest>
