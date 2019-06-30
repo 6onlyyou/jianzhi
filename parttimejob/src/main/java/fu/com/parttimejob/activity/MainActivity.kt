@@ -109,6 +109,7 @@ class MainActivity : BaseActivity() {
     override fun initViewClick() {
 
     }
+
     private fun connect(token: String) {
         RongIM.connect(token, object : RongIMClient.ConnectCallback() {
             override fun onTokenIncorrect() {

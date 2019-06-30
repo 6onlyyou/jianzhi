@@ -57,6 +57,7 @@ dependencies {
     implementation 'com.amap.api:map2d:latest.integration'
     implementation 'com.amap.api:location:latest.integration'
     implementation files('libs/open_sdk_r6019_lite.jar')
+    implementation 'liji.library.dev:citypickerview:1.1.0'
 }
 
 apply plugin: 'kotlin-android'

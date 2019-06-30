@@ -91,14 +91,12 @@
         </activity>
         <activity
             android:name="com.tencent.tauth.AuthActivity"
-            android:launchMode="singleTask"
-            android:noHistory="true">
+            android:noHistory="true"
+            android:launchMode="singleTask" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
                 <data android:scheme="tencent1109483400" />
             </intent-filter>
         </activity>
@@ -127,7 +125,7 @@
         <activity android:name=".activity.MyJianLiActivity"></activity>
         <activity
             android:name=".activity.DisplayJianLiActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        ></activity>
         <activity
             android:name=".activity.JobActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
