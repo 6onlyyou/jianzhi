@@ -42,7 +42,7 @@
                     android:paddingTop="2dp"
                     android:text="赏20虚拟币"
                     android:textColor="#ffffffff"
-                    android:textSize="8sp" />
+                    android:textSize="10sp" />
 
                 <View
                     android:layout_width="0dp"
@@ -72,7 +72,7 @@
                     android:layout_marginLeft="15dp"
                     android:text="日结"
                     android:textColor="@color/colorGray"
-                    android:textSize="10sp" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:layout_width="20dp"
@@ -80,7 +80,7 @@
                     android:layout_marginLeft="6dp"
                     android:text="日结"
                     android:textColor="@color/colorGray"
-                    android:textSize="10sp" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:layout_width="20dp"
@@ -88,7 +88,7 @@
                     android:layout_marginLeft="6dp"
                     android:text="日结"
                     android:textColor="@color/colorGray"
-                    android:textSize="10sp" />
+                    android:textSize="12sp" />
 
                 <View
                     android:layout_width="0dp"

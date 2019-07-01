@@ -89,7 +89,7 @@
                     android:layout_height="14dp"
                     android:text="杭州"
                     android:textColor="@color/colorGray"
-                    android:textSize="10sp" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:layout_width="85dp"
@@ -110,7 +110,7 @@
                     android:layout_marginTop="7dp"
                     android:text="分享成功后可获得398虚拟币奖励"
                     android:textColor="@color/colorRed"
-                    android:textSize="10sp" />
+                    android:textSize="12sp" />
             </RelativeLayout>
 
 
