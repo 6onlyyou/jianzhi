@@ -2,6 +2,9 @@ package fu.com.parttimejob.activity
 
 import android.content.Intent
 import android.text.TextUtils
+import android.widget.Toast
+import com.heixiu.errand.net.RetrofitFactory
+import com.lljjcoder.citylist.Toast.ToastUtils
 import com.tencent.connect.UserInfo
 import com.tencent.mm.opensdk.modelmsg.SendAuth
 import com.tencent.mm.opensdk.openapi.IWXAPI
@@ -11,7 +14,10 @@ import com.tencent.tauth.Tencent
 import com.tencent.tauth.UiError
 import fu.com.parttimejob.R
 import fu.com.parttimejob.base.BaseActivity
+import fu.com.parttimejob.retrofitNet.ApiService
+import fu.com.parttimejob.retrofitNet.RxUtils
 import fu.com.parttimejob.utils.SPContants
+import fu.com.parttimejob.utils.SPUtil
 import kotlinx.android.synthetic.main.activity_login.*
 import org.json.JSONObject
 
@@ -30,8 +36,9 @@ class LoginActivity : BaseActivity() {
     }
 
     override fun initViewClick() {
-        //初始化qq主操作对象
-
+        back.setOnClickListener {
+            startActivity(ChooseProfessionActivity::class.java, false)
+        }
         forgetPwd.setOnClickListener({
             startActivity(ChangePwdActivity::class.java, false)
         })
@@ -107,7 +114,6 @@ class LoginActivity : BaseActivity() {
         userInfoListener = object : IUiListener {
 
             override fun onError(arg0: UiError) {
-                // TODO Auto-generated method stub
 
             }
 
@@ -118,14 +124,20 @@ class LoginActivity : BaseActivity() {
                 }
                 try {
                     val jo = arg0 as JSONObject?
+                    println("json=" + jo.toString())
                     val ret = jo!!.getInt("ret")
                     val nickName = jo.getString("nickname")
                     val gender = jo.getString("gender")
                     val figureurl = jo.getString("figureurl").toString()
                     val city = jo.getString("city")
+                    RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().register(mTencent!!.openId,SPUtil.getInt(this@LoginActivity,"Profession",1),nickName,figureurl,gender,1)).subscribe({
+                        ToastUtils.showLongToast(applicationContext,"登入成功")
 
+                    }, {
+                        ToastUtils.showLongToast(applicationContext,it.message.toString())
+                    })
                 } catch (e: Exception) {
-                    // TODO: handle exception
+
                 }
 
 

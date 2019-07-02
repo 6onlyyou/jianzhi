@@ -2,6 +2,7 @@ package fu.com.parttimejob.activity
 
 import fu.com.parttimejob.R
 import fu.com.parttimejob.base.BaseActivity
+import fu.com.parttimejob.utils.SPUtil
 import kotlinx.android.synthetic.main.activity_choose_profession.*
 
 class ChooseProfessionActivity : BaseActivity() {
@@ -16,10 +17,12 @@ class ChooseProfessionActivity : BaseActivity() {
 
     override fun initViewClick() {
         job_hunter_img.setOnClickListener {
+            SPUtil.putInt(this,"Profession",1)
             startActivity(LoginActivity::class.java, true)
         }
 
         interviewer_img.setOnClickListener {
+            SPUtil.putInt(this,"Profession",2)
             startActivity(LoginActivity::class.java, true)
         }
     }

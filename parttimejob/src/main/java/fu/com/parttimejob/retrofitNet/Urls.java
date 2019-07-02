@@ -25,5 +25,5 @@ package fu.com.parttimejob.retrofitNet;
  * ================================================
  */
 public class Urls {
-    public static final String SERVER = "http://47.101.64.147/dc/";
+    public static final String SERVER = "http://39.107.88.233:8080/";
 }

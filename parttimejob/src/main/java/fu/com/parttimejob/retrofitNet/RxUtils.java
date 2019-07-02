@@ -24,7 +24,7 @@ public class RxUtils {
                     @Override
                     public ObservableSource<? extends T> apply(ResponseBean<T> tResponseBean) throws Exception {
                         Log.i("RxUtils", "apply: " + tResponseBean.toString());
-                        if ("0".equals(tResponseBean.getState())) {
+                        if ("200".equals(tResponseBean.getState())) {
                             if (tResponseBean.getData() == null) {
                                 return Observable.empty();
                             } else {

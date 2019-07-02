@@ -119,7 +119,7 @@ class MainActivity : BaseActivity() {
 
             override fun onSuccess(userid: String) {
                 Log.e("MainActivity", "--onSuccess--" + userid)
-                RongIM.getInstance().setCurrentUserInfo(UserInfo(userid, SPUtil.getString("nickname", ""), Uri.parse(SPUtil.getString("headurl", ""))))
+                RongIM.getInstance().setCurrentUserInfo(UserInfo(userid, SPUtil.getString(this@MainActivity,"nickname", ""), Uri.parse(SPUtil.getString(this@MainActivity,"headurl", ""))))
                 RongIM.getInstance().setMessageAttachedUserInfo(true)
             }
 

@@ -20,8 +20,8 @@ class RequestInterceptor(private val context: Context) : Interceptor {
 
         builder.addHeader("X-Parse-Application-Id", "nlebCRJVmSRP0G0vuMHmlgMq-gzGzoHsz")
         builder.addHeader("Content-Type", "application/json")
-        if (SPUtil.getString(SPContants.phone, "").isNotEmpty()) {
-            builder.addHeader(SPContants.phone, SPUtil.getString(SPContants.phone, ""))
+        if (SPUtil.getString(context,SPContants.phone, "").isNotEmpty()) {
+            builder.addHeader(SPContants.phone, SPUtil.getString(context,SPContants.phone, ""))
         }
 
         val request = builder.build()

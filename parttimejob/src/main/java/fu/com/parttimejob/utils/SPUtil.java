@@ -1,58 +1,121 @@
 package fu.com.parttimejob.utils;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 
-import fu.com.parttimejob.App;
-
-
 /**
- * Created by YuanGang on 2018/9/6.
+ * SharePreference工具类，用于进行数据缓存以及获取
  */
-
 public class SPUtil {
+    private static SharedPreferences preferences;
 
-
-    public static SharedPreferences getPreferences() {
-        return App.getInstance().getSharedPreferences("localData", App.getInstance().MODE_PRIVATE);
+    public static void getPreference(Context context) {
+        if (preferences == null) {
+            preferences = context.getSharedPreferences("mysp", Context.MODE_PRIVATE);
+        }
     }
-
-    public static String getString(String key, String defValue) {
-
-        return getPreferences().getString(key, defValue);
+    /**
+     *
+     * @param context  上下文 最好用Application的context
+     * @param key 属性名
+     * @param value 属性值
+     */
+    public static void putBoolean(Context context, String key, boolean value) {
+        getPreference(context);
+        preferences.edit().putBoolean(key, value).commit();
     }
-
-    public static Boolean getBoolean(String key, Boolean defValue) {
-
-        return getPreferences().getBoolean(key, defValue);
-    }
-
-    public static int getInt(String key, int defValue) {
-
-        return getPreferences().getInt(key, defValue);
-    }
-
-    public static long getLong(String key, long defValue) {
-
-        return getPreferences().getLong(key, defValue);
+    /**
+     *
+     * @param context  上下文 最好用Application的context
+     * @param key 属性名
+     * @param defaultValue 属性值 默认
+     */
+    public static boolean getBoolean(Context context, String key, boolean defaultValue) {
+        getPreference(context);
+        return preferences.getBoolean(key, defaultValue);
     }
 
     /**
-     * 保存字符串变量
+     *
+     * @param context  上下文 最好用Application的context
+     * @param key 属性名
+     * @param value 属性值
      */
-    public static void saveString(String key, String value) {
-        getPreferences().edit().putString(key, value).commit();
+    public static void putFloat(Context context, String key, float value) {
+        getPreference(context);
+        preferences.edit().putFloat(key, value).commit();
+    }
+    /**
+     *
+     * @param context  上下文 最好用Application的context
+     * @param key 属性名
+     * @param defaultValue 属性值 默认
+     */
+    public static float getFloat(Context context, String key, float defaultValue) {
+        getPreference(context);
+        return preferences.getFloat(key, defaultValue);
     }
 
-    public static void saveBoolean(String key, Boolean value) {
-        getPreferences().edit().putBoolean(key, value).commit();
+    /**
+     *
+     * @param context  上下文 最好用Application的context
+     * @param key 属性名
+     * @param value 属性值
+     */
+    public static void putString(Context context, String key, String value) {
+        getPreference(context);
+        preferences.edit().putString(key, value).commit();
+    }
+    /**
+     *
+     * @param context  上下文 最好用Application的context
+     * @param key 属性名
+     * @param defaultValue 属性值 默认
+     */
+    public static String getString(Context context, String key, String defaultValue) {
+        getPreference(context);
+        return preferences.getString(key, defaultValue);
     }
 
-    public static void saveInt(String key, int value) {
-        getPreferences().edit().putInt(key, value).commit();
+    /**
+     *
+     * @param context  上下文 最好用Application的context
+     * @param key 属性名
+     * @param value 属性值
+     */
+    public static void putLong(Context context, String key, long value) {
+        getPreference(context);
+        preferences.edit().putLong(key, value).commit();
     }
-
-    public static void saveLong(String key, long value) {
-        getPreferences().edit().putLong(key, value).commit();
+    /**
+     *
+     * @param context  上下文 最好用Application的context
+     * @param key 属性名
+     * @param defaultValue 属性值 默认
+     */
+    public static long getLong(Context context, String key, long defaultValue) {
+        getPreference(context);
+        return preferences.getLong(key, defaultValue);
+    }
+    /**
+     *
+     * @param context  上下文 最好用Application的context
+     * @param key 属性名
+     * @param value 属性值
+     */
+    public static void putInt(Context context, String key, int value) {
+        getPreference(context);
+        preferences.edit().putInt(key, value).commit();
+    }
+    /**
+     *
+     * @param context  上下文 最好用Application的context
+     * @param key 属性名
+     * @param defaultValue 属性值 默认
+     */
+    public static int getInt(Context context, String key, int defaultValue) {
+        getPreference(context);
+        return preferences.getInt(key, defaultValue);
     }
 
 }
