@@ -57,7 +57,14 @@ class LoginActivity : BaseActivity() {
 
         login_with_pwd.setOnClickListener {
             if (judgeIsCanLogin()) {
-                startPwdLogin()
+                RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().login(loginPhoneEt.text.toString(),loginPwdEt.text.toString())).subscribe({
+                    ToastUtils.showLongToast(applicationContext,"登入成功")
+                    SPUtil.putString(this,"token",it.token.toString())
+                    startPwdLogin()
+                }, {
+                    ToastUtils.showLongToast(applicationContext,it.message.toString())
+                })
+
             }
         }
         mTencent = Tencent.createInstance("1109483400", this.getApplicationContext());
@@ -132,6 +139,7 @@ class LoginActivity : BaseActivity() {
                     val city = jo.getString("city")
                     RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().register(mTencent!!.openId,SPUtil.getInt(this@LoginActivity,"Profession",1),nickName,figureurl,gender,1)).subscribe({
                         ToastUtils.showLongToast(applicationContext,"登入成功")
+                        startActivity(MainActivity::class.java, true)
 
                     }, {
                         ToastUtils.showLongToast(applicationContext,it.message.toString())
@@ -152,8 +160,8 @@ class LoginActivity : BaseActivity() {
 
     private fun startPwdLogin() {
         showToast("登录成功")
-//        startActivity(MainActivity::class.java, true)
-        startActivity(ChooseJobActivity::class.java, true)
+        startActivity(MainActivity::class.java, true)
+        finish()
     }
 
 

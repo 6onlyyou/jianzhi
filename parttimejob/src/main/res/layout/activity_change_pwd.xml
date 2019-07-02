@@ -17,7 +17,14 @@
         android:text="修改密码，"
         android:textColor="#ffffffff"
         android:textSize="30sp" />
-
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="20dp"
+        android:padding="8dp"
+        android:src="@mipmap/ic_back" />
     <LinearLayout
         android:layout_width="345dp"
         android:layout_height="335dp"

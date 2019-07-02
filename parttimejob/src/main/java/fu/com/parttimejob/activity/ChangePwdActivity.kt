@@ -4,8 +4,12 @@ import android.os.CountDownTimer
 import android.text.Editable
 import android.text.TextUtils
 import android.widget.Button
+import com.heixiu.errand.net.RetrofitFactory
+import com.lljjcoder.citylist.Toast.ToastUtils
 import fu.com.parttimejob.R
 import fu.com.parttimejob.base.BaseActivity
+import fu.com.parttimejob.retrofitNet.RxUtils
+import fu.com.parttimejob.utils.SPUtil
 import kotlinx.android.synthetic.main.activity_change_pwd.*
 
 class ChangePwdActivity : BaseActivity() {
@@ -32,9 +36,13 @@ class ChangePwdActivity : BaseActivity() {
                 startChangePwd()
             }
         })
+        back.setOnClickListener {
+            finish()
+        }
     }
 
     private fun getPhoneCode(text: Editable?) {
+
 
     }
 
@@ -48,8 +56,14 @@ class ChangePwdActivity : BaseActivity() {
 
     private fun startChangePwd() {
         //接口
-        showToast("修改密码成功")
-        finish()
+        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().modifyPassword(phoneEt.text.toString(),pwdNextEt.text.toString())).subscribe({
+            showToast("修改密码成功")
+            finish()
+        }, {
+            ToastUtils.showLongToast(applicationContext,it.message.toString())
+        })
+
+
     }
 
 

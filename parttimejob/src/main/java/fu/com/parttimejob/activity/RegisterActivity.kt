@@ -4,8 +4,12 @@ import android.os.CountDownTimer
 import android.text.Editable
 import android.text.TextUtils
 import android.widget.Button
+import com.heixiu.errand.net.RetrofitFactory
+import com.lljjcoder.citylist.Toast.ToastUtils
 import fu.com.parttimejob.R
 import fu.com.parttimejob.base.BaseActivity
+import fu.com.parttimejob.retrofitNet.RxUtils
+import fu.com.parttimejob.utils.SPUtil
 import kotlinx.android.synthetic.main.activity_register.*
 
 class RegisterActivity : BaseActivity() {
@@ -26,9 +30,9 @@ class RegisterActivity : BaseActivity() {
         })
 
         registerTv.setOnClickListener({
-            if (judgeIsCanRegister()) {
+//            if (judgeIsCanRegister()) {
                 startRegister()
-            }
+//            }
         })
     }
 
@@ -46,8 +50,14 @@ class RegisterActivity : BaseActivity() {
 
     private fun startRegister() {
         //接口
-        showToast("注册成功")
-        finish()
+        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().register(phoneEt.text.toString(), SPUtil.getInt(this@RegisterActivity,"Profession",1),"","","",3)).subscribe({
+            ToastUtils.showLongToast(applicationContext,"登入成功")
+            startActivity(MainActivity::class.java, true)
+            finish()
+        }, {
+            ToastUtils.showLongToast(applicationContext,it.message.toString())
+        })
+
     }
 
 
