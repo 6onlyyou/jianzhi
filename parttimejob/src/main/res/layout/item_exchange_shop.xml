@@ -27,7 +27,7 @@
                 android:paddingTop="2dp"
                 android:text="赏20虚拟币"
                 android:textColor="#ffffffff"
-                android:textSize="8sp" />
+                android:textSize="10sp" />
 
 
             <ImageView
