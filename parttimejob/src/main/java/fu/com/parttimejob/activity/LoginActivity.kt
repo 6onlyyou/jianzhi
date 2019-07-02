@@ -38,6 +38,7 @@ class LoginActivity : BaseActivity() {
     override fun initViewClick() {
         back.setOnClickListener {
             startActivity(ChooseProfessionActivity::class.java, false)
+            finish()
         }
         forgetPwd.setOnClickListener({
             startActivity(ChangePwdActivity::class.java, false)
@@ -137,7 +138,7 @@ class LoginActivity : BaseActivity() {
                     val gender = jo.getString("gender")
                     val figureurl = jo.getString("figureurl").toString()
                     val city = jo.getString("city")
-                    RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().register(mTencent!!.openId,SPUtil.getInt(this@LoginActivity,"Profession",1),nickName,figureurl,gender,1)).subscribe({
+                    RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().register(mTencent!!.openId,SPUtil.getInt(this@LoginActivity,"Profession",1),nickName,figureurl,gender,1,"")).subscribe({
                         ToastUtils.showLongToast(applicationContext,"登入成功")
                         startActivity(MainActivity::class.java, true)
 

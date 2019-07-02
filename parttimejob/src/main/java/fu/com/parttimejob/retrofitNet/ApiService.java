@@ -12,12 +12,19 @@ import retrofit2.http.Query;
 
 public interface ApiService {
     /**
-     * 注册接口
+     * 手机注册接口
      *
      * @return
      */
     @POST("/appservice/app/alluser/register")
-    Observable<ResponseBean<String>> register(@Query("thirdAccount") String thirdAccount, @Query("identyType") int identyType, @Query("nickName") String nickName, @Query("headImg") String headImg, @Query("sex") String sex, @Query("loginType") int loginType);
+    Observable<ResponseBean<String>> phoneregister(@Query("thirdAccount") String thirdAccount, @Query("identyType") int identyType,  @Query("loginType") int loginType, @Query("password") String password);
+    /**
+     * 第三方注册接口
+     *
+     * @return
+     */
+    @POST("/appservice/app/alluser/register")
+    Observable<ResponseBean<String>> register(@Query("thirdAccount") String thirdAccount, @Query("identyType") int identyType, @Query("nickName") String nickName, @Query("headImg") String headImg, @Query("sex") String sex, @Query("loginType") int loginType, @Query("password") String password);
     /**
      * 登入接口
      *

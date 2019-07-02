@@ -126,7 +126,7 @@
             android:layout_marginTop="10dp"
             android:text="还没有账户？立即注册"
             android:textColor="#ff333333"
-            android:textSize="10sp" />
+            android:textSize="15sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
