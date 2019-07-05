@@ -24,11 +24,7 @@ public class ChooseDreamJobListAdapter extends BaseRecyclerViewAdapter {
 
         @Override
         public void onBindViewHolder(BaseRecyclerModel object, int position) {
-            binding.jobName.setText("12345");
-//            TouBaoInfoBean touBaoInfoBean = (TouBaoInfoBean) object;
-//            binding.toubaoId.setText("卡号:     " + touBaoInfoBean.getInsuranceNo() + "");
-//            binding.toubaoMoney.setText("密码:     " + touBaoInfoBean.getInterestMoney() + "");
-//            binding.toubaoTime.setText("发放日期:     " + touBaoInfoBean.getGiveTime()+"");
+            binding.jobName.setText(object.getViewTypeSt());
         }
     }
 }

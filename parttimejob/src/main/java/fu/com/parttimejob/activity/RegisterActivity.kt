@@ -18,6 +18,7 @@ class RegisterActivity : BaseActivity() {
     }
 
     override fun initViewParams() {
+
     }
 
     override fun initViewClick() {
@@ -51,9 +52,13 @@ class RegisterActivity : BaseActivity() {
     private fun startRegister() {
         //接口
         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().phoneregister(phoneEt.text.toString(), SPUtil.getInt(this@RegisterActivity,"Profession",1),3,pwdNextEt.text.toString())).subscribe({
-            ToastUtils.showLongToast(applicationContext,"登入成功")
-            startActivity(MainActivity::class.java, true)
-            finish()
+            if(it.register){
+                ToastUtils.showLongToast(applicationContext,it.tip)
+            }else{
+                ToastUtils.showLongToast(applicationContext,"注册成功")
+                startActivity(MainActivity::class.java, true)
+                finish()
+            }
         }, {
             ToastUtils.showLongToast(applicationContext,it.message.toString())
         })

@@ -139,8 +139,14 @@ class LoginActivity : BaseActivity() {
                     val figureurl = jo.getString("figureurl").toString()
                     val city = jo.getString("city")
                     RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().register(mTencent!!.openId,SPUtil.getInt(this@LoginActivity,"Profession",1),nickName,figureurl,gender,1,"")).subscribe({
-                        ToastUtils.showLongToast(applicationContext,"登入成功")
-                        startActivity(MainActivity::class.java, true)
+                      if(it.register){
+                          ToastUtils.showLongToast(applicationContext,"登入成功")
+                          startActivity(MainActivity::class.java, true)
+                      }else{
+                          ToastUtils.showLongToast(applicationContext,"登入成功")
+                          startActivity(ChooseJobActivity::class.java, true)
+                      }
+                       finish()
 
                     }, {
                         ToastUtils.showLongToast(applicationContext,it.message.toString())

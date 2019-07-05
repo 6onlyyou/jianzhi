@@ -1,8 +1,12 @@
 package fu.com.parttimejob.retrofitNet;
 
+import fu.com.parttimejob.bean.GetLabelsBean;
 import fu.com.parttimejob.bean.LoginBean;
+import fu.com.parttimejob.bean.RegisterBean;
 import fu.com.parttimejob.bean.ResponseBean;
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
+import retrofit2.http.Body;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
@@ -17,14 +21,14 @@ public interface ApiService {
      * @return
      */
     @POST("/appservice/app/alluser/register")
-    Observable<ResponseBean<String>> phoneregister(@Query("thirdAccount") String thirdAccount, @Query("identyType") int identyType,  @Query("loginType") int loginType, @Query("password") String password);
+    Observable<ResponseBean<RegisterBean>> phoneregister(@Query("thirdAccount") String thirdAccount, @Query("identyType") int identyType, @Query("loginType") int loginType, @Query("password") String password);
     /**
      * 第三方注册接口
      *
      * @return
      */
     @POST("/appservice/app/alluser/register")
-    Observable<ResponseBean<String>> register(@Query("thirdAccount") String thirdAccount, @Query("identyType") int identyType, @Query("nickName") String nickName, @Query("headImg") String headImg, @Query("sex") String sex, @Query("loginType") int loginType, @Query("password") String password);
+    Observable<ResponseBean<RegisterBean>> register(@Query("thirdAccount") String thirdAccount, @Query("identyType") int identyType, @Query("nickName") String nickName, @Query("headImg") String headImg, @Query("sex") String sex, @Query("loginType") int loginType, @Query("password") String password);
     /**
      * 登入接口
      *
@@ -39,4 +43,35 @@ public interface ApiService {
      */
     @POST("/appservice/app/alluser/modifyPassword")
     Observable<ResponseBean<LoginBean>> modifyPassword(@Query("thirdAccount") String thirdAccount, @Query("password") String password);
+
+    /**
+     * 获得标签
+     *
+     * @return
+     */
+    @POST("/appservice/app/jobhunter/getLabel")
+    Observable<ResponseBean<GetLabelsBean>> getLabel();
+    /**
+     * 创建简历
+     *
+     * @return
+     */
+    @POST("/appservice/app/jobhunter/createPR")
+    Observable<ResponseBean<String>> createPR(@Query("thirdAccount") String thirdAccount,@Query("name") String name, @Query("sex") String sex, @Query("age") String age, @Query("personalProfile") String personalProfile, @Body RequestBody file );
+    /**
+     * 设置标签
+     *
+     * @return
+     */
+    @POST("/appservice/app/jobhunter/customizeLabel")
+    Observable<ResponseBean<String>> customizeLabel(@Query("thirdAccount") String thirdAccount, @Query("labelName") String labelName);
+
+    /**
+     * 查询个人信息
+     *
+     * @return
+     */
+    @POST("/app/alluser/getUserInfo")
+    Observable<ResponseBean<String>> getUserInfo(@Query("thirdAccount") String thirdAccount, @Query("identyType") String identyType, @Query("longitude") String longitude, @Query("latitude") String latitude, @Query("city") String city, @Query("token") String token);
+
 }

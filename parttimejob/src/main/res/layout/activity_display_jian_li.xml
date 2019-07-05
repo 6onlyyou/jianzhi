@@ -52,6 +52,7 @@
                 android:textSize="15sp" />
 
             <EditText
+                android:id="@+id/jianliname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -83,6 +84,7 @@
                 android:textSize="15sp" />
 
             <TextView
+                android:id="@+id/jianlisex"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -111,6 +113,7 @@
                 android:textSize="15sp" />
 
             <TextView
+                android:id="@+id/jianliage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -141,6 +144,7 @@
 
 
             <EditText
+                android:id="@+id/jianlijianjie"
                 android:layout_width="match_parent"
                 android:layout_height="119dp"
                 android:layout_marginLeft="15dp"
@@ -203,6 +207,7 @@
 
 
     <TextView
+        android:id="@+id/pushjianli"
         android:layout_width="252dp"
         android:layout_height="36dp"
         android:layout_gravity="center_horizontal|bottom"

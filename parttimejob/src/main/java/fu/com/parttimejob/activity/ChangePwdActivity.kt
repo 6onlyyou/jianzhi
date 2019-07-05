@@ -62,8 +62,6 @@ class ChangePwdActivity : BaseActivity() {
         }, {
             ToastUtils.showLongToast(applicationContext,it.message.toString())
         })
-
-
     }
 
 

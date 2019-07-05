@@ -8,4 +8,21 @@ package fu.com.parttimejob.base.baseadapter;
 
 public class BaseRecyclerModel {
     public int viewType;
+    public String viewTypeSt;
+
+    public int getViewType() {
+        return viewType;
+    }
+
+    public void setViewType(int viewType) {
+        this.viewType = viewType;
+    }
+
+    public String getViewTypeSt() {
+        return viewTypeSt;
+    }
+
+    public void setViewTypeSt(String viewTypeSt) {
+        this.viewTypeSt = viewTypeSt;
+    }
 }
