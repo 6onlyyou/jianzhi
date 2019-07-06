@@ -2,9 +2,9 @@ package fu.com.parttimejob.activity
 
 import android.content.Intent
 import android.text.TextUtils
-import android.widget.Toast
 import com.heixiu.errand.net.RetrofitFactory
 import com.lljjcoder.citylist.Toast.ToastUtils
+import com.luck.picture.lib.rxbus2.RxBus
 import com.tencent.connect.UserInfo
 import com.tencent.mm.opensdk.modelmsg.SendAuth
 import com.tencent.mm.opensdk.openapi.IWXAPI
@@ -14,10 +14,15 @@ import com.tencent.tauth.Tencent
 import com.tencent.tauth.UiError
 import fu.com.parttimejob.R
 import fu.com.parttimejob.base.BaseActivity
-import fu.com.parttimejob.retrofitNet.ApiService
+import fu.com.parttimejob.bean.GetTokenEntity
+import fu.com.parttimejob.bean.WXInfoEntity
 import fu.com.parttimejob.retrofitNet.RxUtils
 import fu.com.parttimejob.utils.SPContants
 import fu.com.parttimejob.utils.SPUtil
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.functions.Consumer
+import io.reactivex.schedulers.Schedulers
+import io.rong.imlib.statistics.UserData.gender
 import kotlinx.android.synthetic.main.activity_login.*
 import org.json.JSONObject
 
@@ -32,7 +37,50 @@ class LoginActivity : BaseActivity() {
     }
 
     override fun initViewParams() {
+        RxBus.getDefault().toObservable(SendAuth.Resp::class.java).subscribe({
+            getWxUserInfo(it)
+        }, {
+            showToast("获取登陆信息失败")
+        })
+    }
 
+    private fun getWxUserInfo(resp: SendAuth.Resp) {
+        RetrofitFactory.getRetrofit().getToken(SPContants.WX_APP_ID, SPContants.WX_APP_SERCRET, resp.code, "authorization_code")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(Consumer<GetTokenEntity> { getTokenEntity ->
+                    RetrofitFactory.getRetrofit().getWXInfo(getTokenEntity.getmAccessToken().toString(), getTokenEntity.getmOpenid())
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(Consumer<WXInfoEntity> { wxInfoEntity ->
+                                RxBus.getDefault().post(wxInfoEntity)
+                                loginWithWx(wxInfoEntity)
+                                finish()
+                            }, Consumer<Throwable> {
+                                showToast("获取登陆信息失败")
+                                finish()
+                            })
+                }, Consumer<Throwable> {
+                    showToast("获取登陆信息失败")
+                    finish()
+                })
+    }
+
+    private fun loginWithWx(wxInfoEntity: WXInfoEntity) {
+        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().register(wxInfoEntity!!.getmOpenid(), SPUtil.getInt(this@LoginActivity, "Profession", 1),
+                wxInfoEntity.getmNickname(), wxInfoEntity.getmHeadimgurl(), wxInfoEntity.getmSex(), 1, "")).subscribe({
+            if (it.register) {
+                ToastUtils.showLongToast(applicationContext, "登入成功")
+                startActivity(MainActivity::class.java, true)
+            } else {
+                ToastUtils.showLongToast(applicationContext, "登入成功")
+                startActivity(ChooseJobActivity::class.java, true)
+            }
+            finish()
+
+        }, {
+            ToastUtils.showLongToast(applicationContext, it.message.toString())
+        })
     }
 
     override fun initViewClick() {
@@ -58,12 +106,12 @@ class LoginActivity : BaseActivity() {
 
         login_with_pwd.setOnClickListener {
             if (judgeIsCanLogin()) {
-                RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().login(loginPhoneEt.text.toString(),loginPwdEt.text.toString())).subscribe({
-                    ToastUtils.showLongToast(applicationContext,"登入成功")
-                    SPUtil.putString(this,"token",it.token.toString())
+                RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().login(loginPhoneEt.text.toString(), loginPwdEt.text.toString())).subscribe({
+                    ToastUtils.showLongToast(applicationContext, "登入成功")
+                    SPUtil.putString(this, "token", it.token.toString())
                     startPwdLogin()
                 }, {
-                    ToastUtils.showLongToast(applicationContext,it.message.toString())
+                    ToastUtils.showLongToast(applicationContext, it.message.toString())
                 })
 
             }
@@ -138,18 +186,18 @@ class LoginActivity : BaseActivity() {
                     val gender = jo.getString("gender")
                     val figureurl = jo.getString("figureurl").toString()
                     val city = jo.getString("city")
-                    RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().register(mTencent!!.openId,SPUtil.getInt(this@LoginActivity,"Profession",1),nickName,figureurl,gender,1,"")).subscribe({
-                      if(it.register){
-                          ToastUtils.showLongToast(applicationContext,"登入成功")
-                          startActivity(MainActivity::class.java, true)
-                      }else{
-                          ToastUtils.showLongToast(applicationContext,"登入成功")
-                          startActivity(ChooseJobActivity::class.java, true)
-                      }
-                       finish()
+                    RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().register(mTencent!!.openId, SPUtil.getInt(this@LoginActivity, "Profession", 1), nickName, figureurl, gender, 1, "")).subscribe({
+                        if (it.register) {
+                            ToastUtils.showLongToast(applicationContext, "登入成功")
+                            startActivity(MainActivity::class.java, true)
+                        } else {
+                            ToastUtils.showLongToast(applicationContext, "登入成功")
+                            startActivity(ChooseJobActivity::class.java, true)
+                        }
+                        finish()
 
                     }, {
-                        ToastUtils.showLongToast(applicationContext,it.message.toString())
+                        ToastUtils.showLongToast(applicationContext, it.message.toString())
                     })
                 } catch (e: Exception) {
 
@@ -201,4 +249,6 @@ class LoginActivity : BaseActivity() {
     override fun isTranslucent(): Boolean {
         return true
     }
+
+
 }
