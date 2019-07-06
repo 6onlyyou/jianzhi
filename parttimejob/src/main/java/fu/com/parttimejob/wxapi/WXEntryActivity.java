@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.luck.picture.lib.rxbus2.RxBus;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -53,7 +54,8 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
             Log.e(TAG + "AAAA", resp.code);
             if (resp.errCode == 0) {
                 if (resp.state.equals("wechat_login")) {
-
+                    RxBus.getDefault().post(resp);
+                    finish();
                 }
             }
         }

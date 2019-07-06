@@ -1,12 +1,15 @@
 package fu.com.parttimejob.retrofitNet;
 
 import fu.com.parttimejob.bean.GetLabelsBean;
+import fu.com.parttimejob.bean.GetTokenEntity;
 import fu.com.parttimejob.bean.LoginBean;
 import fu.com.parttimejob.bean.RegisterBean;
 import fu.com.parttimejob.bean.ResponseBean;
+import fu.com.parttimejob.bean.WXInfoEntity;
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
@@ -29,6 +32,28 @@ public interface ApiService {
      */
     @POST("/appservice/app/alluser/register")
     Observable<ResponseBean<RegisterBean>> register(@Query("thirdAccount") String thirdAccount, @Query("identyType") int identyType, @Query("nickName") String nickName, @Query("headImg") String headImg, @Query("sex") String sex, @Query("loginType") int loginType, @Query("password") String password);
+
+
+    /**
+     * 获得access_token和openid
+     *
+     * @param appId
+     * @param secret
+     * @param code
+     * @param authorization_code
+     * @return
+     */
+    @GET("https://api.weixin.qq.com/sns/oauth2/access_token")
+    Observable<GetTokenEntity> getToken(@Query("appid") String appId, @Query("secret") String secret, @Query("code") String code, @Query("grant_type") String authorization_code);
+
+    /**
+     * 微信獲取用戶信息
+     * @param accessToken
+     * @param openid
+     * @return
+     */
+    @GET("https://api.weixin.qq.com/sns/userinfo")
+    Observable<WXInfoEntity> getWXInfo(@Query("access_token") String accessToken, @Query("openid") String openid);
     /**
      * 登入接口
      *
