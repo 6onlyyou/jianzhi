@@ -71,7 +71,7 @@ public interface ApiService {
      *
      * @return
      */
-    @POST("/app/alluser/getUserInfo")
+    @POST("/appservice/app/alluser/getUserInfo")
     Observable<ResponseBean<String>> getUserInfo(@Query("thirdAccount") String thirdAccount, @Query("identyType") String identyType, @Query("longitude") String longitude, @Query("latitude") String latitude, @Query("city") String city, @Query("token") String token);
 
 }

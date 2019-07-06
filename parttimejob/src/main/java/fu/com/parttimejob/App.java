@@ -7,6 +7,7 @@ import android.support.multidex.MultiDexApplication;
 
 import com.heixiu.errand.net.OkHttpFactory;
 import com.heixiu.errand.net.RetrofitFactory;
+import com.mob.MobSDK;
 import com.tencent.tauth.Tencent;
 
 import io.rong.imkit.RongIM;
@@ -29,6 +30,7 @@ public class App extends MultiDexApplication {
         OkHttpFactory.INSTANCE.init(this);
         RetrofitFactory.INSTANCE.init();
         RongIM.init(this);
+        MobSDK.init(this);
     }
 
     @Override

@@ -25,5 +25,5 @@ package fu.com.parttimejob.retrofitNet;
  * ================================================
  */
 public class Urls {
-    public static final String SERVER = "http://www.jjqhkj.com/appservice";
+    public static final String SERVER = "http://www.jjqhkj.com";
 }
