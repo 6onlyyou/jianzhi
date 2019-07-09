@@ -23,7 +23,7 @@ class RegisterActivity : BaseActivity() {
         override fun handleMessage(msg: Message) {
             super.handleMessage(msg)
             if (msg.what == 1) {
-                showToast("验证码错误：")
+                showToast("验证码错误："+msg.obj)
             } else if (msg.what == 2) {
                 showToast("获取验证码失败")
             } else if (msg.what == 4) {
@@ -55,7 +55,7 @@ class RegisterActivity : BaseActivity() {
 
         registerTv.setOnClickListener({
             if (judgeIsCanRegister()) {
-                submitCode("86", phoneEt.text.toString(), getPhoneCodeTv.text.toString())
+                submitCode("86", phoneEt.text.toString(), smsCodeEt.text.toString())
             }
         })
     }
