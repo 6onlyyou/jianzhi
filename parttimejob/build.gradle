@@ -1,4 +1,12 @@
 apply plugin: 'com.android.application'
+// 添加插件
+apply plugin: 'com.mob.sdk'
+
+MobSDK {
+    appKey "2b985003e7962"
+    appSecret "e049e7eb057d7d6616d8f37474299082"
+    SMSSDK {}
+}
 
 android {
     compileSdkVersion 28
@@ -25,6 +33,17 @@ android {
     }
     dataBinding {
         enabled = true
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+}
+
+repositories {
+    flatDir {
+        dirs 'libs'
     }
 }
 
@@ -59,6 +78,7 @@ dependencies {
     implementation 'com.amap.api:location:latest.integration'
     implementation files('libs/open_sdk_r6019_lite.jar')
     implementation 'liji.library.dev:citypickerview:1.1.0'
+    implementation(name: 'alipaySdk-15.5.7-20181023110917', ext: 'aar')
 }
 
 apply plugin: 'kotlin-android'
