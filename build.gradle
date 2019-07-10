@@ -6,15 +6,16 @@ buildscript {
         google()
         jcenter()
         mavenCentral()
-        maven { url "https://jitpack.io" }
-        jcenter(){url 'http://jcenter.bintray.com/'}
+        maven{ url "https://jitpack.io" }
+        maven {
+            url "http://mvn.mob.com/android"
+        }
     }
-    dependencies {
+        dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.mob.sdk:MobSDK:+'
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
     }
 }
 
@@ -22,7 +23,6 @@ allprojects {
     repositories {
         google()
         jcenter()
-        jcenter(){url 'http://jcenter.bintray.com/'}
         mavenCentral()
         maven { url "https://jitpack.io" }
 

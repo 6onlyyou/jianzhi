@@ -22,7 +22,6 @@ import fu.com.parttimejob.utils.SPUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
-import io.rong.imlib.statistics.UserData.gender
 import kotlinx.android.synthetic.main.activity_login.*
 import org.json.JSONObject
 
@@ -86,7 +85,6 @@ class LoginActivity : BaseActivity() {
     override fun initViewClick() {
         back.setOnClickListener {
             startActivity(ChooseProfessionActivity::class.java, false)
-            finish()
         }
         forgetPwd.setOnClickListener({
             startActivity(ChangePwdActivity::class.java, false)

@@ -6,10 +6,14 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import com.amap.api.location.AMapLocation
 import com.amap.api.location.AMapLocationListener
+import com.heixiu.errand.net.RetrofitFactory
+import com.lljjcoder.citylist.Toast.ToastUtils
 import fu.com.parttimejob.R
 import fu.com.parttimejob.base.BaseActivity
+import fu.com.parttimejob.retrofitNet.RxUtils
 import fu.com.parttimejob.utils.AppUtils
 import fu.com.parttimejob.utils.LocationUtils
+import fu.com.parttimejob.utils.SPUtil
 import kotlinx.android.synthetic.main.activity_splash.*
 import java.util.*
 
@@ -27,7 +31,21 @@ class SplashActivity : BaseActivity() {
                 runOnUiThread {
                     time_txt.text = time--.toString()
                     if (time == -1) {
-                        startActivity(ChooseProfessionActivity::class.java, true)
+                        if(SPUtil.getString(this@SplashActivity,"thirdAccount","").equals("")){
+                            startActivity(ChooseProfessionActivity::class.java, true)
+                        }else{
+                            RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().getUserInfo(SPUtil.getString(this@SplashActivity,"thirdAccount",""), SPUtil.getInt(this@SplashActivity, "Profession", 1), SPUtil.getString(this@SplashActivity, "longitude", ""), SPUtil.getString(this@SplashActivity, "latitude", ""),SPUtil.getString(this@SplashActivity, "city", ""),SPUtil.getString(this@SplashActivity, "token", ""))).subscribe({
+                                SPUtil.putInt(this@SplashActivity,"loginType",it.loginType)
+                                SPUtil.putString(this@SplashActivity,"registrationDate",it.registrationDate)
+                                SPUtil.putString(this@SplashActivity,"city",it.city)
+                                SPUtil.putString(this@SplashActivity,"longitude",it.longitude)
+                                SPUtil.putString(this@SplashActivity,"latitude",it.latitude)
+                                startActivity(MainActivity::class.java, true)
+                            }, {
+                                ToastUtils.showLongToast(applicationContext, it.message.toString())
+                            })
+
+                        }
                     }
                 }
             }

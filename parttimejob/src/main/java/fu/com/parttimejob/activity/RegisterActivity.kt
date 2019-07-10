@@ -25,7 +25,7 @@ class RegisterActivity : BaseActivity() {
             if (msg.what == 1) {
                 showToast("验证码错误："+msg.obj)
             } else if (msg.what == 2) {
-                showToast("获取验证码失败")
+                showToast("获取验证码失败"+msg.obj)
             } else if (msg.what == 4) {
                 SPUtil.putString(applicationContext, "ronyuntoken", msg.obj.toString())
             } else if (msg.what == 5) {
@@ -76,8 +76,10 @@ class RegisterActivity : BaseActivity() {
                         // 请注意，此时只是完成了发送验证码的请求，验证码短信还需要几秒钟之后才送达
                     }
                 } else {
-                    val s = data.toString()
-                    handler.sendEmptyMessage(2);
+                    var message: Message = Message()
+                    message.obj = data.toString()
+                    message.what = 2
+                    handler.sendMessage(message);
                 }
             }
         })
@@ -96,8 +98,9 @@ class RegisterActivity : BaseActivity() {
                             if (it.register) {
                                 ToastUtils.showLongToast(applicationContext, it.tip)
                             } else {
+                                SPUtil.putString(this@RegisterActivity,"thirdAccount",phoneEt.text.toString())
                                 ToastUtils.showLongToast(applicationContext, "注册成功")
-                                startActivity(MainActivity::class.java, true)
+                                startActivity(LoginActivity::class.java, true)
                                 finish()
                             }
                         }, {

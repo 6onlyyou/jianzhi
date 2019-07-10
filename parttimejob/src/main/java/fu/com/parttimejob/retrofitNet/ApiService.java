@@ -5,6 +5,7 @@ import fu.com.parttimejob.bean.GetTokenEntity;
 import fu.com.parttimejob.bean.LoginBean;
 import fu.com.parttimejob.bean.RegisterBean;
 import fu.com.parttimejob.bean.ResponseBean;
+import fu.com.parttimejob.bean.UserInfoBean;
 import fu.com.parttimejob.bean.WXInfoEntity;
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
@@ -97,6 +98,6 @@ public interface ApiService {
      * @return
      */
     @POST("/appservice/app/alluser/getUserInfo")
-    Observable<ResponseBean<String>> getUserInfo(@Query("thirdAccount") String thirdAccount, @Query("identyType") String identyType, @Query("longitude") String longitude, @Query("latitude") String latitude, @Query("city") String city, @Query("token") String token);
+    Observable<ResponseBean<UserInfoBean>> getUserInfo(@Query("thirdAccount") String thirdAccount, @Query("identyType") int identyType, @Query("longitude") String longitude, @Query("latitude") String latitude, @Query("city") String city, @Query("token") String token);
 
 }
