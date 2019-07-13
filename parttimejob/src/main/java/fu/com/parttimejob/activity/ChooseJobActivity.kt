@@ -8,6 +8,7 @@ import fu.com.parttimejob.R
 import fu.com.parttimejob.adapter.ChooseDreamJobListAdapter
 import fu.com.parttimejob.base.BaseActivity
 import fu.com.parttimejob.base.baseadapter.BaseRecyclerModel
+import fu.com.parttimejob.bean.GetLabelsBean
 import fu.com.parttimejob.retrofitNet.RxUtils
 import kotlinx.android.synthetic.main.activity_choose_job.*
 
@@ -21,15 +22,19 @@ class ChooseJobActivity : BaseActivity() {
         adapter = ChooseDreamJobListAdapter()
         dreamJobList.layoutManager = GridLayoutManager(this, 4) as RecyclerView.LayoutManager?
         dreamJobList.adapter = adapter
-        var strarr = "".split(",")
+        adapter.setOnItemClickListener { view, t, position -> adapter.changeSelectPosition(position) }
+
+
+        var strarr: List<String>
         var list: ArrayList<BaseRecyclerModel> = ArrayList()
         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().getLabel()).subscribe({
+
             if (it.labels != null && !it.labels.equals("")) {
                 strarr = it.labels.substring(0, it.labels.length).split(",")
-                var baseRecyclerModel: BaseRecyclerModel = BaseRecyclerModel()
                 var index = 0;
                 while (index < strarr.size) {
-                    baseRecyclerModel!!.viewTypeSt=strarr[index]
+                    var baseRecyclerModel: GetLabelsBean = GetLabelsBean()
+                    baseRecyclerModel.labels = (strarr[index])
                     index++//自增
                     list.add(baseRecyclerModel)
                 }

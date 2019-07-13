@@ -79,6 +79,7 @@ dependencies {
     implementation files('libs/open_sdk_r6019_lite.jar')
     implementation 'liji.library.dev:citypickerview:1.1.0'
     implementation(name: 'alipaySdk-15.5.7-20181023110917', ext: 'aar')
+    implementation 'com.longsh:OptionFrame:1.0.0'
 }
 
 apply plugin: 'kotlin-android'
