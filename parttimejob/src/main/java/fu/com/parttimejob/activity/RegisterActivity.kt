@@ -64,7 +64,6 @@ class RegisterActivity : BaseActivity() {
         sendCode("86", phoneEt.text.toString())
     }
 
-    var phonenumber = ""
     // 请求验证码，其中country表示国家代码，如“86”；phone表示手机号码，如“13800138000”
     fun sendCode(country: String, phone: String) {
         // 注册一个事件回调，用于处理发送验证码操作的结果
@@ -100,7 +99,7 @@ class RegisterActivity : BaseActivity() {
                             } else {
                                 SPUtil.putString(this@RegisterActivity,"thirdAccount",phoneEt.text.toString())
                                 ToastUtils.showLongToast(applicationContext, "注册成功")
-                                startActivity(LoginActivity::class.java, true)
+                                startActivity(ChooseJobActivity::class.java, true)
                                 finish()
                             }
                         }, {

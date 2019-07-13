@@ -1,8 +1,11 @@
 package fu.com.parttimejob.adapter;
 
+import android.content.Intent;
+import android.view.View;
 import android.view.ViewGroup;
 
 import fu.com.parttimejob.R;
+import fu.com.parttimejob.activity.JobInfoActivity;
 import fu.com.parttimejob.base.baseadapter.BaseRecyclerModel;
 import fu.com.parttimejob.base.baseadapter.BaseRecyclerViewAdapter;
 import fu.com.parttimejob.base.baseadapter.BaseRecyclerViewHolder;
@@ -24,7 +27,13 @@ public class HomeJobListAdapter extends BaseRecyclerViewAdapter {
 
         @Override
         public void onBindViewHolder(BaseRecyclerModel object, int position) {
-
+            binding.goJobinfo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(view.getContext(), JobInfoActivity.class);
+                    view.getContext().startActivity(intent);
+                }
+            });
 //            TouBaoInfoBean touBaoInfoBean = (TouBaoInfoBean) object;
 //            binding.toubaoId.setText("卡号:     " + touBaoInfoBean.getInsuranceNo() + "");
 //            binding.toubaoMoney.setText("密码:     " + touBaoInfoBean.getInterestMoney() + "");

@@ -8,6 +8,7 @@
         app:cardCornerRadius="4dp">
 
         <LinearLayout
+            android:id="@+id/go_jobinfo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"

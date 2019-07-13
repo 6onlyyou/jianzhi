@@ -59,8 +59,7 @@ class HomeFragment : Fragment() {
 
 
         exchange_shop_iv.setOnClickListener({
-//            startActivity(Intent(context, ExchangeShopActivity::class.java))
-            startActivity(Intent(context, CommunicateHistoryActivity::class.java))
+            startActivity(Intent(context, ExchangeShopActivity::class.java))
         })
 
         brief_iv.setOnClickListener({

@@ -24,16 +24,15 @@ class ChooseJobActivity : BaseActivity() {
         var strarr = "".split(",")
         var list: ArrayList<BaseRecyclerModel> = ArrayList()
         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().getLabel()).subscribe({
-
             if (it.labels != null && !it.labels.equals("")) {
                 strarr = it.labels.substring(0, it.labels.length).split(",")
                 var baseRecyclerModel: BaseRecyclerModel = BaseRecyclerModel()
                 var index = 0;
-                while (index <= strarr.size) {
-                    baseRecyclerModel!!.setViewTypeSt(strarr[index])
+                while (index < strarr.size) {
+                    baseRecyclerModel!!.viewTypeSt=strarr[index]
                     index++//自增
+                    list.add(baseRecyclerModel)
                 }
-                list.add(BaseRecyclerModel())
                 adapter.addAll(list)
 
             }

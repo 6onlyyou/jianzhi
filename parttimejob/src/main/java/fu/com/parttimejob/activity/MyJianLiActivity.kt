@@ -1,8 +1,10 @@
 package fu.com.parttimejob.activity
 
+import android.content.Intent
 import android.os.Bundle
 import fu.com.parttimejob.R
 import fu.com.parttimejob.base.BaseActivity
+import kotlinx.android.synthetic.main.activity_my_jian_li.*
 
 class MyJianLiActivity : BaseActivity() {
     override fun getLayoutId(): Int {
@@ -13,6 +15,9 @@ class MyJianLiActivity : BaseActivity() {
     }
 
     override fun initViewClick() {
+        back.setOnClickListener {
+            finish()
+        }
     }
 
 

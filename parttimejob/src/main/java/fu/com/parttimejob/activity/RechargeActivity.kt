@@ -12,6 +12,7 @@ import fu.com.parttimejob.base.BaseActivity
 import fu.com.parttimejob.bean.WXPayEntity
 import fu.com.parttimejob.utils.PayResult
 import fu.com.parttimejob.utils.SPContants
+import kotlinx.android.synthetic.main.activity_recharge.*
 
 /**
  * 充值提现
@@ -25,6 +26,9 @@ class RechargeActivity : BaseActivity() {
     }
 
     override fun initViewClick() {
+        back.setOnClickListener {
+            finish()
+        }
     }
 
     fun startWxPay(entity: WXPayEntity) {

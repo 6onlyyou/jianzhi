@@ -84,7 +84,7 @@ class LoginActivity : BaseActivity() {
 
     override fun initViewClick() {
         back.setOnClickListener {
-            startActivity(ChooseProfessionActivity::class.java, false)
+            startActivity(ChooseProfessionActivity::class.java, true)
         }
         forgetPwd.setOnClickListener({
             startActivity(ChangePwdActivity::class.java, false)
@@ -213,7 +213,8 @@ class LoginActivity : BaseActivity() {
 
     private fun startPwdLogin() {
         showToast("登录成功")
-        startActivity(MainActivity::class.java, true)
+        startActivity(ChooseJobActivity::class.java, true)
+//        startActivity(MainActivity::class.java, true)
         finish()
     }
 

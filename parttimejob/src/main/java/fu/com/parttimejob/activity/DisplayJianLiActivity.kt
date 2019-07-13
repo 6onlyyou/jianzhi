@@ -8,6 +8,8 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.heixiu.errand.net.RetrofitFactory
+import com.lljjcoder.citylist.Toast.ToastUtils
+import com.longsh.optionframelibrary.OptionCenterDialog
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureConfig
 import com.luck.picture.lib.config.PictureMimeType
@@ -51,9 +53,9 @@ class DisplayJianLiActivity : BaseActivity() {
             }
             val requestBody: RequestBody = builder.build();
             RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().createPR(SPUtil.getString(this, "thirdAccount", "111"), jianliname.text.toString(), jianlisex.text.toString(),jianliage.text.toString(), jianlijianjie.text.toString(),requestBody)).subscribe(Consumer<String> {
-
+                ToastUtils.showLongToast(applicationContext, it.toString())
             }, Consumer<Throwable> {
-
+                ToastUtils.showLongToast(applicationContext, it.message.toString())
             })
         }
     }
@@ -61,6 +63,20 @@ class DisplayJianLiActivity : BaseActivity() {
 
 private var themeId: Int = 0
 override fun initViewClick() {
+    jianlisex.setOnClickListener {
+        val list = java.util.ArrayList<String>()
+        list.add("男")
+        list.add("女")
+        val optionCenterDialog = OptionCenterDialog()
+        optionCenterDialog.show(this, list)
+        optionCenterDialog.setItemClickListener { parent, view, position, id ->
+                if(position == 0){
+                    jianlisex.setText("男")
+                }else if(position == 1){
+                    jianlisex.setText("女")
+                }
+            optionCenterDialog.dismiss() }
+    }
     themeId = R.style.picture_default_style
     val manager = FullyGridLayoutManager(this@DisplayJianLiActivity, 1, GridLayoutManager.VERTICAL, false)
     recyclerView.setLayoutManager(manager)
@@ -92,24 +108,24 @@ override fun initViewClick() {
     })
 
     // 清空图片缓存，包括裁剪、压缩后的图片 注意:必须要在上传完成后调用 必须要获取权限
-    val permissions = RxPermissions(this)
-    permissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(object : Observer<Boolean> {
-        override fun onNext(aBoolean: Boolean) {
-            if (aBoolean!!) {
-                PictureFileUtils.deleteCacheDirFile(this@DisplayJianLiActivity)
-            } else {
-                Toast.makeText(this@DisplayJianLiActivity,
-                        getString(R.string.picture_jurisdiction), Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        override fun onSubscribe(d: Disposable) {}
-
-
-        override fun onError(e: Throwable) {}
-
-        override fun onComplete() {}
-    })
+//    val permissions = RxPermissions(this)
+//    permissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(object : Observer<Boolean> {
+//        override fun onNext(aBoolean: Boolean) {
+//            if (aBoolean!!) {
+//                PictureFileUtils.deleteCacheDirFile(this@DisplayJianLiActivity)
+//            } else {
+//                Toast.makeText(this@DisplayJianLiActivity,
+//                        getString(R.string.picture_jurisdiction), Toast.LENGTH_SHORT).show()
+//            }
+//        }
+//
+//        override fun onSubscribe(d: Disposable) {}
+//
+//
+//        override fun onError(e: Throwable) {}
+//
+//        override fun onComplete() {}
+//    })
 }
 
 private val onAddPicClickListener = object : GridImageAdapter.onAddPicClickListener {

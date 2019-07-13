@@ -25,6 +25,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(getLayoutId());
         initViewParams();
         initViewClick();
+        ActivityManager.addActivity(this);
     }
 
     public void startActivity(Class activity, boolean isFinish) {

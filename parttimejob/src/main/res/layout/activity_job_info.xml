@@ -92,6 +92,7 @@
                     android:textSize="12sp" />
 
                 <TextView
+                    android:id="@+id/ji_gouton"
                     android:layout_width="85dp"
                     android:layout_height="27dp"
                     android:layout_alignParentRight="true"

@@ -24,7 +24,7 @@ public class ChooseDreamJobListAdapter extends BaseRecyclerViewAdapter {
 
         @Override
         public void onBindViewHolder(BaseRecyclerModel object, int position) {
-            binding.jobName.setText(object.getViewTypeSt());
+            binding.jobName.setText(object.viewTypeSt);
         }
     }
 }

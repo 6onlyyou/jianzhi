@@ -55,23 +55,37 @@ class SplashActivity : BaseActivity() {
         app_version_txt.text = AppUtils.getAppVersion(this)
 
         LocationUtils().getLocation(this, object : AMapLocationListener {
-            override fun onLocationChanged(p0: AMapLocation?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            override fun onLocationChanged(amapLocation: AMapLocation?) {
+                SPUtil.putString(this@SplashActivity,"longitude", amapLocation!!.getLongitude().toString())
+                SPUtil.putString(this@SplashActivity,"latitude", amapLocation!!.getLatitude().toString())
+                SPUtil.putString(this@SplashActivity,"city",amapLocation.city)
             }
         })
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             //申请WRITE_EXTERNAL_STORAGE权限
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.READ_EXTERNAL_STORAGE
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION
             ), 1)//自定义的code
         }
     }
 
     override fun initViewClick() {
         go_experience_txt.setOnClickListener {
-            startActivity(ChooseProfessionActivity::class.java, true)
+            if(SPUtil.getString(this@SplashActivity,"thirdAccount","").equals("")){
+                startActivity(ChooseProfessionActivity::class.java, true)
+            }else{
+                RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().getUserInfo(SPUtil.getString(this@SplashActivity,"thirdAccount",""), SPUtil.getInt(this@SplashActivity, "Profession", 1), SPUtil.getString(this@SplashActivity, "longitude", ""), SPUtil.getString(this@SplashActivity, "latitude", ""),SPUtil.getString(this@SplashActivity, "city", ""),SPUtil.getString(this@SplashActivity, "token", ""))).subscribe({
+                    SPUtil.putInt(this@SplashActivity,"loginType",it.loginType)
+                    SPUtil.putString(this@SplashActivity,"registrationDate",it.registrationDate)
+                    SPUtil.putString(this@SplashActivity,"city",it.city)
+                    SPUtil.putString(this@SplashActivity,"longitude",it.longitude)
+                    SPUtil.putString(this@SplashActivity,"latitude",it.latitude)
+                    startActivity(MainActivity::class.java, true)
+                }, {
+                    ToastUtils.showLongToast(applicationContext, it.message.toString())
+                })
+            }
         }
     }
 

@@ -5,6 +5,7 @@ import fu.com.parttimejob.bean.GetTokenEntity;
 import fu.com.parttimejob.bean.LoginBean;
 import fu.com.parttimejob.bean.RegisterBean;
 import fu.com.parttimejob.bean.ResponseBean;
+import fu.com.parttimejob.bean.RunTokenBean;
 import fu.com.parttimejob.bean.UserInfoBean;
 import fu.com.parttimejob.bean.WXInfoEntity;
 import io.reactivex.Observable;
@@ -91,7 +92,13 @@ public interface ApiService {
      */
     @POST("/appservice/app/jobhunter/customizeLabel")
     Observable<ResponseBean<String>> customizeLabel(@Query("thirdAccount") String thirdAccount, @Query("labelName") String labelName);
-
+    /**
+     * 获得融云token
+     *
+     * @return
+     */
+    @POST("/appservice/app/alluser/getCloudToken")
+    Observable<ResponseBean<RunTokenBean>> getCloudToken(@Query("thirdAccount") String thirdAccount);
     /**
      * 查询个人信息
      *

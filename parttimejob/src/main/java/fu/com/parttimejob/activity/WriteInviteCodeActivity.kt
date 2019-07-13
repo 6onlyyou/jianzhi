@@ -2,6 +2,7 @@ package fu.com.parttimejob.activity
 
 import fu.com.parttimejob.R
 import fu.com.parttimejob.base.BaseActivity
+import kotlinx.android.synthetic.main.activity_write_invite_code.*
 
 class WriteInviteCodeActivity : BaseActivity() {
     override fun getLayoutId(): Int {
@@ -12,6 +13,9 @@ class WriteInviteCodeActivity : BaseActivity() {
     }
 
     override fun initViewClick() {
+        back.setOnClickListener {
+            finish()
+        }
     }
 
 }
