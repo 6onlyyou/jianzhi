@@ -1,0 +1,90 @@
+package fu.com.parttimejob.bean;
+
+/**
+ * Description:
+ * Data：2019/7/14-23:11
+ * Author: fushuaige
+ */
+public class SameCityBean {
+    private int id;
+    private String companyName;
+    private String label;
+    private int numberOfVirtualCoins;
+    private int recruitingNumbers;
+    private int redEnvelopeNumber;
+    private String salaryAndWelfare;
+    private String contactAddress;
+    private String businessLicenseImg;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public int getNumberOfVirtualCoins() {
+        return numberOfVirtualCoins;
+    }
+
+    public void setNumberOfVirtualCoins(int numberOfVirtualCoins) {
+        this.numberOfVirtualCoins = numberOfVirtualCoins;
+    }
+
+    public int getRecruitingNumbers() {
+        return recruitingNumbers;
+    }
+
+    public void setRecruitingNumbers(int recruitingNumbers) {
+        this.recruitingNumbers = recruitingNumbers;
+    }
+
+    public int getRedEnvelopeNumber() {
+        return redEnvelopeNumber;
+    }
+
+    public void setRedEnvelopeNumber(int redEnvelopeNumber) {
+        this.redEnvelopeNumber = redEnvelopeNumber;
+    }
+
+    public String getSalaryAndWelfare() {
+        return salaryAndWelfare;
+    }
+
+    public void setSalaryAndWelfare(String salaryAndWelfare) {
+        this.salaryAndWelfare = salaryAndWelfare;
+    }
+
+    public String getContactAddress() {
+        return contactAddress;
+    }
+
+    public void setContactAddress(String contactAddress) {
+        this.contactAddress = contactAddress;
+    }
+
+    public String getBusinessLicenseImg() {
+        return businessLicenseImg;
+    }
+
+    public void setBusinessLicenseImg(String businessLicenseImg) {
+        this.businessLicenseImg = businessLicenseImg;
+    }
+}

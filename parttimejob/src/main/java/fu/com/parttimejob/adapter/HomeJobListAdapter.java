@@ -9,6 +9,7 @@ import fu.com.parttimejob.activity.JobInfoActivity;
 import fu.com.parttimejob.base.baseadapter.BaseRecyclerModel;
 import fu.com.parttimejob.base.baseadapter.BaseRecyclerViewAdapter;
 import fu.com.parttimejob.base.baseadapter.BaseRecyclerViewHolder;
+import fu.com.parttimejob.bean.JobInfoBean;
 import fu.com.parttimejob.databinding.ItemHomeJobBinding;
 
 
@@ -27,6 +28,10 @@ public class HomeJobListAdapter extends BaseRecyclerViewAdapter {
 
         @Override
         public void onBindViewHolder(BaseRecyclerModel object, int position) {
+            JobInfoBean jobInfoBean = (JobInfoBean)object;
+            binding.jobName.setText(jobInfoBean.getCompanyName());
+            binding.jobReward.setText("赠送"+jobInfoBean.getNumberOfVirtualCoins()+"金币");
+            binding.jobSalaryTv.setText(jobInfoBean.getSalaryAndWelfare()+"");
             binding.goJobinfo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

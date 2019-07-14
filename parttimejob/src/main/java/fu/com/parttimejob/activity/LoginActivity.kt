@@ -70,9 +70,11 @@ class LoginActivity : BaseActivity() {
                 wxInfoEntity.getmNickname(), wxInfoEntity.getmHeadimgurl(), wxInfoEntity.getmSex(), 1, "")).subscribe({
             if (it.register) {
                 ToastUtils.showLongToast(applicationContext, "登入成功")
+                SPUtil.putString(applicationContext,"thirdAccount",wxInfoEntity!!.getmOpenid())
                 startActivity(MainActivity::class.java, true)
             } else {
                 ToastUtils.showLongToast(applicationContext, "登入成功")
+                SPUtil.putString(applicationContext,"thirdAccount",wxInfoEntity!!.getmOpenid())
                 startActivity(ChooseJobActivity::class.java, true)
             }
             finish()
@@ -106,6 +108,7 @@ class LoginActivity : BaseActivity() {
             if (judgeIsCanLogin()) {
                 RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().login(loginPhoneEt.text.toString(), loginPwdEt.text.toString())).subscribe({
                     ToastUtils.showLongToast(applicationContext, "登入成功")
+                    SPUtil.putString(applicationContext,"thirdAccount",loginPhoneEt.text.toString())
                     SPUtil.putString(this, "token", it.token.toString())
                     startPwdLogin()
                 }, {
@@ -186,9 +189,11 @@ class LoginActivity : BaseActivity() {
                     val city = jo.getString("city")
                     RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().register(mTencent!!.openId, SPUtil.getInt(this@LoginActivity, "Profession", 1), nickName, figureurl, gender, 1, "")).subscribe({
                         if (it.register) {
+                            SPUtil.putString(applicationContext,"thirdAccount",mTencent!!.openId)
                             ToastUtils.showLongToast(applicationContext, "登入成功")
                             startActivity(MainActivity::class.java, true)
                         } else {
+                            SPUtil.putString(applicationContext,"thirdAccount",mTencent!!.openId)
                             ToastUtils.showLongToast(applicationContext, "登入成功")
                             startActivity(ChooseJobActivity::class.java, true)
                         }
@@ -212,7 +217,6 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun startPwdLogin() {
-        showToast("登录成功")
         startActivity(ChooseJobActivity::class.java, true)
 //        startActivity(MainActivity::class.java, true)
         finish()

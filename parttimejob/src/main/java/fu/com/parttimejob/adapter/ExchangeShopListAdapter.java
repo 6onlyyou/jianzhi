@@ -1,12 +1,16 @@
 package fu.com.parttimejob.adapter;
 
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import fu.com.parttimejob.R;
 import fu.com.parttimejob.base.baseadapter.BaseRecyclerModel;
 import fu.com.parttimejob.base.baseadapter.BaseRecyclerViewAdapter;
 import fu.com.parttimejob.base.baseadapter.BaseRecyclerViewHolder;
+import fu.com.parttimejob.bean.ExchangeBean;
 import fu.com.parttimejob.databinding.ItemExchangeShopBinding;
+import fu.com.parttimejob.utils.GlideUtil;
 
 
 public class ExchangeShopListAdapter extends BaseRecyclerViewAdapter {
@@ -24,10 +28,16 @@ public class ExchangeShopListAdapter extends BaseRecyclerViewAdapter {
 
         @Override
         public void onBindViewHolder(BaseRecyclerModel object, int position) {
-//            TouBaoInfoBean touBaoInfoBean = (TouBaoInfoBean) object;
-//            binding.toubaoId.setText("卡号:     " + touBaoInfoBean.getInsuranceNo() + "");
-//            binding.toubaoMoney.setText("密码:     " + touBaoInfoBean.getInterestMoney() + "");
-//            binding.toubaoTime.setText("发放日期:     " + touBaoInfoBean.getGiveTime()+"");
+            ExchangeBean exchangeBean = (ExchangeBean) object;
+            GlideUtil.load(binding.getRoot().getContext(), exchangeBean.getGoodsImg(), (ImageView)binding.skuImgIv);
+            binding.shopName.setText(exchangeBean.getGoodsName());
+            binding.zan.setText("赠送"+exchangeBean.getGoodsPrice()+"金币");
+            binding.exchangeBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+//                    startActivity(Intent(context, JobActivity::class.java))
+                }
+            });
         }
     }
 }

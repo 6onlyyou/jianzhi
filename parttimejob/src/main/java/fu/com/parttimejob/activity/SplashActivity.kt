@@ -53,7 +53,6 @@ class SplashActivity : BaseActivity() {
         timer.schedule(timerTask, 1000, 1000)
 
         app_version_txt.text = AppUtils.getAppVersion(this)
-
         LocationUtils().getLocation(this, object : AMapLocationListener {
             override fun onLocationChanged(amapLocation: AMapLocation?) {
                 SPUtil.putString(this@SplashActivity,"longitude", amapLocation!!.getLongitude().toString())

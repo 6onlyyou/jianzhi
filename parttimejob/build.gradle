@@ -1,12 +1,6 @@
 apply plugin: 'com.android.application'
-// 添加插件
-apply plugin: 'com.mob.sdk'
+apply plugin: "com.mob.sdk"
 
-MobSDK {
-    appKey "2b985003e7962"
-    appSecret "e049e7eb057d7d6616d8f37474299082"
-    SMSSDK {}
-}
 
 android {
     compileSdkVersion 28
@@ -38,6 +32,13 @@ android {
         main {
             jniLibs.srcDirs = ['libs']
         }
+    }
+}
+MobSDK {
+    appKey "2b985003e7962"
+    appSecret "e049e7eb057d7d6616d8f37474299082"
+    SMSSDK {
+        gui false
     }
 }
 
@@ -79,6 +80,9 @@ dependencies {
     implementation files('libs/open_sdk_r6019_lite.jar')
     implementation 'liji.library.dev:citypickerview:1.1.0'
     implementation(name: 'alipaySdk-15.5.7-20181023110917', ext: 'aar')
+    compile 'com.longsh:OptionFrame:1.0.0'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'jp.wasabeef:glide-transformations:2.0.0'
 }
 
 apply plugin: 'kotlin-android'
