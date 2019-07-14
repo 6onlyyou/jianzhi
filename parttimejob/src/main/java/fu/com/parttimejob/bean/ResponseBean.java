@@ -26,7 +26,6 @@ public class ResponseBean<T> implements Serializable {
 
     private static final long serialVersionUID = 5213230387175987834L;
 
-    public int code;
     public String msg;
     public T data;
     public String state;
@@ -39,13 +38,6 @@ public class ResponseBean<T> implements Serializable {
         this.state = state;
     }
 
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
 
     public String getMsg() {
         return msg;
@@ -66,7 +58,6 @@ public class ResponseBean<T> implements Serializable {
     @Override
     public String toString() {
         return "LzyResponse{\n" +//
-               "\tcode=" + code + "\n" +//
                "\tmsg='" + msg + "\'\n" +//
                "\tdata=" + data + "\n" +//
                '}';

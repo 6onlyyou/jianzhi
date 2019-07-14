@@ -11,6 +11,9 @@ import fu.com.parttimejob.retrofitNet.RxUtils
 import fu.com.parttimejob.utils.SPUtil
 import kotlinx.android.synthetic.main.activity_my_jian_li.*
 
+/**
+ * 我的简历/求职者简历
+ */
 class MyJianLiActivity : BaseActivity() {
     override fun getLayoutId(): Int {
         return R.layout.activity_my_jian_li
