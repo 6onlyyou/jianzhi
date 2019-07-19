@@ -73,7 +73,7 @@ public class RadDialog extends Dialog implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dialog_job);
+        setContentView(R.layout.dialog_rad);
         setCanceledOnTouchOutside(true);
 
         initView();

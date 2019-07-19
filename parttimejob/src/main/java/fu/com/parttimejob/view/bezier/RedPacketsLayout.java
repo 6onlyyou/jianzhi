@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
@@ -16,11 +17,21 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.heixiu.errand.net.RetrofitFactory;
+import com.lljjcoder.citylist.Toast.ToastUtils;
+
 import java.util.Random;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import fu.com.parttimejob.R;
+import fu.com.parttimejob.activity.JobInfoActivity;
+import fu.com.parttimejob.bean.SameCityBean;
+import fu.com.parttimejob.dialog.HintDialog;
 import fu.com.parttimejob.dialog.JobDialog;
+import fu.com.parttimejob.dialog.RadDialog;
+import fu.com.parttimejob.retrofitNet.RxUtils;
+import fu.com.parttimejob.utils.SPUtil;
+import io.reactivex.functions.Consumer;
 
 /**
  * 自定义布局通过 属性动画(贝塞尔曲线)实现红包
@@ -28,7 +39,7 @@ import fu.com.parttimejob.dialog.JobDialog;
  * create by yao.cui at 2016/11/28
  */
 public class RedPacketsLayout extends RelativeLayout {
-
+    private OnCloseListener listener;
     private int dHeight;//红包图片高度
     private int dWidth;//红包图片宽度
 
@@ -56,6 +67,9 @@ public class RedPacketsLayout extends RelativeLayout {
     };
 
 
+    public interface OnCloseListener {
+        void onClick(View view);
+    }
 
     public RedPacketsLayout(Context context) {
         super(context);
@@ -103,17 +117,54 @@ public class RedPacketsLayout extends RelativeLayout {
                 @Override
                 public void onClick(View view) {
                     removeView(view);
+                    Random rdm = new Random();
+//                    if(rdm.nextBoolean()){
+//                        new JobDialog(getContext(), R.style.dialog, "招聘内容大撒大撒大撒大苏打大撒大撒撒大苏打", new  JobDialog.OnCloseListener (){
+//                            @Override
+//                            public void onClick(Dialog dialog, boolean confirm) {
+//                                Intent intent = new Intent(getContext(), JobInfoActivity.class);
+//                                getContext().startActivity(intent);
+//                                dialog.dismiss();
+//                            }
+//
+//                        })
+//                                .setTitle("招聘名称").show();
+//                    }else {
+//                        new RadDialog(getContext(), R.style.dialog, "获得10金币", new  RadDialog.OnCloseListener (){
+//                            @Override
+//                            public void onClick(Dialog dialog, boolean confirm) {
+//                                ToastUtils.showLongToast(getContext(), "跳到广告详情页");
+////                                Intent intent = new Intent(getContext(), JobInfoActivity.class);
+////                                getContext().startActivity(intent);
+//                                dialog.dismiss();
+//                            }
+//                        })
+//                                .setTitle("").show();
+//                    }
 
-                   new JobDialog(getContext(), R.style.dialog, "兼职内容是大大撒大苏打大苏打盛大的", new  JobDialog.OnCloseListener (){
-                       @Override
-                       public void onClick(Dialog dialog, boolean confirm) {
-                           Toast.makeText(getContext(),"获得红包",Toast.LENGTH_LONG).show();
-                           dialog.dismiss();
-                       }
+                    if(rdm.nextBoolean()){
+                        RxUtils.wrapRestCall(RetrofitFactory.INSTANCE.getRetrofit().randomGetOne(SPUtil.getString(getContext(),"thirdAccount",""))).subscribe(new Consumer<SameCityBean>() {
+                            @Override
+                            public void accept(SameCityBean sameCityBean) throws Exception {
+                                new JobDialog(getContext(), R.style.dialog, sameCityBean.getCompanyName(), new  JobDialog.OnCloseListener (){
+                                    @Override
+                                    public void onClick(Dialog dialog, boolean confirm) {
+                                        Intent intent = new Intent(getContext(), JobInfoActivity.class);
+                                        getContext().startActivity(intent);
+                                        dialog.dismiss();
+                                    }
 
-                    })
+                                })
+                                        .setTitle(sameCityBean.getLabel()).show();
+                            }
 
-                    .setTitle("找工兼职").show();
+                        });
+                    }else{
+
+
+                    }
+
+
 
                 }
             });

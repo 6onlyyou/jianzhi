@@ -29,7 +29,7 @@
             android:layout_centerInParent="true"
             android:text="发布招聘"
             android:textColor="@color/colorWhite"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
     </RelativeLayout>
 
@@ -60,18 +60,18 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="24dp"
+                android:textCursorDrawable="@drawable/color_cursor"
                 android:background="@null"
                 android:hint="点击输入企业/店铺名称"
                 android:singleLine="true"
                 android:textColorHint="#ffc0c0c0"
-                android:textCursorDrawable="@drawable/cursor"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="9dp"
                 android:layout_marginRight="15dp"
                 android:background="@color/colorLine" />
 
@@ -81,7 +81,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="7dp"
 
-                android:text="发布样式"
+                android:text="工作标签"
                 android:textColor="#ff8b8b8b"
                 android:textSize="15sp" />
 
@@ -94,18 +94,18 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="24dp"
                 android:background="@null"
-                android:hint="请选择样式"
+                android:hint="请选择标签"
                 android:singleLine="true"
                 android:drawableRight="@mipmap/ic_next"
                 android:textColorHint="#ffc0c0c0"
-                android:textCursorDrawable="@drawable/cursor"
-                android:textSize="18sp" />
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="9dp"
                 android:layout_marginRight="15dp"
                 android:background="@color/colorLine" />
 
@@ -113,7 +113,7 @@
                 android:layout_width="103dp"
                 android:layout_height="22dp"
                 android:layout_marginLeft="15dp"
-                android:text="虚拟币悬赏"
+                android:text="金币悬赏金额"
                 android:textColor="#ff8b8b8b"
                 android:textSize="15sp" />
 
@@ -127,17 +127,18 @@
                 android:layout_marginRight="24dp"
                 android:background="@null"
                 android:hint="请选择悬赏金额"
+                android:inputType="number"
                 android:singleLine="true"
                 android:drawableRight="@mipmap/ic_next"
                 android:textColorHint="#ffc0c0c0"
-                android:textCursorDrawable="@drawable/cursor"
-                android:textSize="18sp" />
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="9dp"
                 android:layout_marginRight="15dp"
                 android:background="@color/colorLine" />
 
@@ -147,7 +148,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="7dp"
 
-                android:text="招聘人数"
+                android:text="金币悬赏数量"
                 android:textColor="#ff8b8b8b"
                 android:textSize="15sp" />
 
@@ -160,21 +161,53 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="24dp"
                 android:background="@null"
+                android:inputType="number"
                 android:drawableRight="@mipmap/ic_next"
-                android:hint="请选择招聘人数"
+                android:hint="请输入悬赏数"
                 android:singleLine="true"
                 android:textColorHint="#ffc0c0c0"
-                android:textCursorDrawable="@drawable/cursor"
-                android:textSize="18sp" />
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="9dp"
                 android:layout_marginRight="15dp"
                 android:background="@color/colorLine" />
+            <TextView
+                android:layout_width="103dp"
+                android:layout_height="22dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="7dp"
 
+                android:text="招聘人数"
+                android:textColor="#ff8b8b8b"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/sizepe"
+                android:layout_width="match_parent"
+                android:layout_height="22dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginTop="8dp"
+                android:background="@null"
+                android:drawableRight="@mipmap/ic_next"
+                android:hint="请输入招聘人数:例如:电工2人,清洁工3人"
+                android:singleLine="true"
+                android:textColorHint="#ffc0c0c0"
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="9dp"
+                android:layout_marginRight="15dp"
+                android:background="@color/colorLine" />
             <TextView
                 android:layout_width="103dp"
                 android:layout_height="22dp"
@@ -194,17 +227,17 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="24dp"
                 android:background="@null"
-                android:hint="点击输入工资福利"
+                android:hint="点击输入工资福利:例如:每小时50元"
                 android:singleLine="true"
                 android:textColorHint="#ffc0c0c0"
-                android:textCursorDrawable="@drawable/cursor"
-                android:textSize="18sp" />
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="9dp"
                 android:layout_marginRight="15dp"
                 android:background="@color/colorLine" />
             <TextView
@@ -226,17 +259,17 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="24dp"
                 android:background="@null"
-                android:hint="点击输入工作时间"
+                android:hint="点击输入工作时间:例如8点到16点"
                 android:singleLine="true"
                 android:textColorHint="#ffc0c0c0"
-                android:textCursorDrawable="@drawable/cursor"
-                android:textSize="18sp" />
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="9dp"
                 android:layout_marginRight="15dp"
                 android:background="@color/colorLine" />
             <TextView
@@ -258,17 +291,18 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="24dp"
                 android:background="@null"
+                android:inputType="phone"
                 android:hint="点击输入联系电话"
                 android:singleLine="true"
                 android:textColorHint="#ffc0c0c0"
-                android:textCursorDrawable="@drawable/cursor"
-                android:textSize="18sp" />
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="9dp"
                 android:layout_marginRight="15dp"
                 android:background="@color/colorLine" />
             <TextView
@@ -294,14 +328,14 @@
                 android:singleLine="true"
                 android:drawableRight="@mipmap/ic_next"
                 android:textColorHint="#ffc0c0c0"
-                android:textCursorDrawable="@drawable/cursor"
-                android:textSize="18sp" />
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="9dp"
                 android:layout_marginRight="15dp"
                 android:background="@color/colorLine" />
 
@@ -327,14 +361,14 @@
                 android:singleLine="true"
                 android:drawableRight="@mipmap/ic_next"
                 android:textColorHint="#ffc0c0c0"
-                android:textCursorDrawable="@drawable/cursor"
-                android:textSize="18sp" />
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="9dp"
                 android:layout_marginRight="15dp"
                 android:background="@color/colorLine" />
 
@@ -375,12 +409,19 @@
                 android:textColor="#ff222222"
                 android:textSize="14sp"
                 />
-
-            <ImageView
-                android:src="@mipmap/ic_add_photo"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="91dp"
+                android:layout_height="91dp"
                 android:layout_marginLeft="15dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="100dp"
+                android:overScrollMode="never" />
+            <!--<ImageView-->
+                <!--android:src="@mipmap/ic_add_photo"-->
+                <!--android:layout_marginLeft="15dp"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content" />-->
 
             <TextView
                 android:id="@+id/pushjianli"
@@ -399,5 +440,52 @@
 
     </android.support.v4.widget.NestedScrollView>
 
+    <RelativeLayout
+        android:id="@+id/picker_rel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="-620dp"
+        android:background="#99232323"
+        android:visibility="gone" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#ffffff" >
+
+            <fu.com.parttimejob.view.PickerScrollView
+                android:id="@+id/pickerscrlllview"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:background="#ffffff"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_below="@id/pickerscrlllview"
+                android:layout_marginTop="-95dp"
+                android:background="@mipmap/picker_tv_bg"/>
+
+            <Button
+                android:id="@+id/picker_yes"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_below="@id/pickerscrlllview"
+                android:layout_marginLeft="70dp"
+                android:layout_marginRight="70dp"
+                android:layout_marginTop="-30dp"
+                android:background="#ff0000"
+                android:text="确定"
+                android:textColor="#ffffff"
+                android:textSize="14dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_below="@id/picker_yes" />
+        </RelativeLayout>
+
+    </RelativeLayout>
 
 </LinearLayout>

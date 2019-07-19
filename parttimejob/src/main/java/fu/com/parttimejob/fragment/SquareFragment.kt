@@ -14,7 +14,10 @@ import fu.com.parttimejob.view.bezier.RedPacketsLayout
 /**
  * A simple [Fragment] subclass.
  */
-class SquareFragment : Fragment() {
+class SquareFragment : Fragment(),View.OnClickListener  {
+    override fun onClick(p0: View?) {
+
+    }
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

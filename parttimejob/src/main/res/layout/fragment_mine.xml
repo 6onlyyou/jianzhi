@@ -78,13 +78,78 @@
             android:layout_height="wrap_content"
             android:src="@mipmap/ic_back" />
     </LinearLayout>
-
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorLine" />
-
     <LinearLayout
+        android:id="@+id/editGaogaohdon"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="17dp"
+            android:src="@mipmap/ic_my_jianli" />
+
+        <TextView
+            android:layout_width="59dp"
+            android:layout_height="22dp"
+            android:layout_marginLeft="4dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="广告活动"
+            android:textColor="@color/colorGray"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_back" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorLine" />
+    <LinearLayout
+        android:id="@+id/setsgil"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="17dp"
+            android:src="@mipmap/ic_my_jianli" />
+
+        <TextView
+            android:layout_width="59dp"
+            android:layout_height="22dp"
+            android:layout_marginLeft="4dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="设置工作类型"
+            android:textColor="@color/colorGray"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_back" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorLine" />
+    <LinearLayout
+        android:visibility="gone"
         android:id="@+id/myAddressLayout"
         android:layout_width="match_parent"
         android:layout_height="45dp"
@@ -153,7 +218,40 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorLine" />
+    <LinearLayout
+        android:id="@+id/zhaopinlishi"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
 
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="17dp"
+            android:src="@mipmap/ic_my_history" />
+
+        <TextView
+            android:layout_width="59dp"
+            android:layout_height="22dp"
+            android:layout_marginLeft="4dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="招聘历史"
+            android:textColor="@color/colorGray"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_back" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorLine" />
     <LinearLayout
         android:id="@+id/yaoQingLayout"
         android:layout_width="match_parent"
@@ -225,6 +323,7 @@
         android:background="@color/colorLine" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/change_identity"
         android:layout_width="252dp"
         android:layout_height="36dp"

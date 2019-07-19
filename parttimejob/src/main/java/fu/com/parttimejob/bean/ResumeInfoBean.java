@@ -13,6 +13,15 @@ public class ResumeInfoBean {
     private String personalProfile;
     private String picOrVedioSource;
     private String city;
+    private String phoneNum;
+
+    public String getPhoneNum() {
+        return phoneNum;
+    }
+
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
+    }
 
     public String getCity() {
         return city;

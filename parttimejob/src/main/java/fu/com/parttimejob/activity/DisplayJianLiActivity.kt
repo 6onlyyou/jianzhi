@@ -145,7 +145,7 @@ private val onAddPicClickListener = object : GridImageAdapter.onAddPicClickListe
                 .isZoomAnim(true)// 图片列表点击 缩放效果 默认true
                 //.imageFormat(PictureMimeType.PNG)// 拍照保存图片格式后缀,默认jpeg
                 //.setOutputCameraPath("/CustomPath")// 自定义拍照保存路径
-                .enableCrop(true)// 是否裁剪
+                .enableCrop(false)// 是否裁剪
                 .compress(true)// 是否压缩
                 .synOrAsy(true)//同步true或异步false 压缩 默认同步
                 //.compressSavePath(getPath())//压缩图片保存地址

@@ -198,7 +198,6 @@ class LoginActivity : BaseActivity() {
                             startActivity(ChooseJobActivity::class.java, true)
                         }
                         finish()
-
                     }, {
                         ToastUtils.showLongToast(applicationContext, it.message.toString())
                     })

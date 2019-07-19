@@ -5,19 +5,24 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import com.heixiu.errand.net.RetrofitFactory
+import com.lljjcoder.citylist.Toast.ToastUtils
 import com.yanzhenjie.recyclerview.OnItemMenuClickListener
 import com.yanzhenjie.recyclerview.SwipeMenuCreator
 import com.yanzhenjie.recyclerview.SwipeMenuItem
 import fu.com.parttimejob.R
 import fu.com.parttimejob.adapter.HomeJobListAdapter
+import fu.com.parttimejob.adapter.JobAdapter
 import fu.com.parttimejob.base.BaseActivity
 import fu.com.parttimejob.base.baseadapter.BaseRecyclerModel
+import fu.com.parttimejob.retrofitNet.RxUtils
+import fu.com.parttimejob.utils.SPUtil
 import kotlinx.android.synthetic.main.activity_communicate_history.*
 
 
 class CommunicateHistoryActivity : BaseActivity() {
 
-    lateinit var adapter: HomeJobListAdapter
+    lateinit var homeJobListAdapter: JobAdapter
 
     override fun getLayoutId(): Int {
         return R.layout.activity_communicate_history
@@ -28,7 +33,7 @@ class CommunicateHistoryActivity : BaseActivity() {
             finish()
         })
 
-        adapter = HomeJobListAdapter()
+        homeJobListAdapter = JobAdapter()
         swipeList.layoutManager = LinearLayoutManager(this)
 
         var mSwipeMenuCreator: SwipeMenuCreator = SwipeMenuCreator { leftMenu, rightMenu, position ->
@@ -54,19 +59,16 @@ class CommunicateHistoryActivity : BaseActivity() {
         }
         swipeList.setOnItemMenuClickListener(mItemMenuClickListener)
 
-        swipeList.adapter = adapter
+        swipeList.adapter = homeJobListAdapter
 
         var list: ArrayList<BaseRecyclerModel> = ArrayList()
-        list.add(BaseRecyclerModel())
-        list.add(BaseRecyclerModel())
-        list.add(BaseRecyclerModel())
-        list.add(BaseRecyclerModel())
-        list.add(BaseRecyclerModel())
-        list.add(BaseRecyclerModel())
-        list.add(BaseRecyclerModel())
-        list.add(BaseRecyclerModel())
-        list.add(BaseRecyclerModel())
-        adapter.addAll(list)
+        homeJobListAdapter.addAll(list)
+        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().queryCommunicationRecord(SPUtil.getString(this,"thirdAccount",""))).subscribe({
+            homeJobListAdapter.addAll(it as List<BaseRecyclerModel>?)
+            homeJobListAdapter.notifyDataSetChanged()
+        }, {
+            ToastUtils.showLongToast(this, it.message.toString())
+        })
     }
 
     override fun initViewClick() {

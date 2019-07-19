@@ -29,7 +29,17 @@
             android:text="广告活动"
             android:textColor="@color/colorWhite"
             android:textSize="18sp" />
-
+        <TextView
+            android:id="@+id/pushgaogao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:text="发布广告"
+            android:textColor="@color/white"
+            android:background="@drawable/state_pressed"
+            android:textSize="15sp" />
     </RelativeLayout>
 
     <FrameLayout

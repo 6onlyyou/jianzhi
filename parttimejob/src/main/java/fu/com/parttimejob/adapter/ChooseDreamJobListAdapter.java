@@ -38,13 +38,13 @@ public class ChooseDreamJobListAdapter extends BaseRecyclerViewAdapter {
 
         @Override
         public void onBindViewHolder(BaseRecyclerModel object, int position) {
-            GetLabelsBean object1 = (GetLabelsBean) object;
-            binding.jobName.setText(((GetLabelsBean) object).getLabels());
-            if (selectPositions.contains(position)){
-                binding.jobName.setBackgroundResource(R.drawable.bg_round_bq);
-            }else {
-                binding.jobName.setBackgroundResource(R.drawable.item_qiuzhi_job);
-            }
+//            GetLabelsBean object1 = (GetLabelsBean) object;
+//            binding.jobName.setText(((GetLabelsBean) object1).getLabels());
+//            if (selectPositions.contains(position)){
+//                binding.jobName.setBackgroundResource(R.drawable.bg_round_bq);
+//            }else {
+//                binding.jobName.setBackgroundResource(R.drawable.item_qiuzhi_job);
+//            }
         }
     }
 }

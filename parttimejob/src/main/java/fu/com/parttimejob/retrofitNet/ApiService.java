@@ -148,8 +148,8 @@ public interface ApiService {
      *
      * @return
      */
-    @POST("/appservice/app/jobhunter/sameCity")
-    Observable<ResponseBean<SameCityBean>> sameCity(@Query("thirdAccount") String thirdAccount);
+    @POST("/appservice/app/jobhunter/randomGetOne")
+    Observable<ResponseBean<SameCityBean>> randomGetOne(@Query("thirdAccount") String thirdAccount);
 
     /**
      *发布招聘订单
@@ -164,7 +164,7 @@ public interface ApiService {
      * @return
      */
     @POST("/appservice/app/jobhunter/addCommunicationRecord")
-    Observable<ResponseBean<String>> addCommunicationRecord(@Query("thirdAccount") String thirdAccount,@Query("recruitmentId") String recruitmentId);
+    Observable<ResponseBean<String>> addCommunicationRecord(@Query("thirdAccount") String thirdAccount,@Query("recruitmentId") int recruitmentId);
     /**
      *沟通历史列表
      *

@@ -24,6 +24,7 @@ class MyJianLiActivity : BaseActivity() {
         if(beViewedAccount ==null||beViewedAccount.equals("")){
             beViewedAccount = SPUtil.getString(this,"thirdAccount","")
         }
+
         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().getResumeInfo(SPUtil.getString(this,"thirdAccount",""),beViewedAccount)).subscribe({
             name.setText(it.name)
             sex.setText(it.sex+"  "+it.age+"岁")
@@ -36,6 +37,9 @@ class MyJianLiActivity : BaseActivity() {
     }
 
     override fun initViewClick() {
+        jian_xiugai.setOnClickListener {
+            startActivity(Intent(this, DisplayJianLiActivity::class.java))
+        }
         back.setOnClickListener {
             finish()
         }

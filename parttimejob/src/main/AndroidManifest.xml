@@ -26,24 +26,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.AdListActivity"></activity>
-        <activity android:name=".activity.PublishAdActivity" />
-        <activity android:name=".activity.PublishJobActivity" />
-        <activity android:name=".activity.TalentManagementActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".activity.CreateJobCardActivity" />
-
-        <meta-data
-            android:name="com.amap.api.v2.apikey"
-            android:value="c6f88c504400959908421f756a4d318f" />
-
-        <service android:name="com.amap.api.location.APSService" />
-
         <activity
             android:name=".activity.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -53,6 +35,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.PublishAdActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activity.PublishJobActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activity.TalentManagementActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity android:name=".activity.CreateJobCardActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="c6f88c504400959908421f756a4d318f" />
+
+        <service android:name="com.amap.api.location.APSService" />
+
+
         <activity
             android:name=".activity.ChooseProfessionActivity"
             android:launchMode="singleTask"
@@ -136,12 +135,16 @@
         <activity
             android:name=".activity.RechargeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.MyJianLiActivity" />
+        <activity android:name=".activity.MyJianLiActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.DisplayJianLiActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.JobActivity"
+            android:theme="@style/AppTheme.NoActionBar" /> <!-- 全面屏 -->
+        <activity
+            android:name=".activity.AdListActivity"
             android:theme="@style/AppTheme.NoActionBar" /> <!-- 全面屏 -->
         <meta-data
             android:name="android.max_aspect"

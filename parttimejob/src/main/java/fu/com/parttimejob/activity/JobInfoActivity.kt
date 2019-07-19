@@ -2,9 +2,12 @@ package fu.com.parttimejob.activity
 
 import android.content.Intent
 import android.net.Uri
+import com.heixiu.errand.net.RetrofitFactory
 import com.lljjcoder.citylist.Toast.ToastUtils
 import fu.com.parttimejob.R
 import fu.com.parttimejob.base.BaseActivity
+import fu.com.parttimejob.bean.SameCityBean
+import fu.com.parttimejob.retrofitNet.RxUtils
 import fu.com.parttimejob.utils.SPUtil
 import io.rong.imkit.RongIM
 import io.rong.imlib.model.UserInfo
@@ -23,12 +26,19 @@ class JobInfoActivity : BaseActivity() {
         back.setOnClickListener {
             finish()
         }
+//        var smeCityBean:SameCityBean=  intent.getSerializableExtra("user") as SameCityBean
         ji_gouton.setOnClickListener {
-            if (SPUtil.getString(this, "phonenumber", "").equals("")) {
+            if (SPUtil.getString(this, "thirdAccount", "").equals("")) {
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 ToastUtils.showShortToast(this,"需要先登入才可以使用其他功能")
             } else {
+                RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().addCommunicationRecord(SPUtil.getString(this,"thirdAccount",""),1)).subscribe({
+
+                }, {
+
+                    ToastUtils.showLongToast(this, it.message.toString())
+                })
 //                RongIM.setUserInfoProvider({
                     //在这里，根据userId，使用同步的请求，去请求服务器，就可以完美做到显示用户的头像，昵称了
 //                    if(orderEntity.orderInfo!!.headImgUrl==null||orderEntity.orderInfo!!.headImgUrl.equals("")){

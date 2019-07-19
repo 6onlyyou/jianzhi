@@ -12,10 +12,7 @@ import com.heixiu.errand.net.RetrofitFactory
 import com.lljjcoder.citylist.Toast.ToastUtils
 
 import fu.com.parttimejob.R
-import fu.com.parttimejob.activity.CommunicateHistoryActivity
-import fu.com.parttimejob.activity.DisplayJianLiActivity
-import fu.com.parttimejob.activity.ExchangeShopActivity
-import fu.com.parttimejob.activity.JobActivity
+import fu.com.parttimejob.activity.*
 import fu.com.parttimejob.adapter.HomeJobListAdapter
 import fu.com.parttimejob.base.baseadapter.BaseRecyclerModel
 import fu.com.parttimejob.bean.JobInfoBean
@@ -51,27 +48,53 @@ class HomeFragment : Fragment() {
     }
 
     private fun initClickListener() {
+        if( SPUtil.getInt(activity, "Profession", 2)==2){
+            make_money_iv.visibility = View.VISIBLE
+            exchange_shop_iv.visibility = View.VISIBLE
+            brief_iv.visibility = View.VISIBLE
+            management.visibility = View.GONE
+            campaign.visibility = View.GONE
+            brief_iv.visibility = View.GONE
+
+        }else{
+            make_money_iv.visibility = View.GONE
+            exchange_shop_iv.visibility = View.GONE
+            brief_iv.visibility = View.GONE
+            management.visibility = View.VISIBLE
+            campaign.visibility = View.VISIBLE
+            pushzp.visibility = View.VISIBLE
+        }
+        management.setOnClickListener {
+            startActivity(Intent(context, TalentManagementActivity::class.java))
+        }
+        campaign.setOnClickListener {
+            startActivity(Intent(context, AdListActivity::class.java))
+        }
+        pushzp.setOnClickListener {
+            startActivity(Intent(context, PublishJobActivity::class.java))
+        }
         same_city_iv.setOnClickListener({
             startActivity(Intent(context, JobActivity::class.java))
         })
-
+        make_money_iv.setOnClickListener {
+            startActivity(Intent(context, MyInviteActivity::class.java))
+        }
 
         exchange_shop_iv.setOnClickListener({
             startActivity(Intent(context, ExchangeShopActivity::class.java))
         })
 
         brief_iv.setOnClickListener({
-            startActivity(Intent(context, DisplayJianLiActivity::class.java))
-        })
-
-        make_money_iv.setOnClickListener({
-
+            startActivity(Intent(context, MyJianLiActivity::class.java))
         })
     }
 
     override fun onResume() {
         super.onResume()
         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().firstPage(SPUtil.getString(context,"thirdAccount",""))).subscribe({
+            var list: ArrayList<JobInfoBean> = ArrayList()
+            list.add(JobInfoBean())
+            homeJobListAdapter.addAll(list as List<BaseRecyclerModel>?)
             homeJobListAdapter.addAll(it as List<BaseRecyclerModel>?)
             homeJobListAdapter.notifyDataSetChanged()
         }, {

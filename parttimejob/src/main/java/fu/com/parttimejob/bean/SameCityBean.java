@@ -1,11 +1,15 @@
 package fu.com.parttimejob.bean;
 
+import java.io.Serializable;
+
+import fu.com.parttimejob.base.baseadapter.BaseRecyclerModel;
+
 /**
  * Description:
  * Data：2019/7/14-23:11
  * Author: fushuaige
  */
-public class SameCityBean {
+public class SameCityBean extends BaseRecyclerModel implements Serializable {
     private int id;
     private String companyName;
     private String label;

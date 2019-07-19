@@ -30,8 +30,37 @@ class MineFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if( SPUtil.getInt(activity, "Profession", 2)==2){
+            editJianLiLayout.visibility = View.VISIBLE
+            historyLayout.visibility = View.VISIBLE
+            zhaopinlishi.visibility = View.GONE
+            editGaogaohdon.visibility = View.GONE
+            setsgil.visibility = View.VISIBLE
+        }else{
+            editJianLiLayout.visibility = View.GONE
+            editGaogaohdon.visibility = View.VISIBLE
+            zhaopinlishi.visibility = View.GONE
+            historyLayout.visibility = View.GONE
+            setsgil.visibility = View.GONE
+        }
+        setsgil.setOnClickListener {
+            startActivity(Intent(context, ChooseJobActivity::class.java))
+        }
+        historyLayout.setOnClickListener {
+            startActivity(Intent(context, CommunicateHistoryActivity::class.java))
+
+        }
+        zhaopinlishi.setOnClickListener {
+            startActivity(Intent(context, CommunicateHistoryActivity::class.java))
+
+        }
+        editGaogaohdon.setOnClickListener {
+            startActivity(Intent(context, AdListActivity::class.java))
+
+        }
         editJianLiLayout.setOnClickListener {
-            startActivity(Intent(context, DisplayJianLiActivity::class.java))
+            startActivity(Intent(context, MyJianLiActivity::class.java))
         }
         yaoQingLayout.setOnClickListener {
             startActivity(Intent(context, MyInviteActivity::class.java))

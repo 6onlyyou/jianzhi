@@ -5,19 +5,39 @@ import fu.com.parttimejob.base.BaseActivity
 import fu.com.parttimejob.dialog.abelPopWindowL
 import kotlinx.android.synthetic.main.activity_job.*
 import android.graphics.Color
+import android.support.v7.widget.LinearLayoutManager
+import android.view.MotionEvent
+import android.view.View
+import com.heixiu.errand.net.RetrofitFactory
+import com.lljjcoder.citylist.Toast.ToastUtils
 import com.lljjcoder.citypickerview.widget.CityPicker
+import fu.com.parttimejob.adapter.HomeJobListAdapter
+import fu.com.parttimejob.adapter.JobAdapter
+import fu.com.parttimejob.base.baseadapter.BaseRecyclerModel
+import fu.com.parttimejob.bean.JobInfoBean
+import fu.com.parttimejob.retrofitNet.RxUtils
+import fu.com.parttimejob.utils.SPUtil
 
 
-class JobActivity : BaseActivity() {
+class JobActivity : BaseActivity(){
 
+    var homeJobListAdapter = JobAdapter()
     override fun getLayoutId(): Int {
         return R.layout.activity_job
     }
 
     override fun initViewParams() {
+
     }
 
     override fun initViewClick() {
+        cityname.setText(SPUtil.getString(this,"longitude","0.0"))
+        jobList.layoutManager = LinearLayoutManager(this)
+        jobList.adapter = homeJobListAdapter
+        var list: ArrayList<JobInfoBean> = ArrayList()
+
+        list.add(JobInfoBean())
+        homeJobListAdapter.addAll(list as List<BaseRecyclerModel>?)
         job_city.setOnClickListener {
             selectAddress()
         }
@@ -26,7 +46,12 @@ class JobActivity : BaseActivity() {
             addPopWindow.showPopupWindow(job_work)
         }
 
-
+        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().sameCity(SPUtil.getString(this,"thirdAccount",""),cityname.text.toString(),job_label.text.toString())).subscribe({
+            homeJobListAdapter.addAll(it as List<BaseRecyclerModel>?)
+            homeJobListAdapter.notifyDataSetChanged()
+        }, {
+            ToastUtils.showLongToast(this, it.message.toString())
+        })
     }
     private fun selectAddress() {
         val cityPicker = CityPicker.Builder(this@JobActivity)
@@ -52,6 +77,12 @@ class JobActivity : BaseActivity() {
                 val city = citySelected[1]
                 //区县（如果设定了两级联动，那么该项返回空）
                 cityname.setText(city)
+                RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().sameCity(SPUtil.getString(this@JobActivity,"thirdAccount",""),city,job_label.text.toString())).subscribe({
+                    homeJobListAdapter.addAll(it as List<BaseRecyclerModel>?)
+                    homeJobListAdapter.notifyDataSetChanged()
+                }, {
+                    ToastUtils.showLongToast(this@JobActivity, it.message.toString())
+                })
             }
 
             override fun onCancel() {

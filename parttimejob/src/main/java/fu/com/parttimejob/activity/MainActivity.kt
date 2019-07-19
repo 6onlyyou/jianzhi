@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.support.design.widget.TabLayout
 import android.support.v4.app.ActivityCompat
+import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
 import android.util.Log
@@ -28,10 +29,14 @@ import fu.com.parttimejob.fragment.MessageFragment
 import fu.com.parttimejob.fragment.MineFragment
 import fu.com.parttimejob.fragment.SquareFragment
 import fu.com.parttimejob.retrofitNet.RxUtils
+import fu.com.parttimejob.utils.ConversationListAdapterEx
 import fu.com.parttimejob.utils.LocationUtils
 import fu.com.parttimejob.utils.SPUtil
+import fu.com.parttimejob.weight.ConversationListImFragment
+import io.rong.imkit.RongContext
 import io.rong.imkit.RongIM
 import io.rong.imlib.RongIMClient
+import io.rong.imlib.model.Conversation
 import io.rong.imlib.model.UserInfo
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
@@ -50,7 +55,17 @@ class MainActivity : BaseActivity() {
     override fun isTranslucent(): Boolean {
         return true
     }
+    private fun initConversationList(): Fragment {
 
+        val listFragment = ConversationListImFragment()
+        listFragment.setAdapter(ConversationListAdapterEx(RongContext.getInstance()));
+        val uri = Uri.parse("rong://" + applicationInfo.packageName).buildUpon()
+                .appendPath("conversationList")
+                .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false")
+                .build()
+        listFragment.uri = uri
+        return listFragment
+    }
     override fun initViewParams() {
         adapter = FragmentAdapter(supportFragmentManager)
 
@@ -61,7 +76,7 @@ class MainActivity : BaseActivity() {
 
         adapter.addFragments(HomeFragment())
         adapter.addFragments(SquareFragment())
-        adapter.addFragments(MessageFragment())
+        adapter.addFragments(initConversationList())
         adapter.addFragments(MineFragment())
 
         titles.add("首页")

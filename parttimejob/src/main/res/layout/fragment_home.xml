@@ -41,6 +41,25 @@
                 android:src="@mipmap/ic_brief" />
 
             <ImageView
+                android:id="@+id/management"
+                android:layout_width="56dp"
+                android:layout_height="72dp"
+                android:layout_weight="1"
+                android:src="@mipmap/management" />
+            <ImageView
+                android:id="@+id/campaign"
+                android:layout_width="56dp"
+                android:layout_height="72dp"
+                android:layout_weight="1"
+                android:src="@mipmap/campaign" />
+            <ImageView
+            android:id="@+id/pushzp"
+            android:layout_width="56dp"
+            android:layout_height="72dp"
+            android:layout_weight="1"
+            android:src="@mipmap/pushzp" />
+
+            <ImageView
                 android:id="@+id/exchange_shop_iv"
                 android:layout_width="56dp"
                 android:layout_height="72dp"
