@@ -75,7 +75,12 @@ class LoginActivity : BaseActivity() {
             } else {
                 ToastUtils.showLongToast(applicationContext, "登入成功")
                 SPUtil.putString(applicationContext,"thirdAccount",wxInfoEntity!!.getmOpenid())
-                startActivity(ChooseJobActivity::class.java, true)
+                if(SPUtil.getInt(this@LoginActivity, "Profession", 2)==1){
+                    startActivity(CreateJobCardActivity::class.java, true)
+                }else{
+                    startActivity(ChooseJobActivity::class.java, true)
+                }
+
             }
             finish()
 
@@ -191,11 +196,17 @@ class LoginActivity : BaseActivity() {
                         if (it.register) {
                             SPUtil.putString(applicationContext,"thirdAccount",mTencent!!.openId)
                             ToastUtils.showLongToast(applicationContext, "登入成功")
+
                             startActivity(MainActivity::class.java, true)
                         } else {
                             SPUtil.putString(applicationContext,"thirdAccount",mTencent!!.openId)
                             ToastUtils.showLongToast(applicationContext, "登入成功")
-                            startActivity(ChooseJobActivity::class.java, true)
+                            if(SPUtil.getInt(this@LoginActivity, "Profession", 2)==1){
+                                startActivity(CreateJobCardActivity::class.java, true)
+                            }else{
+                                startActivity(ChooseJobActivity::class.java, true)
+                            }
+
                         }
                         finish()
                     }, {

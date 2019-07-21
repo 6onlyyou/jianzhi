@@ -72,7 +72,7 @@ class MineFragment : Fragment() {
             startActivity(Intent(context, CommunicateHistoryActivity::class.java))
         }
         aboutUsLayout.setOnClickListener {
-            startActivity(Intent(context, CommunicateHistoryActivity::class.java))
+            startActivity(Intent(context, AboutUsActivity::class.java))
         }
         loginOut.setOnClickListener {
             HintDialog(context, R.style.dialog, "是否确定退出登录？", object : HintDialog.OnCloseListener {

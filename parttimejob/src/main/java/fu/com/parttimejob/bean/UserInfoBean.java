@@ -13,6 +13,42 @@ public class UserInfoBean {
     private String city;
     private String longitude;
     private String latitude;
+    private int totalCount;
+    private String inviteCode;
+    private String labelName;
+    private int inviteCount;
+
+    public int getTotalCount() {
+        return totalCount;
+    }
+
+    public void setTotalCount(int totalCount) {
+        this.totalCount = totalCount;
+    }
+
+    public String getInviteCode() {
+        return inviteCode;
+    }
+
+    public void setInviteCode(String inviteCode) {
+        this.inviteCode = inviteCode;
+    }
+
+    public String getLabelName() {
+        return labelName;
+    }
+
+    public void setLabelName(String labelName) {
+        this.labelName = labelName;
+    }
+
+    public int getInviteCount() {
+        return inviteCount;
+    }
+
+    public void setInviteCount(int inviteCount) {
+        this.inviteCount = inviteCount;
+    }
 
     public String getThirdAccount() {
         return thirdAccount;

@@ -40,6 +40,10 @@ class SplashActivity : BaseActivity() {
                                 SPUtil.putString(this@SplashActivity,"city",it.city)
                                 SPUtil.putString(this@SplashActivity,"longitude",it.longitude)
                                 SPUtil.putString(this@SplashActivity,"latitude",it.latitude)
+                                SPUtil.putString(this@SplashActivity,"inviteCode",it.inviteCode)
+                                SPUtil.putString(this@SplashActivity,"labelName",it.labelName)
+                                SPUtil.putInt(this@SplashActivity,"totalCount",it.totalCount)
+                                SPUtil.putInt(this@SplashActivity,"inviteCount",it.inviteCount)
                                 startActivity(MainActivity::class.java, true)
                             }, {
                                 ToastUtils.showLongToast(applicationContext, it.message.toString())

@@ -58,11 +58,12 @@
         android:textSize="22sp" />
 
     <TextView
+        android:id="@+id/invite_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="241dp"
-        android:text="123452"
+        android:text=""
         android:textColor="#ff444444"
         android:textSize="32sp"
         android:textStyle="bold" />
@@ -78,7 +79,7 @@
         android:paddingLeft="50dp"
         android:paddingRight="40dp"
         android:text="填写邀请码"
-        android:textColor="#ffffffff"
+        android:textColor="#ffffff"
         android:textSize="22sp" />
     <TextView
         android:id="@+id/share"
@@ -104,15 +105,32 @@
         android:text="成功邀请好友下载APP，你都能从中获益"
         android:textColor="#ff444444"
         android:textSize="15sp" />
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginTop="461dp"
+    android:orientation="horizontal"> <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
 
+
+    android:text="已成功邀请好友"
+    android:textColor="#ff444444"
+    android:textSize="15sp" />
     <TextView
-        android:layout_width="143dp"
-        android:layout_height="21dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="461dp"
-        android:text="已成功邀请好友34人"
+        android:id="@+id/invite_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textColor="@color/colorRed"
+        android:textSize="18sp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="人"
         android:textColor="#ff444444"
-        android:textSize="15sp" />
+        android:textSize="15sp" /></LinearLayout>
 
     <ImageView
         android:layout_width="match_parent"

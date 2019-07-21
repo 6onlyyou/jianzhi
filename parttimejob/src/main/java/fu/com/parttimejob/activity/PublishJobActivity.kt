@@ -3,6 +3,7 @@ package fu.com.parttimejob.activity
 import android.app.Activity
 import android.content.Intent
 import android.support.v7.widget.GridLayoutManager
+import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import com.heixiu.errand.net.RetrofitFactory
@@ -24,9 +25,10 @@ import java.util.ArrayList
 import fu.com.parttimejob.view.PickerScrollView
 import fu.com.parttimejob.bean.Pickers
 import fu.com.parttimejob.view.PickerScrollView.onSelectListener
-
-
-
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
 
 
 class PublishJobActivity : BaseActivity() {
@@ -38,12 +40,7 @@ class PublishJobActivity : BaseActivity() {
     }
 
     override fun initViewParams() {
-        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().publichInfo(SPUtil.getString(this, "thirdAccount", "111"), nameEt.text.toString(), style.text.toString(),money.text.toString(), size.text.toString(), sizepe.text.toString(),salary.text.toString(),phone.text.toString(),detailLocation.text.toString(),"","",jianlijianjie.text.toString(),"",SPUtil.getString(this, "city", ""))).subscribe({
-            ToastUtils.showLongToast(this, it)
 
-        }, {
-            ToastUtils.showLongToast(this, it.message.toString())
-        })
     }
     private var themeId: Int = 0
     override fun initViewClick() {
@@ -96,23 +93,23 @@ class PublishJobActivity : BaseActivity() {
             if (it.labels != null && !it.labels.equals("")) {
                 strarr = it.labels.substring(0, it.labels.length).split(",")
                 var index = 0;
-                while (index < strarr.size) {
+                while (index < strarr.size-1) {
                     index++//自增
                     lists.add(strarr[index])
                 }
                 name = lists
-
+                list = ArrayList<Pickers>()
+                for (i in 0 until name!!.size) {
+                    list!!.add(Pickers(name!![i], id!![i]))
+                }
+                // 设置数据，默认选择第一条
+                pickerscrlllview.setData(list)
+                pickerscrlllview.setSelected(0)
             }
         }, {
             ToastUtils.showLongToast(applicationContext, it.message.toString())
         })
-        list = ArrayList<Pickers>()
-        for (i in 0 until name!!.size) {
-            list!!.add(Pickers(name!![i], id!![i]))
-        }
-        // 设置数据，默认选择第一条
-        pickerscrlllview.setData(list)
-        pickerscrlllview.setSelected(0)
+
     }
     // 滚动选择器选中事件
     var pickerListener: onSelectListener = onSelectListener { pickers ->
@@ -126,6 +123,27 @@ class PublishJobActivity : BaseActivity() {
             if (v === style) {
                 picker_rel.visibility = View.VISIBLE
             } else if (v === picker_yes) {
+                if (TextUtils.isEmpty(nameEt.text) || TextUtils.isEmpty(style.text) || TextUtils.isEmpty(money.text) || TextUtils.isEmpty(size.text)|| TextUtils.isEmpty(sizepe.text)|| TextUtils.isEmpty(salary.text)|| TextUtils.isEmpty(workTime.text)|| TextUtils.isEmpty(phone.text)|| TextUtils.isEmpty(detailLocation.text)|| TextUtils.isEmpty(jianlijianjie.text)) {
+                    showToast("您的信息未填写完整~")
+                } else {
+                    val builder: MultipartBody.Builder = MultipartBody.Builder()
+                            .setType(MultipartBody.FORM)
+                    if (selectList!!.size < 1) {
+                        builder.addFormDataPart("businessLicenseImg", File(selectList!!.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList!!.get(0).compressPath)));
+                    } else {
+                        for (i in selectList!!.indices) {
+                            builder.addFormDataPart("businessLicenseImg", File(selectList!!.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList!!.get(0).compressPath)));
+                        }
+                    }
+                    val requestBody: RequestBody = builder.build();
+                    RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().publichInfo(SPUtil.getString(this@PublishJobActivity, "thirdAccount", "111"), nameEt.text.toString(), style.text.toString(),money.text.toString(), size.text.toString(), sizepe.text.toString(),salary.text.toString(),phone.text.toString(),detailLocation.text.toString(),SPUtil.getString(this@PublishJobActivity, "longitude", "0.0"),SPUtil.getString(this@PublishJobActivity, "latitude", "0.0"),jianlijianjie.text.toString(),requestBody,SPUtil.getString(this@PublishJobActivity, "city", ""))).subscribe({
+                        ToastUtils.showLongToast(this@PublishJobActivity, it)
+
+                    }, {
+                        ToastUtils.showLongToast(this@PublishJobActivity, it.message.toString())
+                    })
+                }
+
                 picker_rel.visibility = View.GONE
             }
         }

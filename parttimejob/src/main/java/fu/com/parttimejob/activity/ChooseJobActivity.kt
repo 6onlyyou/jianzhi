@@ -10,23 +10,42 @@ import fu.com.parttimejob.base.BaseActivity
 import fu.com.parttimejob.base.baseadapter.BaseRecyclerModel
 import fu.com.parttimejob.bean.GetLabelsBean
 import fu.com.parttimejob.retrofitNet.RxUtils
+import fu.com.parttimejob.utils.AppUtils
+import fu.com.parttimejob.utils.SPUtil
 import kotlinx.android.synthetic.main.activity_choose_job.*
+import java.util.*
+
+
 
 class ChooseJobActivity : BaseActivity() {
     lateinit var adapter: ChooseDreamJobListAdapter
     override fun getLayoutId(): Int {
         return R.layout.activity_choose_job
     }
-
+    var listself : ArrayList<GetLabelsBean>? =null
+    var strarr: List<String> ?=null
+    var labelName:String ?=""
     override fun initViewParams() {
         adapter = ChooseDreamJobListAdapter()
         dreamJobList.layoutManager = GridLayoutManager(this, 4) as RecyclerView.LayoutManager?
         dreamJobList.adapter = adapter
         adapter.setOnItemClickListener { view, t, position -> adapter.changeSelectPosition(position) }
 
+        if (SPUtil.getString(this@ChooseJobActivity,"labelName","")!= null && !SPUtil.getString(this@ChooseJobActivity,"labelName","").equals("")) {
+            strarr = SPUtil.getString(this@ChooseJobActivity,"labelName","").substring(0, SPUtil.getString(this@ChooseJobActivity,"labelName","").length).split(",")
+            var index = 0;
+            while (index < strarr!!.size) {
+                var baseRecyclerModel: GetLabelsBean = GetLabelsBean()
+                baseRecyclerModel.labels = (strarr!![index])
+                index++//自增
+                listself!!.add(baseRecyclerModel)
+            }
+        }else{
+
+        }
 
         var strarr: List<String>
-        var list: ArrayList<BaseRecyclerModel> = ArrayList()
+        var list: ArrayList<GetLabelsBean> = ArrayList()
         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().getLabel()).subscribe({
 
             if (it.labels != null && !it.labels.equals("")) {
@@ -38,7 +57,13 @@ class ChooseJobActivity : BaseActivity() {
                     index++//自增
                     list.add(baseRecyclerModel)
                 }
-                adapter.addAll(list)
+                if(listself ==null||listself!!.size>0){
+                    val res =   AppUtils.setCollection(listself,list) as List<BaseRecyclerModel>?
+                    adapter.addAll(res)
+                }else{
+                    adapter.addAll(list as List<BaseRecyclerModel>?)
+                }
+
 
             }
         }, {
@@ -50,6 +75,18 @@ class ChooseJobActivity : BaseActivity() {
 
     override fun initViewClick() {
         next.setOnClickListener({
+            var index = 0;
+            while(index<adapter.getselectPositionsData().size){
+                labelName = labelName+adapter.getselectPositionsData()[index].labels
+                index++//自增
+            }
+
+            labelName = labelName+loginPwdEt.text.toString()
+            RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().customizeLabel(SPUtil.getString(this,"thirdAccount",""),labelName)).subscribe({
+                ToastUtils.showLongToast(applicationContext, it)
+            }, {
+                ToastUtils.showLongToast(applicationContext, it.message.toString())
+            })
             startActivity(MainActivity::class.java, true)
         })
     }
@@ -57,5 +94,4 @@ class ChooseJobActivity : BaseActivity() {
     override fun isTranslucent(): Boolean {
         return true
     }
-
 }

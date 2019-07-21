@@ -5,6 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="71dp"
+
         app:cardCornerRadius="4dp">
 
         <LinearLayout
@@ -27,7 +28,7 @@
                     android:layout_width="64dp"
                     android:layout_height="23dp"
                     android:layout_marginLeft="15dp"
-                    android:text="UI设计师"
+                    android:text=""
                     android:textColor="@color/colorBlack"
                     android:textSize="16sp" />
 
@@ -57,7 +58,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="19dp"
                     android:layout_marginRight="15dp"
-                    android:text="600～800元/天"
+                    android:text=""
                     android:textColor="@color/colorPrimary"
                     android:textSize="13sp" />
 
@@ -70,25 +71,10 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/timejob"
                     android:layout_width="20dp"
                     android:layout_height="14dp"
                     android:layout_marginLeft="15dp"
-                    android:text="日结"
-                    android:textColor="@color/colorGray"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="20dp"
-                    android:layout_height="14dp"
-                    android:layout_marginLeft="6dp"
-                    android:text="日结"
-                    android:textColor="@color/colorGray"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="20dp"
-                    android:layout_height="14dp"
-                    android:layout_marginLeft="6dp"
                     android:text="日结"
                     android:textColor="@color/colorGray"
                     android:textSize="12sp" />
@@ -103,11 +89,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="19dp"
                     android:layout_marginRight="15dp"
-                    android:text="杭州"
+                    android:text=""
                     android:textColor="@color/colorGray"
                     android:textSize="13sp" />
             </LinearLayout>
-
+<View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="@color/gray_text"></View>
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </layout>

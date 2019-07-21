@@ -8,7 +8,7 @@
 
 
     <TextView
-        android:layout_width="138dp"
+        android:layout_width="wrap_content"
         android:layout_height="33dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="56dp"
@@ -17,13 +17,13 @@
         android:textSize="23sp" />
 
     <TextView
-        android:layout_width="72dp"
-        android:layout_height="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp"
-        android:text="工作类型"
+        android:text="我们会根据你选的工作给您推荐专属并且最优工作"
         android:textColor="@color/colorGray"
-        android:textSize="18sp" />
+        android:textSize="15sp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/dreamJobList"
@@ -51,7 +51,7 @@
         android:layout_marginRight="28dp"
         android:layout_marginTop="20dp"
         android:background="@null"
-        android:hint="请输入职位"
+        android:hint="请输入您想找的工作:比如:服务员,医生"
         android:paddingLeft="12dp"
         android:drawableRight="@mipmap/ic_next"
         android:singleLine="true"
@@ -75,7 +75,7 @@
         android:layout_marginTop="71dp"
         android:background="#ff71c9c0"
         android:gravity="center"
-        android:text="下一步"
+        android:text="确定"
         android:textColor="@color/colorWhite"
         android:textSize="15sp" />
 </LinearLayout>

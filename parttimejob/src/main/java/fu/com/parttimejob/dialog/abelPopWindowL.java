@@ -12,11 +12,17 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
+import com.heixiu.errand.net.RetrofitFactory;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import fu.com.parttimejob.R;
 import fu.com.parttimejob.adapter.ChooseDreamJobListAdapter;
 import fu.com.parttimejob.base.baseadapter.BaseRecyclerModel;
+import fu.com.parttimejob.bean.GetLabelsBean;
+import fu.com.parttimejob.retrofitNet.RxUtils;
+import io.reactivex.functions.Consumer;
 
 /**
  * Description:
@@ -55,15 +61,29 @@ public class abelPopWindowL extends PopupWindow {
         adapter =new ChooseDreamJobListAdapter();
         dreamJobList.setLayoutManager(new GridLayoutManager(context, 4)) ;
         dreamJobList.setAdapter(adapter);
-        ArrayList<BaseRecyclerModel>  list =new ArrayList();
-        list.add(new  BaseRecyclerModel());
-        list.add(new  BaseRecyclerModel());
-        list.add(new  BaseRecyclerModel());
-        list.add(new  BaseRecyclerModel());
-        list.add(new  BaseRecyclerModel());
-        list.add(new  BaseRecyclerModel());
+        final ArrayList<BaseRecyclerModel>  list =new ArrayList();
         adapter.addAll(list);
+        final ArrayList<BaseRecyclerModel>  list2 = new ArrayList();
+            RxUtils.wrapRestCall(RetrofitFactory.INSTANCE.getRetrofit().getLabel()).subscribe(new Consumer<GetLabelsBean>() {
+                @Override
+                public void accept(GetLabelsBean getLabelsBean) throws Exception {
+                    if (getLabelsBean.getLabels() != null && !getLabelsBean.getLabels().equals("")) {
+                        String[] strarr1 =getLabelsBean.getLabels().substring(0, getLabelsBean.getLabels().length()).split(",");
+                        int index =0;
+                        for ( index = 0; index< strarr1.length-1;index++) {
 
+                            GetLabelsBean baseRecyclerModel = new GetLabelsBean();
+                            baseRecyclerModel.setLabels(strarr1[index]);
+                            if(index == 0){
+                                baseRecyclerModel.setLabelssel(true);
+                            }
+                            index++;//自增
+                            list2.add(baseRecyclerModel);
+                        }
+                        adapter.addAll(list2);
+                    }
+                }
+            });
 
     }
 

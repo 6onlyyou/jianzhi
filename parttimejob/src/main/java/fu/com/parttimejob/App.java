@@ -8,8 +8,11 @@ import android.support.multidex.MultiDexApplication;
 import com.heixiu.errand.net.OkHttpFactory;
 import com.heixiu.errand.net.RetrofitFactory;
 import com.mob.MobSDK;
-import com.tencent.tauth.Tencent;
+import com.umeng.commonsdk.UMConfigure;
+import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.UMShareAPI;
 
+import fu.com.parttimejob.utils.SPContants;
 import io.rong.imkit.RongIM;
 
 /**
@@ -18,6 +21,10 @@ import io.rong.imkit.RongIM;
 
 public class App extends MultiDexApplication {
     private static App application;
+
+    {
+        PlatformConfig.setQQZone(SPContants.QQ_APP_ID, SPContants.QQ_APP_SERCRET);
+    }
 
     public static App getInstance() {
         return application;
@@ -31,6 +38,8 @@ public class App extends MultiDexApplication {
         RetrofitFactory.INSTANCE.init();
         RongIM.init(this);
         MobSDK.init(this);
+        UMShareAPI.get(this);
+        UMConfigure.init(this, "5cf7644a3fc1950df70011cf", "chess", UMConfigure.DEVICE_TYPE_PHONE, "");
     }
 
     @Override

@@ -106,8 +106,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="22dp"
                 android:layout_marginLeft="15dp"
+                android:inputType="number"
                 android:layout_marginTop="20dp"
-                android:text="虚拟币奖励金额"
+                android:text="金币奖励金额"
                 android:textColor="#ff8b8b8b"
                 android:textSize="15sp" />
 
@@ -120,6 +121,7 @@
                 android:layout_marginRight="15dp"
                 android:background="@null"
                 android:hint="请输入择虚拟币奖励金额"
+                android:inputType="number"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:textColorHint="@color/colorGray"
@@ -138,7 +140,7 @@
                 android:layout_height="22dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="20dp"
-                android:text="选择地址"
+                android:text="选择地址(选填用于推广店铺)"
                 android:textColor="#ff8b8b8b"
                 android:textSize="15sp" />
 
@@ -194,7 +196,7 @@
                 android:layout_height="22dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="20dp"
-                android:text="添加图片详情"
+                android:text="添加图片详情(选填)"
                 android:textColor="#ff222222"
                 android:textSize="14sp" />
 

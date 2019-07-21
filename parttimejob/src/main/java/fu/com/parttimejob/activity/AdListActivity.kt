@@ -19,6 +19,9 @@ class AdListActivity : BaseActivity() {
     }
 
     override fun initViewClick() {
+        back.setOnClickListener {
+            finish()
+        }
         pushgaogao.setOnClickListener {
             startActivity(Intent(this, PublishAdActivity::class.java))
 

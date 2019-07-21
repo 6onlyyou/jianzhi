@@ -32,6 +32,8 @@ public class HomeJobListAdapter extends BaseRecyclerViewAdapter {
             binding.jobName.setText(jobInfoBean.getCompanyName());
             binding.jobReward.setText("赠送"+jobInfoBean.getNumberOfVirtualCoins()+"金币");
             binding.jobSalaryTv.setText(jobInfoBean.getSalaryAndWelfare()+"");
+            binding.jobLocation.setText(jobInfoBean.getCity()+"");
+            binding.timejob.setText(jobInfoBean.getPublichDate());
             binding.goJobinfo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

@@ -44,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="25dp"
         android:layout_marginTop="20dp"
-        android:text="我的虚拟币"
+        android:text="我的金币"
         android:textColor="#ff444444"
         android:textSize="18sp" />
 
@@ -53,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="70dp"
         android:layout_marginTop="7dp"
-        android:text="¥ 2000"
+        android:text="2000"
         android:textColor="#ff444444"
         android:textSize="50sp" />
 

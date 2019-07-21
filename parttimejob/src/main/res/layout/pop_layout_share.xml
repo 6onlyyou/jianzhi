@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerHorizontal="true"
+    android:gravity="bottom|center_horizontal">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_alignParentTop="true"
+        android:background="@color/black" />
+
+    <LinearLayout
+        android:background="@color/white"
+        android:id="@+id/shareTypeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/qq_friend"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:drawableTop="@mipmap/ic_qq_friend"
+            android:gravity="center_horizontal"
+            android:text="QQ" />
+
+        <TextView
+            android:id="@+id/qq_space"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:drawableTop="@mipmap/ic_qq_space"
+            android:gravity="center_horizontal"
+            android:text="QQ空间" />
+
+        <TextView
+            android:id="@+id/wx_friend"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:drawableTop="@mipmap/ic_wx_friend"
+            android:gravity="center_horizontal"
+            android:text="微信好友" />
+
+        <TextView
+            android:id="@+id/wx_space"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:drawableTop="@mipmap/ic_wx_space"
+            android:gravity="center_horizontal"
+            android:text="朋友圈" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@+id/shareTypeLayout"
+        android:background="@color/black" />
+
+    <TextView
+        android:background="@color/white"
+        android:id="@+id/cancel"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/line"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="取消" />
+
+</RelativeLayout>

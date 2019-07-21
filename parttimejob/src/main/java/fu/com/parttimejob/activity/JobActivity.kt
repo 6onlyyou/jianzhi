@@ -14,6 +14,7 @@ import com.lljjcoder.citypickerview.widget.CityPicker
 import fu.com.parttimejob.adapter.HomeJobListAdapter
 import fu.com.parttimejob.adapter.JobAdapter
 import fu.com.parttimejob.base.baseadapter.BaseRecyclerModel
+import fu.com.parttimejob.bean.GetLabelsBean
 import fu.com.parttimejob.bean.JobInfoBean
 import fu.com.parttimejob.retrofitNet.RxUtils
 import fu.com.parttimejob.utils.SPUtil
@@ -29,14 +30,27 @@ class JobActivity : BaseActivity(){
     override fun initViewParams() {
 
     }
-
+     var list : ArrayList<GetLabelsBean>? =null
+    var strarr: List<String> ?=null
     override fun initViewClick() {
-        cityname.setText(SPUtil.getString(this,"longitude","0.0"))
+        cityname.setText(SPUtil.getString(this,"city","廊坊"))
         jobList.layoutManager = LinearLayoutManager(this)
         jobList.adapter = homeJobListAdapter
-        var list: ArrayList<JobInfoBean> = ArrayList()
+         list = ArrayList()
+        if (SPUtil.getString(this@JobActivity,"labelName","")!= null && !SPUtil.getString(this@JobActivity,"labelName","").equals("")) {
+            strarr = SPUtil.getString(this@JobActivity,"labelName","").substring(0, SPUtil.getString(this@JobActivity,"labelName","").length).split(",")
+            var index = 0;
+            while (index < strarr!!.size) {
+                var baseRecyclerModel: GetLabelsBean = GetLabelsBean()
+                baseRecyclerModel.labels = (strarr!![index])
+                index++//自增
+                list!!.add(baseRecyclerModel)
+            }
+            job_label.setText(list!![0].labels)
+        }else{
+            job_label.setText("")
+        }
 
-        list.add(JobInfoBean())
         homeJobListAdapter.addAll(list as List<BaseRecyclerModel>?)
         job_city.setOnClickListener {
             selectAddress()
@@ -91,4 +105,5 @@ class JobActivity : BaseActivity(){
         })
             //监听方法，获取选择结果
     }
+
 }

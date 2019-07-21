@@ -38,10 +38,10 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         jobList.layoutManager = LinearLayoutManager(context)
         jobList.adapter = homeJobListAdapter
-        var list: ArrayList<JobInfoBean> = ArrayList()
-
-        list.add(JobInfoBean())
-        homeJobListAdapter.addAll(list as List<BaseRecyclerModel>?)
+//        var list: ArrayList<JobInfoBean> = ArrayList()
+//
+//        list.add(JobInfoBean())
+//        homeJobListAdapter.addAll(list as List<BaseRecyclerModel>?)
 
         initClickListener()
 
@@ -54,8 +54,8 @@ class HomeFragment : Fragment() {
             brief_iv.visibility = View.VISIBLE
             management.visibility = View.GONE
             campaign.visibility = View.GONE
-            brief_iv.visibility = View.GONE
-
+            brief_iv.visibility = View.VISIBLE
+            pushzp.visibility = View.GONE
         }else{
             make_money_iv.visibility = View.GONE
             exchange_shop_iv.visibility = View.GONE
@@ -92,9 +92,13 @@ class HomeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().firstPage(SPUtil.getString(context,"thirdAccount",""))).subscribe({
-            var list: ArrayList<JobInfoBean> = ArrayList()
-            list.add(JobInfoBean())
-            homeJobListAdapter.addAll(list as List<BaseRecyclerModel>?)
+//            var list: ArrayList<JobInfoBean> = ArrayList()
+//            list.add(JobInfoBean())
+//            homeJobListAdapter.addAll(list as List<BaseRecyclerModel>?)
+//            jobList.adapter = null
+//            homeJobListAdapter.notifyDataSetChanged()
+            homeJobListAdapter.clear();
+            homeJobListAdapter.notifyDataSetChanged() ;
             homeJobListAdapter.addAll(it as List<BaseRecyclerModel>?)
             homeJobListAdapter.notifyDataSetChanged()
         }, {

@@ -161,6 +161,7 @@ class MainActivity : BaseActivity() {
                     .setTitle("").show()
 
         }
+        main_vp.setCurrentItem(1)
     }
 
     override fun initViewClick() {
@@ -170,7 +171,6 @@ class MainActivity : BaseActivity() {
         }, {
             ToastUtils.showLongToast(applicationContext, it.message.toString())
         })
-
     }
 
     private fun connect(token: String) {

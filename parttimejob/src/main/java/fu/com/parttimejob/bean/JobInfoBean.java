@@ -13,8 +13,26 @@ public class JobInfoBean extends BaseRecyclerModel {
     private String label;
     private int numberOfVirtualCoins;
     private int recruitingNumbers;
-    private int salaryAndWelfare;
+    private String salaryAndWelfare;
     private String businessLicenseImg;
+    private String publichDate;
+    private String city;
+
+    public String getPublichDate() {
+        return publichDate;
+    }
+
+    public void setPublichDate(String publichDate) {
+        this.publichDate = publichDate;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
 
     public String getThirdAccount() {
         return thirdAccount;
@@ -56,11 +74,11 @@ public class JobInfoBean extends BaseRecyclerModel {
         this.recruitingNumbers = recruitingNumbers;
     }
 
-    public int getSalaryAndWelfare() {
+    public String getSalaryAndWelfare() {
         return salaryAndWelfare;
     }
 
-    public void setSalaryAndWelfare(int salaryAndWelfare) {
+    public void setSalaryAndWelfare(String salaryAndWelfare) {
         this.salaryAndWelfare = salaryAndWelfare;
     }
 

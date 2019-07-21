@@ -9,6 +9,15 @@ import fu.com.parttimejob.base.baseadapter.BaseRecyclerModel;
  */
 public class GetLabelsBean extends BaseRecyclerModel {
     private String labels;
+    private Boolean labelssel;
+
+    public Boolean getLabelssel() {
+        return labelssel;
+    }
+
+    public void setLabelssel(Boolean labelssel) {
+        this.labelssel = labelssel;
+    }
 
     public String getLabels() {
         return labels;

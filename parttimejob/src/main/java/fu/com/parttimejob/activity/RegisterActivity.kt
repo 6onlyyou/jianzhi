@@ -99,7 +99,11 @@ class RegisterActivity : BaseActivity() {
                             } else {
                                 SPUtil.putString(this@RegisterActivity,"thirdAccount",phoneEt.text.toString())
                                 ToastUtils.showLongToast(applicationContext, "注册成功")
-                                startActivity(ChooseJobActivity::class.java, true)
+                                  if(SPUtil.getInt(this@RegisterActivity, "Profession", 2)==1){
+                                    startActivity(CreateJobCardActivity::class.java, true)
+                                }else{
+                                    startActivity(ChooseJobActivity::class.java, true)
+                                }
                                 finish()
                             }
                         }, {

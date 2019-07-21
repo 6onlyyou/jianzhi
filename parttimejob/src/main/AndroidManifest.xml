@@ -149,6 +149,9 @@
         <meta-data
             android:name="android.max_aspect"
             android:value="2.1" />
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5cf7644a3fc1950df70011cf" />
     </application>
 
 </manifest>
