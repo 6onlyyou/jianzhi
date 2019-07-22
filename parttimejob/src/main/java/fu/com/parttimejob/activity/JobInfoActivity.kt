@@ -23,6 +23,17 @@ class JobInfoActivity : BaseActivity() {
     }
 
     override fun initViewClick() {
+        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().singleRecruitmentDetail(SPUtil.getString(this,"thirdAccount",""),intent.getIntExtra("id",0))).subscribe({
+            label_job.setText(it.label)
+            jobSalaryTv.setText(it.salaryAndWelfare)
+            jobLocation.setText(it.city)
+            content_job.setText(it.workContent)
+            phone.setText(it.phoneNumber)
+            job_jbi.setText("分享群领取"+it.recruitingNumbers/it.redEnvelopeNumber+"金币")
+            coid_job.setText("分享成功后可获得"+it.recruitingNumbers/it.redEnvelopeNumber+"虚拟币奖励")
+        }, {
+            ToastUtils.showLongToast(this, it.message.toString())
+        })
         back.setOnClickListener {
             finish()
         }
@@ -33,7 +44,7 @@ class JobInfoActivity : BaseActivity() {
                 startActivity(intent)
                 ToastUtils.showShortToast(this,"需要先登入才可以使用其他功能")
             } else {
-                RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().addCommunicationRecord(SPUtil.getString(this,"thirdAccount",""),1)).subscribe({
+                RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().addCommunicationRecord(SPUtil.getString(this,"thirdAccount",""),intent.getIntExtra("id",0))).subscribe({
 
                 }, {
 

@@ -92,11 +92,6 @@ class HomeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().firstPage(SPUtil.getString(context,"thirdAccount",""))).subscribe({
-//            var list: ArrayList<JobInfoBean> = ArrayList()
-//            list.add(JobInfoBean())
-//            homeJobListAdapter.addAll(list as List<BaseRecyclerModel>?)
-//            jobList.adapter = null
-//            homeJobListAdapter.notifyDataSetChanged()
             homeJobListAdapter.clear();
             homeJobListAdapter.notifyDataSetChanged() ;
             homeJobListAdapter.addAll(it as List<BaseRecyclerModel>?)

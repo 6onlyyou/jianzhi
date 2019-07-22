@@ -7,12 +7,15 @@ import fu.com.parttimejob.base.baseadapter.BaseRecyclerModel;
  * Data：2019/7/21-23:59
  * Author: fushuaige
  */
-public class MAdvertisingBean  extends BaseRecyclerModel {
-
+public class AdvertisingInfoBean extends BaseRecyclerModel {
+    private String longitude;
+    private String latitude;
     private int id;
+    private String thirdAccount;
     private String companyName;
     private int numberOfVirtualCoins;
     private int redEnvelopeNumber;
+    private String city;
     private String advertisementImg;
     private String publichDate;
     private int forwordCount;
@@ -27,6 +30,38 @@ public class MAdvertisingBean  extends BaseRecyclerModel {
 
     public void setHeadImg(String headImg) {
         this.headImg = headImg;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getThirdAccount() {
+        return thirdAccount;
+    }
+
+    public void setThirdAccount(String thirdAccount) {
+        this.thirdAccount = thirdAccount;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public int getUnclaimedVirtualCoins() {

@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="fu.com.parttimejob">
+
     <!-- 允许程序打开网络套接字 -->
     <uses-permission android:name="android.permission.INTERNET" /> <!-- 允许程序设置内置sd卡的写权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 允许程序获取网络状态 -->
@@ -35,22 +36,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.PublishAdActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".activity.PublishJobActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".activity.TalentManagementActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity android:name=".activity.CreateJobCardActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".activity.PublishAdActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.PublishJobActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.TalentManagementActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activity.CreateJobCardActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="c6f88c504400959908421f756a4d318f" />
 
         <service android:name="com.amap.api.location.APSService" />
-
 
         <activity
             android:name=".activity.ChooseProfessionActivity"
@@ -135,7 +138,8 @@
         <activity
             android:name=".activity.RechargeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.MyJianLiActivity"
+        <activity
+            android:name=".activity.MyJianLiActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.DisplayJianLiActivity"
@@ -152,6 +156,8 @@
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="5cf7644a3fc1950df70011cf" />
+
+        <activity android:name=".activity.AdInfoActivity"></activity>
     </application>
 
 </manifest>

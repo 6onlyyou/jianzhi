@@ -2,6 +2,8 @@ package fu.com.parttimejob.retrofitNet;
 
 import java.util.List;
 
+import fu.com.parttimejob.bean.AdInfoBean;
+import fu.com.parttimejob.bean.AdvertisingInfoBean;
 import fu.com.parttimejob.bean.ExchangeBean;
 import fu.com.parttimejob.bean.GetLabelsBean;
 import fu.com.parttimejob.bean.GetTokenEntity;
@@ -9,6 +11,7 @@ import fu.com.parttimejob.bean.JobInfoBean;
 import fu.com.parttimejob.bean.LoginBean;
 import fu.com.parttimejob.bean.MAdvertisingBean;
 import fu.com.parttimejob.bean.MyRecruitBean;
+import fu.com.parttimejob.bean.RecruitInfoBean;
 import fu.com.parttimejob.bean.RegisterBean;
 import fu.com.parttimejob.bean.ResponseBean;
 import fu.com.parttimejob.bean.ResumeInfoBean;
@@ -154,6 +157,14 @@ public interface ApiService {
     Observable<ResponseBean<SameCityBean>> randomGetOne(@Query("thirdAccount") String thirdAccount);
 
     /**
+     *随机获得一个广告接口
+     *
+     * @return
+     */
+    @POST("/appservice/app/jobhunter/randomGetOneAdvertisement")
+    Observable<ResponseBean<AdInfoBean>> randomGetOneAdvertisement(@Query("thirdAccount") String thirdAccount);
+
+    /**
      *发布招聘订单
      *
      * @return
@@ -276,4 +287,21 @@ public interface ApiService {
      */
     @POST("/appservice/app/jobhunter/addNumberOfRecruitView")
     Observable<ResponseBean<String>> addNumberOfRecruitView(@Query("thirdAccount") String thirdAccount,@Query("id") int id);
+    /**
+     *广告详情
+     *
+     * @return
+     */
+    @POST("/appservice/app/jobhunter/singleAdDetail")
+    Observable<ResponseBean<AdvertisingInfoBean>> singleAdDetail(@Query("thirdAccount") String thirdAccount, @Query("id") int id);
+
+
+    /**
+     *招聘详情接口
+     *
+     * @return
+     */
+    @POST("/appservice/app/jobhunter/singleRecruitmentDetail")
+    Observable<ResponseBean<RecruitInfoBean>> singleRecruitmentDetail(@Query("thirdAccount") String thirdAccount,@Query("id") int id);
+
 }
