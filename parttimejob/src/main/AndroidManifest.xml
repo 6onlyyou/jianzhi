@@ -44,7 +44,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.TalentManagementActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.CreateJobCardActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -157,8 +157,10 @@
             android:name="UMENG_APPKEY"
             android:value="5cf7644a3fc1950df70011cf" />
 
-        <activity android:name=".activity.AdInfoActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activity.AdInfoActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.ChosseMapPositionActivity"></activity>
     </application>
 
 </manifest>
