@@ -159,7 +159,7 @@
                 android:paddingTop="14dp"
                 android:textColorHint="@color/colorGray"
                 android:textCursorDrawable="@drawable/cursor"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -188,7 +188,7 @@
                 android:layout_marginRight="15dp"
                 android:text="录制视频或者图片给老板看，录制您会做什么工作，以前做过什么工作，做了多久等介绍让老板更想招你"
                 android:textColor="#ffcfcfcf"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
             <!--<LinearLayout-->
                 <!--android:layout_width="wrap_content"-->

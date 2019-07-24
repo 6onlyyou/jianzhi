@@ -8,7 +8,7 @@ package fu.com.parttimejob.bean;
 public class ResumeInfoBean {
     private String thirdAccount;
     private String name;
-    private String sex;
+    private int sex;
     private String age;
     private String personalProfile;
     private String picOrVedioSource;
@@ -56,11 +56,11 @@ public class ResumeInfoBean {
         this.name = name;
     }
 
-    public String getSex() {
+    public int getSex() {
         return sex;
     }
 
-    public void setSex(String sex) {
+    public void setSex(int sex) {
         this.sex = sex;
     }
 

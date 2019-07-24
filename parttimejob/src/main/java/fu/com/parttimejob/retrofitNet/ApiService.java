@@ -95,7 +95,7 @@ public interface ApiService {
      * @return
      */
     @POST("/appservice/app/jobhunter/createPR")
-    Observable<ResponseBean<String>> createPR(@Query("thirdAccount") String thirdAccount,@Query("name") String name, @Query("sex") String sex, @Query("age") String age, @Query("personalProfile") String personalProfile, @Body RequestBody file );
+    Observable<ResponseBean<String>> createPR(@Query("thirdAccount") String thirdAccount,@Query("name") String name, @Query("sex") int sex, @Query("age") String age, @Query("personalProfile") String personalProfile, @Body RequestBody file );
     /**
      * 设置标签
      *

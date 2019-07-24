@@ -7,7 +7,14 @@
     android:orientation="vertical"
     tools:context="fu.com.parttimejob.activity.MyJianLiActivity"
     >
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -49,7 +56,7 @@
                 android:layout_width="345dp"
                 android:layout_height="216dp"
                 android:src="@mipmap/ic_launcher" />
-                />
+            />
 
             <LinearLayout
                 android:id="@+id/nameLayout"
@@ -86,8 +93,8 @@
 
             <TextView
                 android:id="@+id/sex"
-                android:layout_width="57dp"
-                android:layout_height="22dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/nameLayout"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="9dp"
@@ -98,12 +105,12 @@
             <TextView
                 android:id="@+id/myInfo"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/sex"
                 android:layout_margin="15dp"
                 android:text="我是一个活泼开朗，我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗。"
-                android:textColor="#cfcfcf"
-                android:textSize="12sp" />
+                android:textColor="#cccccc"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/jobYixiang"
@@ -148,4 +155,6 @@
         android:text="立即修改"
         android:textColor="#ffffff"
         android:textSize="15sp" />
+    </LinearLayout>
+</ScrollView>
 </LinearLayout>

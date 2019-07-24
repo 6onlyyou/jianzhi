@@ -60,7 +60,9 @@ class MineFragment : Fragment() {
 
         }
         editJianLiLayout.setOnClickListener {
-            startActivity(Intent(context, MyJianLiActivity::class.java))
+            val intent = Intent(context, MyJianLiActivity::class.java)
+            intent.putExtra("beViewedAccount", "")
+            context!!.startActivity(intent)
         }
         yaoQingLayout.setOnClickListener {
             startActivity(Intent(context, MyInviteActivity::class.java))

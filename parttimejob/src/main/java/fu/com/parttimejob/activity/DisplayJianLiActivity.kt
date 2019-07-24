@@ -69,7 +69,13 @@ class DisplayJianLiActivity : BaseActivity() {
         })
         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().getResumeInfo(SPUtil.getString(this,"thirdAccount",""),SPUtil.getString(this,"thirdAccount",""))).subscribe({
             jianliname.setText(it.name)
-            jianlisex.setText(it.sex)
+            val sexs = ""
+            if(it.sex ==1){
+                val sexs = "男"
+            }else{
+                val sexs = "女"
+            }
+            jianlisex.setText(sexs)
             jianliage.setText(it.age)
             jianlijianjie.setText(it.personalProfile)
         }, {
@@ -89,7 +95,13 @@ class DisplayJianLiActivity : BaseActivity() {
                     }
                 }
                 val requestBody: RequestBody = builder.build();
-                RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().createPR(SPUtil.getString(this, "thirdAccount", "111"), jianliname.text.toString(), jianlisex.text.toString(),jianliage.text.toString(), jianlijianjie.text.toString(),requestBody)).subscribe(Consumer<String> {
+                var sex = 0
+                if( jianlisex.text.toString().equals("男")){
+                    sex = 1
+                }else{
+                    sex = 2
+                }
+                RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().createPR(SPUtil.getString(this, "thirdAccount", "111"), jianliname.text.toString(), sex,jianliage.text.toString(), jianlijianjie.text.toString(),requestBody)).subscribe(Consumer<String> {
                     ToastUtils.showLongToast(applicationContext, it.toString())
                     dialogPro!!.dismiss()
                     finish()

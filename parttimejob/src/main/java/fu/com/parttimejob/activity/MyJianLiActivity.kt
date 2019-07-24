@@ -8,6 +8,7 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.KeyEvent
 import android.view.View
+import com.bumptech.glide.Glide
 import com.heixiu.errand.net.RetrofitFactory
 import com.lljjcoder.citylist.Toast.ToastUtils
 import fu.com.parttimejob.R
@@ -70,29 +71,48 @@ class MyJianLiActivity : BaseActivity() {
             finish()
         }
     }
-
-    override fun onRestart() {
-        super.onRestart()
+    override fun onResume() {
+        super.onResume()
         var strarr: List<String>
+        var listimg: ArrayList<String> = ArrayList()
         var list: ArrayList<GetLabelsBean> = ArrayList()
         dialogPro!!.show()
         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().getResumeInfo(SPUtil.getString(this,"thirdAccount",""),beViewedAccount)).subscribe({
             name.setText(it.name)
-            sex.setText(it.sex+"  "+it.age+"岁")
+            val sexs = ""
+            if(it.sex ==1){
+                val sexs = "男"
+            }else{
+                val sexs = "女"
+            }
+
+
+            sex.setText(sexs+"  "+it.age+"岁")
             myInfo.setText(it.personalProfile)
             myLocation.setText(it.city)
             myInfo.setText(it.personalProfile)
             if (it.picOrVedioSource != null && !it.picOrVedioSource.equals("")) {
-                strarr = it.labelName.substring(0, it.labelName.length).split(",")
+                strarr = it.picOrVedioSource.substring(0, it.picOrVedioSource.length).split(",")
                 var index = 0;
                 while (index < strarr.size) {
-                    var baseRecyclerModel: GetLabelsBean = GetLabelsBean()
-                    baseRecyclerModel.labels = (strarr[index])
-                    baseRecyclerModel.labelssel = true
-                    index++//自增
-                    list.add(baseRecyclerModel)
+
+                    listimg.add(strarr[index])
+                    index++//自
                 }
-                adapter.addAll(list as List<BaseRecyclerModel>?)
+                if(listimg.size<1){
+                    Glide.with(this)
+                            .load(listimg[1])
+                            .placeholder(R.mipmap.defind)
+                            .into(myPhoto)
+                }else if (listimg.size==1){
+                    Glide.with(this)
+                            .load(listimg[0])
+                            .placeholder(R.mipmap.defind)
+                            .into(myPhoto)
+                }else{
+                    myPhoto.visibility = View.GONE
+                }
+
             }
             if (it.labelName != null && !it.labelName.equals("")) {
                 strarr = it.labelName.substring(0, it.labelName.length).split(",")
@@ -106,12 +126,13 @@ class MyJianLiActivity : BaseActivity() {
                 }
                 adapter.addAll(list as List<BaseRecyclerModel>?)
             }
-            phone.setText(it.phoneNum)
+            phone.setText("联系电话："+it.phoneNum)
             dialogPro!!.dismiss()
         }, {
             dialogPro!!.dismiss()
             startActivity(Intent(this, DisplayJianLiActivity::class.java))
             ToastUtils.showLongToast(this, "您还未创建简历请创建，让老板更了解你")
+            finish()
         })
     }
 }

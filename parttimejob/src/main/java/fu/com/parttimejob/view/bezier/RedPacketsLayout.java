@@ -4,13 +4,16 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
@@ -42,10 +45,9 @@ public class RedPacketsLayout extends RelativeLayout {
     private OnCloseListener listener;
     private int dHeight;//红包图片高度
     private int dWidth;//红包图片宽度
-
     private int mHeight;//view 高度
     private int mWidth;//view宽度
-
+    private ProgressDialog dialogPro = new ProgressDialog(getContext());
     private LayoutParams mLp;//红包布局参数
 
     private Drawable[] mDrawables;//红包图片
@@ -106,6 +108,25 @@ public class RedPacketsLayout extends RelativeLayout {
     }
 
     private void addPacket() {
+
+                dialogPro = new ProgressDialog(getContext());
+        dialogPro.setCanceledOnTouchOutside(false);
+        dialogPro.setMessage("小二加载中，大人请稍后~");
+        dialogPro.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialogInterface, int i, KeyEvent keyEvent) {
+                if (i == KeyEvent.KEYCODE_BACK && keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
+//                    val rxBusEntity = RxBusEntity()
+//                    rxBusEntity.msg = "77"
+//                    RxBus.getDefault().post(rxBusEntity)
+
+//                    finish()
+                    return true;
+                } else {
+                    return false; //默认返回 false
+                }
+            }
+        });
         ImageView imageView = null;
         if (mCacheQueue.isEmpty()) {
             imageView = new ImageView(getContext());
@@ -117,31 +138,9 @@ public class RedPacketsLayout extends RelativeLayout {
             imageView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    dialogPro.show();
                     removeView(view);
                     Random rdm = new Random();
-//                    if(rdm.nextBoolean()){
-//                        new JobDialog(getContext(), R.style.dialog, "招聘内容大撒大撒大撒大苏打大撒大撒撒大苏打", new  JobDialog.OnCloseListener (){
-//                            @Override
-//                            public void onClick(Dialog dialog, boolean confirm) {
-//                                Intent intent = new Intent(getContext(), JobInfoActivity.class);
-//                                getContext().startActivity(intent);
-//                                dialog.dismiss();
-//                            }
-//
-//                        })
-//                                .setTitle("招聘名称").show();
-//                    }else {
-//                        new RadDialog(getContext(), R.style.dialog, "获得10金币", new  RadDialog.OnCloseListener (){
-//                            @Override
-//                            public void onClick(Dialog dialog, boolean confirm) {
-//                                ToastUtils.showLongToast(getContext(), "跳到广告详情页");
-////                                Intent intent = new Intent(getContext(), JobInfoActivity.class);
-////                                getContext().startActivity(intent);
-//                                dialog.dismiss();
-//                            }
-//                        })
-//                                .setTitle("").show();
-//                    }
 
                     if (rdm.nextBoolean()) {
                         RxUtils.wrapRestCall(RetrofitFactory.INSTANCE.getRetrofit().randomGetOne(SPUtil.getString(getContext(), "thirdAccount", ""))).subscribe(new Consumer<SameCityBean>() {
@@ -158,12 +157,36 @@ public class RedPacketsLayout extends RelativeLayout {
 
                                 })
                                         .setTitle(sameCityBean.getLabel()).show();
+                                dialogPro.dismiss();
                             }
 
                         }, new Consumer<Throwable>() {
                             @Override
                             public void accept(Throwable throwable) throws Exception {
-                                ToastUtils.showLongToast(getContext(), throwable.getMessage().toString());
+                                RxUtils.wrapRestCall(RetrofitFactory.INSTANCE.getRetrofit().randomGetOneAdvertisement(SPUtil.getString(getContext(), "thirdAccount", ""))).subscribe(new Consumer<AdInfoBean>() {
+                                    @Override
+                                    public void accept(final AdInfoBean adInfoBean) throws Exception {
+                                        new RadDialog(getContext(), R.style.dialog, "恭喜获得"+adInfoBean.getNumberOfVirtualCoins()/adInfoBean.getRedEnvelopeNumber()+"金币", new RadDialog.OnCloseListener() {
+                                            @Override
+                                            public void onClick(Dialog dialog, boolean confirm) {
+                                                Intent intent = new Intent(getContext(), AdInfoActivity.class);
+                                                intent.putExtra("id",adInfoBean.getId());
+                                                getContext().startActivity(intent);
+                                                dialog.dismiss();
+                                            }
+                                        })
+                                                .setTitle("").show();
+                                        dialogPro.dismiss();
+                                    }
+
+                                }, new Consumer<Throwable>() {
+                                    @Override
+                                    public void accept(Throwable throwable) throws Exception {
+                                        dialogPro.dismiss();
+                                        ToastUtils.showLongToast(getContext(), throwable.getMessage().toString());
+                                    }
+                                });
+//                                ToastUtils.showLongToast(getContext(), throwable.getMessage().toString());
                             }
                         });
                     } else {
@@ -181,11 +204,13 @@ public class RedPacketsLayout extends RelativeLayout {
                                     }
                                 })
                                         .setTitle("").show();
+                                dialogPro.dismiss();
                             }
 
                         }, new Consumer<Throwable>() {
                             @Override
                             public void accept(Throwable throwable) throws Exception {
+                                dialogPro.dismiss();
                                 ToastUtils.showLongToast(getContext(), throwable.getMessage().toString());
                             }
                         });
