@@ -249,7 +249,7 @@ public interface ApiService {
 
 
     /**
-     *打我的招聘列表
+     *我的招聘列表
      *
      * @return
      */
@@ -303,5 +303,22 @@ public interface ApiService {
      */
     @POST("/appservice/app/jobhunter/singleRecruitmentDetail")
     Observable<ResponseBean<RecruitInfoBean>> singleRecruitmentDetail(@Query("thirdAccount") String thirdAccount,@Query("id") int id);
+
+
+    /**
+     *领取广告虚拟币接口
+     *
+     * @return
+     */
+    @POST("/appservice/app/jobhunter/receiveOfAdVirtual")
+    Observable<ResponseBean<String>> receiveOfAdVirtual(@Query("thirdAccount") String thirdAccount,@Query("id") int id);
+
+    /**
+     *领取招聘虚拟币接口
+     *
+     * @return
+     */
+    @POST("/appservice/app/jobhunter/receiveOfRecruitmentVirtual")
+    Observable<ResponseBean<String>> receiveOfRecruitmentVirtual(@Query("thirdAccount") String thirdAccount,@Query("id") int id);
 
 }

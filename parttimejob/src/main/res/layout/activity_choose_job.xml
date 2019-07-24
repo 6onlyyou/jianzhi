@@ -24,7 +24,15 @@
         android:text="我们会根据你选的工作给您推荐专属并且最优工作"
         android:textColor="@color/colorGray"
         android:textSize="15sp" />
-
+    <TextView
+        android:id="@+id/myla_job"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:text="我想找:"
+        android:textColor="@color/colorPrimary"
+        android:textSize="15sp" />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/dreamJobList"
         android:layout_width="match_parent"

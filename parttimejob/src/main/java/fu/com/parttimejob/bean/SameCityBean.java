@@ -9,7 +9,7 @@ import fu.com.parttimejob.base.baseadapter.BaseRecyclerModel;
  * Data：2019/7/14-23:11
  * Author: fushuaige
  */
-public class SameCityBean extends BaseRecyclerModel implements Serializable {
+public class SameCityBean extends BaseRecyclerModel  {
     private int id;
     private String companyName;
     private String label;
@@ -19,6 +19,15 @@ public class SameCityBean extends BaseRecyclerModel implements Serializable {
     private String salaryAndWelfare;
     private String contactAddress;
     private String businessLicenseImg;
+    private String city;
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
 
     public int getId() {
         return id;

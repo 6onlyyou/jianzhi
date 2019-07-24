@@ -17,7 +17,7 @@ class MyMoneyActivity : BaseActivity() {
     }
 
     override fun initViewClick() {
-        myMoneyTv.setText(SPUtil.getInt(this@MyMoneyActivity, "totalCount", 0))
+        myMoneyTv.setText(SPUtil.getInt(this@MyMoneyActivity, "totalCount", 0).toString())
         back.setOnClickListener {
             finish()
         }

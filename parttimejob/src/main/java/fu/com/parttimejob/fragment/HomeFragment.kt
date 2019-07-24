@@ -85,7 +85,9 @@ class HomeFragment : Fragment() {
         })
 
         brief_iv.setOnClickListener({
-            startActivity(Intent(context, MyJianLiActivity::class.java))
+            val intent = Intent(context, MyJianLiActivity::class.java)
+            intent.putExtra("beViewedAccount", "")
+            context!!.startActivity(intent)
         })
     }
 

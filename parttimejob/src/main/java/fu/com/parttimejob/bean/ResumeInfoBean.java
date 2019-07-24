@@ -14,6 +14,15 @@ public class ResumeInfoBean {
     private String picOrVedioSource;
     private String city;
     private String phoneNum;
+    private String labelName;
+
+    public String getLabelName() {
+        return labelName;
+    }
+
+    public void setLabelName(String labelName) {
+        this.labelName = labelName;
+    }
 
     public String getPhoneNum() {
         return phoneNum;

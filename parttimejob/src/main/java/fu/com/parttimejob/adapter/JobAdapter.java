@@ -29,14 +29,15 @@ public class JobAdapter extends BaseRecyclerViewAdapter {
 
         @Override
         public void onBindViewHolder(BaseRecyclerModel object, int position) {
-            JobInfoBean jobInfoBean = (JobInfoBean)object;
-            binding.jobName.setText(jobInfoBean.getCompanyName());
+            final JobInfoBean jobInfoBean = (JobInfoBean)object;
+            binding.jobName.setText(jobInfoBean.getLabel());
             binding.jobReward.setText("赠送"+jobInfoBean.getNumberOfVirtualCoins()+"金币");
-            binding.jobSalaryTv.setText(jobInfoBean.getSalaryAndWelfare()+"");
+            binding.jobSalaryTv.setText("工资:"+jobInfoBean.getSalaryAndWelfare()+"");
             binding.goJobinfo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(view.getContext(), JobInfoActivity.class);
+                    intent.putExtra("id",jobInfoBean.getId());
                     view.getContext().startActivity(intent);
                 }
             });

@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager
 import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -110,6 +111,15 @@ class MainActivity : BaseActivity() {
             override fun onPageSelected(position: Int) {
                 for (i in 0 until main_tab.tabCount) {
                     val selectTab = main_tab.getTabAt(i)
+                    if(position == 0){
+                        incl_titles.visibility = View.GONE
+                    }else if(position == 1){
+                        incl_titles.visibility = View.GONE
+                    }else if(position == 2){
+                        incl_titles.visibility = View.VISIBLE
+                    }else if(position == 3){
+                        incl_titles.visibility = View.GONE
+                    }
                     if (i == position) {
                         selectTab!!.select()
                         (selectTab.tag as ImageView).setColorFilter(ContextCompat.getColor(this@MainActivity, R.color.colorPrimary))

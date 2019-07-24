@@ -22,10 +22,19 @@ public class RecruitInfoBean {
     private String contactAddress;
     private String workContent;
     private String businessLicenseImg;
-    private String unclaimedVirtualCoins;
+    private int unclaimedVirtualCoins;
     private int forwordCount;
     private int viewCount;
     private int state;
+    private String headImg;
+
+    public String getHeadImg() {
+        return headImg;
+    }
+
+    public void setHeadImg(String headImg) {
+        this.headImg = headImg;
+    }
 
     public String getPhoneNumber() {
         return phoneNumber;
@@ -83,11 +92,11 @@ public class RecruitInfoBean {
         this.publichDate = publichDate;
     }
 
-    public String getUnclaimedVirtualCoins() {
+    public int getUnclaimedVirtualCoins() {
         return unclaimedVirtualCoins;
     }
 
-    public void setUnclaimedVirtualCoins(String unclaimedVirtualCoins) {
+    public void setUnclaimedVirtualCoins(int unclaimedVirtualCoins) {
         this.unclaimedVirtualCoins = unclaimedVirtualCoins;
     }
 

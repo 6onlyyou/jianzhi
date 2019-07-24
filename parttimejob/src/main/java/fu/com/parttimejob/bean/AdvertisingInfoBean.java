@@ -23,6 +23,15 @@ public class AdvertisingInfoBean extends BaseRecyclerModel {
     private int  unclaimedVirtualCoins;
     private String advertisementContent;
     private String headImg;
+    private int state;
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
 
     public String getHeadImg() {
         return headImg;

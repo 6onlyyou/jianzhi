@@ -2,7 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginLeft="-5dp"
     tools:context="fu.com.parttimejob.fragment.SquareFragment">
+
     <fu.com.parttimejob.view.bezier.RedPacketsLayout
         android:id="@+id/packets_layout"
         android:layout_width="match_parent"
@@ -11,7 +13,23 @@
 
     </fu.com.parttimejob.view.bezier.RedPacketsLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal">
 
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="红包广场"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
 
 
 

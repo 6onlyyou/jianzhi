@@ -151,7 +151,7 @@ public class RedPacketsLayout extends RelativeLayout {
                                     @Override
                                     public void onClick(Dialog dialog, boolean confirm) {
                                         Intent intent = new Intent(getContext(), JobInfoActivity.class);
-                                        intent.putExtra("id",sameCityBean.getId());
+                                        intent.putExtra("id", sameCityBean.getId());
                                         getContext().startActivity(intent);
                                         dialog.dismiss();
                                     }
@@ -160,6 +160,11 @@ public class RedPacketsLayout extends RelativeLayout {
                                         .setTitle(sameCityBean.getLabel()).show();
                             }
 
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                ToastUtils.showLongToast(getContext(), throwable.getMessage().toString());
+                            }
                         });
                     } else {
 
@@ -178,6 +183,11 @@ public class RedPacketsLayout extends RelativeLayout {
                                         .setTitle("").show();
                             }
 
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                ToastUtils.showLongToast(getContext(), throwable.getMessage().toString());
+                            }
                         });
                     }
 

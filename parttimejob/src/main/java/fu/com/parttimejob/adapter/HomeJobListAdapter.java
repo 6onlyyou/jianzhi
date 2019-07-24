@@ -28,7 +28,7 @@ public class HomeJobListAdapter extends BaseRecyclerViewAdapter {
 
         @Override
         public void onBindViewHolder(BaseRecyclerModel object, int position) {
-            JobInfoBean jobInfoBean = (JobInfoBean)object;
+            final JobInfoBean jobInfoBean = (JobInfoBean)object;
             binding.jobName.setText(jobInfoBean.getCompanyName());
             binding.jobReward.setText("赠送"+jobInfoBean.getNumberOfVirtualCoins()+"金币");
             binding.jobSalaryTv.setText(jobInfoBean.getSalaryAndWelfare()+"");
@@ -38,6 +38,7 @@ public class HomeJobListAdapter extends BaseRecyclerViewAdapter {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(view.getContext(), JobInfoActivity.class);
+                    intent.putExtra("id",jobInfoBean.getId());
                     view.getContext().startActivity(intent);
                 }
             });

@@ -10,6 +10,7 @@ import fu.com.parttimejob.R
 import fu.com.parttimejob.adapter.AdListAdapter
 import fu.com.parttimejob.base.BaseActivity
 import fu.com.parttimejob.base.baseadapter.BaseRecyclerModel
+import fu.com.parttimejob.base.baseadapter.OnItemClickListener
 import fu.com.parttimejob.retrofitNet.RxUtils
 import fu.com.parttimejob.utils.SPUtil
 import kotlinx.android.synthetic.main.activity_ad_list.*

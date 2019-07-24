@@ -26,10 +26,16 @@ class ChooseJobActivity : BaseActivity() {
     var strarr: List<String> ?=null
     var labelName:String ?=""
     override fun initViewParams() {
+        listself =  ArrayList<GetLabelsBean>();
         adapter = ChooseDreamJobListAdapter()
         dreamJobList.layoutManager = GridLayoutManager(this, 4) as RecyclerView.LayoutManager?
         dreamJobList.adapter = adapter
         adapter.setOnItemClickListener { view, t, position -> adapter.changeSelectPosition(position) }
+        if(SPUtil.getString(this@ChooseJobActivity,"labelName","").equals("")){
+            myla_job.setText("您还没选择想找的工作类型")
+        }else{
+            myla_job.setText("我想找："+SPUtil.getString(this@ChooseJobActivity,"labelName","")+"工作")
+        }
 
         if (SPUtil.getString(this@ChooseJobActivity,"labelName","")!= null && !SPUtil.getString(this@ChooseJobActivity,"labelName","").equals("")) {
             strarr = SPUtil.getString(this@ChooseJobActivity,"labelName","").substring(0, SPUtil.getString(this@ChooseJobActivity,"labelName","").length).split(",")
@@ -47,7 +53,6 @@ class ChooseJobActivity : BaseActivity() {
         var strarr: List<String>
         var list: ArrayList<GetLabelsBean> = ArrayList()
         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().getLabel()).subscribe({
-
             if (it.labels != null && !it.labels.equals("")) {
                 strarr = it.labels.substring(0, it.labels.length).split(",")
                 var index = 0;
@@ -57,33 +62,35 @@ class ChooseJobActivity : BaseActivity() {
                     index++//自增
                     list.add(baseRecyclerModel)
                 }
-                if(listself ==null||listself!!.size>0){
+                if(listself ==null||listself!!.size<1){
+                    adapter.addAll(list as List<BaseRecyclerModel>?)
+                }else{
                     val res =   AppUtils.setCollection(listself,list) as List<BaseRecyclerModel>?
                     adapter.addAll(res)
-                }else{
-                    adapter.addAll(list as List<BaseRecyclerModel>?)
                 }
-
-
             }
         }, {
             ToastUtils.showLongToast(applicationContext, it.message.toString())
         })
-
-
     }
 
     override fun initViewClick() {
         next.setOnClickListener({
             var index = 0;
             while(index<adapter.getselectPositionsData().size){
-                labelName = labelName+adapter.getselectPositionsData()[index].labels
+                if(labelName.equals("")){
+                    labelName = labelName+adapter.getselectPositionsData()[index].labels
+                }else{
+                    labelName = labelName+","+adapter.getselectPositionsData()[index].labels
+                }
+
                 index++//自增
             }
 
-            labelName = labelName+loginPwdEt.text.toString()
+            labelName = labelName+","+loginPwdEt.text.toString()
             RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().customizeLabel(SPUtil.getString(this,"thirdAccount",""),labelName)).subscribe({
                 ToastUtils.showLongToast(applicationContext, it)
+                SPUtil.putString(this,"labelName",labelName)
             }, {
                 ToastUtils.showLongToast(applicationContext, it.message.toString())
             })

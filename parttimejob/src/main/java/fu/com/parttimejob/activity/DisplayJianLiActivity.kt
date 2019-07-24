@@ -2,9 +2,13 @@ package fu.com.parttimejob.activity
 
 import android.Manifest
 import android.app.Activity
+import android.app.ProgressDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.support.v7.widget.GridLayoutManager
+import android.text.TextUtils
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
 import android.widget.Toast
 import com.heixiu.errand.net.RetrofitFactory
@@ -35,28 +39,67 @@ import java.util.*
 
 class DisplayJianLiActivity : BaseActivity() {
     private var selectList: List<LocalMedia> = ArrayList()
+    var dialogPro: ProgressDialog? = null
     private var adapter: GridImageAdapter? = null
     override fun getLayoutId(): Int {
         return R.layout.activity_display_jian_li
     }
 
     override fun initViewParams() {
-        pushjianli.setOnClickListener {
-            val builder: MultipartBody.Builder = MultipartBody.Builder()
-                    .setType(MultipartBody.FORM)
-            if (selectList!!.size < 1) {
-                builder.addFormDataPart("picOrVedio", File(selectList!!.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList!!.get(0).compressPath)));
-            } else {
-                for (i in selectList!!.indices) {
-                    builder.addFormDataPart("picOrVedio", File(selectList!!.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList!!.get(0).compressPath)));
+        dialogPro = ProgressDialog(this)
+        dialogPro!!.setCanceledOnTouchOutside(false)
+        dialogPro!!.setMessage("小二加载中，大人请稍后~")
+        dialogPro!!.setOnKeyListener(object : View.OnKeyListener, DialogInterface.OnKeyListener {
+            override fun onKey(p0: DialogInterface?, keyCode: Int, event: KeyEvent?): Boolean {
+                if (keyCode == KeyEvent.KEYCODE_BACK && event!!.getAction() == KeyEvent.ACTION_DOWN) {
+//                    val rxBusEntity = RxBusEntity()
+//                    rxBusEntity.msg = "77"
+//                    RxBus.getDefault().post(rxBusEntity)
+//                    dialogPro!!.dismiss()
+//                    finish()
+                    return true;
+                } else {
+                    return false; //默认返回 false
                 }
             }
-            val requestBody: RequestBody = builder.build();
-            RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().createPR(SPUtil.getString(this, "thirdAccount", "111"), jianliname.text.toString(), jianlisex.text.toString(),jianliage.text.toString(), jianlijianjie.text.toString(),requestBody)).subscribe(Consumer<String> {
-                ToastUtils.showLongToast(applicationContext, it.toString())
-            }, Consumer<Throwable> {
-                ToastUtils.showLongToast(applicationContext, it.message.toString())
-            })
+            override fun onKey(p0: View?, p1: Int, p2: KeyEvent?): Boolean {
+                return false
+            }
+
+        })
+        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().getResumeInfo(SPUtil.getString(this,"thirdAccount",""),SPUtil.getString(this,"thirdAccount",""))).subscribe({
+            jianliname.setText(it.name)
+            jianlisex.setText(it.sex)
+            jianliage.setText(it.age)
+            jianlijianjie.setText(it.personalProfile)
+        }, {
+        })
+        pushjianli.setOnClickListener {
+            dialogPro!!.show()
+            if (TextUtils.isEmpty(jianliname.text) || TextUtils.isEmpty(jianlisex.text)|| TextUtils.isEmpty(jianliage.text)|| TextUtils.isEmpty(jianlijianjie.text)){
+                ToastUtils.showLongToast(applicationContext, "请您把信息填写完整才能确定~")
+            }else{
+                val builder: MultipartBody.Builder = MultipartBody.Builder()
+                        .setType(MultipartBody.FORM)
+                if (selectList!!.size < 1) {
+                    builder.addFormDataPart("picOrVedio", File(selectList!!.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList!!.get(0).compressPath)));
+                } else {
+                    for (i in selectList!!.indices) {
+                        builder.addFormDataPart("picOrVedio", File(selectList!!.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList!!.get(0).compressPath)));
+                    }
+                }
+                val requestBody: RequestBody = builder.build();
+                RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().createPR(SPUtil.getString(this, "thirdAccount", "111"), jianliname.text.toString(), jianlisex.text.toString(),jianliage.text.toString(), jianlijianjie.text.toString(),requestBody)).subscribe(Consumer<String> {
+                    ToastUtils.showLongToast(applicationContext, it.toString())
+                    dialogPro!!.dismiss()
+                    finish()
+                }, Consumer<Throwable> {
+                    dialogPro!!.dismiss()
+                    ToastUtils.showLongToast(applicationContext, it.message.toString())
+                })
+
+            }
+
         }
     }
 

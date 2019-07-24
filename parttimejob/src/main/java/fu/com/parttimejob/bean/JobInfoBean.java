@@ -17,6 +17,15 @@ public class JobInfoBean extends BaseRecyclerModel {
     private String businessLicenseImg;
     private String publichDate;
     private String city;
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getPublichDate() {
         return publichDate;
