@@ -83,7 +83,7 @@ class ChooseJobActivity : BaseActivity() {
     }
 
     override fun initViewClick() {
-        next.setOnClickListener {
+            next.setOnClickListener {
             var index = 0
             while (index < adapter.getselectPositionsData().size) {
                 labelName = if (labelName.equals("")) {

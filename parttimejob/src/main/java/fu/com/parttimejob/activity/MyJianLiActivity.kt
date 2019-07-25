@@ -3,9 +3,11 @@ package fu.com.parttimejob.activity
 import android.app.ProgressDialog
 import android.content.DialogInterface
 import android.content.Intent
+import android.media.MediaMetadataRetriever
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import com.bumptech.glide.Glide
@@ -15,12 +17,14 @@ import fu.com.parttimejob.R
 import fu.com.parttimejob.adapter.ChooseDreamJobListAdapter
 import fu.com.parttimejob.base.BaseActivity
 import fu.com.parttimejob.base.baseadapter.BaseRecyclerModel
+import fu.com.parttimejob.bean.FileInfoEntilty
 import fu.com.parttimejob.bean.GetLabelsBean
 import fu.com.parttimejob.retrofitNet.RxUtils
 import fu.com.parttimejob.utils.AppUtils
 import fu.com.parttimejob.utils.SPUtil
 import kotlinx.android.synthetic.main.activity_my_jian_li.*
 import java.util.ArrayList
+import java.util.HashMap
 
 /**
  * 我的简历/求职者简历
@@ -79,11 +83,11 @@ class MyJianLiActivity : BaseActivity() {
         dialogPro!!.show()
         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().getResumeInfo(SPUtil.getString(this,"thirdAccount",""),beViewedAccount)).subscribe({
             name.setText(it.name)
-            val sexs = ""
+            var sexs = ""
             if(it.sex ==1){
-                val sexs = "男"
+                 sexs = "男"
             }else{
-                val sexs = "女"
+                 sexs = "女"
             }
 
 
@@ -135,4 +139,5 @@ class MyJianLiActivity : BaseActivity() {
             finish()
         })
     }
+
 }

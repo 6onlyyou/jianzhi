@@ -94,17 +94,17 @@ class RegisterActivity : BaseActivity() {
                 if (result == SMSSDK.RESULT_COMPLETE) {
                     if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
                         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().phoneregister(phoneEt.text.toString(), SPUtil.getInt(this@RegisterActivity, "Profession", 1), 3, pwdNextEt.text.toString())).subscribe({
+                            SPUtil.putBoolean(this@RegisterActivity,"register",it.register)
                             if (it.register) {
-                                ToastUtils.showLongToast(applicationContext, it.tip)
+                                ToastUtils.showLongToast(applicationContext, it.tip+"，请直接登入")
                             } else {
                                 SPUtil.putString(this@RegisterActivity,"thirdAccount",phoneEt.text.toString())
                                 ToastUtils.showLongToast(applicationContext, "注册成功")
-                                  if(SPUtil.getInt(this@RegisterActivity, "Profession", 2)==1){
-                                    startActivity(CreateJobCardActivity::class.java, true)
-                                }else{
-                                    startActivity(ChooseJobActivity::class.java, true)
-                                }
-                                finish()
+//                                  if(SPUtil.getInt(this@RegisterActivity, "Profession", 2)==1){
+//                                    startActivity(CreateJobCardActivity::class.java, true)
+//                                }else{
+                                    startActivity(LoginActivity::class.java, true)
+//                                }
                             }
                         }, {
                             ToastUtils.showLongToast(applicationContext, it.message.toString())

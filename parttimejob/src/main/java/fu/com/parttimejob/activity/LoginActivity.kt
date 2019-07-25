@@ -112,10 +112,22 @@ class LoginActivity : BaseActivity() {
         login_with_pwd.setOnClickListener {
             if (judgeIsCanLogin()) {
                 RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().login(loginPhoneEt.text.toString(), loginPwdEt.text.toString())).subscribe({
-                    ToastUtils.showLongToast(applicationContext, "登入成功")
-                    SPUtil.putString(applicationContext,"thirdAccount",loginPhoneEt.text.toString())
-                    SPUtil.putString(this, "token", it.token.toString())
-                    startPwdLogin()
+                    if (SPUtil.getBoolean(applicationContext,"",true)) {
+                        ToastUtils.showLongToast(applicationContext, "登入成功")
+                        SPUtil.putString(applicationContext,"thirdAccount",loginPhoneEt.text.toString())
+                        SPUtil.putString(this, "token", it.token.toString())
+                        startPwdLogin()
+                    } else {
+                        SPUtil.putString(applicationContext,"thirdAccount",loginPhoneEt.text.toString())
+                        ToastUtils.showLongToast(applicationContext, "注册成功")
+                        if(SPUtil.getInt(applicationContext, "Profession", 2)==1){
+                            startActivity(CreateJobCardActivity::class.java, true)
+                        }else{
+                            startActivity(ChooseJobActivity::class.java, true)
+                        }
+                        finish()
+                    }
+
                 }, {
                     ToastUtils.showLongToast(applicationContext, it.message.toString())
                 })
@@ -227,8 +239,8 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun startPwdLogin() {
-        startActivity(ChooseJobActivity::class.java, true)
-//        startActivity(MainActivity::class.java, true)
+//        startActivity(ChooseJobActivity::class.java, true)
+        startActivity(MainActivity::class.java, true)
         finish()
     }
 

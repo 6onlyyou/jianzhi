@@ -193,7 +193,9 @@
             <com.amap.api.maps2d.MapView
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_marginTop="15dp"></com.amap.api.maps2d.MapView>
+                android:layout_marginTop="15dp">
+
+            </com.amap.api.maps2d.MapView>
 
             <TextView
                 android:id="@+id/phone"

@@ -3,8 +3,12 @@ package fu.com.parttimejob.activity
 import android.Manifest
 import android.app.Activity
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.media.MediaMetadataRetriever
+import android.os.AsyncTask
+import android.os.Environment
 import android.support.v7.widget.GridLayoutManager
 import android.text.TextUtils
 import android.util.Log
@@ -12,6 +16,7 @@ import android.view.KeyEvent
 import android.view.View
 import android.widget.Toast
 import com.heixiu.errand.net.RetrofitFactory
+import com.iceteck.silicompressorr.SiliCompressor
 import com.lljjcoder.citylist.Toast.ToastUtils
 import com.longsh.optionframelibrary.OptionCenterDialog
 import com.luck.picture.lib.PictureSelector
@@ -23,6 +28,7 @@ import com.luck.picture.lib.tools.PictureFileUtils
 import fu.com.parttimejob.R
 import fu.com.parttimejob.adapter.GridImageAdapter
 import fu.com.parttimejob.base.BaseActivity
+import fu.com.parttimejob.bean.FileInfoEntilty
 import fu.com.parttimejob.retrofitNet.RxUtils
 import fu.com.parttimejob.utils.FullyGridLayoutManager
 import fu.com.parttimejob.utils.SPUtil
@@ -34,6 +40,7 @@ import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
+import java.net.URISyntaxException
 import java.util.*
 
 
@@ -69,11 +76,11 @@ class DisplayJianLiActivity : BaseActivity() {
         })
         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().getResumeInfo(SPUtil.getString(this,"thirdAccount",""),SPUtil.getString(this,"thirdAccount",""))).subscribe({
             jianliname.setText(it.name)
-            val sexs = ""
+            var sexs = ""
             if(it.sex ==1){
-                val sexs = "男"
+                 sexs = "男"
             }else{
-                val sexs = "女"
+                 sexs = "女"
             }
             jianlisex.setText(sexs)
             jianliage.setText(it.age)
@@ -81,34 +88,58 @@ class DisplayJianLiActivity : BaseActivity() {
         }, {
         })
         pushjianli.setOnClickListener {
-            dialogPro!!.show()
+
             if (TextUtils.isEmpty(jianliname.text) || TextUtils.isEmpty(jianlisex.text)|| TextUtils.isEmpty(jianliage.text)|| TextUtils.isEmpty(jianlijianjie.text)){
                 ToastUtils.showLongToast(applicationContext, "请您把信息填写完整才能确定~")
             }else{
-                val builder: MultipartBody.Builder = MultipartBody.Builder()
-                        .setType(MultipartBody.FORM)
-                if (selectList!!.size < 1) {
-                    builder.addFormDataPart("picOrVedio", File(selectList!!.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList!!.get(0).compressPath)));
-                } else {
-                    for (i in selectList!!.indices) {
-                        builder.addFormDataPart("picOrVedio", File(selectList!!.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList!!.get(0).compressPath)));
-                    }
-                }
-                val requestBody: RequestBody = builder.build();
-                var sex = 0
-                if( jianlisex.text.toString().equals("男")){
-                    sex = 1
+                dialogPro!!.show()
+                if (selectList!!.get(0).path.contains(".rmvb") || selectList!!.get(0).path.contains(".avi") || selectList!!.get(0).path.contains(".mkv") || selectList!!.get(0).path.contains(".mov") || selectList!!.get(0).path.contains(".flv") || selectList!!.get(0).path.contains(".3gp") || selectList!!.get(0).path.contains(".mp4")) {
+//                    val folder = File(CameraApp.getInstance().getAllSdPaths(this@TakePictureActivity)[0] + "/CameraJXD")
+//                    if (!folder.exists()) {
+//                        folder.mkdirs()
+//                    }
+//                    val picture = File(CameraApp.getInstance().getAllSdPaths(this@TakePictureActivity)[0] + "/CameraJXD/" + fname)
+//
+//                    Log.d("jxd", "path " + picture.getPath() + "getAbsolutePath " + picture.getAbsolutePath())
+//                    try {
+//                        val fos = FileOutputStream(picture.getPath()) // Get file output stream
+//                        fos.write(params[0]) // Written to the file
+//                        fos.close()
+//                    } catch (e: Exception) {
+//                        e.printStackTrace()
+//                    }
+
+
+                    val f = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).toString() + "/compressor/videos")
+                    if (f.mkdirs() || f.isDirectory)
+                        VideoCompressAsyncTask(this).execute(selectList!!.get(0).path, f.path, fileInfoEntilty!!.get(0).filewidth, fileInfoEntilty!!.get(0).fileheight)
                 }else{
-                    sex = 2
+                    val builder: MultipartBody.Builder = MultipartBody.Builder()
+                            .setType(MultipartBody.FORM)
+                    if (selectList!!.size < 1) {
+                        builder.addFormDataPart("picOrVedio", File(selectList!!.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList!!.get(0).compressPath)));
+                    } else {
+                        for (i in selectList!!.indices) {
+                            builder.addFormDataPart("picOrVedio", File(selectList!!.get(0).path).name, RequestBody.create(MediaType.parse("image/*"), File(selectList!!.get(0).path)));
+                        }
+                    }
+                    val requestBody: RequestBody = builder.build();
+                    var sex = 0
+                    if( jianlisex.text.toString().equals("男")){
+                        sex = 1
+                    }else{
+                        sex = 2
+                    }
+                    RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().createPR(SPUtil.getString(this, "thirdAccount", "111"), jianliname.text.toString(), sex,jianliage.text.toString(), jianlijianjie.text.toString(),requestBody)).subscribe(Consumer<String> {
+                        ToastUtils.showLongToast(applicationContext, it.toString())
+                        dialogPro!!.dismiss()
+                        finish()
+                    }, Consumer<Throwable> {
+                        dialogPro!!.dismiss()
+                        ToastUtils.showLongToast(applicationContext, it.message.toString())
+                    })
                 }
-                RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().createPR(SPUtil.getString(this, "thirdAccount", "111"), jianliname.text.toString(), sex,jianliage.text.toString(), jianlijianjie.text.toString(),requestBody)).subscribe(Consumer<String> {
-                    ToastUtils.showLongToast(applicationContext, it.toString())
-                    dialogPro!!.dismiss()
-                    finish()
-                }, Consumer<Throwable> {
-                    dialogPro!!.dismiss()
-                    ToastUtils.showLongToast(applicationContext, it.message.toString())
-                })
+
 
             }
 
@@ -163,24 +194,24 @@ override fun initViewClick() {
     })
 
     // 清空图片缓存，包括裁剪、压缩后的图片 注意:必须要在上传完成后调用 必须要获取权限
-//    val permissions = RxPermissions(this)
-//    permissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(object : Observer<Boolean> {
-//        override fun onNext(aBoolean: Boolean) {
-//            if (aBoolean!!) {
-//                PictureFileUtils.deleteCacheDirFile(this@DisplayJianLiActivity)
-//            } else {
-//                Toast.makeText(this@DisplayJianLiActivity,
-//                        getString(R.string.picture_jurisdiction), Toast.LENGTH_SHORT).show()
-//            }
-//        }
+    val permissions = RxPermissions(this)
+    permissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(object : Observer<Boolean> {
+        override fun onNext(aBoolean: Boolean) {
+            if (aBoolean!!) {
+                PictureFileUtils.deleteCacheDirFile(this@DisplayJianLiActivity)
+            } else {
+                Toast.makeText(this@DisplayJianLiActivity,
+                        getString(R.string.picture_jurisdiction), Toast.LENGTH_SHORT).show()
+            }
+        }
 //
-//        override fun onSubscribe(d: Disposable) {}
-//
-//
-//        override fun onError(e: Throwable) {}
-//
-//        override fun onComplete() {}
-//    })
+        override fun onSubscribe(d: Disposable) {}
+
+
+        override fun onError(e: Throwable) {}
+
+        override fun onComplete() {}
+    })
 }
 
 private val onAddPicClickListener = object : GridImageAdapter.onAddPicClickListener {
@@ -219,7 +250,7 @@ private val onAddPicClickListener = object : GridImageAdapter.onAddPicClickListe
                 //                        .videoMaxSecond(15)
                 //                        .videoMinSecond(10)
                 //.previewEggs(false)// 预览图片时 是否增强左右滑动图片体验(图片滑动一半即可看到上一张是否选中)
-                //.cropCompressQuality(90)// 裁剪压缩质量 默认100
+                .cropCompressQuality(90)// 裁剪压缩质量 默认100
                 .minimumCompressSize(100)// 小于100kb的图片不压缩
                 //.cropWH()// 裁剪宽高比，设置如果大于图片本身宽高则无效
                 //.rotateEnabled(true) // 裁剪是否可旋转图片
@@ -238,7 +269,10 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
         when (requestCode) {
             PictureConfig.CHOOSE_REQUEST -> {
                 // 图片选择结果回调
+
                 selectList = PictureSelector.obtainMultipleResult(data)
+
+                getPlayTime(selectList.get(0).path, 0)
                 // 例如 LocalMedia 里面返回三种path
                 // 1.media.getPath(); 为原图path
                 // 2.media.getCutPath();为裁剪后path，需判断media.isCut();是否为true
@@ -254,4 +288,89 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
         }
     }
 }
+    var fileInfoEntilty: ArrayList<FileInfoEntilty>? = null
+    fun getPlayTime(mUri: String, type: Int): String {
+        fileInfoEntilty = ArrayList<FileInfoEntilty>()
+        HashMap<String, String>()
+        val mmr = MediaMetadataRetriever();
+        try {
+            val fileInfo = FileInfoEntilty()
+            mmr.setDataSource(mUri);
+            val duration = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);//时长(毫秒)
+            val width = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH);//宽
+            val height = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT);//高
+            fileInfo.filewidth = width
+            fileInfo.fileheight = height
+            fileInfoEntilty!!.add(fileInfo)
+//            Toast.makeText(this, "playtime:" + duration + "w=" + width + "h=" + height, Toast.LENGTH_SHORT).show();
+            Log.e("duration", duration);
+
+            return duration;
+        } catch (ex: Exception) {
+            Log.e("duration", ex.toString());
+        } finally {
+            mmr.release();
+        }
+
+        return "";
+    }
+    internal inner class VideoCompressAsyncTask(var mContext: Context) : AsyncTask<String, String, String>() {
+
+        override fun onPreExecute() {
+            super.onPreExecute()
+        }
+
+        override fun doInBackground(vararg paths: String): String? {
+            var filePath: String? = null
+            var width: Int? = paths[2].toInt()
+            var hight: Int? = paths[3].toInt()
+            try {
+                if (paths[2].toInt() > 300) {
+                    if (paths[2].toInt() > 1000) {
+                        hight = paths[3].toInt() - 200
+                        width = paths[2].toInt() - 200
+                    } else {
+                        hight = paths[3].toInt() - 100
+                        width = paths[2].toInt() - 100
+                    }
+                }
+                filePath = SiliCompressor.with(mContext).compressVideo(paths[0], paths[1], width!!, hight!!, 1800000)
+
+            } catch (e: URISyntaxException) {
+                e.printStackTrace()
+            }
+            return filePath
+        }
+
+
+        override fun onPostExecute(compressedFilePath: String) {
+            super.onPostExecute(compressedFilePath)
+                val builder: MultipartBody.Builder = MultipartBody.Builder()
+                        .setType(MultipartBody.FORM)
+                if (selectList!!.size < 1) {
+                    builder.addFormDataPart("picOrVedio", File(compressedFilePath).name, RequestBody.create(MediaType.parse("image/*"), File(compressedFilePath)));
+                } else {
+                    for (i in selectList!!.indices) {
+                        builder.addFormDataPart("picOrVedio", File(compressedFilePath).name, RequestBody.create(MediaType.parse("image/*"), File(compressedFilePath)));
+                    }
+                }
+                val requestBody: RequestBody = builder.build();
+                var sex = 0
+                if( jianlisex.text.toString().equals("男")){
+                    sex = 1
+                }else{
+                    sex = 2
+                }
+                RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().createPR(SPUtil.getString(this@DisplayJianLiActivity, "thirdAccount", "111"), jianliname.text.toString(), sex,jianliage.text.toString(), jianlijianjie.text.toString(),requestBody)).subscribe(Consumer<String> {
+                    ToastUtils.showLongToast(applicationContext, it.toString())
+                    dialogPro!!.dismiss()
+                    finish()
+                }, Consumer<Throwable> {
+                    dialogPro!!.dismiss()
+                    ToastUtils.showLongToast(applicationContext, it.message.toString())
+                })
+
+            }
+
+        }
 }

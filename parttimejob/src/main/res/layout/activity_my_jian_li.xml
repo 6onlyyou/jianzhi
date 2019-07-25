@@ -53,8 +53,11 @@
 
             <ImageView
                 android:id="@+id/myPhoto"
+                android:layout_marginTop="15dp"
                 android:layout_width="345dp"
                 android:layout_height="216dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
                 android:src="@mipmap/ic_launcher" />
             />
 
@@ -132,11 +135,10 @@
 
             <TextView
                 android:id="@+id/phone"
-                android:layout_width="72dp"
-                android:layout_height="22dp"
-                android:layout_below="@+id/jobYixiangList"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignStart="@+id/jobYixiangList"
                 android:text="联系电话："
                 android:textColor="#ff8b8b8b"
                 android:textSize="14sp" />
