@@ -63,7 +63,13 @@ public class TalentFragmentAdapter extends PagerAdapter {
         TextView name  = view.findViewById(R.id.name);
         name.setText(data.get(position).getName());
         TextView sex  = view.findViewById(R.id.sex);
-        sex.setText(data.get(position).getSex()+"  "+data.get(position).getAge()+"岁");
+        String sexs = "";
+        if (data.get(position).getSex() == 1) {
+            sexs = "男";
+        } else {
+            sexs = "女";
+        }
+        sex.setText(sexs+"  "+data.get(position).getAge()+"岁");
         TextView myInfo  = view.findViewById(R.id.myInfo);
         myInfo.setText(data.get(position).getPersonalProfile());
         TextView phone  = view.findViewById(R.id.phone);

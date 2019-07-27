@@ -5,29 +5,31 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_marginLeft="50dp"
-    android:layout_marginRight="50dp"
+    android:layout_margin="25dp"
     app:cardUseCompatPadding="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="471dp">
+
         <LinearLayout
             android:id="@+id/myPhotos"
-            android:layout_width="345dp"
+            android:layout_width="match_parent"
             android:layout_height="216dp"
             android:orientation="vertical">
+
             <cn.jzvd.JZVideoPlayerStandard
                 android:id="@+id/videoplayer"
                 android:layout_width="match_parent"
-                android:visibility="gone"
                 android:layout_height="216dp"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"/>
+                android:layout_centerHorizontal="true"
+                android:visibility="gone" />
+
             <ImageView
                 android:id="@+id/myPhoto"
                 android:layout_width="match_parent"
-                android:layout_height="216dp"
+                android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:scaleType="centerCrop"
@@ -76,27 +78,27 @@
             android:layout_marginTop="9dp"
             android:text="男 30岁"
             android:textColor="#8b8b8b"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/myInfo"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/sex"
             android:layout_margin="15dp"
             android:text="我是一个活泼开朗，我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗。"
             android:textColor="#cfcfcf"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/phone"
-            android:layout_width="72dp"
+            android:layout_width="wrap_content"
             android:layout_height="22dp"
+            android:layout_alignStart="@+id/myInfo"
             android:layout_below="@+id/myInfo"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="10dp"
             android:text="联系电话："
             android:textColor="#ff8b8b8b"
+            android:layout_marginBottom="12dp"
             android:textSize="14sp" />
     </RelativeLayout>
 
