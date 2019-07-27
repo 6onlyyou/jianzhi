@@ -130,7 +130,7 @@ class DisplayJianLiActivity : BaseActivity() {
                     }else{
                         sex = 2
                     }
-                    RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().createPR(SPUtil.getString(this, "thirdAccount", "111"), jianliname.text.toString(), sex,jianliage.text.toString(), jianlijianjie.text.toString(),requestBody)).subscribe(Consumer<String> {
+                    RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().createPR(SPUtil.getString(this, "thirdAccount", "111"), jianliname.text.toString(), sex,jianliage.text.toString(), jianlijianjie.text.toString(),requestBody,SPUtil.getString(this@DisplayJianLiActivity,"city","廊坊市"))).subscribe(Consumer<String> {
                         ToastUtils.showLongToast(applicationContext, it.toString())
                         dialogPro!!.dismiss()
                         finish()
@@ -361,7 +361,7 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
                 }else{
                     sex = 2
                 }
-                RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().createPR(SPUtil.getString(this@DisplayJianLiActivity, "thirdAccount", "111"), jianliname.text.toString(), sex,jianliage.text.toString(), jianlijianjie.text.toString(),requestBody)).subscribe(Consumer<String> {
+                RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().createPR(SPUtil.getString(this@DisplayJianLiActivity, "thirdAccount", "111"), jianliname.text.toString(), sex,jianliage.text.toString(), jianlijianjie.text.toString(),requestBody,SPUtil.getString(this@DisplayJianLiActivity,"city","廊坊市"))).subscribe(Consumer<String> {
                     ToastUtils.showLongToast(applicationContext, it.toString())
                     dialogPro!!.dismiss()
                     finish()

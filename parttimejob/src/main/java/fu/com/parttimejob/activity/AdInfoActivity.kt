@@ -4,8 +4,10 @@ import android.app.Dialog
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import com.bumptech.glide.Glide
 import com.heixiu.errand.net.RetrofitFactory
 import com.lljjcoder.citylist.Toast.ToastUtils
@@ -14,6 +16,8 @@ import fu.com.parttimejob.base.BaseActivity
 import fu.com.parttimejob.bean.AdvertisingInfoBean
 import fu.com.parttimejob.dialog.HintDialog
 import fu.com.parttimejob.retrofitNet.RxUtils
+import fu.com.parttimejob.utils.DialogShowPic
+import fu.com.parttimejob.utils.DialogShowPicP
 import fu.com.parttimejob.utils.GlideUtil
 import fu.com.parttimejob.utils.SPUtil
 import kotlinx.android.synthetic.main.activity_ad_info.*
@@ -46,8 +50,11 @@ class AdInfoActivity : BaseActivity() {
                         .load( it.getHeadImg())
                         .placeholder(R.mipmap.defind)
                         .into(ava)
-            }
 
+            }
+            ava.setOnClickListener {
+                DlgForBigPhto(advertisingInfoBean!!.getHeadImg())
+            }
             name.setText(it.companyName)
             time.setText("发布时间："+it.publichDate)
             location.setText("地点："+it.city)
@@ -108,5 +115,37 @@ class AdInfoActivity : BaseActivity() {
             }
         })
                 .setTitle("").show()
+    }
+
+    private fun DlgForBigPhto(url: String) {
+        val pDialogMy = DialogShowPic(this)
+        pDialogMy.SetStyle(R.style.myDialogTheme1)
+        pDialogMy.InitDialog(object : DialogShowPicP {
+            lateinit var dialog6LlBckgrnd: LinearLayout
+            lateinit var dialog6IvPic: ImageView
+            override fun SetDialogView(pDialog: Dialog, pDialogMy: DialogShowPic) {
+                pDialog.setContentView(R.layout.show_pic)
+                dialog6LlBckgrnd = pDialog.findViewById<View>(R.id.dialog6LlBckgrnd) as LinearLayout
+                dialog6LlBckgrnd.setOnClickListener(pDialogMy)
+                dialog6IvPic = pDialog.findViewById<View>(R.id.dialog6IvPic) as ImageView
+//                Glide.with(dialog6IvPic.context)
+//                        .load(url)
+//                        .into(dialog6IvPic)
+                Glide.with(this@AdInfoActivity)
+                        .load(url)
+                        .placeholder(R.mipmap.defind)
+                        .into(dialog6IvPic)
+                dialog6IvPic.setOnClickListener { pDialog.dismiss() }
+            }
+
+            override fun SetOnClickListener(v: View, pDialogMy: DialogShowPic) {
+                if (v === dialog6LlBckgrnd) {
+                    pDialogMy.Destroy()
+                }
+            }
+
+            override fun SetOnKeyListener(keyCode: Int, event: KeyEvent) {}
+        })
+        pDialogMy.Show()
     }
 }

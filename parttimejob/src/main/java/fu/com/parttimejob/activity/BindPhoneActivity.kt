@@ -1,5 +1,6 @@
 package fu.com.parttimejob.activity
 
+import android.graphics.Color
 import android.os.CountDownTimer
 import android.os.Handler
 import android.os.Message
@@ -15,25 +16,17 @@ import fu.com.parttimejob.base.BaseActivity
 import fu.com.parttimejob.retrofitNet.RxUtils
 import fu.com.parttimejob.utils.CountDownTimerUtils
 import fu.com.parttimejob.utils.SPUtil
-import kotlinx.android.synthetic.main.activity_register.*
-import android.graphics.Color.parseColor
-import android.databinding.adapters.TextViewBindingAdapter.setText
-import android.graphics.Color
+import kotlinx.android.synthetic.main.activity_bindr.*
 
-
-
-
-
-
-class RegisterActivity : BaseActivity() {
+class BindPhoneActivity : BaseActivity() {
     var mCountDownTimerUtils: CountDownTimerUtils? = null
     var handler: Handler = object : Handler() {
         override fun handleMessage(msg: Message) {
             super.handleMessage(msg)
             if (msg.what == 1) {
-                showToast("验证码错误："+msg.obj)
+                showToast("验证码错误：" + msg.obj)
             } else if (msg.what == 2) {
-                showToast("获取验证码失败"+msg.obj)
+                showToast("获取验证码失败" + msg.obj)
             } else if (msg.what == 4) {
                 SPUtil.putString(applicationContext, "ronyuntoken", msg.obj.toString())
             } else if (msg.what == 5) {
@@ -44,7 +37,7 @@ class RegisterActivity : BaseActivity() {
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.activity_register
+        return R.layout.activity_bindr
     }
 
     override fun initViewParams() {
@@ -53,7 +46,6 @@ class RegisterActivity : BaseActivity() {
 
     private var time: TimeCount? = null
     override fun initViewClick() {
-
         time = TimeCount(60000, 1000)
         mCountDownTimerUtils = CountDownTimerUtils(getPhoneCodeTv, 60000, 1000)
         getPhoneCodeTv.setOnClickListener({
@@ -104,19 +96,10 @@ class RegisterActivity : BaseActivity() {
             override fun afterEvent(event: Int, result: Int, data: Any?) {
                 if (result == SMSSDK.RESULT_COMPLETE) {
                     if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
-                        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().phoneregister(phoneEt.text.toString(), SPUtil.getInt(this@RegisterActivity, "Profession", 1), 3, pwdNextEt.text.toString())).subscribe({
-                            SPUtil.putBoolean(this@RegisterActivity,"register",it.register)
-                            if (it.register) {
-                                ToastUtils.showLongToast(applicationContext, it.tip+"，请直接登入")
-                            } else {
-                                SPUtil.putString(this@RegisterActivity,"thirdAccount",phoneEt.text.toString())
-                                ToastUtils.showLongToast(applicationContext, "注册成功")
-//                                  if(SPUtil.getInt(this@RegisterActivity, "Profession", 2)==1){
-//                                    startActivity(CreateJobCardActivity::class.java, true)
-//                                }else{
-                                    startActivity(LoginActivity::class.java, true)
-//                                }
-                            }
+                        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().bindPhoneNum(SPUtil.getString(this@BindPhoneActivity, "thirdAccount", ""), phoneEt.text.toString())).subscribe({
+                            ToastUtils.showLongToast(applicationContext, "绑定成功")
+                            SPUtil.putString(this@BindPhoneActivity,"phoneNumber",phoneEt.text.toString())
+                            finish()
                         }, {
                             ToastUtils.showLongToast(applicationContext, it.message.toString())
                         })
@@ -134,7 +117,7 @@ class RegisterActivity : BaseActivity() {
     }
 
     private fun judgeIsCanRegister(): Boolean {
-        if (TextUtils.isEmpty(phoneEt.text) || TextUtils.isEmpty(smsCodeEt.text) || TextUtils.isEmpty(pwdEt.text) || TextUtils.isEmpty(pwdNextEt.text)) {
+        if (TextUtils.isEmpty(phoneEt.text) || TextUtils.isEmpty(smsCodeEt.text)) {
             showToast("您的信息未填写完整!")
             return false
         }
@@ -166,6 +149,7 @@ class RegisterActivity : BaseActivity() {
     override fun isTranslucent(): Boolean {
         return true
     }
+
     override fun onDestroy() {
         super.onDestroy()
         SMSSDK.unregisterAllEventHandler()

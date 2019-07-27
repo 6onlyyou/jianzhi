@@ -82,14 +82,15 @@
                 android:textColor="#ff8b8b8b"
                 android:textSize="15sp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/hongbaoSize"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="8dp"
+                android:inputType="number"
+                android:background="@null"
                 android:layout_marginRight="15dp"
-                android:drawableRight="@mipmap/ic_next"
                 android:hint="请选择红包数"
                 android:singleLine="true"
                 android:textSize="16sp" />
@@ -165,8 +166,8 @@
                 android:background="@color/colorLine" />
 
             <TextView
-                android:layout_width="57dp"
-                android:layout_height="22dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="20dp"
                 android:text="广告活动内容"
@@ -199,14 +200,20 @@
                 android:text="添加图片详情(选填)"
                 android:textColor="#ff222222"
                 android:textSize="14sp" />
-
-            <ImageView
-                android:id="@+id/jina_pic"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
                 android:layout_width="91dp"
                 android:layout_height="91dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="7dp"
-                android:background="@mipmap/ic_add_photo" />
+                android:overScrollMode="never" />
+            <!--<ImageView-->
+                <!--android:id="@+id/jina_pic"-->
+                <!--android:layout_width="91dp"-->
+                <!--android:layout_height="91dp"-->
+                <!--android:layout_marginLeft="15dp"-->
+                <!--android:layout_marginTop="7dp"-->
+                <!--android:background="@mipmap/ic_add_photo" />-->
 
             <TextView
                 android:id="@+id/publish"
@@ -217,6 +224,7 @@
                 android:background="@drawable/bg_round_bq"
                 android:gravity="center"
                 android:text="发布"
+                android:layout_marginBottom="100dp"
                 android:textColor="@color/colorWhite"
                 android:textSize="15sp" />
 

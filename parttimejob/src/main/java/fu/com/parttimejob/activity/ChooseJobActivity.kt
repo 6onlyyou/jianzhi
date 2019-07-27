@@ -98,6 +98,7 @@ class ChooseJobActivity : BaseActivity() {
             labelName = labelName + "," + loginPwdEt.text.toString()
             RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().customizeLabel(SPUtil.getString(this, "thirdAccount", ""), labelName)).subscribe({
                 ToastUtils.showLongToast(applicationContext, it)
+                SPUtil.putBoolean(this@ChooseJobActivity, "sfcustomizeLabel",true )
                 SPUtil.putString(this, "labelName", labelName)
             }, {
                 ToastUtils.showLongToast(applicationContext, it.message.toString())

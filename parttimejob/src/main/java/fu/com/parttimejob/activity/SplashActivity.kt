@@ -31,20 +31,37 @@ class SplashActivity : BaseActivity() {
                 runOnUiThread {
                     time_txt.text = time--.toString()
                     if (time == -1) {
-                        if(SPUtil.getString(this@SplashActivity,"thirdAccount","").equals("")){
+                        if (SPUtil.getString(this@SplashActivity, "thirdAccount", "").equals("")) {
                             startActivity(ChooseProfessionActivity::class.java, true)
-                        }else{
-                            RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().getUserInfo(SPUtil.getString(this@SplashActivity,"thirdAccount",""), SPUtil.getInt(this@SplashActivity, "Profession", 1), SPUtil.getString(this@SplashActivity, "longitude", ""), SPUtil.getString(this@SplashActivity, "latitude", ""),SPUtil.getString(this@SplashActivity, "city", ""),SPUtil.getString(this@SplashActivity, "token", ""))).subscribe({
-                                SPUtil.putInt(this@SplashActivity,"loginType",it.loginType)
-                                SPUtil.putString(this@SplashActivity,"registrationDate",it.registrationDate)
-                                SPUtil.putString(this@SplashActivity,"city",it.city)
-                                SPUtil.putString(this@SplashActivity,"longitude",it.longitude)
-                                SPUtil.putString(this@SplashActivity,"latitude",it.latitude)
-                                SPUtil.putString(this@SplashActivity,"inviteCode",it.inviteCode)
-                                SPUtil.putString(this@SplashActivity,"labelName",it.labelName)
-                                SPUtil.putInt(this@SplashActivity,"totalCount",it.totalCount)
-                                SPUtil.putInt(this@SplashActivity,"inviteCount",it.inviteCount)
-                                startActivity(MainActivity::class.java, true)
+                        } else {
+                            RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().getUserInfo(SPUtil.getString(this@SplashActivity, "thirdAccount", ""), SPUtil.getInt(this@SplashActivity, "Profession", 1), SPUtil.getString(this@SplashActivity, "longitude", ""), SPUtil.getString(this@SplashActivity, "latitude", ""), SPUtil.getString(this@SplashActivity, "city", ""), SPUtil.getString(this@SplashActivity, "token", ""))).subscribe({
+                                SPUtil.putInt(this@SplashActivity, "loginType", it.loginType)
+                                SPUtil.putString(this@SplashActivity, "registrationDate", it.registrationDate)
+                                SPUtil.putString(this@SplashActivity, "city", it.city)
+                                SPUtil.putString(this@SplashActivity, "longitude", it.longitude)
+                                SPUtil.putString(this@SplashActivity, "latitude", it.latitude)
+                                SPUtil.putString(this@SplashActivity, "inviteCode", it.inviteCode)
+                                SPUtil.putString(this@SplashActivity, "labelName", it.labelName)
+                                SPUtil.putString(this@SplashActivity, "phoneNumber", it.labelName)
+                                SPUtil.putInt(this@SplashActivity, "totalCount", it.totalCount)
+                                SPUtil.putInt(this@SplashActivity, "inviteCount", it.inviteCount)
+
+//                                if (SPUtil.getInt(this@SplashActivity, "Profession", 2) == 1) {
+//                                    if (SPUtil.getBoolean(this@SplashActivity, "sfcreateCard", false)) {
+//                                        startActivity(MainActivity::class.java, true)
+//                                    } else {
+//                                        startActivity(CreateJobCardActivity::class.java, true)
+//                                    }
+//                                } else {
+//                                    if (SPUtil.getBoolean(this@SplashActivity, "sfcustomizeLabel", false)) {
+
+                                        startActivity(MainActivity::class.java, true)
+//                                    } else {
+//                                        startActivity(ChooseJobActivity::class.java, true)
+//                                    }
+//                                }
+
+
                             }, {
                                 ToastUtils.showLongToast(applicationContext, it.message.toString())
                             })
@@ -59,36 +76,51 @@ class SplashActivity : BaseActivity() {
         app_version_txt.text = AppUtils.getAppVersion(this)
         LocationUtils().getLocation(this, object : AMapLocationListener {
             override fun onLocationChanged(amapLocation: AMapLocation?) {
-                SPUtil.putString(this@SplashActivity,"longitude", amapLocation!!.getLongitude().toString())
-                SPUtil.putString(this@SplashActivity,"latitude", amapLocation!!.getLatitude().toString())
-                SPUtil.putString(this@SplashActivity,"city",amapLocation.city)
+                SPUtil.putString(this@SplashActivity, "longitude", amapLocation!!.getLongitude().toString())
+                SPUtil.putString(this@SplashActivity, "latitude", amapLocation!!.getLatitude().toString())
+                SPUtil.putString(this@SplashActivity, "city", amapLocation.city)
             }
         })
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             //申请WRITE_EXTERNAL_STORAGE权限
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION
             ), 1)//自定义的code
         }
     }
 
     override fun initViewClick() {
         go_experience_txt.setOnClickListener {
-            if(SPUtil.getString(this@SplashActivity,"thirdAccount","").equals("")){
+            if (SPUtil.getString(this@SplashActivity, "thirdAccount", "").equals("")) {
                 startActivity(ChooseProfessionActivity::class.java, true)
-            }else{
-                RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().getUserInfo(SPUtil.getString(this@SplashActivity,"thirdAccount",""), SPUtil.getInt(this@SplashActivity, "Profession", 1), SPUtil.getString(this@SplashActivity, "longitude", ""), SPUtil.getString(this@SplashActivity, "latitude", ""),SPUtil.getString(this@SplashActivity, "city", ""),SPUtil.getString(this@SplashActivity, "token", ""))).subscribe({
-                    SPUtil.putInt(this@SplashActivity,"loginType",it.loginType)
-                    SPUtil.putString(this@SplashActivity,"registrationDate",it.registrationDate)
-                    SPUtil.putString(this@SplashActivity,"city",it.city)
-                    SPUtil.putString(this@SplashActivity,"longitude",it.longitude)
-                    SPUtil.putString(this@SplashActivity,"latitude",it.latitude)
-                    SPUtil.putString(this@SplashActivity,"inviteCode",it.inviteCode)
-                    SPUtil.putString(this@SplashActivity,"labelName",it.labelName)
-                    SPUtil.putInt(this@SplashActivity,"totalCount",it.totalCount)
-                    SPUtil.putInt(this@SplashActivity,"inviteCount",it.inviteCount)
-                    startActivity(MainActivity::class.java, true)
+            } else {
+                RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().getUserInfo(SPUtil.getString(this@SplashActivity, "thirdAccount", ""), SPUtil.getInt(this@SplashActivity, "Profession", 1), SPUtil.getString(this@SplashActivity, "longitude", ""), SPUtil.getString(this@SplashActivity, "latitude", ""), SPUtil.getString(this@SplashActivity, "city", ""), SPUtil.getString(this@SplashActivity, "token", ""))).subscribe({
+                    SPUtil.putInt(this@SplashActivity, "loginType", it.loginType)
+                    SPUtil.putString(this@SplashActivity, "registrationDate", it.registrationDate)
+                    SPUtil.putString(this@SplashActivity, "city", it.city)
+                    SPUtil.putString(this@SplashActivity, "longitude", it.longitude)
+                    SPUtil.putString(this@SplashActivity, "latitude", it.latitude)
+                    SPUtil.putString(this@SplashActivity, "inviteCode", it.inviteCode)
+                    SPUtil.putString(this@SplashActivity, "labelName", it.labelName)
+                    SPUtil.putInt(this@SplashActivity, "totalCount", it.totalCount)
+                    SPUtil.putString(this@SplashActivity, "phoneNumber", it.labelName)
+                    SPUtil.putInt(this@SplashActivity, "inviteCount", it.inviteCount)
+//                    if (SPUtil.getInt(this@SplashActivity, "Profession", 2) == 1) {
+//                        if (SPUtil.getBoolean(this@SplashActivity, "sfcreateCard", false)) {
+//                            startActivity(MainActivity::class.java, true)
+//                        } else {
+//                            startActivity(CreateJobCardActivity::class.java, true)
+//
+//                        }
+//                    } else {
+//                        if (SPUtil.getBoolean(this@SplashActivity, "sfcustomizeLabel", false)) {
+
+                            startActivity(MainActivity::class.java, true)
+//                        } else {
+//                            startActivity(ChooseJobActivity::class.java, true)
+//                        }
+//                    }
                 }, {
                     ToastUtils.showLongToast(applicationContext, it.message.toString())
                 })

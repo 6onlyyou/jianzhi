@@ -100,7 +100,7 @@ class PublishJobActivity : BaseActivity() {
                 name = lists
                 list = ArrayList<Pickers>()
                 for (i in 0 until name!!.size) {
-                    list!!.add(Pickers(name!![i], id!![i]))
+                    list!!.add(Pickers(name!![i], i.toString()))
                 }
                 // 设置数据，默认选择第一条
                 pickerscrlllview.setData(list)

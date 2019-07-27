@@ -18,6 +18,7 @@ import fu.com.parttimejob.bean.GetLabelsBean
 import fu.com.parttimejob.bean.JobInfoBean
 import fu.com.parttimejob.retrofitNet.RxUtils
 import fu.com.parttimejob.utils.SPUtil
+import io.reactivex.functions.Consumer
 
 
 class JobActivity : BaseActivity(){
@@ -32,30 +33,49 @@ class JobActivity : BaseActivity(){
     }
      var list : ArrayList<GetLabelsBean>? =null
     var strarr: List<String> ?=null
+    val list2: ArrayList<BaseRecyclerModel>? =ArrayList<BaseRecyclerModel>()
     override fun initViewClick() {
-        cityname.setText(SPUtil.getString(this,"city","廊坊"))
+        cityname.setText(SPUtil.getString(this,"city","廊坊市"))
         jobList.layoutManager = LinearLayoutManager(this)
         jobList.adapter = homeJobListAdapter
          list = ArrayList()
-        if (SPUtil.getString(this@JobActivity,"labelName","")!= null && !SPUtil.getString(this@JobActivity,"labelName","").equals("")) {
-            strarr = SPUtil.getString(this@JobActivity,"labelName","").substring(0, SPUtil.getString(this@JobActivity,"labelName","").length).split(",")
-            var index = 0;
-            while (index < strarr!!.size) {
-                var baseRecyclerModel: GetLabelsBean = GetLabelsBean()
-                baseRecyclerModel.labels = (strarr!![index])
-                index++//自增
-                list!!.add(baseRecyclerModel)
+        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().label).subscribe { getLabelsBean ->
+            if (getLabelsBean.labels != null && getLabelsBean.labels != "") {
+                val strarr1 = getLabelsBean.labels.substring(0, getLabelsBean.labels.length).split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                var index = 0
+                index = 0
+                while (index < strarr1.size - 1) {
+                    val baseRecyclerModel = GetLabelsBean()
+                    baseRecyclerModel.labels = strarr1[index]
+                    if (index == 0) {
+                        baseRecyclerModel.labelssel = true
+                    }
+                    index++//自增
+                    list2!!.add(baseRecyclerModel)
+                }
+                job_label.setText(list2!![0].viewTypeSt)
             }
-            job_label.setText(list!![0].labels)
-        }else{
-            job_label.setText("")
         }
+//        if (SPUtil.getString(this@JobActivity,"labelName","")!= null && !SPUtil.getString(this@JobActivity,"labelName","").equals("")) {
+//            strarr = SPUtil.getString(this@JobActivity,"labelName","").substring(0, SPUtil.getString(this@JobActivity,"labelName","").length).split(",")
+//            var index = 0;
+//            while (index < strarr!!.size) {
+//                var baseRecyclerModel: GetLabelsBean = GetLabelsBean()
+//                baseRecyclerModel.labels = (strarr!![index])
+//                index++//自增
+//                list!!.add(baseRecyclerModel)
+//            }
+//            job_label.setText(list!![0].labels)
+//        }else{
+//            job_label.setText("")
+//        }
 
         homeJobListAdapter.addAll(list as List<BaseRecyclerModel>?)
         job_city.setOnClickListener {
             selectAddress()
         }
         job_work.setOnClickListener {
+
             val addPopWindow = abelPopWindowL(this@JobActivity)
             addPopWindow.showPopupWindow(job_work)
         }

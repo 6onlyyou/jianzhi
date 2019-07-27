@@ -17,6 +17,15 @@ public class UserInfoBean {
     private String inviteCode;
     private String labelName;
     private int inviteCount;
+    private String phoneNumber;
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
     public int getTotalCount() {
         return totalCount;

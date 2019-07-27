@@ -176,7 +176,7 @@ class MainActivity : BaseActivity() {
 
     override fun initViewClick() {
         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().getCloudToken( SPUtil.getString(this@MainActivity, "thirdAccount", ""))).subscribe({
-            SPUtil.putString(this@MainActivity,"token",it.token)
+            SPUtil.putString(this@MainActivity,"tokenryun",it.token)
             connect(it.token)
         }, {
             ToastUtils.showLongToast(applicationContext, it.message.toString())

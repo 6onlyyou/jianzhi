@@ -163,6 +163,7 @@ public class RedPacketsLayout extends RelativeLayout {
                         }, new Consumer<Throwable>() {
                             @Override
                             public void accept(Throwable throwable) throws Exception {
+                                dialogPro.dismiss();
                                 RxUtils.wrapRestCall(RetrofitFactory.INSTANCE.getRetrofit().randomGetOneAdvertisement(SPUtil.getString(getContext(), "thirdAccount", ""))).subscribe(new Consumer<AdInfoBean>() {
                                     @Override
                                     public void accept(final AdInfoBean adInfoBean) throws Exception {

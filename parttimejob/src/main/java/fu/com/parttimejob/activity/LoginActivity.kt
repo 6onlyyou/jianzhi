@@ -66,14 +66,22 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun loginWithWx(wxInfoEntity: WXInfoEntity) {
+        var sex = 0
+        if( wxInfoEntity.getmSex().equals("男")){
+            sex = 1
+        }else{
+            sex = 2
+        }
         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().register(wxInfoEntity!!.getmOpenid(), SPUtil.getInt(this@LoginActivity, "Profession", 1),
-                wxInfoEntity.getmNickname(), wxInfoEntity.getmHeadimgurl(), wxInfoEntity.getmSex(), 1, "")).subscribe({
+                wxInfoEntity.getmNickname(), wxInfoEntity.getmHeadimgurl(),sex , 1, "wx23456")).subscribe({
             if (it.register) {
                 ToastUtils.showLongToast(applicationContext, "登入成功")
+                SPUtil.putString(this@LoginActivity, "token", it.token)
                 SPUtil.putString(applicationContext,"thirdAccount",wxInfoEntity!!.getmOpenid())
                 startActivity(MainActivity::class.java, true)
             } else {
                 ToastUtils.showLongToast(applicationContext, "登入成功")
+                SPUtil.putString(this@LoginActivity, "token", it.token)
                 SPUtil.putString(applicationContext,"thirdAccount",wxInfoEntity!!.getmOpenid())
                 if(SPUtil.getInt(this@LoginActivity, "Profession", 2)==1){
                     startActivity(CreateJobCardActivity::class.java, true)
@@ -204,15 +212,22 @@ class LoginActivity : BaseActivity() {
                     val gender = jo.getString("gender")
                     val figureurl = jo.getString("figureurl").toString()
                     val city = jo.getString("city")
-                    RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().register(mTencent!!.openId, SPUtil.getInt(this@LoginActivity, "Profession", 1), nickName, figureurl, gender, 1, "")).subscribe({
+                    var sex = 0
+                    if( gender.equals("男")){
+                        sex = 1
+                    }else{
+                        sex = 2
+                    }
+                    RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().register(mTencent!!.openId, SPUtil.getInt(this@LoginActivity, "Profession", 1), nickName, figureurl, sex, 1, "qq123456")).subscribe({
                         if (it.register) {
                             SPUtil.putString(applicationContext,"thirdAccount",mTencent!!.openId)
                             ToastUtils.showLongToast(applicationContext, "登入成功")
-
+                            SPUtil.putString(this@LoginActivity, "token", it.token)
                             startActivity(MainActivity::class.java, true)
                         } else {
                             SPUtil.putString(applicationContext,"thirdAccount",mTencent!!.openId)
                             ToastUtils.showLongToast(applicationContext, "登入成功")
+                            SPUtil.putString(this@LoginActivity, "token", it.token)
                             if(SPUtil.getInt(this@LoginActivity, "Profession", 2)==1){
                                 startActivity(CreateJobCardActivity::class.java, true)
                             }else{

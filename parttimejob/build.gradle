@@ -94,9 +94,11 @@ dependencies {
     compile 'jp.wasabeef:glide-transformations:2.0.0'
 //    compile 'com.umeng.umsdk:analytics:8.0.0'
     compile 'com.umeng.umsdk:common:2.0.0'
+    implementation 'com.iceteck.silicompressorr:silicompressor:2.2.1'
     implementation files('libs/umeng-sharetool-6.9.4.jar')
     implementation files('libs/umeng-shareboard-widget-6.9.4.jar')
     implementation files('libs/umeng-share-core-6.9.4.jar')
+    compile 'cn.jzvd:jiaozivideoplayer:6.2.12'
 }
 
 apply plugin: 'kotlin-android'

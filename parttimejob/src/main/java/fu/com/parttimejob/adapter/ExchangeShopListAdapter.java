@@ -31,7 +31,7 @@ public class ExchangeShopListAdapter extends BaseRecyclerViewAdapter {
             ExchangeBean exchangeBean = (ExchangeBean) object;
             GlideUtil.load(binding.getRoot().getContext(), exchangeBean.getGoodsImg(), (ImageView)binding.skuImgIv);
             binding.shopName.setText(exchangeBean.getGoodsName());
-            binding.zan.setText("赠送"+exchangeBean.getGoodsPrice()+"金币");
+            binding.zan.setText("需要"+exchangeBean.getGoodsPrice()+"金币");
             binding.exchangeBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

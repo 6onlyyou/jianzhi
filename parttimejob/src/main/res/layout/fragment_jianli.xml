@@ -12,18 +12,33 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/myPhoto"
+        <LinearLayout
+            android:id="@+id/myPhotos"
             android:layout_width="345dp"
             android:layout_height="216dp"
-            android:src="@mipmap/ic_launcher" />
+            android:orientation="vertical">
+            <cn.jzvd.JZVideoPlayerStandard
+                android:id="@+id/videoplayer"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="216dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"/>
+            <ImageView
+                android:id="@+id/myPhoto"
+                android:layout_width="match_parent"
+                android:layout_height="216dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_launcher" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/nameLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/myPhoto"
+            android:layout_below="@+id/myPhotos"
             android:layout_marginLeft="15dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
@@ -37,7 +52,7 @@
                 android:textSize="18sp" />
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="8dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="2dp"

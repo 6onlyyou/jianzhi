@@ -3,28 +3,29 @@ package fu.com.parttimejob.activity
 import android.app.ProgressDialog
 import android.content.DialogInterface
 import android.content.Intent
-import android.media.MediaMetadataRetriever
-import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import com.bumptech.glide.Glide
 import com.heixiu.errand.net.RetrofitFactory
 import com.lljjcoder.citylist.Toast.ToastUtils
+import com.luck.picture.lib.PictureSelector
 import fu.com.parttimejob.R
 import fu.com.parttimejob.adapter.ChooseDreamJobListAdapter
 import fu.com.parttimejob.base.BaseActivity
 import fu.com.parttimejob.base.baseadapter.BaseRecyclerModel
-import fu.com.parttimejob.bean.FileInfoEntilty
 import fu.com.parttimejob.bean.GetLabelsBean
 import fu.com.parttimejob.retrofitNet.RxUtils
-import fu.com.parttimejob.utils.AppUtils
 import fu.com.parttimejob.utils.SPUtil
 import kotlinx.android.synthetic.main.activity_my_jian_li.*
-import java.util.ArrayList
-import java.util.HashMap
+import java.util.*
+import cn.jzvd.JZVideoPlayerStandard
+import java.net.URI
+import cn.jzvd.JZVideoPlayer
+
+
+
 
 /**
  * 我的简历/求职者简历
@@ -35,6 +36,7 @@ class MyJianLiActivity : BaseActivity() {
     override fun getLayoutId(): Int {
         return R.layout.activity_my_jian_li
     }
+
     lateinit var adapter: ChooseDreamJobListAdapter
     override fun initViewParams() {
         dialogPro = ProgressDialog(this)
@@ -53,14 +55,15 @@ class MyJianLiActivity : BaseActivity() {
                     return false; //默认返回 false
                 }
             }
+
             override fun onKey(p0: View?, p1: Int, p2: KeyEvent?): Boolean {
                 return false
             }
 
         })
-         beViewedAccount = intent.getStringExtra("beViewedAccount")
-        if(beViewedAccount ==null||beViewedAccount.equals("")){
-            beViewedAccount = SPUtil.getString(this,"thirdAccount","")
+        beViewedAccount = intent.getStringExtra("beViewedAccount")
+        if (beViewedAccount == null || beViewedAccount.equals("")) {
+            beViewedAccount = SPUtil.getString(this, "thirdAccount", "")
         }
         adapter = ChooseDreamJobListAdapter()
         jobYixiangList.layoutManager = GridLayoutManager(this, 4) as RecyclerView.LayoutManager?
@@ -75,49 +78,74 @@ class MyJianLiActivity : BaseActivity() {
             finish()
         }
     }
+
+    override fun onBackPressed() {
+        if (JZVideoPlayer.backPress()) {
+            return
+        }
+        super.onBackPressed()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        JZVideoPlayer.releaseAllVideos()
+    }
+    private var themeId: Int = 0
     override fun onResume() {
         super.onResume()
+        themeId = R.style.picture_default_style
         var strarr: List<String>
         var listimg: ArrayList<String> = ArrayList()
         var list: ArrayList<GetLabelsBean> = ArrayList()
         dialogPro!!.show()
-        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().getResumeInfo(SPUtil.getString(this,"thirdAccount",""),beViewedAccount)).subscribe({
+        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().getResumeInfo(SPUtil.getString(this, "thirdAccount", ""), beViewedAccount)).subscribe({
             name.setText(it.name)
             var sexs = ""
-            if(it.sex ==1){
-                 sexs = "男"
-            }else{
-                 sexs = "女"
+            if (it.sex == 1) {
+                sexs = "男"
+            } else {
+                sexs = "女"
             }
-
-
-            sex.setText(sexs+"  "+it.age+"岁")
+            sex.setText(sexs + "  " + it.age + "岁")
             myInfo.setText(it.personalProfile)
             myLocation.setText(it.city)
             myInfo.setText(it.personalProfile)
             if (it.picOrVedioSource != null && !it.picOrVedioSource.equals("")) {
-                strarr = it.picOrVedioSource.substring(0, it.picOrVedioSource.length).split(",")
+                strarr = it.picOrVedioSource.substring(0, it.picOrVedioSource.length).split(";")
                 var index = 0;
                 while (index < strarr.size) {
-
                     listimg.add(strarr[index])
                     index++//自
                 }
-                if(listimg.size<1){
+                if (listimg.size < 1) {
                     Glide.with(this)
-                            .load(listimg[1])
+                            .load("")
                             .placeholder(R.mipmap.defind)
                             .into(myPhoto)
-                }else if (listimg.size==1){
+                    myPhoto.visibility = View.VISIBLE
+                    videoplayer.visibility = View.GONE
+                } else if (listimg.size == 1) {
                     Glide.with(this)
                             .load(listimg[0])
                             .placeholder(R.mipmap.defind)
                             .into(myPhoto)
-                }else{
+                    myPhoto.visibility = View.VISIBLE
+                    videoplayer.visibility = View.GONE
+                } else {
+                    val jzVideoPlayerStandard = findViewById<View>(R.id.videoplayer) as JZVideoPlayerStandard
+                    jzVideoPlayerStandard.setUp(listimg[0],
+                            JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL,
+                            "视频简历")
+                    Glide.with(this)
+                            .load(listimg[1])
+                            .placeholder(R.mipmap.defind)
+                            .into(jzVideoPlayerStandard.thumbImageView)
                     myPhoto.visibility = View.GONE
+                    videoplayer.visibility = View.VISIBLE
                 }
-
             }
+
+
             if (it.labelName != null && !it.labelName.equals("")) {
                 strarr = it.labelName.substring(0, it.labelName.length).split(",")
                 var index = 0;
@@ -130,7 +158,7 @@ class MyJianLiActivity : BaseActivity() {
                 }
                 adapter.addAll(list as List<BaseRecyclerModel>?)
             }
-            phone.setText("联系电话："+it.phoneNum)
+            phone.setText("联系电话：" + it.phoneNum)
             dialogPro!!.dismiss()
         }, {
             dialogPro!!.dismiss()

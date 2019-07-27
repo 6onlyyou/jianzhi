@@ -89,21 +89,21 @@ class CreateJobCardActivity : BaseActivity() {
                 val builder: MultipartBody.Builder = MultipartBody.Builder()
                         .setType(MultipartBody.FORM)
                 if (selectList!!.size < 1) {
-                    builder.addFormDataPart("businessLicenseImg", File(selectList!!.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList!!.get(0).compressPath)));
+                    builder.addFormDataPart("img", File(selectList!!.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList!!.get(0).compressPath)));
                 } else {
                     for (i in selectList!!.indices) {
-                        builder.addFormDataPart("businessLicenseImg", File(selectList!!.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList!!.get(0).compressPath)));
+                        builder.addFormDataPart("img", File(selectList!!.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList!!.get(0).compressPath)));
                     }
                 }
                 val requestBody: RequestBody = builder.build();
                 RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().createCard(SPUtil.getString(this,"thirdAccount",""),requestBody,nameEt.text.toString(),phoneEt.text.toString(),shopEt.text.toString())).subscribe({
                     ToastUtils.showLongToast(applicationContext, it)
+                    SPUtil.putBoolean(this@CreateJobCardActivity, "sfcreateCard",true )
                     startActivity(Intent(applicationContext, MainActivity::class.java))
                 }, {
                     ToastUtils.showLongToast(applicationContext, it.message.toString())
                 })
             }
-
         }
 
     }

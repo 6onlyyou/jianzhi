@@ -38,7 +38,6 @@
             android:layout_marginRight="16dp"
             android:text="发布广告"
             android:textColor="@color/white"
-            android:background="@drawable/state_pressed"
             android:textSize="15sp" />
     </RelativeLayout>
 

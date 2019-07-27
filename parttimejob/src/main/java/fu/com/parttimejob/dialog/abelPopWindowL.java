@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.heixiu.errand.net.RetrofitFactory;
 
@@ -71,7 +72,6 @@ public class abelPopWindowL extends PopupWindow {
                         String[] strarr1 =getLabelsBean.getLabels().substring(0, getLabelsBean.getLabels().length()).split(",");
                         int index =0;
                         for ( index = 0; index< strarr1.length-1;index++) {
-
                             GetLabelsBean baseRecyclerModel = new GetLabelsBean();
                             baseRecyclerModel.setLabels(strarr1[index]);
                             if(index == 0){
@@ -92,6 +92,7 @@ public class abelPopWindowL extends PopupWindow {
      *
      * @param parent
      */
+    private View view;
     public void showPopupWindow(View parent) {
         if (!this.isShowing()) {
             // 以下拉方式显示popupwindow

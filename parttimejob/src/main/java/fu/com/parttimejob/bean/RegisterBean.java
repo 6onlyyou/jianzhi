@@ -8,6 +8,15 @@ package fu.com.parttimejob.bean;
 public class RegisterBean {
     private String tip;
     private Boolean isRegister;
+    private String token;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public String getTip() {
         return tip;
