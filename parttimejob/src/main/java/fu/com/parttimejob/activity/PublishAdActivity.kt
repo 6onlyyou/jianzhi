@@ -29,6 +29,7 @@ import java.io.File
 import java.util.*
 
 class PublishAdActivity : BaseActivity() {
+    private var selectList: List<LocalMedia> = ArrayList()
     private var adapter: GridImageAdapter? = null
     override fun getLayoutId(): Int {
         return R.layout.activity_publish_ad
@@ -93,7 +94,7 @@ class PublishAdActivity : BaseActivity() {
     private val onAddPicClickListener = object : GridImageAdapter.onAddPicClickListener {
         override fun onAddPicClick() {
             PictureSelector.create(this@PublishAdActivity)
-                    .openGallery(PictureMimeType.ofAll())// 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
+                    .openGallery(PictureMimeType.ofImage())// 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
                     .theme(R.style.picture_default_style)// 主题样式设置 具体参考 values/styles   用法：R.style.picture.white.style
                     .maxSelectNum(1)// 最大图片选择数量
                     .minSelectNum(1)// 最小选择数量
@@ -143,7 +144,6 @@ class PublishAdActivity : BaseActivity() {
         setContentView(R.layout.activity_publish_ad)
     }
 
-    private var selectList: List<LocalMedia> = ArrayList()
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {

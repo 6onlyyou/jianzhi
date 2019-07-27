@@ -43,7 +43,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="50dp"
+                android:layout_width="wrap_content"
                 android:layout_height="22dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="20dp"
@@ -194,7 +194,7 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="22dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="20dp"
                 android:text="添加图片详情(选填)"
@@ -206,14 +206,15 @@
                 android:layout_height="91dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="7dp"
+                android:visibility="visible"
                 android:overScrollMode="never" />
-            <!--<ImageView-->
-                <!--android:id="@+id/jina_pic"-->
-                <!--android:layout_width="91dp"-->
-                <!--android:layout_height="91dp"-->
-                <!--android:layout_marginLeft="15dp"-->
-                <!--android:layout_marginTop="7dp"-->
-                <!--android:background="@mipmap/ic_add_photo" />-->
+            <ImageView
+                android:id="@+id/jina_pic"
+                android:layout_width="91dp"
+                android:layout_height="91dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="7dp"
+                android:background="@mipmap/ic_add_photo" />
 
             <TextView
                 android:id="@+id/publish"
@@ -224,7 +225,7 @@
                 android:background="@drawable/bg_round_bq"
                 android:gravity="center"
                 android:text="发布"
-                android:layout_marginBottom="100dp"
+                android:layout_marginBottom="50dp"
                 android:textColor="@color/colorWhite"
                 android:textSize="15sp" />
 

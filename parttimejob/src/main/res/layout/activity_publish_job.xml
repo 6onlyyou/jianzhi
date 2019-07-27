@@ -402,7 +402,7 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="22dp"
+                android:layout_height="wrap_content"
                 android:text="*营业执照（兼职选填，全职必填）"
                 android:layout_marginTop="22dp"
                 android:layout_marginLeft="15dp"

@@ -123,9 +123,6 @@ class PublishJobActivity : BaseActivity() {
             if (v === style) {
                 picker_rel.visibility = View.VISIBLE
             } else if (v === picker_yes) {
-                if (TextUtils.isEmpty(nameEt.text) || TextUtils.isEmpty(style.text) || TextUtils.isEmpty(money.text) || TextUtils.isEmpty(size.text)|| TextUtils.isEmpty(sizepe.text)|| TextUtils.isEmpty(salary.text)|| TextUtils.isEmpty(workTime.text)|| TextUtils.isEmpty(phone.text)|| TextUtils.isEmpty(detailLocation.text)|| TextUtils.isEmpty(jianlijianjie.text)) {
-                    showToast("您的信息未填写完整~")
-                } else {
                     val builder: MultipartBody.Builder = MultipartBody.Builder()
                             .setType(MultipartBody.FORM)
                     if (selectList!!.size < 1) {
@@ -142,7 +139,6 @@ class PublishJobActivity : BaseActivity() {
                     }, {
                         ToastUtils.showLongToast(this@PublishJobActivity, it.message.toString())
                     })
-                }
 
                 picker_rel.visibility = View.GONE
             }
@@ -151,7 +147,7 @@ class PublishJobActivity : BaseActivity() {
     private val onAddPicClickListener = object : GridImageAdapter.onAddPicClickListener {
         override fun onAddPicClick() {
             PictureSelector.create(this@PublishJobActivity)
-                    .openGallery(PictureMimeType.ofAll())// 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
+                    .openGallery(PictureMimeType.ofImage())// 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
                     .theme(R.style.picture_default_style)// 主题样式设置 具体参考 values/styles   用法：R.style.picture.white.style
                     .maxSelectNum(1)// 最大图片选择数量
                     .minSelectNum(1)// 最小选择数量
