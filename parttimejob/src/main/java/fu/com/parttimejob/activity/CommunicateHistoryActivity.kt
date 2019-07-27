@@ -29,9 +29,9 @@ class CommunicateHistoryActivity : BaseActivity() {
     }
 
     override fun initViewParams() {
-        back.setOnClickListener({
+        back.setOnClickListener {
             finish()
-        })
+        }
 
         homeJobListAdapter = JobAdapter()
         swipeList.layoutManager = LinearLayoutManager(this)
