@@ -316,7 +316,7 @@
                 android:textSize="15sp" />
 
 
-            <EditText
+            <TextView
                 android:id="@+id/location"
                 android:layout_width="match_parent"
                 android:layout_height="22dp"

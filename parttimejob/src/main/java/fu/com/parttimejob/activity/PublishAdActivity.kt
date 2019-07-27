@@ -7,6 +7,7 @@ import android.support.v7.widget.GridLayoutManager
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
+import com.amap.api.services.core.PoiItem
 import com.heixiu.errand.net.RetrofitFactory
 import com.lljjcoder.citylist.Toast.ToastUtils
 import com.luck.picture.lib.PictureSelector
@@ -22,6 +23,8 @@ import fu.com.parttimejob.utils.GlideUtil
 import fu.com.parttimejob.utils.SPUtil
 import fu.com.parttimejob.view.PickerScrollView
 import kotlinx.android.synthetic.main.activity_publish_ad.*
+import kotlinx.android.synthetic.main.activity_publish_ad.location
+import kotlinx.android.synthetic.main.activity_publish_ad.recyclerView
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -88,6 +91,10 @@ class PublishAdActivity : BaseActivity() {
                     ToastUtils.showLongToast(this, it.message.toString())
                 })
             }
+        }
+
+        location.setOnClickListener{
+            startActivityForResult(Intent(this@PublishAdActivity, ChosseMapPositionActivity::class.java), CHOOSE_LOCATION)
         }
     }
     private val onAddPicClickListener = object : GridImageAdapter.onAddPicClickListener {
@@ -163,7 +170,14 @@ class PublishAdActivity : BaseActivity() {
                     adapter!!.setList(selectList)
                     adapter!!.notifyDataSetChanged()
                 }
+                CHOOSE_LOCATION -> {
+                    poiItem = data?.getParcelableExtra("location")
+                    location.text = poiItem?.title
+                }
             }
         }
     }
+
+    var poiItem: PoiItem? = null
+    val CHOOSE_LOCATION = 10000
 }

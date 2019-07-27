@@ -6,6 +6,7 @@ import android.support.v7.widget.GridLayoutManager
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
+import com.amap.api.services.core.PoiItem
 import com.heixiu.errand.net.RetrofitFactory
 import com.lljjcoder.citylist.Toast.ToastUtils
 import com.luck.picture.lib.PictureSelector
@@ -15,26 +16,24 @@ import com.luck.picture.lib.entity.LocalMedia
 import fu.com.parttimejob.R
 import fu.com.parttimejob.adapter.GridImageAdapter
 import fu.com.parttimejob.base.BaseActivity
-import fu.com.parttimejob.base.baseadapter.BaseRecyclerModel
-import fu.com.parttimejob.bean.GetLabelsBean
+import fu.com.parttimejob.bean.Pickers
 import fu.com.parttimejob.retrofitNet.RxUtils
 import fu.com.parttimejob.utils.FullyGridLayoutManager
 import fu.com.parttimejob.utils.SPUtil
-import kotlinx.android.synthetic.main.activity_publish_job.*
-import java.util.ArrayList
-import fu.com.parttimejob.view.PickerScrollView
-import fu.com.parttimejob.bean.Pickers
 import fu.com.parttimejob.view.PickerScrollView.onSelectListener
+import kotlinx.android.synthetic.main.activity_publish_job.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
+import java.util.*
 
 
 class PublishJobActivity : BaseActivity() {
     private var selectList: List<LocalMedia> = ArrayList()
-//    private val pickerscrlllview: PickerScrollView? = null // 滚动选择器
+    //    private val pickerscrlllview: PickerScrollView? = null // 滚动选择器
     private var adapter: GridImageAdapter? = null
+
     override fun getLayoutId(): Int {
         return R.layout.activity_publish_job
     }
@@ -42,6 +41,7 @@ class PublishJobActivity : BaseActivity() {
     override fun initViewParams() {
 
     }
+
     private var themeId: Int = 0
     override fun initViewClick() {
         initData()
@@ -77,7 +77,12 @@ class PublishJobActivity : BaseActivity() {
                 }
             }
         })
+
+        location.setOnClickListener {
+            startActivityForResult(Intent(this@PublishJobActivity, ChosseMapPositionActivity::class.java), CHOOSE_LOCATION)
+        }
     }
+
 
     private var list: ArrayList<Pickers>? = null // 滚动选择器数据
     private var id: ArrayList<String>? = null
@@ -93,7 +98,7 @@ class PublishJobActivity : BaseActivity() {
             if (it.labels != null && !it.labels.equals("")) {
                 strarr = it.labels.substring(0, it.labels.length).split(",")
                 var index = 0;
-                while (index < strarr.size-1) {
+                while (index < strarr.size - 1) {
                     index++//自增
                     lists.add(strarr[index])
                 }
@@ -111,6 +116,7 @@ class PublishJobActivity : BaseActivity() {
         })
 
     }
+
     // 滚动选择器选中事件
     var pickerListener: onSelectListener = onSelectListener { pickers ->
         style.setText(pickers.showConetnt)
@@ -119,11 +125,11 @@ class PublishJobActivity : BaseActivity() {
     // 点击监听事件
     var onClickListener: View.OnClickListener = object : View.OnClickListener {
 
-        override   fun onClick(v: View) {
+        override fun onClick(v: View) {
             if (v === style) {
                 picker_rel.visibility = View.VISIBLE
             } else if (v === picker_yes) {
-                if (TextUtils.isEmpty(nameEt.text) || TextUtils.isEmpty(style.text) || TextUtils.isEmpty(money.text) || TextUtils.isEmpty(size.text)|| TextUtils.isEmpty(sizepe.text)|| TextUtils.isEmpty(salary.text)|| TextUtils.isEmpty(workTime.text)|| TextUtils.isEmpty(phone.text)|| TextUtils.isEmpty(detailLocation.text)|| TextUtils.isEmpty(jianlijianjie.text)) {
+                if (TextUtils.isEmpty(nameEt.text) || TextUtils.isEmpty(style.text) || TextUtils.isEmpty(money.text) || TextUtils.isEmpty(size.text) || TextUtils.isEmpty(sizepe.text) || TextUtils.isEmpty(salary.text) || TextUtils.isEmpty(workTime.text) || TextUtils.isEmpty(phone.text) || TextUtils.isEmpty(detailLocation.text) || TextUtils.isEmpty(jianlijianjie.text)) {
                     showToast("您的信息未填写完整~")
                 } else {
                     val builder: MultipartBody.Builder = MultipartBody.Builder()
@@ -136,7 +142,7 @@ class PublishJobActivity : BaseActivity() {
                         }
                     }
                     val requestBody: RequestBody = builder.build();
-                    RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().publichInfo(SPUtil.getString(this@PublishJobActivity, "thirdAccount", "111"), nameEt.text.toString(), style.text.toString(),money.text.toString(), size.text.toString(), sizepe.text.toString(),salary.text.toString(),phone.text.toString(),detailLocation.text.toString(),SPUtil.getString(this@PublishJobActivity, "longitude", "0.0"),SPUtil.getString(this@PublishJobActivity, "latitude", "0.0"),jianlijianjie.text.toString(),requestBody,SPUtil.getString(this@PublishJobActivity, "city", ""))).subscribe({
+                    RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().publichInfo(SPUtil.getString(this@PublishJobActivity, "thirdAccount", "111"), nameEt.text.toString(), style.text.toString(), money.text.toString(), size.text.toString(), sizepe.text.toString(), salary.text.toString(), phone.text.toString(), detailLocation.text.toString(), SPUtil.getString(this@PublishJobActivity, "longitude", "0.0"), SPUtil.getString(this@PublishJobActivity, "latitude", "0.0"), jianlijianjie.text.toString(), requestBody, SPUtil.getString(this@PublishJobActivity, "city", ""))).subscribe({
                         ToastUtils.showLongToast(this@PublishJobActivity, it)
 
                     }, {
@@ -216,7 +222,14 @@ class PublishJobActivity : BaseActivity() {
                     adapter!!.setList(selectList)
                     adapter!!.notifyDataSetChanged()
                 }
+                CHOOSE_LOCATION -> {
+                    poiItem = data?.getParcelableExtra("location")
+                    location.text = poiItem?.title
+                }
             }
         }
     }
+
+    var poiItem: PoiItem? = null
+    val CHOOSE_LOCATION = 10000
 }

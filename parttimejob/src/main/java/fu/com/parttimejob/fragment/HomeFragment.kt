@@ -73,22 +73,24 @@ class HomeFragment : Fragment() {
         pushzp.setOnClickListener {
             startActivity(Intent(context, PublishJobActivity::class.java))
         }
-        same_city_iv.setOnClickListener({
+        same_city_iv.setOnClickListener {
+            startActivity(Intent(context, PublishJobActivity::class.java))
+
             startActivity(Intent(context, JobActivity::class.java))
-        })
+        }
         make_money_iv.setOnClickListener {
             startActivity(Intent(context, MyInviteActivity::class.java))
         }
 
-        exchange_shop_iv.setOnClickListener({
+        exchange_shop_iv.setOnClickListener {
             startActivity(Intent(context, ExchangeShopActivity::class.java))
-        })
+        }
 
-        brief_iv.setOnClickListener({
+        brief_iv.setOnClickListener {
             val intent = Intent(context, MyJianLiActivity::class.java)
             intent.putExtra("beViewedAccount", "")
             context!!.startActivity(intent)
-        })
+        }
     }
 
     override fun onResume() {
