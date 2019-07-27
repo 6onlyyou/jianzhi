@@ -1,6 +1,5 @@
 package fu.com.parttimejob.retrofitNet;
 
-import android.text.TextUtils;
 import android.util.Log;
 
 import java.util.concurrent.Callable;
@@ -25,27 +24,20 @@ public class RxUtils {
                     public ObservableSource<? extends T> apply(ResponseBean<T> tResponseBean) throws Exception {
                         Log.i("RxUtils", "apply: " + tResponseBean.toString());
                         if ("200".equals(tResponseBean.getState())) {
-                            if (tResponseBean.getData() == null) {
-                                return Observable.empty();
-                            } else {
-                                return Observable.just(tResponseBean.getData());
-                            }
+                            return Observable.just(tResponseBean.getData());
                         } else {
-                            if (!TextUtils.isEmpty(tResponseBean.getMsg()))
-                                return Observable.error(new Exception(tResponseBean.getMsg()));
-                            else
-                                return Observable.error(new Exception(tResponseBean.getState()));
+                            return Observable.error(new Exception(tResponseBean.getMsg()));
                         }
                     }
                 }, new Function<Throwable, ObservableSource<? extends T>>() {
                     @Override
-                    public ObservableSource<? extends T> apply(Throwable throwable) throws Exception {
+                    public ObservableSource<? extends T> apply(Throwable throwable) {
                         Log.e("API ERROR", throwable.toString());
                         return Observable.error(throwable);
                     }
                 }, new Callable<ObservableSource<? extends T>>() {
                     @Override
-                    public ObservableSource<? extends T> call() throws Exception {
+                    public ObservableSource<? extends T> call() {
                         return Observable.empty();
                     }
                 }).singleOrError();
