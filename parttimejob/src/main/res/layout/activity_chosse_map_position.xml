@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,41 +8,34 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:orientation="horizontal"
         android:focusable="true"
-        android:focusableInTouchMode="true">
+        android:focusableInTouchMode="true"
+        android:orientation="horizontal">
 
         <AutoCompleteTextView
             android:id="@+id/keyWord"
             android:layout_width="match_parent"
-            android:layout_height="36dp"
-            android:layout_weight="1"
-            android:completionThreshold="1"
-            android:dropDownVerticalOffset="1.0dip"
+            android:layout_height="40dp"
             android:layout_marginLeft="-10dp"
             android:layout_marginRight="-10dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:completionThreshold="1"
+            android:dropDownVerticalOffset="1.0dip"
+            android:focusable="true"
             android:hint="请输入关键字"
-            android:textColorHint="#C0C0C0"
             android:imeOptions="actionDone"
             android:inputType="text|textAutoComplete"
             android:maxLength="20"
-            android:paddingRight="37.0dip"
             android:paddingLeft="20.0dip"
+            android:paddingRight="37.0dip"
             android:singleLine="true"
             android:textColor="#000000"
-            android:textSize="16.0sp"
-            android:focusable="true"/>
+            android:textColorHint="#C0C0C0"
+            android:textCursorDrawable="@drawable/cursor"
+            android:textSize="16.0sp" />
 
-
-        <Button
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:clickable="true"
-            android:onClick="onActionSearchByKey"
-            android:text="Search"
-            android:visibility="gone"/>
     </LinearLayout>
-
 
 
     <com.amap.api.maps.MapView
@@ -51,8 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="220dp" />
 
-    <fu.com.parttimejob.view.SegmentedGroup
-        xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
+    <fu.com.parttimejob.view.SegmentedGroup xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
         android:id="@+id/segmented_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -104,7 +95,7 @@
         android:layout_below="@id/map"
         android:layout_weight="1"
         android:cacheColorHint="#00000000"
-        android:dividerHeight="1px"
-        android:divider="@android:color/darker_gray"/>
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1px" />
 
 </LinearLayout>

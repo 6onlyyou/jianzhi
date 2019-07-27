@@ -20,10 +20,28 @@ public class ChooseDreamJobListAdapter extends BaseRecyclerViewAdapter {
         return new TouBaoHolder(parent, R.layout.item_qiuzhi_job);
     }
 
+    /**
+     * 多选
+     * @param position
+     */
     public void changeSelectPosition(int position){
         if (selectPositions.contains(Integer.valueOf(position))){
             selectPositions.remove(Integer.valueOf(position));
         }else {
+            selectPositions.add(position);
+        }
+        notifyDataSetChanged();
+    }
+
+    /**
+     * 单选
+     * @param position
+     */
+    public void chooseAloneSelectPosition(int position){
+        if (selectPositions.contains(Integer.valueOf(position))){
+            selectPositions.remove(Integer.valueOf(position));
+        }else {
+            selectPositions.clear();
             selectPositions.add(position);
         }
         notifyDataSetChanged();
