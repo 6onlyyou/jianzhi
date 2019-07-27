@@ -52,7 +52,7 @@
         android:textSize="15sp" />
 
     <EditText
-        android:id="@+id/loginPwdEt"
+        android:id="@+id/dreamJobEt"
         android:layout_width="match_parent"
         android:layout_height="22dp"
         android:layout_marginLeft="28dp"

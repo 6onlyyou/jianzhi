@@ -6,6 +6,7 @@ import android.os.CountDownTimer;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.widget.TextView;
 
 import fu.com.parttimejob.R;
@@ -53,7 +54,7 @@ public class CountDownTimerUtils extends CountDownTimer {
          * http://blog.csdn.net/ah200614435/article/details/7914459
          */
         SpannableString spannableString = new SpannableString(mTextView.getText().toString());  //获取按钮上的文字
-        ForegroundColorSpan span = new ForegroundColorSpan(Color.WHITE);
+        ForegroundColorSpan span = new ForegroundColorSpan(Color.RED);
         /**
          * public void setSpan(Object what, int start, int end, int flags) {
          * 主要是start跟end，start是起始位置,无论中英文，都算一个。

@@ -35,7 +35,7 @@ class JobActivity : BaseActivity(){
     var strarr: List<String> ?=null
     val list2: ArrayList<BaseRecyclerModel>? =ArrayList<BaseRecyclerModel>()
     override fun initViewClick() {
-        cityname.setText(SPUtil.getString(this,"city","廊坊市"))
+        cityname.text = SPUtil.getString(this,"city","廊坊市")
         jobList.layoutManager = LinearLayoutManager(this)
         jobList.adapter = homeJobListAdapter
          list = ArrayList()
@@ -53,7 +53,7 @@ class JobActivity : BaseActivity(){
                     index++//自增
                     list2!!.add(baseRecyclerModel)
                 }
-                job_label.setText(list2!![0].viewTypeSt)
+                job_label.text = list2!![0].viewTypeSt
             }
         }
 //        if (SPUtil.getString(this@JobActivity,"labelName","")!= null && !SPUtil.getString(this@JobActivity,"labelName","").equals("")) {
@@ -110,7 +110,7 @@ class JobActivity : BaseActivity(){
                 //城市
                 val city = citySelected[1]
                 //区县（如果设定了两级联动，那么该项返回空）
-                cityname.setText(city)
+                cityname.text = city
                 RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().sameCity(SPUtil.getString(this@JobActivity,"thirdAccount",""),city,job_label.text.toString())).subscribe({
                     homeJobListAdapter.addAll(it as List<BaseRecyclerModel>?)
                     homeJobListAdapter.notifyDataSetChanged()

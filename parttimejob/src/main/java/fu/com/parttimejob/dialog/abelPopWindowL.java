@@ -9,14 +9,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.TextView;
 
 import com.heixiu.errand.net.RetrofitFactory;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import fu.com.parttimejob.R;
 import fu.com.parttimejob.adapter.ChooseDreamJobListAdapter;
@@ -34,11 +31,18 @@ public class abelPopWindowL extends PopupWindow {
     private View conentView;
     private ChooseDreamJobListAdapter adapter;
     private RecyclerView dreamJobList;
+    /**
+     * 显示popupWindow
+     *
+     * @param parent
+     */
+    private View view;
+
     public abelPopWindowL(final Activity context) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         conentView = inflater.inflate(R.layout.label_popup_dialog, null);
-        dreamJobList =conentView.findViewById(R.id.dreamJobList);
+        dreamJobList = conentView.findViewById(R.id.dreamJobList);
         int h = context.getWindowManager().getDefaultDisplay().getHeight();
         int w = context.getWindowManager().getDefaultDisplay().getWidth();
         // 设置SelectPicPopupWindow的View
@@ -59,44 +63,39 @@ public class abelPopWindowL extends PopupWindow {
         // mPopupWindow.setAnimationStyle(android.R.style.Animation_Dialog);
         // 设置SelectPicPopupWindow弹出窗体动画效果
         this.setAnimationStyle(R.style.AnimationPreview);
-        adapter =new ChooseDreamJobListAdapter();
-        dreamJobList.setLayoutManager(new GridLayoutManager(context, 4)) ;
+        adapter = new ChooseDreamJobListAdapter();
+        dreamJobList.setLayoutManager(new GridLayoutManager(context, 4));
         dreamJobList.setAdapter(adapter);
-        final ArrayList<BaseRecyclerModel>  list =new ArrayList();
+        final ArrayList<BaseRecyclerModel> list = new ArrayList();
         adapter.addAll(list);
-        final ArrayList<BaseRecyclerModel>  list2 = new ArrayList();
-            RxUtils.wrapRestCall(RetrofitFactory.INSTANCE.getRetrofit().getLabel()).subscribe(new Consumer<GetLabelsBean>() {
-                @Override
-                public void accept(GetLabelsBean getLabelsBean) throws Exception {
-                    if (getLabelsBean.getLabels() != null && !getLabelsBean.getLabels().equals("")) {
-                        String[] strarr1 =getLabelsBean.getLabels().substring(0, getLabelsBean.getLabels().length()).split(",");
-                        int index =0;
-                        for ( index = 0; index< strarr1.length-1;index++) {
-                            GetLabelsBean baseRecyclerModel = new GetLabelsBean();
-                            baseRecyclerModel.setLabels(strarr1[index]);
-                            if(index == 0){
-                                baseRecyclerModel.setLabelssel(true);
-                            }
-                            index++;//自增
-                            list2.add(baseRecyclerModel);
+        final ArrayList<BaseRecyclerModel> list2 = new ArrayList();
+
+        RxUtils.wrapRestCall(RetrofitFactory.INSTANCE.getRetrofit().getLabel()).subscribe(new Consumer<GetLabelsBean>() {
+            @Override
+            public void accept(GetLabelsBean getLabelsBean) {
+                if (getLabelsBean.getLabels() != null && !getLabelsBean.getLabels().equals("")) {
+                    String[] strarr1 = getLabelsBean.getLabels().split(",");
+                    int index = 0;
+                    for (index = 0; index < strarr1.length - 1; index++) {
+                        GetLabelsBean baseRecyclerModel = new GetLabelsBean();
+                        baseRecyclerModel.setLabels(strarr1[index]);
+                        if (index == 0) {
+                            baseRecyclerModel.setLabelssel(true);
                         }
-                        adapter.addAll(list2);
+                        index++;//自增
+                        list2.add(baseRecyclerModel);
                     }
+                    adapter.addAll(list2);
                 }
-            });
+            }
+        });
 
     }
 
-    /**
-     * 显示popupWindow
-     *
-     * @param parent
-     */
-    private View view;
     public void showPopupWindow(View parent) {
         if (!this.isShowing()) {
             // 以下拉方式显示popupwindow
-            this.showAsDropDown(parent, parent.getLayoutParams().width , 0);
+            this.showAsDropDown(parent, parent.getLayoutParams().width, 0);
         } else {
             this.dismiss();
         }

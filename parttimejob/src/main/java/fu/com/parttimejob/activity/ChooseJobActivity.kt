@@ -1,6 +1,8 @@
 package fu.com.parttimejob.activity
 
 import android.support.v7.widget.GridLayoutManager
+import android.text.TextUtils
+import android.util.Log
 import com.heixiu.errand.net.RetrofitFactory
 import com.lljjcoder.citylist.Toast.ToastUtils
 import fu.com.parttimejob.R
@@ -11,7 +13,6 @@ import fu.com.parttimejob.bean.GetLabelsBean
 import fu.com.parttimejob.retrofitNet.RxUtils
 import fu.com.parttimejob.utils.SPUtil
 import kotlinx.android.synthetic.main.activity_choose_job.*
-import java.util.*
 
 
 class ChooseJobActivity : BaseActivity() {
@@ -22,7 +23,7 @@ class ChooseJobActivity : BaseActivity() {
 
     var listself: ArrayList<GetLabelsBean>? = null
     var strarr: List<String>? = null
-    var labelName: String? = ""
+    var labelName: String = ""
     override fun initViewParams() {
         listself = ArrayList<GetLabelsBean>()
         adapter = ChooseDreamJobListAdapter()
@@ -37,10 +38,11 @@ class ChooseJobActivity : BaseActivity() {
 
         if (SPUtil.getString(this@ChooseJobActivity, "labelName", "") != null && !SPUtil.getString(this@ChooseJobActivity, "labelName", "").equals("")) {
             strarr = SPUtil.getString(this@ChooseJobActivity, "labelName", "").substring(0, SPUtil.getString(this@ChooseJobActivity, "labelName", "").length).split(",")
-
+        } else {
+            strarr = ArrayList()
         }
 
-        var selectSize=0
+        var selectSize = 0
         var strarrAll: List<String>
         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().label).subscribe({
             if (it.labels != null && it.labels != "") {
@@ -70,8 +72,8 @@ class ChooseJobActivity : BaseActivity() {
                 }
                 adapter.addAll(listself as List<BaseRecyclerModel>?)
 
-                if (selectSize>0){
-                    for (i in 0..selectSize) {
+                if (selectSize > 0) {
+                    for (i in 0 until selectSize) {
                         adapter.changeSelectPosition(i)
                     }
                 }
@@ -83,27 +85,29 @@ class ChooseJobActivity : BaseActivity() {
     }
 
     override fun initViewClick() {
-            next.setOnClickListener {
+        next.setOnClickListener {
             var index = 0
-            while (index < adapter.getselectPositionsData().size) {
-                labelName = if (labelName.equals("")) {
-                    labelName + adapter.getselectPositionsData()[index].labels
+            while (index < adapter.selectPositions.size) {
+                labelName = if (TextUtils.isEmpty(labelName)) {
+                    labelName + (adapter.data[adapter.selectPositions[index]] as GetLabelsBean).labels
                 } else {
-                    labelName + "," + adapter.getselectPositionsData()[index].labels
+                    labelName + "," + (adapter.data[adapter.selectPositions[index]] as GetLabelsBean).labels
                 }
 
                 index++//自增
             }
-
-            labelName = labelName + "," + loginPwdEt.text.toString()
+            if (!TextUtils.isEmpty(dreamJobEt.text.toString())) {
+                labelName = labelName + "," + dreamJobEt.text.toString()
+            }
+            Log.i("LABELLLLL", labelName)
             RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().customizeLabel(SPUtil.getString(this, "thirdAccount", ""), labelName)).subscribe({
                 ToastUtils.showLongToast(applicationContext, it)
-                SPUtil.putBoolean(this@ChooseJobActivity, "sfcustomizeLabel",true )
+                SPUtil.putBoolean(this@ChooseJobActivity, "sfcustomizeLabel", true)
                 SPUtil.putString(this, "labelName", labelName)
+                startActivity(MainActivity::class.java, true)
             }, {
                 ToastUtils.showLongToast(applicationContext, it.message.toString())
             })
-            startActivity(MainActivity::class.java, true)
         }
     }
 

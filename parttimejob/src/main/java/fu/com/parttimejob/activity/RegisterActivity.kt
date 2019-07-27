@@ -56,19 +56,19 @@ class RegisterActivity : BaseActivity() {
 
         time = TimeCount(60000, 1000)
         mCountDownTimerUtils = CountDownTimerUtils(getPhoneCodeTv, 60000, 1000)
-        getPhoneCodeTv.setOnClickListener({
+        getPhoneCodeTv.setOnClickListener {
             if (!TextUtils.isEmpty(phoneEt.text) || phoneEt.text.length != 11) {
                 getPhoneCode(phoneEt.text)
             } else {
                 showToast("手机号码为空或者格式错误!")
             }
-        })
+        }
 
-        registerTv.setOnClickListener({
+        registerTv.setOnClickListener {
             if (judgeIsCanRegister()) {
                 submitCode("86", phoneEt.text.toString(), smsCodeEt.text.toString())
             }
-        })
+        }
     }
 
     private fun getPhoneCode(text: Editable?) {

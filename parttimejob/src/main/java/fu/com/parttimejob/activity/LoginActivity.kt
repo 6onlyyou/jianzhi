@@ -101,21 +101,21 @@ class LoginActivity : BaseActivity() {
         back.setOnClickListener {
             startActivity(ChooseProfessionActivity::class.java, true)
         }
-        forgetPwd.setOnClickListener({
+        forgetPwd.setOnClickListener {
             startActivity(ChangePwdActivity::class.java, false)
-        })
+        }
 
-        go_register.setOnClickListener({
+        go_register.setOnClickListener {
             startActivity(RegisterActivity::class.java, false)
-        })
+        }
 
-        login_with_wx.setOnClickListener({
+        login_with_wx.setOnClickListener {
             startWxLogin()
-        })
+        }
 
-        login_with_qq.setOnClickListener({
+        login_with_qq.setOnClickListener {
             login()
-        })
+        }
 
         login_with_pwd.setOnClickListener {
             if (judgeIsCanLogin()) {
@@ -137,7 +137,7 @@ class LoginActivity : BaseActivity() {
                     }
 
                 }, {
-                    ToastUtils.showLongToast(applicationContext, it.message.toString())
+                    showToast(it.message)
                 })
 
             }

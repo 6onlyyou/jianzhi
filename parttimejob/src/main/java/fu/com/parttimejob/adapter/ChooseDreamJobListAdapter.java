@@ -15,7 +15,6 @@ import fu.com.parttimejob.databinding.ItemQiuzhiJobBinding;
 public class ChooseDreamJobListAdapter extends BaseRecyclerViewAdapter {
 
     private ArrayList<Integer> selectPositions = new ArrayList<>();
-    private ArrayList<GetLabelsBean> selectPositionsData = new ArrayList<>();
     @Override
     public BaseRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new TouBaoHolder(parent, R.layout.item_qiuzhi_job);
@@ -30,8 +29,8 @@ public class ChooseDreamJobListAdapter extends BaseRecyclerViewAdapter {
         notifyDataSetChanged();
     }
 
-    public ArrayList<GetLabelsBean> getselectPositionsData(){
-        return selectPositionsData;
+    public ArrayList<Integer> getSelectPositions(){
+        return selectPositions;
     }
     class TouBaoHolder extends BaseRecyclerViewHolder<ItemQiuzhiJobBinding> {
 
@@ -48,19 +47,15 @@ public class ChooseDreamJobListAdapter extends BaseRecyclerViewAdapter {
             }else{
                 if(object1.getLabelssel()){
                     binding.jobName.setBackgroundResource(R.drawable.bg_round_bq);
-                    selectPositionsData.add(object1);
                 }else{
                     binding.jobName.setBackgroundResource(R.drawable.item_qiuzhi_job);
-                    selectPositionsData.remove(object1);
                 }
             }
 
             if (selectPositions.contains(position)){
                 binding.jobName.setBackgroundResource(R.drawable.bg_round_bq);
-                selectPositionsData.add(object1);
             }else {
                 binding.jobName.setBackgroundResource(R.drawable.item_qiuzhi_job);
-                selectPositionsData.remove(object1);
             }
         }
     }
