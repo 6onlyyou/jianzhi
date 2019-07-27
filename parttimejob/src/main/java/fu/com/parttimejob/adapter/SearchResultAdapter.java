@@ -42,12 +42,12 @@ public class SearchResultAdapter extends BaseAdapter {
         this.data = data;
     }
 
-    public void setSelectedPosition(int selectedPosition) {
-        this.selectedPosition = selectedPosition;
-    }
-
     public int getSelectedPosition() {
         return selectedPosition;
+    }
+
+    public void setSelectedPosition(int selectedPosition) {
+        this.selectedPosition = selectedPosition;
     }
 
     @Override

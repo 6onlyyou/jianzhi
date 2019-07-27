@@ -19,11 +19,6 @@ import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.amap.api.maps.model.BitmapDescriptorFactory;
-import com.amap.api.maps.model.MarkerOptions;
-import com.amap.api.maps.model.animation.Animation;
-import com.amap.api.maps.model.animation.TranslateAnimation;
-import com.amap.api.services.core.PoiItem;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
@@ -32,11 +27,16 @@ import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
+import com.amap.api.maps.model.MarkerOptions;
+import com.amap.api.maps.model.animation.Animation;
+import com.amap.api.maps.model.animation.TranslateAnimation;
 import com.amap.api.services.core.AMapException;
 import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.geocoder.GeocodeResult;
 import com.amap.api.services.geocoder.GeocodeSearch;
 import com.amap.api.services.geocoder.RegeocodeQuery;
@@ -46,7 +46,6 @@ import com.amap.api.services.help.InputtipsQuery;
 import com.amap.api.services.help.Tip;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,16 +83,69 @@ public class ChosseMapPositionActivity extends AppCompatActivity implements Loca
     private String searchKey = "";
     private LatLonPoint searchLatlonPoint;
 
+    /**
+     * 选中的地点
+     */
+    private PoiItem choosePoiItem;
 
     private List<PoiItem> resultData;
 
     private SearchResultAdapter searchResultAdapter;
 
     private boolean isItemClickAction;
+    AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            if (position != searchResultAdapter.getSelectedPosition()) {
+                PoiItem poiItem = (PoiItem) searchResultAdapter.getItem(position);
+                LatLng curLatlng = new LatLng(poiItem.getLatLonPoint().getLatitude(), poiItem.getLatLonPoint().getLongitude());
+                Log.i("MY", "onItemClick: " + curLatlng.latitude + " " + curLatlng.longitude);
 
+                choosePoiItem = poiItem;
+
+                isItemClickAction = true;
+
+                aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(curLatlng, 16f));
+
+                searchResultAdapter.setSelectedPosition(position);
+                searchResultAdapter.notifyDataSetChanged();
+            }
+        }
+    };
     private List<Tip> autoTips;
     private boolean isfirstinput = true;
+    Inputtips.InputtipsListener inputtipsListener = new Inputtips.InputtipsListener() {
+        @Override
+        public void onGetInputtips(List<Tip> list, int rCode) {
+            if (rCode == AMapException.CODE_AMAP_SUCCESS) {// 正确返回
+                autoTips = list;
+                List<String> listString = new ArrayList<String>();
+                for (int i = 0; i < list.size(); i++) {
+                    listString.add(list.get(i).getName());
+                }
+                ArrayAdapter<String> aAdapter = new ArrayAdapter<String>(
+                        getApplicationContext(),
+                        R.layout.route_inputs, listString);
+                searchText.setAdapter(aAdapter);
+                aAdapter.notifyDataSetChanged();
+                if (isfirstinput) {
+                    isfirstinput = false;
+                    searchText.showDropDown();
+                }
+            } else {
+                Toast.makeText(ChosseMapPositionActivity.this, "erroCode " + rCode, Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
     private PoiItem firstItem;
+    private boolean isInputKeySearch;
+    private String inputSearchKey;
+
+    //dip和px转换
+    private static int dip2px(Context context, float dpValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,6 +235,7 @@ public class ChosseMapPositionActivity extends AppCompatActivity implements Loca
         progDialog = new ProgressDialog(this);
 
         hideSoftKey(searchText);
+
     }
 
     /**
@@ -260,6 +313,10 @@ public class ChosseMapPositionActivity extends AppCompatActivity implements Loca
     }
 
     /**
+     * 开始进行poi搜索
+     */
+
+    /**
      * 方法必须重写
      */
     @Override
@@ -276,7 +333,7 @@ public class ChosseMapPositionActivity extends AppCompatActivity implements Loca
      */
     @Override
     public void onLocationChanged(AMapLocation amapLocation) {
-//        Log.i("MY", "onLocationChanged");
+        Log.i("MY", "onLocationChanged");
         if (mListener != null && amapLocation != null) {
             if (amapLocation != null
                     && amapLocation.getErrorCode() == 0) {
@@ -336,12 +393,11 @@ public class ChosseMapPositionActivity extends AppCompatActivity implements Loca
         mlocationClient = null;
     }
 
-
     /**
      * 响应逆地理编码
      */
     public void geoAddress() {
-//        Log.i("MY", "geoAddress"+ searchLatlonPoint.toString());
+        Log.i("MY", "geoAddress" + searchLatlonPoint.toString());
         showDialog();
         searchText.setText("");
         if (searchLatlonPoint != null) {
@@ -353,11 +409,8 @@ public class ChosseMapPositionActivity extends AppCompatActivity implements Loca
     /**
      * 开始进行poi搜索
      */
-    /**
-     * 开始进行poi搜索
-     */
     protected void doSearchQuery() {
-//        Log.i("MY", "doSearchQuery");
+        Log.i("MY", "doSearchQuery");
         currentPage = 0;
         query = new PoiSearch.Query(searchKey, searchType, "");// 第一个参数表示搜索字符串，第二个参数表示poi搜索类型，第三个参数表示poi搜索区域（空字符串代表全国）
         query.setCityLimit(true);
@@ -424,6 +477,9 @@ public class ChosseMapPositionActivity extends AppCompatActivity implements Loca
     private void updateListview(List<PoiItem> poiItems) {
         resultData.clear();
         searchResultAdapter.setSelectedPosition(0);
+
+        choosePoiItem = (PoiItem) searchResultAdapter.getItem(0);
+
         resultData.add(firstItem);
         resultData.addAll(poiItems);
 
@@ -431,28 +487,10 @@ public class ChosseMapPositionActivity extends AppCompatActivity implements Loca
         searchResultAdapter.notifyDataSetChanged();
     }
 
-
     @Override
     public void onPoiItemSearched(PoiItem poiItem, int i) {
 
     }
-
-    AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            if (position != searchResultAdapter.getSelectedPosition()) {
-                PoiItem poiItem = (PoiItem) searchResultAdapter.getItem(position);
-                LatLng curLatlng = new LatLng(poiItem.getLatLonPoint().getLatitude(), poiItem.getLatLonPoint().getLongitude());
-
-                isItemClickAction = true;
-
-                aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(curLatlng, 16f));
-
-                searchResultAdapter.setSelectedPosition(position);
-                searchResultAdapter.notifyDataSetChanged();
-            }
-        }
-    };
 
     public void showDialog() {
         progDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -517,40 +555,6 @@ public class ChosseMapPositionActivity extends AppCompatActivity implements Loca
         }
     }
 
-    //dip和px转换
-    private static int dip2px(Context context, float dpValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (dpValue * scale + 0.5f);
-    }
-
-
-    Inputtips.InputtipsListener inputtipsListener = new Inputtips.InputtipsListener() {
-        @Override
-        public void onGetInputtips(List<Tip> list, int rCode) {
-            if (rCode == AMapException.CODE_AMAP_SUCCESS) {// 正确返回
-                autoTips = list;
-                List<String> listString = new ArrayList<String>();
-                for (int i = 0; i < list.size(); i++) {
-                    listString.add(list.get(i).getName());
-                }
-                ArrayAdapter<String> aAdapter = new ArrayAdapter<String>(
-                        getApplicationContext(),
-                        R.layout.route_inputs, listString);
-                searchText.setAdapter(aAdapter);
-                aAdapter.notifyDataSetChanged();
-                if (isfirstinput) {
-                    isfirstinput = false;
-                    searchText.showDropDown();
-                }
-            } else {
-                Toast.makeText(ChosseMapPositionActivity.this, "erroCode " + rCode, Toast.LENGTH_SHORT).show();
-            }
-        }
-    };
-
-    private boolean isInputKeySearch;
-    private String inputSearchKey;
-
     private void searchPoi(Tip result) {
         isInputKeySearch = true;
         inputSearchKey = result.getName();//getAddress(); // + result.getRegeocodeAddress().getCity() + result.getRegeocodeAddress().getDistrict() + result.getRegeocodeAddress().getTownship();
@@ -561,6 +565,7 @@ public class ChosseMapPositionActivity extends AppCompatActivity implements Loca
         resultData.clear();
 
         searchResultAdapter.setSelectedPosition(0);
+        choosePoiItem = (PoiItem) searchResultAdapter.getItem(0);
 
         aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(searchLatlonPoint.getLatitude(), searchLatlonPoint.getLongitude()), 16f));
 
@@ -573,5 +578,6 @@ public class ChosseMapPositionActivity extends AppCompatActivity implements Loca
         imm.showSoftInput(view, InputMethodManager.SHOW_FORCED);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
+
 
 }
