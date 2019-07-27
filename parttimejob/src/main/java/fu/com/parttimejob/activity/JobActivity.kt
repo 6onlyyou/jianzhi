@@ -1,27 +1,23 @@
 package fu.com.parttimejob.activity
 
-import fu.com.parttimejob.R
-import fu.com.parttimejob.base.BaseActivity
-import fu.com.parttimejob.dialog.abelPopWindowL
-import kotlinx.android.synthetic.main.activity_job.*
 import android.graphics.Color
 import android.support.v7.widget.LinearLayoutManager
-import android.view.MotionEvent
-import android.view.View
+import android.text.TextUtils
 import com.heixiu.errand.net.RetrofitFactory
 import com.lljjcoder.citylist.Toast.ToastUtils
 import com.lljjcoder.citypickerview.widget.CityPicker
-import fu.com.parttimejob.adapter.HomeJobListAdapter
+import fu.com.parttimejob.R
 import fu.com.parttimejob.adapter.JobAdapter
+import fu.com.parttimejob.base.BaseActivity
 import fu.com.parttimejob.base.baseadapter.BaseRecyclerModel
 import fu.com.parttimejob.bean.GetLabelsBean
-import fu.com.parttimejob.bean.JobInfoBean
+import fu.com.parttimejob.dialog.abelPopWindowL
 import fu.com.parttimejob.retrofitNet.RxUtils
 import fu.com.parttimejob.utils.SPUtil
-import io.reactivex.functions.Consumer
+import kotlinx.android.synthetic.main.activity_job.*
 
 
-class JobActivity : BaseActivity(){
+class JobActivity : BaseActivity() {
 
     var homeJobListAdapter = JobAdapter()
     override fun getLayoutId(): Int {
@@ -31,14 +27,15 @@ class JobActivity : BaseActivity(){
     override fun initViewParams() {
 
     }
-     var list : ArrayList<GetLabelsBean>? =null
-    var strarr: List<String> ?=null
-    val list2: ArrayList<BaseRecyclerModel>? =ArrayList<BaseRecyclerModel>()
+
+    var list: ArrayList<GetLabelsBean>? = null
+    var strarr: List<String>? = null
+    val list2: ArrayList<BaseRecyclerModel>? = ArrayList<BaseRecyclerModel>()
     override fun initViewClick() {
-        cityname.text = SPUtil.getString(this,"city","廊坊市")
+        cityname.text = SPUtil.getString(this, "city", "廊坊市")
         jobList.layoutManager = LinearLayoutManager(this)
         jobList.adapter = homeJobListAdapter
-         list = ArrayList()
+        list = ArrayList()
         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().label).subscribe { getLabelsBean ->
             if (getLabelsBean.labels != null && getLabelsBean.labels != "") {
                 val strarr1 = getLabelsBean.labels.substring(0, getLabelsBean.labels.length).split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
@@ -75,18 +72,29 @@ class JobActivity : BaseActivity(){
             selectAddress()
         }
         job_work.setOnClickListener {
-
             val addPopWindow = abelPopWindowL(this@JobActivity)
-            addPopWindow.showPopupWindow(job_work)
+            addPopWindow.showPopupWindow(job_work) { jobName ->
+                job_label.text = if (TextUtils.isEmpty(jobName)) {
+                    "工作"
+                } else {
+                    jobName
+                }
+                getJobList()
+            }
         }
 
-        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().sameCity(SPUtil.getString(this,"thirdAccount",""),cityname.text.toString(),job_label.text.toString())).subscribe({
+        getJobList()
+    }
+
+    public fun getJobList() {
+        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().sameCity(SPUtil.getString(this, "thirdAccount", ""), cityname.text.toString(), job_label.text.toString())).subscribe({
             homeJobListAdapter.addAll(it as List<BaseRecyclerModel>?)
             homeJobListAdapter.notifyDataSetChanged()
         }, {
             ToastUtils.showLongToast(this, it.message.toString())
         })
     }
+
     private fun selectAddress() {
         val cityPicker = CityPicker.Builder(this@JobActivity)
                 .textSize(14)
@@ -104,14 +112,14 @@ class JobActivity : BaseActivity(){
                 .onlyShowProvinceAndCity(true)
                 .build()
         cityPicker.show()
-        cityPicker.setOnCityItemClickListener(object :CityPicker.OnCityItemClickListener{
+        cityPicker.setOnCityItemClickListener(object : CityPicker.OnCityItemClickListener {
             override fun onSelected(vararg citySelected: String?) {
                 val province = citySelected[0]
                 //城市
                 val city = citySelected[1]
                 //区县（如果设定了两级联动，那么该项返回空）
                 cityname.text = city
-                RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().sameCity(SPUtil.getString(this@JobActivity,"thirdAccount",""),city,job_label.text.toString())).subscribe({
+                RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().sameCity(SPUtil.getString(this@JobActivity, "thirdAccount", ""), city, job_label.text.toString())).subscribe({
                     homeJobListAdapter.addAll(it as List<BaseRecyclerModel>?)
                     homeJobListAdapter.notifyDataSetChanged()
                 }, {
@@ -123,7 +131,7 @@ class JobActivity : BaseActivity(){
             }
 
         })
-            //监听方法，获取选择结果
+        //监听方法，获取选择结果
     }
 
 }
