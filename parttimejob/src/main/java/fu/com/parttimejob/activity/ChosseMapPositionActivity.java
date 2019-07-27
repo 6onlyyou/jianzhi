@@ -2,6 +2,7 @@ package fu.com.parttimejob.activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -110,6 +111,10 @@ public class ChosseMapPositionActivity extends AppCompatActivity implements Loca
                 searchResultAdapter.setSelectedPosition(position);
                 searchResultAdapter.notifyDataSetChanged();
             }
+            Intent intent = new Intent();
+            intent.putExtra("location", choosePoiItem);
+            setResult(RESULT_OK, intent);
+            finish();
         }
     };
     private List<Tip> autoTips;
@@ -478,12 +483,14 @@ public class ChosseMapPositionActivity extends AppCompatActivity implements Loca
         resultData.clear();
         searchResultAdapter.setSelectedPosition(0);
 
-        choosePoiItem = (PoiItem) searchResultAdapter.getItem(0);
 
         resultData.add(firstItem);
         resultData.addAll(poiItems);
 
+
         searchResultAdapter.setData(resultData);
+
+        choosePoiItem = (PoiItem) searchResultAdapter.getItem(0);
         searchResultAdapter.notifyDataSetChanged();
     }
 
@@ -565,7 +572,6 @@ public class ChosseMapPositionActivity extends AppCompatActivity implements Loca
         resultData.clear();
 
         searchResultAdapter.setSelectedPosition(0);
-        choosePoiItem = (PoiItem) searchResultAdapter.getItem(0);
 
         aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(searchLatlonPoint.getLatitude(), searchLatlonPoint.getLongitude()), 16f));
 
