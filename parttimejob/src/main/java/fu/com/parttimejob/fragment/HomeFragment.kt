@@ -74,8 +74,6 @@ class HomeFragment : Fragment() {
             startActivity(Intent(context, PublishJobActivity::class.java))
         }
         same_city_iv.setOnClickListener {
-            startActivity(Intent(context, PublishJobActivity::class.java))
-
             startActivity(Intent(context, JobActivity::class.java))
         }
         make_money_iv.setOnClickListener {
