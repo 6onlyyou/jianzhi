@@ -19,12 +19,8 @@ import fu.com.parttimejob.adapter.GridImageAdapter
 import fu.com.parttimejob.base.BaseActivity
 import fu.com.parttimejob.retrofitNet.RxUtils
 import fu.com.parttimejob.utils.FullyGridLayoutManager
-import fu.com.parttimejob.utils.GlideUtil
 import fu.com.parttimejob.utils.SPUtil
-import fu.com.parttimejob.view.PickerScrollView
 import kotlinx.android.synthetic.main.activity_publish_ad.*
-import kotlinx.android.synthetic.main.activity_publish_ad.location
-import kotlinx.android.synthetic.main.activity_publish_ad.recyclerView
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -39,37 +35,42 @@ class PublishAdActivity : BaseActivity() {
 
     override fun initViewParams() {
     }
-    private var themeId: Int = 0
-    override fun initViewClick() {
-        themeId = R.style.picture_default_style
+
+    override fun onResume() {
+        super.onResume()
         val manager = FullyGridLayoutManager(this@PublishAdActivity, 1, GridLayoutManager.VERTICAL, false)
-        recyclerView.setLayoutManager(manager)
+        recyclerView.layoutManager = manager
         adapter = GridImageAdapter(this@PublishAdActivity, onAddPicClickListener)
         adapter!!.setList(selectList)
         adapter!!.setSelectMax(1)
-        recyclerView.setAdapter(adapter)
-        adapter!!.setOnItemClickListener(object : GridImageAdapter.OnItemClickListener {
-            override fun onItemClick(position: Int, v: View) {
-                if (selectList.size > 0) {
-                    val media = selectList[position]
-                    val pictureType = media.pictureType
+        recyclerView.adapter = adapter
+        adapter!!.setOnItemClickListener { position, v ->
+            if (selectList.isNotEmpty()) {
+                val media = selectList[position]
+                val pictureType = media.pictureType
 
-                    val mediaType = PictureMimeType.pictureToVideo(pictureType)
-                    when (mediaType) {
-                        1 ->
-                            // 预览图片 可自定长按保存路径
-                            //PictureSelector.create(MainActivity.this).themeStyle(themeId).externalPicturePreview(position, "/custom_file", selectList);
-                            PictureSelector.create(this@PublishAdActivity).themeStyle(themeId).openExternalPreview(position, selectList)
-                        2 ->
-                            // 预览视频
-                            PictureSelector.create(this@PublishAdActivity).externalPictureVideo(media.path)
-                        3 ->
-                            // 预览音频
-                            PictureSelector.create(this@PublishAdActivity).externalPictureAudio(media.path)
-                    }
+                val mediaType = PictureMimeType.pictureToVideo(pictureType)
+                when (mediaType) {
+                    1 ->
+                        // 预览图片 可自定长按保存路径
+                        //PictureSelector.create(MainActivity.this).themeStyle(themeId).externalPicturePreview(position, "/custom_file", selectList);
+                        PictureSelector.create(this@PublishAdActivity).themeStyle(themeId).openExternalPreview(position, selectList)
+                    2 ->
+                        // 预览视频
+                        PictureSelector.create(this@PublishAdActivity).externalPictureVideo(media.path)
+                    3 ->
+                        // 预览音频
+                        PictureSelector.create(this@PublishAdActivity).externalPictureAudio(media.path)
                 }
             }
-        })
+        }
+
+        location.setOnClickListener {
+            startActivityForResult(Intent(this@PublishAdActivity, ChosseMapPositionActivity::class.java), CHOOSE_LOCATION)
+        }
+
+        themeId = R.style.picture_default_style
+
 
         publish.setOnClickListener {
             if (TextUtils.isEmpty(jianliname.text) || TextUtils.isEmpty(hongbaoSize.text) || TextUtils.isEmpty(jiangliMoney.text) || TextUtils.isEmpty(guanggaoContent.text)) {
@@ -77,14 +78,14 @@ class PublishAdActivity : BaseActivity() {
             } else {
                 val builder: MultipartBody.Builder = MultipartBody.Builder()
                         .setType(MultipartBody.FORM)
-                if (selectList!!.size < 1) {
-                    builder.addFormDataPart("img", File(selectList!!.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList!!.get(0).compressPath)));
+                if (selectList.size < 1) {
+                    builder.addFormDataPart("img", File(selectList.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList.get(0).compressPath)))
                 } else {
-                    for (i in selectList!!.indices) {
-                        builder.addFormDataPart("img", File(selectList!!.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList!!.get(0).compressPath)));
+                    for (i in selectList.indices) {
+                        builder.addFormDataPart("img", File(selectList.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList.get(0).compressPath)))
                     }
                 }
-                val requestBody: RequestBody = builder.build();
+                val requestBody: RequestBody = builder.build()
                 RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().publichAdvertisement(SPUtil.getString(this, "thirdAccount", "111"), jianliname.text.toString(), hongbaoSize.text.toString(), jiangliMoney.text.toString(), SPUtil.getString(this, "city", "廊坊市"), SPUtil.getString(this, "latitude", "0.0"), SPUtil.getString(this, "longitude", "0.0"), guanggaoContent.text.toString(), requestBody)).subscribe({
                     ToastUtils.showLongToast(this, it)
                 }, {
@@ -92,11 +93,13 @@ class PublishAdActivity : BaseActivity() {
                 })
             }
         }
-
-        location.setOnClickListener{
-            startActivityForResult(Intent(this@PublishAdActivity, ChosseMapPositionActivity::class.java), CHOOSE_LOCATION)
-        }
     }
+
+    private var themeId: Int = 0
+    override fun initViewClick() {
+
+    }
+
     private val onAddPicClickListener = object : GridImageAdapter.onAddPicClickListener {
         override fun onAddPicClick() {
             PictureSelector.create(this@PublishAdActivity)
@@ -145,6 +148,7 @@ class PublishAdActivity : BaseActivity() {
         }
 
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_publish_ad)
@@ -165,7 +169,7 @@ class PublishAdActivity : BaseActivity() {
                     // 如果裁剪并压缩了，已取压缩路径为准，因为是先裁剪后压缩的
 
                     for (media in selectList) {
-                        Log.i("图片-----》", media.getPath())
+                        Log.i("图片-----》", media.path)
                     }
                     adapter!!.setList(selectList)
                     adapter!!.notifyDataSetChanged()
