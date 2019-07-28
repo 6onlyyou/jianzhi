@@ -23,8 +23,6 @@ import fu.com.parttimejob.utils.GlideUtil
 import fu.com.parttimejob.utils.SPUtil
 import fu.com.parttimejob.view.PickerScrollView
 import kotlinx.android.synthetic.main.activity_publish_ad.*
-import kotlinx.android.synthetic.main.activity_publish_ad.location
-import kotlinx.android.synthetic.main.activity_publish_ad.recyclerView
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -44,11 +42,12 @@ class PublishAdActivity : BaseActivity() {
     override fun initViewClick() {
         themeId = R.style.picture_default_style
         val manager = FullyGridLayoutManager(this@PublishAdActivity, 1, GridLayoutManager.VERTICAL, false)
-        recyclerView.setLayoutManager(manager)
+        recyclerViewss.setLayoutManager(manager)
+        selectList = ArrayList()
         adapter = GridImageAdapter(this@PublishAdActivity, onAddPicClickListener)
         adapter!!.setList(selectList)
         adapter!!.setSelectMax(1)
-        recyclerView.setAdapter(adapter)
+        recyclerViewss.setAdapter(adapter)
         adapter!!.setOnItemClickListener(object : GridImageAdapter.OnItemClickListener {
             override fun onItemClick(position: Int, v: View) {
                 if (selectList.size > 0) {

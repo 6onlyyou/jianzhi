@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fu.com.parttimejob.activity.DisplayJianLiActivity">
+    android:orientation="vertical"
+    tools:context=".activity.PublishAdActivity"
+ >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -35,7 +37,7 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="40dp">
+      >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -148,7 +150,7 @@
             <TextView
                 android:id="@+id/location"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="15dp"
@@ -201,20 +203,19 @@
                 android:textColor="#ff222222"
                 android:textSize="14sp" />
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
+                android:id="@+id/recyclerViewss"
                 android:layout_width="91dp"
                 android:layout_height="91dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="7dp"
-                android:visibility="visible"
                 android:overScrollMode="never" />
-            <ImageView
-                android:id="@+id/jina_pic"
-                android:layout_width="91dp"
-                android:layout_height="91dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="7dp"
-                android:background="@mipmap/ic_add_photo" />
+            <!--<ImageView-->
+                <!--android:id="@+id/jina_pic"-->
+                <!--android:layout_width="91dp"-->
+                <!--android:layout_height="91dp"-->
+                <!--android:layout_marginLeft="15dp"-->
+                <!--android:layout_marginTop="7dp"-->
+                <!--android:background="@mipmap/ic_add_photo" />-->
 
             <TextView
                 android:id="@+id/publish"
@@ -235,4 +236,4 @@
     </android.support.v4.widget.NestedScrollView>
 
 
-</FrameLayout>
+</LinearLayout>

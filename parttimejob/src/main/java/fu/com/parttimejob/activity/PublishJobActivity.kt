@@ -3,6 +3,7 @@ package fu.com.parttimejob.activity
 import android.app.Activity
 import android.content.Intent
 import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
@@ -51,6 +52,7 @@ class PublishJobActivity : BaseActivity() {
         pickerscrlllview.setOnSelectListener(pickerListener);
         val manager = FullyGridLayoutManager(this@PublishJobActivity, 1, GridLayoutManager.VERTICAL, false)
         recyclerView.setLayoutManager(manager)
+
         adapter = GridImageAdapter(this@PublishJobActivity, onAddPicClickListener)
         adapter!!.setList(selectList)
         adapter!!.setSelectMax(1)
