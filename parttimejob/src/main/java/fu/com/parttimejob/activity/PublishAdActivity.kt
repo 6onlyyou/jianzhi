@@ -19,9 +19,7 @@ import fu.com.parttimejob.adapter.GridImageAdapter
 import fu.com.parttimejob.base.BaseActivity
 import fu.com.parttimejob.retrofitNet.RxUtils
 import fu.com.parttimejob.utils.FullyGridLayoutManager
-import fu.com.parttimejob.utils.GlideUtil
 import fu.com.parttimejob.utils.SPUtil
-import fu.com.parttimejob.view.PickerScrollView
 import kotlinx.android.synthetic.main.activity_publish_ad.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -30,7 +28,6 @@ import java.io.File
 import java.util.*
 
 class PublishAdActivity : BaseActivity() {
-    private var selectList: List<LocalMedia> = ArrayList()
     private var adapter: GridImageAdapter? = null
     override fun getLayoutId(): Int {
         return R.layout.activity_publish_ad
@@ -38,16 +35,16 @@ class PublishAdActivity : BaseActivity() {
 
     override fun initViewParams() {
     }
+
     private var themeId: Int = 0
     override fun initViewClick() {
         themeId = R.style.picture_default_style
         val manager = FullyGridLayoutManager(this@PublishAdActivity, 1, GridLayoutManager.VERTICAL, false)
-        recyclerViewss.setLayoutManager(manager)
-        selectList = ArrayList()
+        recyclerView.layoutManager = manager
         adapter = GridImageAdapter(this@PublishAdActivity, onAddPicClickListener)
         adapter!!.setList(selectList)
         adapter!!.setSelectMax(1)
-        recyclerViewss.setAdapter(adapter)
+        recyclerView.adapter = adapter
         adapter!!.setOnItemClickListener(object : GridImageAdapter.OnItemClickListener {
             override fun onItemClick(position: Int, v: View) {
                 if (selectList.size > 0) {
@@ -77,14 +74,14 @@ class PublishAdActivity : BaseActivity() {
             } else {
                 val builder: MultipartBody.Builder = MultipartBody.Builder()
                         .setType(MultipartBody.FORM)
-                if (selectList!!.size < 1) {
-                    builder.addFormDataPart("img", File(selectList!!.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList!!.get(0).compressPath)));
+                if (selectList.size < 1) {
+                    builder.addFormDataPart("img", File(selectList.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList.get(0).compressPath)))
                 } else {
-                    for (i in selectList!!.indices) {
-                        builder.addFormDataPart("img", File(selectList!!.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList!!.get(0).compressPath)));
+                    for (i in selectList.indices) {
+                        builder.addFormDataPart("img", File(selectList.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList.get(0).compressPath)))
                     }
                 }
-                val requestBody: RequestBody = builder.build();
+                val requestBody: RequestBody = builder.build()
                 RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().publichAdvertisement(SPUtil.getString(this, "thirdAccount", "111"), jianliname.text.toString(), hongbaoSize.text.toString(), jiangliMoney.text.toString(), SPUtil.getString(this, "city", "廊坊市"), SPUtil.getString(this, "latitude", "0.0"), SPUtil.getString(this, "longitude", "0.0"), guanggaoContent.text.toString(), requestBody)).subscribe({
                     ToastUtils.showLongToast(this, it)
                 }, {
@@ -93,14 +90,15 @@ class PublishAdActivity : BaseActivity() {
             }
         }
 
-        location.setOnClickListener{
+        location.setOnClickListener {
             startActivityForResult(Intent(this@PublishAdActivity, ChosseMapPositionActivity::class.java), CHOOSE_LOCATION)
         }
     }
+
     private val onAddPicClickListener = object : GridImageAdapter.onAddPicClickListener {
         override fun onAddPicClick() {
             PictureSelector.create(this@PublishAdActivity)
-                    .openGallery(PictureMimeType.ofImage())// 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
+                    .openGallery(PictureMimeType.ofAll())// 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
                     .theme(R.style.picture_default_style)// 主题样式设置 具体参考 values/styles   用法：R.style.picture.white.style
                     .maxSelectNum(1)// 最大图片选择数量
                     .minSelectNum(1)// 最小选择数量
@@ -145,11 +143,8 @@ class PublishAdActivity : BaseActivity() {
         }
 
     }
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_publish_ad)
-    }
 
+    private var selectList: List<LocalMedia> = ArrayList()
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
@@ -164,7 +159,7 @@ class PublishAdActivity : BaseActivity() {
                     // 如果裁剪并压缩了，已取压缩路径为准，因为是先裁剪后压缩的
 
                     for (media in selectList) {
-                        Log.i("图片-----》", media.getPath())
+                        Log.i("图片-----》", media.path)
                     }
                     adapter!!.setList(selectList)
                     adapter!!.notifyDataSetChanged()
