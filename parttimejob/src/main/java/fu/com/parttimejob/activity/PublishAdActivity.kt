@@ -36,41 +36,37 @@ class PublishAdActivity : BaseActivity() {
     override fun initViewParams() {
     }
 
-    override fun onResume() {
-        super.onResume()
+    private var themeId: Int = 0
+    override fun initViewClick() {
+        themeId = R.style.picture_default_style
         val manager = FullyGridLayoutManager(this@PublishAdActivity, 1, GridLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = manager
         adapter = GridImageAdapter(this@PublishAdActivity, onAddPicClickListener)
         adapter!!.setList(selectList)
         adapter!!.setSelectMax(1)
         recyclerView.adapter = adapter
-        adapter!!.setOnItemClickListener { position, v ->
-            if (selectList.isNotEmpty()) {
-                val media = selectList[position]
-                val pictureType = media.pictureType
+        adapter!!.setOnItemClickListener(object : GridImageAdapter.OnItemClickListener {
+            override fun onItemClick(position: Int, v: View) {
+                if (selectList.size > 0) {
+                    val media = selectList[position]
+                    val pictureType = media.pictureType
 
-                val mediaType = PictureMimeType.pictureToVideo(pictureType)
-                when (mediaType) {
-                    1 ->
-                        // 预览图片 可自定长按保存路径
-                        //PictureSelector.create(MainActivity.this).themeStyle(themeId).externalPicturePreview(position, "/custom_file", selectList);
-                        PictureSelector.create(this@PublishAdActivity).themeStyle(themeId).openExternalPreview(position, selectList)
-                    2 ->
-                        // 预览视频
-                        PictureSelector.create(this@PublishAdActivity).externalPictureVideo(media.path)
-                    3 ->
-                        // 预览音频
-                        PictureSelector.create(this@PublishAdActivity).externalPictureAudio(media.path)
+                    val mediaType = PictureMimeType.pictureToVideo(pictureType)
+                    when (mediaType) {
+                        1 ->
+                            // 预览图片 可自定长按保存路径
+                            //PictureSelector.create(MainActivity.this).themeStyle(themeId).externalPicturePreview(position, "/custom_file", selectList);
+                            PictureSelector.create(this@PublishAdActivity).themeStyle(themeId).openExternalPreview(position, selectList)
+                        2 ->
+                            // 预览视频
+                            PictureSelector.create(this@PublishAdActivity).externalPictureVideo(media.path)
+                        3 ->
+                            // 预览音频
+                            PictureSelector.create(this@PublishAdActivity).externalPictureAudio(media.path)
+                    }
                 }
             }
-        }
-
-        location.setOnClickListener {
-            startActivityForResult(Intent(this@PublishAdActivity, ChosseMapPositionActivity::class.java), CHOOSE_LOCATION)
-        }
-
-        themeId = R.style.picture_default_style
-
+        })
 
         publish.setOnClickListener {
             if (TextUtils.isEmpty(jianliname.text) || TextUtils.isEmpty(hongbaoSize.text) || TextUtils.isEmpty(jiangliMoney.text) || TextUtils.isEmpty(guanggaoContent.text)) {
@@ -93,11 +89,10 @@ class PublishAdActivity : BaseActivity() {
                 })
             }
         }
-    }
 
-    private var themeId: Int = 0
-    override fun initViewClick() {
-
+        location.setOnClickListener {
+            startActivityForResult(Intent(this@PublishAdActivity, ChosseMapPositionActivity::class.java), CHOOSE_LOCATION)
+        }
     }
 
     private val onAddPicClickListener = object : GridImageAdapter.onAddPicClickListener {
@@ -147,11 +142,6 @@ class PublishAdActivity : BaseActivity() {
                     .forResult(PictureConfig.CHOOSE_REQUEST)//结果回调onActivityResult code
         }
 
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_publish_ad)
     }
 
     private var selectList: List<LocalMedia> = ArrayList()
