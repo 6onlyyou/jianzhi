@@ -5,7 +5,6 @@ import android.content.Context
 import android.net.wifi.WifiManager
 import android.os.Handler
 import android.os.Message
-import android.os.SystemClock
 import android.text.TextUtils
 import android.widget.CompoundButton
 import com.alipay.sdk.app.PayTask
@@ -88,11 +87,11 @@ class RechargeActivity : BaseActivity() {
         api.registerApp(SPContants.WX_APP_ID)
         val payReq = PayReq()
         payReq.appId = SPContants.WX_APP_ID
-        payReq.partnerId = entity.mch_id
-        payReq.prepayId = entity.prepay_id
-        payReq.packageValue = "Sign=WXPay"
-        payReq.nonceStr = entity.nonce_str
-        payReq.timeStamp = (System.currentTimeMillis()/1000).toString()
+        payReq.partnerId = entity.partnerid
+        payReq.prepayId = entity.prepayid
+        payReq.packageValue = entity.packageX
+        payReq.nonceStr = entity.noncestr
+        payReq.timeStamp = entity.timestamp.toString()
         payReq.sign = entity.sign
         api.sendReq(payReq)
     }

@@ -13,8 +13,8 @@ public class WXPayEntity implements Serializable {
     /**
      * appid : wx1d3b4994f7a135da
      * mch_id : 1493995262
-     * prepay_id : wx201712110943237209bf96000439181872
-     * nonce_str : 16740f6d-721c-433d-8741-07e917
+     * prepayid : wx201712110943237209bf96000439181872
+     * noncestr : 16740f6d-721c-433d-8741-07e917
      * timestamp : 1512956603
      * sign : 5547F6BAAD1D89EF8FCF61C04ECBB46E
      * package : Sign=WXPay
@@ -22,12 +22,29 @@ public class WXPayEntity implements Serializable {
 
     private String appid;
     private String mch_id;
-    private String prepay_id;
-    private String nonce_str;
-    private int timestamp;
+    private String prepayid;
+    private String noncestr;
+    private String timestamp;
     private String sign;
     @SerializedName("package")
     private String mPackage;
+    private String partnerid;
+
+    public String getmPackage() {
+        return mPackage;
+    }
+
+    public void setmPackage(String mPackage) {
+        this.mPackage = mPackage;
+    }
+
+    public String getPartnerid() {
+        return partnerid;
+    }
+
+    public void setPartnerid(String partnerid) {
+        this.partnerid = partnerid;
+    }
 
     public String getAppid() {
         return appid;
@@ -45,27 +62,27 @@ public class WXPayEntity implements Serializable {
         this.mch_id = mch_id;
     }
 
-    public String getPrepay_id() {
-        return prepay_id;
+    public String getPrepayid() {
+        return prepayid;
     }
 
-    public void setPrepay_id(String prepay_id) {
-        this.prepay_id = prepay_id;
+    public void setPrepayid(String prepayid) {
+        this.prepayid = prepayid;
     }
 
-    public String getNonce_str() {
-        return nonce_str;
+    public String getNoncestr() {
+        return noncestr;
     }
 
-    public void setNonce_str(String nonce_str) {
-        this.nonce_str = nonce_str;
+    public void setNoncestr(String noncestr) {
+        this.noncestr = noncestr;
     }
 
-    public int getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(int timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 
