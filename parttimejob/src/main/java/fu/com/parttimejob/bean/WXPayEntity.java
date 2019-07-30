@@ -12,18 +12,18 @@ public class WXPayEntity implements Serializable {
     private static final long serialVersionUID = 1144209869581148930L;
     /**
      * appid : wx1d3b4994f7a135da
-     * partnerid : 1493995262
-     * prepayid : wx201712110943237209bf96000439181872
-     * noncestr : 16740f6d-721c-433d-8741-07e917
+     * mch_id : 1493995262
+     * prepay_id : wx201712110943237209bf96000439181872
+     * nonce_str : 16740f6d-721c-433d-8741-07e917
      * timestamp : 1512956603
      * sign : 5547F6BAAD1D89EF8FCF61C04ECBB46E
      * package : Sign=WXPay
      */
 
     private String appid;
-    private String partnerid;
-    private String prepayid;
-    private String noncestr;
+    private String mch_id;
+    private String prepay_id;
+    private String nonce_str;
     private int timestamp;
     private String sign;
     @SerializedName("package")
@@ -37,28 +37,28 @@ public class WXPayEntity implements Serializable {
         this.appid = appid;
     }
 
-    public String getPartnerid() {
-        return partnerid;
+    public String getMch_id() {
+        return mch_id;
     }
 
-    public void setPartnerid(String partnerid) {
-        this.partnerid = partnerid;
+    public void setMch_id(String mch_id) {
+        this.mch_id = mch_id;
     }
 
-    public String getPrepayid() {
-        return prepayid;
+    public String getPrepay_id() {
+        return prepay_id;
     }
 
-    public void setPrepayid(String prepayid) {
-        this.prepayid = prepayid;
+    public void setPrepay_id(String prepay_id) {
+        this.prepay_id = prepay_id;
     }
 
-    public String getNoncestr() {
-        return noncestr;
+    public String getNonce_str() {
+        return nonce_str;
     }
 
-    public void setNoncestr(String noncestr) {
-        this.noncestr = noncestr;
+    public void setNonce_str(String nonce_str) {
+        this.nonce_str = nonce_str;
     }
 
     public int getTimestamp() {
