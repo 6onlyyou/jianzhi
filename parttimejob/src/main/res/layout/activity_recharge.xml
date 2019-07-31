@@ -106,6 +106,7 @@
             android:textSize="18sp" />
 
         <CheckBox
+            android:id="@+id/aliPayCheck"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -145,6 +146,7 @@
             android:textSize="18sp" />
 
         <CheckBox
+            android:id="@+id/wxPayCheck"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -158,6 +160,7 @@
         android:background="@color/colorLine" />
 
     <TextView
+        android:id="@+id/recharge"
         android:layout_width="252dp"
         android:layout_height="36dp"
         android:layout_gravity="center_horizontal"
