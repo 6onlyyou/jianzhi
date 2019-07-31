@@ -7,9 +7,50 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="137dp"
-        android:background="@color/colorPrimary">
+        android:layout_height="157dp"
+        android:background="@color/colorMenuWhite">
 
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="个人中心"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/title"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/bg_myinfo">
+
+            <fu.com.parttimejob.weight.CircleImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:id="@+id/ava"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:src="@mipmap/ic_my_money" />
+
+            <TextView
+                android:layout_marginLeft="16dp"
+                android:layout_alignTop="@+id/ava"
+                android:layout_toRightOf="@+id/ava"
+                android:id="@+id/name"
+                android:layout_width="50dp"
+                android:layout_height="35dp"
+                android:text="张三"
+                android:textColor="#ffffffff"
+                android:textSize="25sp"
+                />
+
+        </RelativeLayout>
 
     </RelativeLayout>
 
@@ -78,10 +119,12 @@
             android:layout_height="wrap_content"
             android:src="@mipmap/ic_back" />
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorLine" />
+
     <LinearLayout
         android:id="@+id/editGaogaohdon"
         android:layout_width="match_parent"
@@ -111,10 +154,12 @@
             android:layout_height="wrap_content"
             android:src="@mipmap/ic_back" />
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorLine" />
+
     <LinearLayout
         android:id="@+id/setsgil"
         android:layout_width="match_parent"
@@ -144,19 +189,21 @@
             android:layout_height="wrap_content"
             android:src="@mipmap/ic_back" />
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorLine" />
+
     <LinearLayout
-        android:visibility="gone"
         android:id="@+id/myAddressLayout"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingLeft="15dp"
-        android:paddingRight="15dp">
+        android:paddingRight="15dp"
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="18dp"
@@ -218,6 +265,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorLine" />
+
     <LinearLayout
         android:id="@+id/zhaopinlishi"
         android:layout_width="match_parent"
@@ -252,6 +300,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorLine" />
+
     <LinearLayout
         android:id="@+id/yaoQingLayout"
         android:layout_width="match_parent"
@@ -323,7 +372,6 @@
         android:background="@color/colorLine" />
 
     <TextView
-        android:visibility="gone"
         android:id="@+id/change_identity"
         android:layout_width="252dp"
         android:layout_height="36dp"
@@ -333,7 +381,8 @@
         android:gravity="center"
         android:text="切换身份"
         android:textColor="@color/colorPrimary"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/loginOut"

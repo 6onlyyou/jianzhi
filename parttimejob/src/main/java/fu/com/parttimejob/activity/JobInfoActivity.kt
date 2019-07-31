@@ -3,8 +3,8 @@ package fu.com.parttimejob.activity
 import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
-import android.widget.ImageView
-import com.bumptech.glide.Glide
+import android.os.Bundle
+import android.os.PersistableBundle
 import com.heixiu.errand.net.RetrofitFactory
 import com.lljjcoder.citylist.Toast.ToastUtils
 import fu.com.parttimejob.R
@@ -16,16 +16,57 @@ import fu.com.parttimejob.utils.SPUtil
 import io.rong.imkit.RongIM
 import io.rong.imlib.model.UserInfo
 import kotlinx.android.synthetic.main.activity_job_info.*
+import com.amap.api.maps.model.MarkerOptions
+import com.amap.api.maps.model.Marker
+import com.amap.api.maps.model.LatLng
+import com.amap.api.maps.AMap
+
+
+
+
 
 class JobInfoActivity : BaseActivity() {
-    override fun getLayoutId(): Int {
-        return R.layout.activity_job_info
-    }
-
     override fun initViewParams() {
 
     }
-    var recruitInfoBean: RecruitInfoBean ? = null
+
+    override fun getLayoutId(): Int {
+        return R.layout.activity_job_info
+    }
+    var aMap: AMap? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        jobLocationMap.onCreate(savedInstanceState)
+        if (aMap == null) {
+            aMap = jobLocationMap.map
+        }
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        jobLocationMap.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        jobLocationMap.onPause()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        jobLocationMap.onDestroy()
+
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?) {
+        super.onSaveInstanceState(outState, outPersistentState)
+        jobLocationMap.onSaveInstanceState(outState)
+    }
+
+
+    var recruitInfoBean: RecruitInfoBean? = null
     var jinbi = 0
     override fun initViewClick() {
         recruitInfoBean = RecruitInfoBean()
@@ -34,25 +75,28 @@ class JobInfoActivity : BaseActivity() {
             recruitInfoBean = it
             if (SPUtil.getString(this, "thirdAccount", "").equals(it.thirdAccount)) {
                 if (it.state == 1) {
-                    ji_gouton.setText("关闭招聘")
+                    ji_gouton.text = "关闭招聘"
                 } else {
-                    ji_gouton.setText("开启招聘")
+                    ji_gouton.text = "开启招聘"
                 }
 
             } else {
-                ji_gouton.setText("立即沟通")
+                ji_gouton.text = "立即沟通"
             }
 
+            val latLng = LatLng(java.lang.Double.valueOf(it.latitude), java.lang.Double.valueOf(it.longitude))
+            val marker = aMap?.addMarker(MarkerOptions().position(latLng).title("").snippet("DefaultMarker"))
+
             jinbi = it.unclaimedVirtualCoins
-            label_job.setText(it.label)
-            jobSalaryTv.setText(it.salaryAndWelfare)
-            jobLocation.setText(it.city)
-            content_job.setText("工作内容:"+it.workContent)
-            location_job.setText("工作地点："+it.contactAddress)
-            phone.setText(it.phoneNumber)
-            num_job.setText("招聘人数："+it.numberOfVirtualCoins)
-            job_jbi.setText("分享群领取" + it.recruitingNumbers / it.redEnvelopeNumber + "金币")
-            coid_job.setText("分享成功后可获得" + it.recruitingNumbers / it.redEnvelopeNumber + "虚拟币奖励")
+            label_job.text = it.label
+            jobSalaryTv.text = it.salaryAndWelfare
+            jobLocation.text = it.city
+            content_job.text = "工作内容:" + it.workContent
+            location_job.text = "工作地点：" + it.contactAddress
+            phone.text = it.phoneNumber
+            num_job.text = "招聘人数：" + it.numberOfVirtualCoins
+            job_jbi.text = "分享群领取" + it.recruitingNumbers / it.redEnvelopeNumber + "金币"
+            coid_job.text = "分享成功后可获得" + it.recruitingNumbers / it.redEnvelopeNumber + "虚拟币奖励"
             ji_gouton.setOnClickListener {
                 if (SPUtil.getString(this, "thirdAccount", "").equals("")) {
                     val intent = Intent(this, MainActivity::class.java)
@@ -117,7 +161,7 @@ class JobInfoActivity : BaseActivity() {
         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().addCommunicationRecord(SPUtil.getString(this, "thirdAccount", ""), intent.getIntExtra("id", 0))).subscribe({
             RongIM.setUserInfoProvider({
                 //在这里，根据userId，使用同步的请求，去请求服务器，就可以完美做到显示用户的头像，昵称了
-                if (recruitInfoBean!!.headImg == null ||recruitInfoBean!!.headImg.equals("")) {
+                if (recruitInfoBean!!.headImg == null || recruitInfoBean!!.headImg.equals("")) {
                     UserInfo(recruitInfoBean!!.thirdAccount.toString(), recruitInfoBean!!.companyName.toString(), Uri.parse("http://konkonyu.oss-cn-beijing.aliyuncs.com/moren.jpg"))//根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。   
                 } else {
                     UserInfo(recruitInfoBean!!.thirdAccount.toString(), recruitInfoBean!!.companyName.toString(), Uri.parse(recruitInfoBean!!.headImg + ""))//根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。   
