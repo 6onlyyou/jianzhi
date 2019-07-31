@@ -27,6 +27,15 @@ public class RecruitInfoBean {
     private int viewCount;
     private int state;
     private String headImg;
+    public String nickName;
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
 
     public String getHeadImg() {
         return headImg;

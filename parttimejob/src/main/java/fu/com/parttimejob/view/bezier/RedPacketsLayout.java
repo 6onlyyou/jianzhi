@@ -109,24 +109,24 @@ public class RedPacketsLayout extends RelativeLayout {
 
     private void addPacket() {
 
-                dialogPro = new ProgressDialog(getContext());
+        dialogPro = new ProgressDialog(getContext());
         dialogPro.setCanceledOnTouchOutside(false);
         dialogPro.setMessage("小二加载中，大人请稍后~");
-        dialogPro.setOnKeyListener(new DialogInterface.OnKeyListener() {
-            @Override
-            public boolean onKey(DialogInterface dialogInterface, int i, KeyEvent keyEvent) {
-                if (i == KeyEvent.KEYCODE_BACK && keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
-//                    val rxBusEntity = RxBusEntity()
-//                    rxBusEntity.msg = "77"
-//                    RxBus.getDefault().post(rxBusEntity)
-
-//                    finish()
-                    return true;
-                } else {
-                    return false; //默认返回 false
-                }
-            }
-        });
+//        dialogPro.setOnKeyListener(new DialogInterface.OnKeyListener() {
+//            @Override
+//            public boolean onKey(DialogInterface dialogInterface, int i, KeyEvent keyEvent) {
+//                if (i == KeyEvent.KEYCODE_BACK && keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
+////                    val rxBusEntity = RxBusEntity()
+////                    rxBusEntity.msg = "77"
+////                    RxBus.getDefault().post(rxBusEntity)
+//
+////                    finish()
+//                    return true;
+//                } else {
+//                    return false; //默认返回 false
+//                }
+//            }
+//        });
         ImageView imageView = null;
         if (mCacheQueue.isEmpty()) {
             imageView = new ImageView(getContext());
@@ -167,11 +167,11 @@ public class RedPacketsLayout extends RelativeLayout {
                                 RxUtils.wrapRestCall(RetrofitFactory.INSTANCE.getRetrofit().randomGetOneAdvertisement(SPUtil.getString(getContext(), "thirdAccount", ""))).subscribe(new Consumer<AdInfoBean>() {
                                     @Override
                                     public void accept(final AdInfoBean adInfoBean) throws Exception {
-                                        new RadDialog(getContext(), R.style.dialog, "恭喜获得"+adInfoBean.getNumberOfVirtualCoins()/adInfoBean.getRedEnvelopeNumber()+"金币", new RadDialog.OnCloseListener() {
+                                        new RadDialog(getContext(), R.style.dialog, "恭喜获得" + adInfoBean.getNumberOfVirtualCoins() / adInfoBean.getRedEnvelopeNumber() + "金币", new RadDialog.OnCloseListener() {
                                             @Override
                                             public void onClick(Dialog dialog, boolean confirm) {
                                                 Intent intent = new Intent(getContext(), AdInfoActivity.class);
-                                                intent.putExtra("id",adInfoBean.getId());
+                                                intent.putExtra("id", adInfoBean.getId());
                                                 getContext().startActivity(intent);
                                                 dialog.dismiss();
                                             }
@@ -195,11 +195,11 @@ public class RedPacketsLayout extends RelativeLayout {
                         RxUtils.wrapRestCall(RetrofitFactory.INSTANCE.getRetrofit().randomGetOneAdvertisement(SPUtil.getString(getContext(), "thirdAccount", ""))).subscribe(new Consumer<AdInfoBean>() {
                             @Override
                             public void accept(final AdInfoBean adInfoBean) throws Exception {
-                                new RadDialog(getContext(), R.style.dialog, "恭喜获得"+adInfoBean.getNumberOfVirtualCoins()/adInfoBean.getRedEnvelopeNumber()+"金币", new RadDialog.OnCloseListener() {
+                                new RadDialog(getContext(), R.style.dialog, "恭喜获得" + adInfoBean.getNumberOfVirtualCoins() / adInfoBean.getRedEnvelopeNumber() + "金币", new RadDialog.OnCloseListener() {
                                     @Override
                                     public void onClick(Dialog dialog, boolean confirm) {
                                         Intent intent = new Intent(getContext(), AdInfoActivity.class);
-                                        intent.putExtra("id",adInfoBean.getId());
+                                        intent.putExtra("id", adInfoBean.getId());
                                         getContext().startActivity(intent);
                                         dialog.dismiss();
                                     }

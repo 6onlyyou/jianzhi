@@ -328,6 +328,14 @@ public interface ApiService {
      */
     @POST("/appservice/app/alluser/bindPhoneNum")
     Observable<ResponseBean<String>> bindPhoneNum(@Query("thirdAccount") String thirdAccount,@Query("phoneNum") String phoneNum);
+    /**
+     *填写邀请码接口
+     *
+     * @return
+     */
+    @POST("/appservice/app/alluser/inputInvit")
+    Observable<ResponseBean<String>> inputInvit(@Query("thirdAccount") String thirdAccount,@Query("inviteCode") String inviteCode);
+
 
 
 

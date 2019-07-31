@@ -18,6 +18,24 @@ public class UserInfoBean {
     private String labelName;
     private int inviteCount;
     private String phoneNumber;
+    private  String headImg;
+    private  String nickName;
+
+    public String getHeadImg() {
+        return headImg;
+    }
+
+    public void setHeadImg(String headImg) {
+        this.headImg = headImg;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
 
     public String getPhoneNumber() {
         return phoneNumber;

@@ -1,5 +1,6 @@
 package fu.com.parttimejob.weight;
 
+import com.lljjcoder.citylist.Toast.ToastUtils;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.UiError;
 
@@ -12,20 +13,25 @@ import org.json.JSONObject;
  */
 public class BaseUiListener implements IUiListener {
 
-
-    public void onComplete(Object o) {
-        JSONObject response;
-        response =  (JSONObject)o;
+    @Override
+    public void onComplete(Object response) {
+//        mBaseMessageText.setText("onComplete:");
+//        mMessageText.setText(response.toString());
+        doComplete(response);
     }
+    protected void doComplete(Object values) {
 
+    }
 
     @Override
     public void onError(UiError e) {
+        doComplete(e.errorCode);
 //        showResult("onError:", "code:" + e.errorCode + ", msg:"
 //                + e.errorMessage + ", detail:" + e.errorDetail);
     }
     @Override
     public void onCancel() {
+        doComplete("s");
 //        showResult("onCancel", "");
     }
 }

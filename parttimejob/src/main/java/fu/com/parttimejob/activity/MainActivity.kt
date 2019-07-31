@@ -192,8 +192,14 @@ class MainActivity : BaseActivity() {
 
             override fun onSuccess(userid: String) {
                 Log.e("MainActivity", "--onSuccess--" + userid)
-                RongIM.getInstance().setCurrentUserInfo(UserInfo(userid, SPUtil.getString(this@MainActivity, "nickname", "游客用户"), Uri.parse(SPUtil.getString(this@MainActivity, "headurl", ""))))
-                RongIM.getInstance().setMessageAttachedUserInfo(true)
+                if (SPUtil.getInt(this@MainActivity, "Profession", 2) == 1) {
+                    RongIM.getInstance().setCurrentUserInfo(UserInfo(userid, SPUtil.getString(this@MainActivity, "nickName", "游客用户"), Uri.parse(SPUtil.getString(this@MainActivity, "headImg", ""))))
+                    RongIM.getInstance().setMessageAttachedUserInfo(true)
+                }else{
+                    RongIM.getInstance().setCurrentUserInfo(UserInfo(userid, SPUtil.getString(this@MainActivity, "nickName", "游客用户"), Uri.parse(SPUtil.getString(this@MainActivity, "headImg", ""))))
+                    RongIM.getInstance().setMessageAttachedUserInfo(true)
+                }
+
             }
 
             override fun onError(errorCode: RongIMClient.ErrorCode) {

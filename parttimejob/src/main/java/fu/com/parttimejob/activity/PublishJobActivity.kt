@@ -144,7 +144,7 @@ class PublishJobActivity : BaseActivity() {
                         }
                     }
                     val requestBody: RequestBody = builder.build();
-                    RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().publichInfo(SPUtil.getString(this@PublishJobActivity, "thirdAccount", "111"), nameEt.text.toString(), style.text.toString(), money.text.toString(), size.text.toString(), sizepe.text.toString(), salary.text.toString(), phone.text.toString(), detailLocation.text.toString(), SPUtil.getString(this@PublishJobActivity, "longitude", "0.0"), SPUtil.getString(this@PublishJobActivity, "latitude", "0.0"), jianlijianjie.text.toString(), requestBody, SPUtil.getString(this@PublishJobActivity, "city", ""))).subscribe({
+                    RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().publichInfo(SPUtil.getString(this@PublishJobActivity, "thirdAccount", "111"), nameEt.text.toString(), style.text.toString(), money.text.toString(), size.text.toString(), sizepe.text.toString(), salary.text.toString(), phone.text.toString(), detailLocation.text.toString(),poiItem!!.latLonPoint.longitude.toString(), poiItem!!.latLonPoint.latitude.toString(), jianlijianjie.text.toString(), requestBody, SPUtil.getString(this@PublishJobActivity, "city", ""))).subscribe({
                         ToastUtils.showLongToast(this@PublishJobActivity, it)
 
                     }, {
@@ -227,6 +227,7 @@ class PublishJobActivity : BaseActivity() {
                 CHOOSE_LOCATION -> {
                     poiItem = data?.getParcelableExtra("location")
                     location.text = poiItem?.title
+
                 }
             }
         }

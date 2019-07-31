@@ -82,7 +82,7 @@ class PublishAdActivity : BaseActivity() {
                     }
                 }
                 val requestBody: RequestBody = builder.build()
-                RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().publichAdvertisement(SPUtil.getString(this, "thirdAccount", "111"), jianliname.text.toString(), hongbaoSize.text.toString(), jiangliMoney.text.toString(), SPUtil.getString(this, "city", "廊坊市"), SPUtil.getString(this, "latitude", "0.0"), SPUtil.getString(this, "longitude", "0.0"), guanggaoContent.text.toString(), requestBody)).subscribe({
+                RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().publichAdvertisement(SPUtil.getString(this, "thirdAccount", "111"), jianliname.text.toString(), hongbaoSize.text.toString(), jiangliMoney.text.toString(), SPUtil.getString(this, "city", "廊坊市"),poiItem!!.latLonPoint.latitude.toString(),poiItem!!.latLonPoint.longitude.toString(), guanggaoContent.text.toString(), requestBody)).subscribe({
                     ToastUtils.showLongToast(this, it)
                 }, {
                     ToastUtils.showLongToast(this, it.message.toString())
@@ -98,7 +98,7 @@ class PublishAdActivity : BaseActivity() {
     private val onAddPicClickListener = object : GridImageAdapter.onAddPicClickListener {
         override fun onAddPicClick() {
             PictureSelector.create(this@PublishAdActivity)
-                    .openGallery(PictureMimeType.ofAll())// 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
+                    .openGallery(PictureMimeType.ofImage())// 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
                     .theme(R.style.picture_default_style)// 主题样式设置 具体参考 values/styles   用法：R.style.picture.white.style
                     .maxSelectNum(1)// 最大图片选择数量
                     .minSelectNum(1)// 最小选择数量

@@ -110,37 +110,52 @@ class LoginActivity : BaseActivity() {
         }
 
         login_with_wx.setOnClickListener {
-            startWxLogin()
+            if(radioButton2.isChecked){
+                startWxLogin()
+            }else{
+                ToastUtils.showShortToast(this,"请先同意隐私协议")
+            }
         }
 
         login_with_qq.setOnClickListener {
-            login()
+            if(radioButton2.isChecked){
+                login()
+            }else{
+                ToastUtils.showShortToast(this,"请先同意隐私协议")
+            }
+
         }
 
         login_with_pwd.setOnClickListener {
-            if (judgeIsCanLogin()) {
-                RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().login(loginPhoneEt.text.toString(), loginPwdEt.text.toString())).subscribe({
-                    if (SPUtil.getBoolean(applicationContext,"",true)) {
-                        ToastUtils.showLongToast(applicationContext, "登入成功")
-                        SPUtil.putString(applicationContext,"thirdAccount",loginPhoneEt.text.toString())
-                        SPUtil.putString(this, "token", it.token.toString())
-                        startPwdLogin()
-                    } else {
-                        SPUtil.putString(applicationContext,"thirdAccount",loginPhoneEt.text.toString())
-                        ToastUtils.showLongToast(applicationContext, "注册成功")
-                        if(SPUtil.getInt(applicationContext, "Profession", 2)==1){
-                            startActivity(CreateJobCardActivity::class.java, true)
-                        }else{
-                            startActivity(ChooseJobActivity::class.java, true)
+            if(radioButton2.isChecked){
+                if (judgeIsCanLogin()) {
+
+                    RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().login(loginPhoneEt.text.toString(), loginPwdEt.text.toString())).subscribe({
+                        if (SPUtil.getBoolean(applicationContext,"",true)) {
+                            ToastUtils.showLongToast(applicationContext, "登入成功")
+                            SPUtil.putString(applicationContext,"thirdAccount",loginPhoneEt.text.toString())
+                            SPUtil.putString(this, "token", it.token.toString())
+                            startPwdLogin()
+                        } else {
+                            SPUtil.putString(applicationContext,"thirdAccount",loginPhoneEt.text.toString())
+                            ToastUtils.showLongToast(applicationContext, "注册成功")
+                            if(SPUtil.getInt(applicationContext, "Profession", 2)==1){
+                                startActivity(CreateJobCardActivity::class.java, true)
+                            }else{
+                                startActivity(ChooseJobActivity::class.java, true)
+                            }
+                            finish()
                         }
-                        finish()
-                    }
 
-                }, {
-                    showToast(it.message)
-                })
+                    }, {
+                        showToast(it.message)
+                    })
 
+                }
+            }else{
+                ToastUtils.showShortToast(this,"请先同意隐私协议")
             }
+
         }
         mTencent = Tencent.createInstance("1109483400", this.getApplicationContext());
         mIwxapi = WXAPIFactory.createWXAPI(this, SPContants.WX_APP_ID, true)
