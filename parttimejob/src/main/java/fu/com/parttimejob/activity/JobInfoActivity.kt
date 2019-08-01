@@ -3,6 +3,8 @@ package fu.com.parttimejob.activity
 import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
+import android.os.PersistableBundle
 import com.heixiu.errand.net.RetrofitFactory
 import com.lljjcoder.citylist.Toast.ToastUtils
 import com.luck.picture.lib.rxbus2.RxBus
@@ -20,17 +22,49 @@ import io.reactivex.functions.Consumer
 import io.rong.imkit.RongIM
 import io.rong.imlib.model.UserInfo
 import kotlinx.android.synthetic.main.activity_job_info.*
+import com.amap.api.maps.model.MarkerOptions
+import com.amap.api.maps.model.Marker
+import com.amap.api.maps.model.LatLng
+import com.amap.api.maps.AMap
+
+
+
+
 
 class JobInfoActivity : BaseActivity() {
     private var subscribe: Disposable? = null
     private var shareTypeFragment: ShareTypeFragment? = null
+
     override fun getLayoutId(): Int {
         return R.layout.activity_job_info
     }
+    var aMap: AMap? = null
 
     override fun onDestroy() {
         super.onDestroy()
         subscribe!!.dispose()
+        jobLocationMap.onDestroy()
+    }
+    override fun onResume() {
+        super.onResume()
+        jobLocationMap.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        jobLocationMap.onPause()
+    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        jobLocationMap.onCreate(savedInstanceState)
+        if (aMap == null) {
+            aMap = jobLocationMap.map
+        }
+
+    }
+    override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?) {
+        super.onSaveInstanceState(outState, outPersistentState)
+        jobLocationMap.onSaveInstanceState(outState)
     }
 
     override fun initViewParams() {
@@ -65,8 +99,7 @@ class JobInfoActivity : BaseActivity() {
         })
         shareTypeFragment = ShareTypeFragment()
     }
-
-    var recruitInfoBean: RecruitInfoBean? = null
+    var recruitInfoBean: RecruitInfoBean ? = null
     var jinbi = 0
     override fun initViewClick() {
         recruitInfoBean = RecruitInfoBean()
@@ -83,19 +116,19 @@ class JobInfoActivity : BaseActivity() {
                 ji_gouton.setText("立即沟通")
             }
 
+            val latLng = LatLng(java.lang.Double.valueOf(it.latitude), java.lang.Double.valueOf(it.longitude))
+            val marker = aMap?.addMarker(MarkerOptions().position(latLng).title("").snippet("DefaultMarker"))
+
             jinbi = it.unclaimedVirtualCoins
-            label_job.setText(it.label)
-            jobSalaryTv.setText(it.salaryAndWelfare)
-            jobLocation.setText(it.city)
-            content_job.setText("工作内容:" + it.workContent)
-            location_job.setText("工作地点：" + it.contactAddress)
-            phone.setText(it.phoneNumber)
-            num_job.setText("招聘人数：" + it.numberOfVirtualCoins)
-            job_jbi.setText("分享群领取" + it.recruitingNumbers / it.redEnvelopeNumber + "金币")
-            coid_job.setText("分享成功后可获得" + it.recruitingNumbers / it.redEnvelopeNumber + "虚拟币奖励")
-            job_jbi.setOnClickListener {
-                shareTypeFragment!!.show(getFragmentManager(), "11", "sss")
-            }
+            label_job.text = it.label
+            jobSalaryTv.text = it.salaryAndWelfare
+            jobLocation.text = it.city
+            content_job.text = "工作内容:" + it.workContent
+            location_job.text = "工作地点：" + it.contactAddress
+            phone.text = it.phoneNumber
+            num_job.text = "招聘人数：" + it.numberOfVirtualCoins
+            job_jbi.text = "分享群领取" + it.recruitingNumbers / it.redEnvelopeNumber + "金币"
+            coid_job.text = "分享成功后可获得" + it.recruitingNumbers / it.redEnvelopeNumber + "虚拟币奖励"
             ji_gouton.setOnClickListener {
                 if (SPUtil.getString(this, "thirdAccount", "").equals("")) {
                     val intent = Intent(this, MainActivity::class.java)
@@ -116,7 +149,9 @@ class JobInfoActivity : BaseActivity() {
         back.setOnClickListener {
             finish()
         }
-
+        job_jbi.setOnClickListener {
+            shareTypeFragment!!.show(getFragmentManager(), "11", "sss")
+        }
     }
 
     fun clossD() {
