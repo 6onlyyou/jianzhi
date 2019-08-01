@@ -17,12 +17,12 @@ class ChooseProfessionActivity : BaseActivity() {
 
     override fun initViewClick() {
         job_hunter_img.setOnClickListener {
-            SPUtil.putInt(this,"Profession",1)
+            SPUtil.putInt(this,"Profession",2)
             startActivity(LoginActivity::class.java, true)
         }
 
         interviewer_img.setOnClickListener {
-            SPUtil.putInt(this,"Profession",2)
+            SPUtil.putInt(this,"Profession",1)
             startActivity(LoginActivity::class.java, true)
         }
     }

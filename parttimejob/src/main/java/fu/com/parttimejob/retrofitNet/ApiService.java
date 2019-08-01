@@ -357,7 +357,7 @@ public interface ApiService {
      * @return
      */
     @POST("/appservice/app/wechatpay/wechat")
-    Observable<ResponseBean<WXPayEntity>> wxPay(@Query("thirdAccount") String thirdAccount, @Query("totalPrice") double totalPrice, @Query("desc") String desc, @Query("detail") String detail, @Query("spbill_create_ip") String spbill_create_ip);
+    Observable<ResponseBean<WXPayEntity>> wxPay(@Query("thirdAccount") String thirdAccount, @Query("totalPrice") int totalPrice, @Query("desc") String desc, @Query("detail") String detail, @Query("spbill_create_ip") String spbill_create_ip);
 
     /**
      * 支付宝支付
@@ -365,7 +365,7 @@ public interface ApiService {
      * @return
      */
     @POST("/appservice/app/pay/alipay")
-    Observable<ResponseBean<String>> alipay(@Query("thirdAccount") String thirdAccount, @Query("totalPrice") double totalPrice, @Query("desc") String desc, @Query("detail") String detail);
+    Observable<ResponseBean<String>> alipay(@Query("thirdAccount") String thirdAccount, @Query("totalPrice") int totalPrice, @Query("desc") String desc, @Query("detail") String detail);
 
 
 }

@@ -106,8 +106,10 @@ class SplashActivity : BaseActivity() {
                     SPUtil.putInt(this@SplashActivity, "totalCount", it.totalCount)
                     SPUtil.putString(this@SplashActivity, "phoneNumber", it.labelName)
                     SPUtil.putInt(this@SplashActivity, "inviteCount", it.inviteCount)
-                    SPUtil.putString(this@SplashActivity, "nickName", it.nickName)
+                    SPUtil.putString(this@SplashActivity, "nickName", it.name)
                     SPUtil.putString(this@SplashActivity, "headImg", it.headImg)
+                    SPUtil.putString(this@SplashActivity, "companyName", it.companyName)
+
 //                    if (SPUtil.getInt(this@SplashActivity, "Profession", 2) == 1) {
 //                        if (SPUtil.getBoolean(this@SplashActivity, "sfcreateCard", false)) {
 //                            startActivity(MainActivity::class.java, true)

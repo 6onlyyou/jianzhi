@@ -31,12 +31,13 @@
     </RelativeLayout>
 
     <TextView
-        android:layout_width="72dp"
-        android:layout_height="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="19dp"
-        android:text="充值金额"
+        android:text="请输入想要充值金币的数量（1元可购买10金币）"
         android:textColor="#ff444444"
+        android:layout_marginRight="30dp"
         android:textSize="18sp" />
 
     <LinearLayout
@@ -47,20 +48,18 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="30dp"
-            android:layout_height="37dp"
-            android:text="¥"
-            android:textColor="#ff444444"
-            android:textSize="26sp" />
-
         <EditText
             android:id="@+id/rechargeMoneyEd"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginRight="15dp"
             android:layout_height="49dp"
             android:background="@null"
-            android:text="22222"
-            android:textSize="35sp" />
+            android:textColorHint="@color/colorGray"
+            android:textCursorDrawable="@drawable/cursor"
+            android:text=""
+            android:inputType="number"
+            android:hint="请点击输入金币数量"
+            android:textSize="30sp" />
 
     </LinearLayout>
 

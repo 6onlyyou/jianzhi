@@ -83,10 +83,11 @@ class LoginActivity : BaseActivity() {
                 ToastUtils.showLongToast(applicationContext, "登入成功")
                 SPUtil.putString(this@LoginActivity, "token", it.token)
                 SPUtil.putString(applicationContext,"thirdAccount",wxInfoEntity!!.getmOpenid())
-                if(SPUtil.getInt(this@LoginActivity, "Profession", 2)==1){
-                    startActivity(CreateJobCardActivity::class.java, true)
-                }else{
+                if(SPUtil.getInt(this@LoginActivity, "Profession", 1)==1){
                     startActivity(ChooseJobActivity::class.java, true)
+                }else{
+                    startActivity(CreateJobCardActivity::class.java, true)
+
                 }
 
             }
@@ -139,10 +140,11 @@ class LoginActivity : BaseActivity() {
                         } else {
                             SPUtil.putString(applicationContext,"thirdAccount",loginPhoneEt.text.toString())
                             ToastUtils.showLongToast(applicationContext, "注册成功")
-                            if(SPUtil.getInt(applicationContext, "Profession", 2)==1){
-                                startActivity(CreateJobCardActivity::class.java, true)
-                            }else{
+                            if(SPUtil.getInt(applicationContext, "Profession", 1)==1){
                                 startActivity(ChooseJobActivity::class.java, true)
+                            }else{
+                                startActivity(CreateJobCardActivity::class.java, true)
+
                             }
                             finish()
                         }
@@ -243,10 +245,11 @@ class LoginActivity : BaseActivity() {
                             SPUtil.putString(applicationContext,"thirdAccount",mTencent!!.openId)
                             ToastUtils.showLongToast(applicationContext, "登入成功")
                             SPUtil.putString(this@LoginActivity, "token", it.token)
-                            if(SPUtil.getInt(this@LoginActivity, "Profession", 2)==1){
-                                startActivity(CreateJobCardActivity::class.java, true)
-                            }else{
+                            if(SPUtil.getInt(this@LoginActivity, "Profession", 1)==1){
                                 startActivity(ChooseJobActivity::class.java, true)
+
+                            }else{
+                                startActivity(CreateJobCardActivity::class.java, true)
                             }
 
                         }

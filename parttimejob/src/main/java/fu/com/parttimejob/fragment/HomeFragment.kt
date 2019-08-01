@@ -48,7 +48,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun initClickListener() {
-        if( SPUtil.getInt(activity, "Profession", 2)==2){
+        if( SPUtil.getInt(activity, "Profession", 1)==1){
             make_money_iv.visibility = View.VISIBLE
             exchange_shop_iv.visibility = View.VISIBLE
             brief_iv.visibility = View.VISIBLE

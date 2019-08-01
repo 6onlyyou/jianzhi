@@ -19,7 +19,24 @@ public class UserInfoBean {
     private int inviteCount;
     private String phoneNumber;
     private  String headImg;
-    private  String nickName;
+    private  String name;
+    private  String companyName;
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getHeadImg() {
         return headImg;
@@ -29,13 +46,6 @@ public class UserInfoBean {
         this.headImg = headImg;
     }
 
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
 
     public String getPhoneNumber() {
         return phoneNumber;

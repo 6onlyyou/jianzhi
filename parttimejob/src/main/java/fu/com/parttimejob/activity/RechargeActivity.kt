@@ -62,7 +62,7 @@ class RechargeActivity : BaseActivity() {
     }
 
     private fun getAliPayInfo() {
-        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().alipay(SPUtil.getString(this@RechargeActivity, "thirdAccount", ""), java.lang.Double.valueOf(rechargeMoneyEd.text.toString())
+        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().alipay(SPUtil.getString(this@RechargeActivity, "thirdAccount", ""), Integer.valueOf(rechargeMoneyEd.text.toString())
                 , "1", "2"))
                 .subscribe({
                     startAliPay(it)
@@ -73,7 +73,7 @@ class RechargeActivity : BaseActivity() {
 
     fun getWxPayInfo() {
 
-        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().wxPay(SPUtil.getString(this@RechargeActivity, "thirdAccount", ""), java.lang.Double.valueOf(rechargeMoneyEd.text.toString())
+        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().wxPay(SPUtil.getString(this@RechargeActivity, "thirdAccount", ""), Integer.valueOf(rechargeMoneyEd.text.toString())
                 , "1", "2", getInNetIp(this)))
                 .subscribe({
                     startWxPay(it)

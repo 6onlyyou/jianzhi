@@ -31,7 +31,7 @@ class MineFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if( SPUtil.getInt(activity, "Profession", 2)==2){
+        if( SPUtil.getInt(activity, "Profession", 1)==1){
             editJianLiLayout.visibility = View.VISIBLE
             historyLayout.visibility = View.VISIBLE
             zhaopinlishi.visibility = View.GONE
