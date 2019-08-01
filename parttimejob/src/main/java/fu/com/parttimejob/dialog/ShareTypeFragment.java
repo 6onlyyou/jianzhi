@@ -59,7 +59,6 @@ public class ShareTypeFragment extends DialogFragment {
         mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         mDialog.setContentView( R.layout.pop_layout_share);
         mDialog.setCanceledOnTouchOutside(true);
-
         Window window = mDialog.getWindow();
         WindowManager.LayoutParams layoutParams = window.getAttributes();
         layoutParams.gravity = Gravity.BOTTOM;

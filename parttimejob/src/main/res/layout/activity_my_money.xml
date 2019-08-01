@@ -85,6 +85,7 @@
         android:background="@drawable/bg_gray"
         android:gravity="center"
         android:text="提现"
+        android:visibility="gone"
         android:textColor="@color/colorWhite"
         android:textSize="15sp" />
 </LinearLayout>

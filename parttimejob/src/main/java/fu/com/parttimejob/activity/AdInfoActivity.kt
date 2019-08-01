@@ -11,25 +11,61 @@ import android.widget.LinearLayout
 import com.bumptech.glide.Glide
 import com.heixiu.errand.net.RetrofitFactory
 import com.lljjcoder.citylist.Toast.ToastUtils
+import com.luck.picture.lib.rxbus2.RxBus
 import fu.com.parttimejob.R
 import fu.com.parttimejob.base.BaseActivity
 import fu.com.parttimejob.bean.AdvertisingInfoBean
+import fu.com.parttimejob.bean.RxBusEntity
 import fu.com.parttimejob.dialog.HintDialog
+import fu.com.parttimejob.dialog.ShareTypeFragment
 import fu.com.parttimejob.retrofitNet.RxUtils
 import fu.com.parttimejob.utils.DialogShowPic
 import fu.com.parttimejob.utils.DialogShowPicP
 import fu.com.parttimejob.utils.GlideUtil
 import fu.com.parttimejob.utils.SPUtil
+import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_ad_info.*
 
 class AdInfoActivity : BaseActivity() {
+    private var subscribe: Disposable? = null
+    private var shareTypeFragment: ShareTypeFragment? = null
     override fun getLayoutId(): Int {
         return R.layout.activity_ad_info
     }
-    
+    override fun onDestroy() {
+        super.onDestroy()
+        subscribe!!.dispose()
+    }
     var advertisingInfoBean: AdvertisingInfoBean ? = null
     override fun initViewParams() {
+        subscribe = RxBus.getDefault().toObservable(RxBusEntity::class.java).subscribe(object : Consumer<RxBusEntity> {
+            @Throws(Exception::class)
+            override fun accept(catchDollUserInfoBean: RxBusEntity) {
+                if (catchDollUserInfoBean.msg.equals("101")) {
+                    RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().addNumberOfAdvertisingForwarding(SPUtil.getString(this@AdInfoActivity, "thirdAccount", ""), intent.getIntExtra("id",0))).subscribe({
+                    }, {
+                        ToastUtils.showLongToast(applicationContext, it.message.toString())
+                    })
+
+                }
+            }
+        }, object : Consumer<Throwable> {
+            @Throws(Exception::class)
+            override fun accept(throwable: Throwable) {
+            }
+        })
+        shareTypeFragment = ShareTypeFragment()
         advertisingInfoBean = AdvertisingInfoBean()
+        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().addNumberOfAdvertisingView(SPUtil.getString(this@AdInfoActivity, "thirdAccount", ""),intent.getIntExtra("id",0))).subscribe({
+            RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().receiveOfAdVirtual(SPUtil.getString(this@AdInfoActivity, "thirdAccount", ""), intent.getIntExtra("id",0))).subscribe({
+                ToastUtils.showShortToast(applicationContext, "领取金币成功")
+            }, {
+                ToastUtils.showShortToast(applicationContext, it.message.toString())
+            })
+        }, {
+            ToastUtils.showShortToast(applicationContext, it.message.toString())
+        })
         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().singleAdDetail(SPUtil.getString(this,"thirdAccount",""),intent.getIntExtra("id",0))).subscribe({
             advertisingInfoBean = it
             if (SPUtil.getString(this, "thirdAccount", "").equals(it.thirdAccount)) {
@@ -79,6 +115,10 @@ class AdInfoActivity : BaseActivity() {
     }
 
     override fun initViewClick() {
+        zhuanfa_ad.setOnClickListener {
+            shareTypeFragment!!.show(getFragmentManager(), "11", "sss")
+
+        }
     }
     fun clossD() {
         HintDialog(this, R.style.dialog, "关闭广告返还" + advertisingInfoBean!!.unclaimedVirtualCoins + "金币,是否继续？", object : HintDialog.OnCloseListener {

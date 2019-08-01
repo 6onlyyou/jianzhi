@@ -1,10 +1,13 @@
 package fu.com.parttimejob.weight;
 
 import com.lljjcoder.citylist.Toast.ToastUtils;
+import com.luck.picture.lib.rxbus2.RxBus;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.UiError;
 
 import org.json.JSONObject;
+
+import fu.com.parttimejob.bean.RxBusEntity;
 
 /**
  * Description:
@@ -15,12 +18,12 @@ public class BaseUiListener implements IUiListener {
 
     @Override
     public void onComplete(Object response) {
-//        mBaseMessageText.setText("onComplete:");
-//        mMessageText.setText(response.toString());
         doComplete(response);
     }
     protected void doComplete(Object values) {
-
+        RxBusEntity rxBusEntity =  new RxBusEntity();
+        rxBusEntity.setMsg("101");
+        RxBus.getDefault().post(rxBusEntity);
     }
 
     @Override

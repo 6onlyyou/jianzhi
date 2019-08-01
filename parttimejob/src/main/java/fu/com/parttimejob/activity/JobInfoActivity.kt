@@ -3,33 +3,73 @@ package fu.com.parttimejob.activity
 import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
-import android.widget.ImageView
-import com.bumptech.glide.Glide
 import com.heixiu.errand.net.RetrofitFactory
 import com.lljjcoder.citylist.Toast.ToastUtils
+import com.luck.picture.lib.rxbus2.RxBus
 import fu.com.parttimejob.R
 import fu.com.parttimejob.base.BaseActivity
 import fu.com.parttimejob.bean.RecruitInfoBean
+import fu.com.parttimejob.bean.RxBusEntity
 import fu.com.parttimejob.dialog.HintDialog
+import fu.com.parttimejob.dialog.RadDialog
+import fu.com.parttimejob.dialog.ShareTypeFragment
 import fu.com.parttimejob.retrofitNet.RxUtils
 import fu.com.parttimejob.utils.SPUtil
+import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Consumer
 import io.rong.imkit.RongIM
 import io.rong.imlib.model.UserInfo
 import kotlinx.android.synthetic.main.activity_job_info.*
 
 class JobInfoActivity : BaseActivity() {
+    private var subscribe: Disposable? = null
+    private var shareTypeFragment: ShareTypeFragment? = null
     override fun getLayoutId(): Int {
         return R.layout.activity_job_info
     }
 
-    override fun initViewParams() {
-
+    override fun onDestroy() {
+        super.onDestroy()
+        subscribe!!.dispose()
     }
-    var recruitInfoBean: RecruitInfoBean ? = null
+
+    override fun initViewParams() {
+        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().addNumberOfRecruitView(SPUtil.getString(this@JobInfoActivity, "thirdAccount", ""), intent.getIntExtra("id", 0))).subscribe({
+            ToastUtils.showLongToast(applicationContext, it)
+        }, {
+            ToastUtils.showLongToast(applicationContext, it.message.toString())
+        })
+        subscribe = RxBus.getDefault().toObservable(RxBusEntity::class.java).subscribe(object : Consumer<RxBusEntity> {
+            @Throws(Exception::class)
+            override fun accept(catchDollUserInfoBean: RxBusEntity) {
+                if (catchDollUserInfoBean.msg.equals("101")) {
+                    RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().addNumberOfRecruitForwarding(SPUtil.getString(this@JobInfoActivity, "thirdAccount", ""), recruitInfoBean!!.id)).subscribe({
+                        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().receiveOfRecruitmentVirtual(SPUtil.getString(this@JobInfoActivity, "thirdAccount", ""), recruitInfoBean!!.id)).subscribe({
+                            RadDialog(this@JobInfoActivity, R.style.dialog, "恭喜获得" + recruitInfoBean!!.getNumberOfVirtualCoins() / recruitInfoBean!!.getRedEnvelopeNumber() + "金币", RadDialog.OnCloseListener { dialog, confirm ->
+                                dialog.dismiss()
+                            })
+                                    .setTitle("").show()
+                        }, {
+                            ToastUtils.showLongToast(applicationContext, it.message.toString())
+                        })
+                    }, {
+                        ToastUtils.showLongToast(applicationContext, it.message.toString())
+                    })
+
+                }
+            }
+        }, object : Consumer<Throwable> {
+            @Throws(Exception::class)
+            override fun accept(throwable: Throwable) {
+            }
+        })
+        shareTypeFragment = ShareTypeFragment()
+    }
+
+    var recruitInfoBean: RecruitInfoBean? = null
     var jinbi = 0
     override fun initViewClick() {
         recruitInfoBean = RecruitInfoBean()
-
         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().singleRecruitmentDetail(SPUtil.getString(this, "thirdAccount", ""), intent.getIntExtra("id", 0))).subscribe({
             recruitInfoBean = it
             if (SPUtil.getString(this, "thirdAccount", "").equals(it.thirdAccount)) {
@@ -47,12 +87,15 @@ class JobInfoActivity : BaseActivity() {
             label_job.setText(it.label)
             jobSalaryTv.setText(it.salaryAndWelfare)
             jobLocation.setText(it.city)
-            content_job.setText("工作内容:"+it.workContent)
-            location_job.setText("工作地点："+it.contactAddress)
+            content_job.setText("工作内容:" + it.workContent)
+            location_job.setText("工作地点：" + it.contactAddress)
             phone.setText(it.phoneNumber)
-            num_job.setText("招聘人数："+it.numberOfVirtualCoins)
+            num_job.setText("招聘人数：" + it.numberOfVirtualCoins)
             job_jbi.setText("分享群领取" + it.recruitingNumbers / it.redEnvelopeNumber + "金币")
             coid_job.setText("分享成功后可获得" + it.recruitingNumbers / it.redEnvelopeNumber + "虚拟币奖励")
+            job_jbi.setOnClickListener {
+                shareTypeFragment!!.show(getFragmentManager(), "11", "sss")
+            }
             ji_gouton.setOnClickListener {
                 if (SPUtil.getString(this, "thirdAccount", "").equals("")) {
                     val intent = Intent(this, MainActivity::class.java)
@@ -117,16 +160,16 @@ class JobInfoActivity : BaseActivity() {
         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().addCommunicationRecord(SPUtil.getString(this, "thirdAccount", ""), intent.getIntExtra("id", 0))).subscribe({
             RongIM.setUserInfoProvider({
                 //在这里，根据userId，使用同步的请求，去请求服务器，就可以完美做到显示用户的头像，昵称了
-                if (recruitInfoBean!!.headImg == null ||recruitInfoBean!!.headImg.equals("")) {
-                    UserInfo(recruitInfoBean!!.thirdAccount.toString(), recruitInfoBean!!.companyName.toString()+"的"+recruitInfoBean!!.nickName.toString(), Uri.parse("http://konkonyu.oss-cn-beijing.aliyuncs.com/moren.jpg"))//根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。   
+                if (recruitInfoBean!!.headImg == null || recruitInfoBean!!.headImg.equals("")) {
+                    UserInfo(recruitInfoBean!!.thirdAccount.toString(), recruitInfoBean!!.companyName.toString() + "的" + recruitInfoBean!!.nickName.toString(), Uri.parse("http://konkonyu.oss-cn-beijing.aliyuncs.com/moren.jpg"))//根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。   
                 } else {
-                    UserInfo(recruitInfoBean!!.thirdAccount.toString(), recruitInfoBean!!.companyName.toString()+"的"+recruitInfoBean!!.nickName.toString(), Uri.parse(recruitInfoBean!!.headImg + ""))//根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。   
+                    UserInfo(recruitInfoBean!!.thirdAccount.toString(), recruitInfoBean!!.companyName.toString() + "的" + recruitInfoBean!!.nickName.toString(), Uri.parse(recruitInfoBean!!.headImg + ""))//根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。   
                 }
 
             }, true)
             RongIM.getInstance().setCurrentUserInfo(UserInfo(SPUtil.getString(this, "thirdAccount", ""), SPUtil.getString(this, "nickName", ""), Uri.parse(SPUtil.getString(this, "headImg", ""))))
             RongIM.getInstance().setMessageAttachedUserInfo(true)
-            RongIM.getInstance().startPrivateChat(this, recruitInfoBean!!.thirdAccount.toString(), recruitInfoBean!!.companyName+"的"+recruitInfoBean!!.nickName.toString())
+            RongIM.getInstance().startPrivateChat(this, recruitInfoBean!!.thirdAccount.toString(), recruitInfoBean!!.companyName + "的" + recruitInfoBean!!.nickName.toString())
 
         }, {
 
