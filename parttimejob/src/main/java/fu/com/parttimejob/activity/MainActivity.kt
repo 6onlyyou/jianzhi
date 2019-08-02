@@ -223,4 +223,26 @@ class MainActivity : BaseActivity() {
         }
         return super.onKeyDown(keyCode, event)
     }
+
+    override fun onResume() {
+        super.onResume()
+        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().getUserInfo(SPUtil.getString(this@MainActivity, "thirdAccount", ""), SPUtil.getInt(this@MainActivity, "Profession", 1), SPUtil.getString(this@MainActivity, "longitude", ""), SPUtil.getString(this@MainActivity, "latitude", ""), SPUtil.getString(this@MainActivity, "city", ""), SPUtil.getString(this@MainActivity, "token", ""))).subscribe({
+            SPUtil.putInt(this@MainActivity, "loginType", it.loginType)
+            SPUtil.putString(this@MainActivity, "registrationDate", it.registrationDate)
+            SPUtil.putString(this@MainActivity, "city", it.city)
+            SPUtil.putString(this@MainActivity, "longitude", it.longitude)
+            SPUtil.putString(this@MainActivity, "latitude", it.latitude)
+            SPUtil.putString(this@MainActivity, "inviteCode", it.inviteCode)
+            SPUtil.putString(this@MainActivity, "labelName", it.labelName)
+            SPUtil.putInt(this@MainActivity, "totalCount", it.totalCount)
+            SPUtil.putString(this@MainActivity, "phoneNumber", it.labelName)
+            SPUtil.putInt(this@MainActivity, "inviteCount", it.inviteCount)
+            SPUtil.putString(this@MainActivity, "nickName", it.name)
+            SPUtil.putString(this@MainActivity, "headImg", it.headImg)
+            SPUtil.putString(this@MainActivity, "companyName", it.companyName)
+
+        }, {
+            ToastUtils.showLongToast(applicationContext, it.message.toString())
+        })
+    }
 }

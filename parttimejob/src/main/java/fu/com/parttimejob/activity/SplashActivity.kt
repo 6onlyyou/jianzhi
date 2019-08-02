@@ -45,27 +45,23 @@ class SplashActivity : BaseActivity() {
                                 SPUtil.putString(this@SplashActivity, "phoneNumber", it.labelName)
                                 SPUtil.putInt(this@SplashActivity, "totalCount", it.totalCount)
                                 SPUtil.putInt(this@SplashActivity, "inviteCount", it.inviteCount)
-
-//                                if (SPUtil.getInt(this@SplashActivity, "Profession", 2) == 1) {
-//                                    if (SPUtil.getBoolean(this@SplashActivity, "sfcreateCard", false)) {
-//                                        startActivity(MainActivity::class.java, true)
-//                                    } else {
-//                                        startActivity(CreateJobCardActivity::class.java, true)
-//                                    }
-//                                } else {
-//                                    if (SPUtil.getBoolean(this@SplashActivity, "sfcustomizeLabel", false)) {
+                                if (SPUtil.getInt(this@SplashActivity, "Profession", 1) == 2) {
+                                    if (!SPUtil.getString(this@SplashActivity, "companyName","").equals("")) {
+                                        startActivity(MainActivity::class.java, true)
+                                    } else {
+                                        startActivity(CreateJobCardActivity::class.java, true)
+                                    }
+                                } else {
+                                    if (!SPUtil.getString(this@SplashActivity, "labelName","").equals("")) {
 
                                         startActivity(MainActivity::class.java, true)
-//                                    } else {
-//                                        startActivity(ChooseJobActivity::class.java, true)
-//                                    }
-//                                }
-
-
+                                    } else {
+                                        startActivity(ChooseJobActivity::class.java, true)
+                                    }
+                                }
                             }, {
                                 ToastUtils.showLongToast(applicationContext, it.message.toString())
                             })
-
                         }
                     }
                 }
@@ -110,21 +106,21 @@ class SplashActivity : BaseActivity() {
                     SPUtil.putString(this@SplashActivity, "headImg", it.headImg)
                     SPUtil.putString(this@SplashActivity, "companyName", it.companyName)
 
-//                    if (SPUtil.getInt(this@SplashActivity, "Profession", 2) == 1) {
-//                        if (SPUtil.getBoolean(this@SplashActivity, "sfcreateCard", false)) {
-//                            startActivity(MainActivity::class.java, true)
-//                        } else {
-//                            startActivity(CreateJobCardActivity::class.java, true)
-//
-//                        }
-//                    } else {
-//                        if (SPUtil.getBoolean(this@SplashActivity, "sfcustomizeLabel", false)) {
+                    if (SPUtil.getInt(this@SplashActivity, "Profession", 1) == 2) {
+                        if (!SPUtil.getString(this@SplashActivity, "companyName","").equals("")) {
+                            startActivity(MainActivity::class.java, true)
+                        } else {
+                            startActivity(CreateJobCardActivity::class.java, true)
+
+                        }
+                    } else {
+                        if (!SPUtil.getString(this@SplashActivity, "labelName","").equals("")) {
 
                             startActivity(MainActivity::class.java, true)
-//                        } else {
-//                            startActivity(ChooseJobActivity::class.java, true)
-//                        }
-//                    }
+                        } else {
+                            startActivity(ChooseJobActivity::class.java, true)
+                        }
+                    }
                 }, {
                     ToastUtils.showLongToast(applicationContext, it.message.toString())
                 })

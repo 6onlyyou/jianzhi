@@ -51,14 +51,14 @@
         <EditText
             android:id="@+id/rechargeMoneyEd"
             android:layout_width="match_parent"
-            android:layout_marginRight="15dp"
             android:layout_height="49dp"
+            android:layout_marginRight="15dp"
             android:background="@null"
+            android:hint="请点击输入金币数量"
+            android:inputType="number"
+            android:text=""
             android:textColorHint="@color/colorGray"
             android:textCursorDrawable="@drawable/cursor"
-            android:text=""
-            android:inputType="number"
-            android:hint="请点击输入金币数量"
             android:textSize="30sp" />
 
     </LinearLayout>

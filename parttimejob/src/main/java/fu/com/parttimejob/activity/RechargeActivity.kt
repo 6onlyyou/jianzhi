@@ -9,6 +9,7 @@ import android.text.TextUtils
 import android.widget.CompoundButton
 import com.alipay.sdk.app.PayTask
 import com.heixiu.errand.net.RetrofitFactory
+import com.lljjcoder.citylist.Toast.ToastUtils
 import com.tencent.mm.opensdk.modelpay.PayReq
 import com.tencent.mm.opensdk.openapi.WXAPIFactory
 import fu.com.parttimejob.R
@@ -152,4 +153,5 @@ class RechargeActivity : BaseActivity() {
             }
         }
     }
+
 }
