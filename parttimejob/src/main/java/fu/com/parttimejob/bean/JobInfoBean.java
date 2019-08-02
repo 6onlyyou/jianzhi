@@ -19,6 +19,53 @@ public class JobInfoBean extends BaseRecyclerModel {
     private String city;
     private int id;
 
+    private int redEnvelopeNumber;
+    private String contactAddress;
+    private String workContent;
+    private int forwordCount;
+    private int viewCount;
+
+
+    public int getRedEnvelopeNumber() {
+        return redEnvelopeNumber;
+    }
+
+    public void setRedEnvelopeNumber(int redEnvelopeNumber) {
+        this.redEnvelopeNumber = redEnvelopeNumber;
+    }
+
+    public String getContactAddress() {
+        return contactAddress;
+    }
+
+    public void setContactAddress(String contactAddress) {
+        this.contactAddress = contactAddress;
+    }
+
+    public String getWorkContent() {
+        return workContent;
+    }
+
+    public void setWorkContent(String workContent) {
+        this.workContent = workContent;
+    }
+
+    public int getForwordCount() {
+        return forwordCount;
+    }
+
+    public void setForwordCount(int forwordCount) {
+        this.forwordCount = forwordCount;
+    }
+
+    public int getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(int viewCount) {
+        this.viewCount = viewCount;
+    }
+
     public int getId() {
         return id;
     }

@@ -1,11 +1,13 @@
 package fu.com.parttimejob.bean;
 
+import fu.com.parttimejob.base.baseadapter.BaseRecyclerModel;
+
 /**
  * Description:
  * Data：2019/7/22-0:44
  * Author: fushuaige
  */
-public class MyRecruitBean {
+public class MyRecruitBean extends BaseRecyclerModel {
 
     private int id;
     private String companyName;

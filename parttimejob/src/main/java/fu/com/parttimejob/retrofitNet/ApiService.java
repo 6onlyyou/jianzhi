@@ -178,6 +178,13 @@ public interface ApiService {
      */
     @POST("/appservice/app/recruitment/publichInfo")
     Observable<ResponseBean<String>> publichInfo(@Query("thirdAccount") String thirdAccount, @Query("companyName") String companyName, @Query("label") String label, @Query("numberOfVirtualCoins") String numberOfVirtualCoins, @Query("redEnvelopeNumber") String redEnvelopeNumber, @Query("recruitingNumbers") String recruitingNumbers, @Query("salaryAndWelfare") String salaryAndWelfare, @Query("phoneNumber") String phoneNumber, @Query("contactAddress") String contactAddress, @Query("longitude") String longitude, @Query("latitude") String latitude, @Query("workContent") String workContent, @Body RequestBody file, @Query("city") String city);
+     /**
+     *发布招聘订单
+     *
+     * @return
+     */
+    @POST("/appservice/app/recruitment/publichInfo")
+    Observable<ResponseBean<String>> publichNoImgInfo(@Query("thirdAccount") String thirdAccount, @Query("companyName") String companyName, @Query("label") String label, @Query("numberOfVirtualCoins") String numberOfVirtualCoins, @Query("redEnvelopeNumber") String redEnvelopeNumber, @Query("recruitingNumbers") String recruitingNumbers, @Query("salaryAndWelfare") String salaryAndWelfare, @Query("phoneNumber") String phoneNumber, @Query("contactAddress") String contactAddress, @Query("longitude") String longitude, @Query("latitude") String latitude, @Query("workContent") String workContent, @Query("city") String city);
 
     /**
      * 添加沟通历史
@@ -193,7 +200,7 @@ public interface ApiService {
      * @return
      */
     @POST("/appservice/app/jobhunter/queryCommunicationRecord")
-    Observable<ResponseBean<List<SameCityBean>>> queryCommunicationRecord(@Query("thirdAccount") String thirdAccount);
+    Observable<ResponseBean<List<JobInfoBean>>> queryCommunicationRecord(@Query("thirdAccount") String thirdAccount);
 
     /**
      * 人才管理列表
@@ -267,7 +274,7 @@ public interface ApiService {
      * @return
      */
     @POST("/appservice/app/recruitment/myRecruitmentList")
-    Observable<ResponseBean<List<MyRecruitBean>>> myRecruitmentList(@Query("thirdAccount") String thirdAccount);
+    Observable<ResponseBean<List<JobInfoBean>>> myRecruitmentList(@Query("thirdAccount") String thirdAccount);
 
 
     /**

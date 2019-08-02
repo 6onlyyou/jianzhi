@@ -446,7 +446,8 @@
         android:layout_height="match_parent"
         android:layout_marginTop="-620dp"
         android:background="#99232323"
-        android:visibility="gone" >
+        android:visibility="gone"
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"
