@@ -13,10 +13,10 @@
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="65dp"
             android:background="@color/white"
             android:gravity="center"
-            android:paddingTop="10dp"
+            android:paddingTop="20dp"
             android:paddingBottom="10dp"
             android:text="个人中心"
             android:textColor="@color/black"
@@ -31,24 +31,35 @@
             android:background="@drawable/bg_myinfo">
 
             <fu.com.parttimejob.weight.CircleImageView
+                android:id="@+id/ava"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:id="@+id/ava"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="15dp"
-                android:src="@mipmap/ic_my_money" />
+                android:src="@mipmap/ic_job_hunter_img" />
 
             <TextView
-                android:layout_marginLeft="16dp"
-                android:layout_alignTop="@+id/ava"
-                android:layout_toRightOf="@+id/ava"
                 android:id="@+id/name"
                 android:layout_width="50dp"
                 android:layout_height="35dp"
-                android:text="张三"
+                android:layout_alignTop="@+id/ava"
+                android:layout_marginLeft="16dp"
+                android:layout_toRightOf="@+id/ava"
+                android:text="姓名"
                 android:textColor="#ffffffff"
-                android:textSize="25sp"
-                />
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/sex_age"
+                android:layout_width="wrap_content"
+                android:layout_height="17dp"
+                android:layout_below="@+id/name"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="3dp"
+                android:layout_toRightOf="@+id/ava"
+                android:text="联系方式"
+                android:textColor="#ffffffff"
+                android:textSize="14sp" />
 
         </RelativeLayout>
 

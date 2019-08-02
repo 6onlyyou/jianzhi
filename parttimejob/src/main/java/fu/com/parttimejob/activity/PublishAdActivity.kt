@@ -74,7 +74,7 @@ class PublishAdActivity : BaseActivity() {
             } else {
                 val builder: MultipartBody.Builder = MultipartBody.Builder()
                         .setType(MultipartBody.FORM)
-                if (selectList.size < 1) {
+                if (selectList.size == 1) {
                     builder.addFormDataPart("img", File(selectList.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList.get(0).compressPath)))
                 } else {
                     for (i in selectList.indices) {

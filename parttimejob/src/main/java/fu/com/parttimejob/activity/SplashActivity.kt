@@ -42,7 +42,7 @@ class SplashActivity : BaseActivity() {
                                 SPUtil.putString(this@SplashActivity, "latitude", it.latitude)
                                 SPUtil.putString(this@SplashActivity, "inviteCode", it.inviteCode)
                                 SPUtil.putString(this@SplashActivity, "labelName", it.labelName)
-                                SPUtil.putString(this@SplashActivity, "phoneNumber", it.labelName)
+                                SPUtil.putString(this@SplashActivity, "phoneNumber", it.phoneNumber)
                                 SPUtil.putInt(this@SplashActivity, "totalCount", it.totalCount)
                                 SPUtil.putInt(this@SplashActivity, "inviteCount", it.inviteCount)
                                 if (SPUtil.getInt(this@SplashActivity, "Profession", 1) == 2) {

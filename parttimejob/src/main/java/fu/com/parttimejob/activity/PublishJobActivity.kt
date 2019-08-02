@@ -3,7 +3,6 @@ package fu.com.parttimejob.activity
 import android.app.Activity
 import android.content.Intent
 import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
@@ -48,6 +47,7 @@ class PublishJobActivity : BaseActivity() {
         initData()
         themeId = R.style.picture_default_style
         picker_yes.setOnClickListener(onClickListener);
+        pushjianli.setOnClickListener(onClickListener);
         style.setOnClickListener(onClickListener);
         pickerscrlllview.setOnSelectListener(pickerListener);
         val manager = FullyGridLayoutManager(this@PublishJobActivity, 1, GridLayoutManager.VERTICAL, false)
@@ -130,28 +130,39 @@ class PublishJobActivity : BaseActivity() {
         override fun onClick(v: View) {
             if (v === style) {
                 picker_rel.visibility = View.VISIBLE
-            } else if (v === picker_yes) {
+            } else if (v === pushjianli) {
                 if (TextUtils.isEmpty(nameEt.text) || TextUtils.isEmpty(style.text) || TextUtils.isEmpty(money.text) || TextUtils.isEmpty(size.text) || TextUtils.isEmpty(sizepe.text) || TextUtils.isEmpty(salary.text) || TextUtils.isEmpty(workTime.text) || TextUtils.isEmpty(phone.text) || TextUtils.isEmpty(detailLocation.text) || TextUtils.isEmpty(jianlijianjie.text)) {
                     showToast("您的信息未填写完整~")
                 } else {
-                    val builder: MultipartBody.Builder = MultipartBody.Builder()
-                            .setType(MultipartBody.FORM)
-                    if (selectList!!.size < 1) {
-                        builder.addFormDataPart("businessLicenseImg", File(selectList!!.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList!!.get(0).compressPath)));
-                    } else {
-                        for (i in selectList!!.indices) {
-                            builder.addFormDataPart("businessLicenseImg", File(selectList!!.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList!!.get(0).compressPath)));
-                        }
-                    }
-                    val requestBody: RequestBody = builder.build();
-                    RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().publichInfo(SPUtil.getString(this@PublishJobActivity, "thirdAccount", "111"), nameEt.text.toString(), style.text.toString(), money.text.toString(), size.text.toString(), sizepe.text.toString(), salary.text.toString(), phone.text.toString(), detailLocation.text.toString(),poiItem!!.latLonPoint.longitude.toString(), poiItem!!.latLonPoint.latitude.toString(), jianlijianjie.text.toString(), requestBody, SPUtil.getString(this@PublishJobActivity, "city", ""))).subscribe({
-                        ToastUtils.showLongToast(this@PublishJobActivity, it)
+                    val builder: MultipartBody.Builder = MultipartBody.Builder().setType(MultipartBody.FORM)
+                    var requestBody: RequestBody
 
-                    }, {
-                        ToastUtils.showLongToast(this@PublishJobActivity, it.message.toString())
-                    })
+                    if (selectList.isNotEmpty()) {
+                        builder.addFormDataPart("img", File(selectList!!.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList!!.get(0).compressPath)));
+                        requestBody = builder.build()
+                        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().publichInfo(SPUtil.getString(this@PublishJobActivity, "thirdAccount", "111"), nameEt.text.toString(), style.text.toString(), money.text.toString(), size.text.toString(), sizepe.text.toString(), salary.text.toString(), phone.text.toString(), detailLocation.text.toString(), poiItem!!.latLonPoint.longitude.toString(), poiItem!!.latLonPoint.latitude.toString(), jianlijianjie.text.toString(), requestBody, SPUtil.getString(this@PublishJobActivity, "city", ""))).subscribe({
+                            ToastUtils.showLongToast(this@PublishJobActivity, it)
+
+                        }, {
+                            ToastUtils.showLongToast(this@PublishJobActivity, it.message.toString())
+                        })
+                    }else{
+                        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().publichNoImgInfo(SPUtil.getString(this@PublishJobActivity, "thirdAccount", "111"), nameEt.text.toString(), style.text.toString(), money.text.toString(), size.text.toString(), sizepe.text.toString(), salary.text.toString(), phone.text.toString(), detailLocation.text.toString(), poiItem!!.latLonPoint.longitude.toString(), poiItem!!.latLonPoint.latitude.toString(), jianlijianjie.text.toString(),  SPUtil.getString(this@PublishJobActivity, "city", ""))).subscribe({
+                            ToastUtils.showLongToast(this@PublishJobActivity, it)
+
+                        }, {
+                            ToastUtils.showLongToast(this@PublishJobActivity, it.message.toString())
+                        })
+                    }
+//                    else {
+//                        for (i in selectList.indices) {
+//                            builder.addFormDataPart("businessLicenseImg", File(selectList!!.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList!!.get(0).compressPath)));
+//                        }
+//                    }
+
                 }
 
+            } else if (v === picker_yes) {
                 picker_rel.visibility = View.GONE
             }
         }

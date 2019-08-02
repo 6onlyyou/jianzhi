@@ -26,9 +26,10 @@ import com.amap.api.maps.model.MarkerOptions
 import com.amap.api.maps.model.Marker
 import com.amap.api.maps.model.LatLng
 import com.amap.api.maps.AMap
-
-
-
+import com.amap.api.maps.AMapOptions
+import com.amap.api.maps.CameraUpdateFactory
+import com.amap.api.maps.model.CameraPosition
+import fu.com.parttimejob.utils.MapUtils
 
 
 class JobInfoActivity : BaseActivity() {
@@ -38,6 +39,7 @@ class JobInfoActivity : BaseActivity() {
     override fun getLayoutId(): Int {
         return R.layout.activity_job_info
     }
+
     var aMap: AMap? = null
 
     override fun onDestroy() {
@@ -54,14 +56,17 @@ class JobInfoActivity : BaseActivity() {
         super.onPause()
         jobLocationMap.onPause()
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         jobLocationMap.onCreate(savedInstanceState)
         if (aMap == null) {
             aMap = jobLocationMap.map
-        }
 
+        }
+        jobLocationMap.requestDisallowInterceptTouchEvent(true)
     }
+
     override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?) {
         super.onSaveInstanceState(outState, outPersistentState)
         jobLocationMap.onSaveInstanceState(outState)
@@ -103,22 +108,32 @@ class JobInfoActivity : BaseActivity() {
     var jinbi = 0
     override fun initViewClick() {
         recruitInfoBean = RecruitInfoBean()
+
         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().singleRecruitmentDetail(SPUtil.getString(this, "thirdAccount", ""), intent.getIntExtra("id", 0))).subscribe({
             recruitInfoBean = it
             if (SPUtil.getString(this, "thirdAccount", "").equals(it.thirdAccount)) {
                 if (it.state == 1) {
-                    ji_gouton.setText("关闭招聘")
+                    ji_gouton.text = "关闭招聘"
                 } else {
-                    ji_gouton.setText("开启招聘")
+                    ji_gouton.text = "开启招聘"
                 }
 
             } else {
-                ji_gouton.setText("立即沟通")
+                ji_gouton.text = "立即沟通"
             }
-
+            it.latitude= 30.28582.toString()
+            it.longitude= 119.992592.toString()
             val latLng = LatLng(java.lang.Double.valueOf(it.latitude), java.lang.Double.valueOf(it.longitude))
-            val marker = aMap?.addMarker(MarkerOptions().position(latLng).title("").snippet("DefaultMarker"))
-
+            val marker = aMap?.addMarker(MarkerOptions().position(latLng).title("").snippet(it.contactAddress))
+            val LUJIAZUI = CameraPosition.Builder()
+                    .target(latLng).zoom(18f).bearing(0f).tilt(30f).build()
+            val aOptions =  AMapOptions()
+            aOptions.zoomGesturesEnabled(false)// 禁止通过手势缩放地图
+            aOptions.scrollGesturesEnabled(false)// 禁止通过手势移动地图
+            aOptions.tiltGesturesEnabled(false)// 禁止通过手势倾斜地图
+            aOptions.camera(LUJIAZUI)
+            val mCameraUpdate = CameraUpdateFactory.newCameraPosition(CameraPosition(latLng, 17f, 30f, 0f))
+            aMap?.moveCamera(mCameraUpdate)
             jinbi = it.unclaimedVirtualCoins
             label_job.text = it.label
             jobSalaryTv.text = it.salaryAndWelfare
@@ -142,6 +157,10 @@ class JobInfoActivity : BaseActivity() {
 
                     }
                 }
+            }
+            location_job.setOnClickListener {
+//                MapUtils.goToBaiduMap(this@JobInfoActivity, latLng.latitude.toString(), latLng.longitude.toString(),"浙江省杭州市余杭区东莲街")
+                MapUtils.goToGaodeMap(this@JobInfoActivity,latLng,recruitInfoBean?.contactAddress)
             }
         }, {
             ToastUtils.showLongToast(this, it.message.toString())

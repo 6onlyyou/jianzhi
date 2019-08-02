@@ -28,31 +28,40 @@ class MineFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_mine, container, false)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if( SPUtil.getInt(activity, "Profession", 1)==1){
+        if (SPUtil.getInt(activity, "Profession", 1) == 1) {
             editJianLiLayout.visibility = View.VISIBLE
             historyLayout.visibility = View.VISIBLE
             zhaopinlishi.visibility = View.GONE
             editGaogaohdon.visibility = View.GONE
             setsgil.visibility = View.VISIBLE
-        }else{
+            ava.setImageResource(R.mipmap.ic_interviewer_img)
+        } else {
             editJianLiLayout.visibility = View.GONE
             editGaogaohdon.visibility = View.VISIBLE
             zhaopinlishi.visibility = View.GONE
             historyLayout.visibility = View.GONE
             setsgil.visibility = View.GONE
+            ava.setImageResource(R.mipmap.ic_job_hunter_img)
         }
+
+        name.text = SPUtil.getString(context, "nickName", "")
+        sex_age.text =  SPUtil.getString(context, "phoneNumber", "")
         setsgil.setOnClickListener {
             startActivity(Intent(context, ChooseJobActivity::class.java))
         }
         historyLayout.setOnClickListener {
+            var intent = Intent(context, CommunicateHistoryActivity::class.java)
+            intent.putExtra("title",CommunicateHistoryActivity.CommuniHistory)
             startActivity(Intent(context, CommunicateHistoryActivity::class.java))
-
         }
         zhaopinlishi.setOnClickListener {
-            startActivity(Intent(context, CommunicateHistoryActivity::class.java))
+            var intent = Intent(context, CommunicateHistoryActivity::class.java)
+            intent.putExtra("title",CommunicateHistoryActivity.PublishHistory)
+            startActivity(intent)
 
         }
         editGaogaohdon.setOnClickListener {
@@ -70,9 +79,7 @@ class MineFragment : Fragment() {
         myMoneyLayout.setOnClickListener {
             startActivity(Intent(context, MyMoneyActivity::class.java))
         }
-        historyLayout.setOnClickListener {
-            startActivity(Intent(context, CommunicateHistoryActivity::class.java))
-        }
+
         aboutUsLayout.setOnClickListener {
             startActivity(Intent(context, AboutUsActivity::class.java))
         }
@@ -81,7 +88,7 @@ class MineFragment : Fragment() {
                 override fun onClick(dialog: Dialog, confirm: Boolean) {
                     if (confirm) {
                         RongIM.getInstance().logout()
-                        SPUtil.putString(context,"thirdAccount","")
+                        SPUtil.putString(context, "thirdAccount", "")
                         activity!!.finish()
                         startActivity(Intent(context, ChooseProfessionActivity::class.java))
                     } else {
