@@ -75,7 +75,7 @@ class RechargeActivity : BaseActivity() {
     fun getWxPayInfo() {
 
         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().wxPay(SPUtil.getString(this@RechargeActivity, "thirdAccount", ""), Integer.valueOf(rechargeMoneyEd.text.toString())
-                , "1", "2", getInNetIp(this)))
+                , "1", "充值"+rechargeMoneyEd.text.toString()+"金币", getInNetIp(this)))
                 .subscribe({
                     startWxPay(it)
                 }, {
