@@ -1,6 +1,7 @@
 package fu.com.parttimejob.activity
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
@@ -17,6 +18,7 @@ import com.luck.picture.lib.entity.LocalMedia
 import fu.com.parttimejob.R
 import fu.com.parttimejob.adapter.GridImageAdapter
 import fu.com.parttimejob.base.BaseActivity
+import fu.com.parttimejob.dialog.HintDialog
 import fu.com.parttimejob.retrofitNet.RxUtils
 import fu.com.parttimejob.utils.FullyGridLayoutManager
 import fu.com.parttimejob.utils.SPUtil
@@ -72,21 +74,45 @@ class PublishAdActivity : BaseActivity() {
             if (TextUtils.isEmpty(jianliname.text) || TextUtils.isEmpty(hongbaoSize.text) || TextUtils.isEmpty(jiangliMoney.text) || TextUtils.isEmpty(guanggaoContent.text)) {
                 showToast("您的信息未填写完整!")
             } else {
-                val builder: MultipartBody.Builder = MultipartBody.Builder()
-                        .setType(MultipartBody.FORM)
-                if (selectList.size == 1) {
-                    builder.addFormDataPart("img", File(selectList.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList.get(0).compressPath)))
-                } else {
-                    for (i in selectList.indices) {
-                        builder.addFormDataPart("img", File(selectList.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList.get(0).compressPath)))
-                    }
+                if(Integer.parseInt(jiangliMoney.text.toString())<Integer.parseInt(hongbaoSize.text.toString())){
+                    showToast("红包数量不能高于金币数量~")
+                }else{
+                    HintDialog(this@PublishAdActivity, R.style.dialog, "需要支付"+jiangliMoney.text.toString()+"个金币是否继续？", object : HintDialog.OnCloseListener {
+                        override fun onClick(dialog: Dialog, confirm: Boolean) {
+                            if (confirm) {
+                                if( Integer.parseInt(jiangliMoney.text.toString())>   SPUtil.getInt(this@PublishAdActivity, "totalCount", 0)){
+                                    showToast("金币不足请充值")
+                                    startActivity(Intent(this@PublishAdActivity, MyMoneyActivity::class.java))
+                                }else{
+                                    val builder: MultipartBody.Builder = MultipartBody.Builder()
+                                            .setType(MultipartBody.FORM)
+                                    if (selectList.size == 1) {
+                                        builder.addFormDataPart("img", File(selectList.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList.get(0).compressPath)))
+                                    } else {
+                                        for (i in selectList.indices) {
+                                            builder.addFormDataPart("img", File(selectList.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList.get(0).compressPath)))
+                                        }
+                                    }
+                                    val requestBody: RequestBody = builder.build()
+                                    RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().publichAdvertisement(SPUtil.getString(this@PublishAdActivity, "thirdAccount", "111"), jianliname.text.toString(), hongbaoSize.text.toString(), jiangliMoney.text.toString(), SPUtil.getString(this@PublishAdActivity, "city", "廊坊市"),poiItem!!.latLonPoint.latitude.toString(),poiItem!!.latLonPoint.longitude.toString(), guanggaoContent.text.toString(), requestBody)).subscribe({
+                                        ToastUtils.showLongToast(this@PublishAdActivity, it)
+                                        SPUtil.putInt(this@PublishAdActivity, "totalCount", SPUtil.getInt(this@PublishAdActivity, "totalCount", 0)-Integer.parseInt(jiangliMoney.text.toString()))
+                                        finish()
+                                    }, {
+                                        ToastUtils.showLongToast(this@PublishAdActivity, it.message.toString())
+                                    })
+                                }
+
+                            } else {
+
+                            }
+                            dialog.dismiss()
+                        }
+                    })
+                            .setTitle("").show()
                 }
-                val requestBody: RequestBody = builder.build()
-                RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().publichAdvertisement(SPUtil.getString(this, "thirdAccount", "111"), jianliname.text.toString(), hongbaoSize.text.toString(), jiangliMoney.text.toString(), SPUtil.getString(this, "city", "廊坊市"),poiItem!!.latLonPoint.latitude.toString(),poiItem!!.latLonPoint.longitude.toString(), guanggaoContent.text.toString(), requestBody)).subscribe({
-                    ToastUtils.showLongToast(this, it)
-                }, {
-                    ToastUtils.showLongToast(this, it.message.toString())
-                })
+
+
             }
         }
 

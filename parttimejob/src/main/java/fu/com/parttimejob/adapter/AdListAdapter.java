@@ -33,10 +33,10 @@ public class AdListAdapter extends BaseRecyclerViewAdapter {
             final MAdvertisingBean adListAdapter = (MAdvertisingBean) object;
             binding.name.setText(adListAdapter.getCompanyName());
             binding.time.setText("发布时间："+adListAdapter.getPublichDate());
-            binding.adContent.setText(adListAdapter.getAdvertisementContent());
-            binding.lookAd.setText(adListAdapter.getViewCount());
+            binding.adContent.setText(adListAdapter.getAdvertisementContent().toString());
+            binding.lookAd.setText(adListAdapter.getViewCount()+"");
             binding.unjbi.setText(adListAdapter.getUnclaimedVirtualCoins()+"");
-            binding.forwordad.setText(adListAdapter.getForwordCount());
+            binding.forwordad.setText(adListAdapter.getForwordCount()+"");
             binding.openAd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

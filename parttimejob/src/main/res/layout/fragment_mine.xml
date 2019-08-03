@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="157dp"
-        android:background="@color/colorMenuWhite">
+        android:background="#f8f8f8">
 
         <TextView
             android:id="@+id/title"
@@ -61,6 +61,39 @@
                 android:textColor="#ffffffff"
                 android:textSize="14sp" />
 
+            <LinearLayout
+                android:id="@+id/aboutUsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="323dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="17dp"
+                    android:src="@mipmap/ic_about_us" />
+
+                <TextView
+                    android:layout_width="59dp"
+                    android:layout_height="22dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="关于我们"
+                    android:textColor="@color/colorGray"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="11dp"
+                    android:layout_height="11dp"
+                    android:src="@mipmap/into" />
+            </LinearLayout>
+
         </RelativeLayout>
 
     </RelativeLayout>
@@ -91,9 +124,9 @@
             android:textSize="14sp" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_back" />
+            android:layout_width="11dp"
+            android:layout_height="11dp"
+            android:src="@mipmap/into" />
     </LinearLayout>
 
     <View
@@ -126,9 +159,9 @@
             android:textSize="14sp" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_back" />
+            android:layout_width="11dp"
+            android:layout_height="11dp"
+            android:src="@mipmap/into" />
     </LinearLayout>
 
     <View
@@ -161,12 +194,13 @@
             android:textSize="14sp" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_back" />
+            android:layout_width="11dp"
+            android:layout_height="11dp"
+            android:src="@mipmap/into" />
     </LinearLayout>
 
     <View
+        android:id="@+id/setsgilview"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorLine" />
@@ -196,9 +230,9 @@
             android:textSize="14sp" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_back" />
+            android:layout_width="11dp"
+            android:layout_height="11dp"
+            android:src="@mipmap/into" />
     </LinearLayout>
 
     <View
@@ -232,12 +266,13 @@
             android:textSize="14sp" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_back" />
+            android:layout_width="11dp"
+            android:layout_height="11dp"
+            android:src="@mipmap/into" />
     </LinearLayout>
 
     <View
+        android:id="@+id/setsgilview1"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorLine" />
@@ -267,9 +302,9 @@
             android:textSize="14sp" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_back" />
+            android:layout_width="11dp"
+            android:layout_height="11dp"
+            android:src="@mipmap/into" />
     </LinearLayout>
 
     <View
@@ -302,15 +337,16 @@
             android:textSize="14sp" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_back" />
+            android:layout_width="11dp"
+            android:layout_height="11dp"
+            android:src="@mipmap/into" />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorLine" />
+
 
     <LinearLayout
         android:id="@+id/yaoQingLayout"
@@ -337,45 +373,11 @@
             android:textSize="14sp" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_back" />
+            android:layout_width="11dp"
+            android:layout_height="11dp"
+            android:src="@mipmap/into" />
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorLine" />
-
-    <LinearLayout
-        android:id="@+id/aboutUsLayout"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp">
-
-        <ImageView
-            android:layout_width="18dp"
-            android:layout_height="17dp"
-            android:src="@mipmap/ic_about_us" />
-
-        <TextView
-            android:layout_width="59dp"
-            android:layout_height="22dp"
-            android:layout_marginLeft="4dp"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:text="关于我们"
-            android:textColor="@color/colorGray"
-            android:textSize="14sp" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_back" />
-    </LinearLayout>
 
     <View
         android:layout_width="match_parent"

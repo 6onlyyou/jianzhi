@@ -39,8 +39,9 @@ class LoginActivity : BaseActivity() {
         RxBus.getDefault().toObservable(SendAuth.Resp::class.java).subscribe({
             getWxUserInfo(it)
         }, {
-            showToast("获取登陆信息失败")
+            showToast("登入失败请重新登入")
         })
+
     }
 
     private fun getWxUserInfo(resp: SendAuth.Resp) {
@@ -117,7 +118,9 @@ class LoginActivity : BaseActivity() {
                 ToastUtils.showShortToast(this,"请先同意隐私协议")
             }
         }
-
+        radyhxieyi.setOnClickListener {
+            WebActivity.startSelf(this, "隐私协议", "http://www.jjqhkj.com/appservice/user_agreement.html")
+        }
         login_with_qq.setOnClickListener {
             if(radioButton2.isChecked){
                 login()

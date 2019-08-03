@@ -16,7 +16,7 @@
                 android:layout_height="53dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="20dp"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/defind" />
 
             <TextView
                 android:id="@+id/name"
@@ -25,19 +25,19 @@
                 android:layout_alignTop="@+id/ava"
                 android:layout_marginLeft="13dp"
                 android:layout_toRightOf="@+id/ava"
-                android:text="一点点奶茶"
+                android:text=""
                 android:textColor="#ff222222"
                 android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/time"
-                android:layout_width="162dp"
+                android:layout_width="wrap_content"
                 android:layout_height="22dp"
                 android:layout_below="@+id/name"
                 android:layout_marginLeft="13dp"
                 android:layout_marginTop="8dp"
                 android:layout_toRightOf="@+id/ava"
-                android:text="发布时间：2019-06-06"
+                android:text=""
                 android:textColor="#ff8b8b8b"
                 android:textSize="12sp" />
         </RelativeLayout>
@@ -45,9 +45,9 @@
         <TextView
             android:id="@+id/ad_content"
             android:layout_width="352dp"
-            android:layout_height="83dp"
+            android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:text=" 我是一个活泼开朗，我是一个活泼开朗我是一个活泼"
+            android:text=" "
             android:textColor="#ff8b8b8b"
             android:textSize="13sp" />
 
@@ -79,7 +79,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="120" />
+                    android:text="0" />
             </LinearLayout>
 
             <view
@@ -104,7 +104,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="120" />
+                    android:text="0" />
             </LinearLayout>
 
             <view
@@ -129,7 +129,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="120" />
+                    android:text="0" />
             </LinearLayout>
 
 

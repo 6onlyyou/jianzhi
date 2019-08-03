@@ -51,7 +51,7 @@
 
                 <TextView
                     android:id="@+id/label_job"
-                    android:layout_width="64dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="23dp"
                     android:layout_marginLeft="15dp"
                     android:text="UI设计师"
@@ -200,14 +200,16 @@
 
             <TextView
                 android:id="@+id/phone"
-                android:layout_width="72dp"
+                android:layout_width="wrap_content"
                 android:layout_height="22dp"
+
                 android:layout_below="@+id/jobYixiangList"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:text="联系电话："
                 android:textColor="#ff8b8b8b"
-                android:textSize="14sp" />
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/job_jbi"

@@ -75,7 +75,6 @@
                     android:layout_width="20dp"
                     android:layout_height="14dp"
                     android:layout_marginLeft="15dp"
-                    android:text="日结"
                     android:textColor="@color/colorGray"
                     android:textSize="12sp" />
 

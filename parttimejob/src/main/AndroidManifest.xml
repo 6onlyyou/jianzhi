@@ -165,6 +165,7 @@
             android:name=".activity.AdInfoActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.ChosseMapPositionActivity" />
+        <activity android:name=".activity.ShouHuoActivity"></activity>
     </application>
 
 </manifest>

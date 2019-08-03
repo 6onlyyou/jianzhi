@@ -373,6 +373,14 @@ public interface ApiService {
      */
     @POST("/appservice/app/pay/alipay")
     Observable<ResponseBean<String>> alipay(@Query("thirdAccount") String thirdAccount, @Query("totalPrice") int totalPrice, @Query("desc") String desc, @Query("detail") String detail);
+    /**
+     * 兑换商品
+     *
+     * @return
+     */
+    @POST("/appservice/app/jobhunter/exchangeGoods")
+    Observable<ResponseBean<String>> exchangeGoods(@Query("thirdAccount") String thirdAccount, @Query("goodsId") String goodsId, @Query("address") String address, @Query("phoneNumber") String phoneNumber, @Query("name") String name);
+
 
 
 }

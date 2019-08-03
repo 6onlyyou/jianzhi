@@ -42,13 +42,16 @@ class MineFragment : Fragment() {
         } else {
             editJianLiLayout.visibility = View.GONE
             editGaogaohdon.visibility = View.VISIBLE
-            zhaopinlishi.visibility = View.GONE
+            zhaopinlishi.visibility = View.VISIBLE
             historyLayout.visibility = View.GONE
+            setsgilview.visibility = View.GONE
+            setsgilview1.visibility = View.GONE
             setsgil.visibility = View.GONE
             ava.setImageResource(R.mipmap.ic_job_hunter_img)
         }
 
         name.text = SPUtil.getString(context, "nickName", "")
+
         sex_age.text =  SPUtil.getString(context, "phoneNumber", "")
         setsgil.setOnClickListener {
             startActivity(Intent(context, ChooseJobActivity::class.java))

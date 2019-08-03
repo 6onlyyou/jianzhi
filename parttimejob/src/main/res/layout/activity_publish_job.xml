@@ -86,18 +86,18 @@
                 android:textSize="15sp" />
 
 
-            <EditText
-                android:id="@+id/style"
+            <TextView
+                android:id="@+id/styles"
                 android:layout_width="match_parent"
                 android:layout_height="22dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="24dp"
                 android:background="@null"
-                android:hint="请选择标签"
+                android:hint="请点击选择标签"
                 android:singleLine="true"
                 android:drawableRight="@mipmap/ic_next"
-                android:textColorHint="#ffc0c0c0"
+                android:textColorHint="#c0c0c0"
                 android:textCursorDrawable="@drawable/color_cursor"
                 android:textSize="16sp" />
 
@@ -113,7 +113,7 @@
                 android:layout_width="103dp"
                 android:layout_height="22dp"
                 android:layout_marginLeft="15dp"
-                android:text="金币悬赏金额"
+                android:text="红包金币数量"
                 android:textColor="#ff8b8b8b"
                 android:textSize="15sp" />
 
@@ -126,10 +126,9 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="24dp"
                 android:background="@null"
-                android:hint="请选择悬赏金额"
-                android:inputType="number"
+                android:hint="请输入红包总金币数量"
+                android:numeric="integer"
                 android:singleLine="true"
-                android:drawableRight="@mipmap/ic_next"
                 android:textColorHint="#ffc0c0c0"
                 android:textCursorDrawable="@drawable/color_cursor"
                 android:textSize="16sp" />
@@ -148,7 +147,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="7dp"
 
-                android:text="金币悬赏数量"
+                android:text="红包数量"
                 android:textColor="#ff8b8b8b"
                 android:textSize="15sp" />
 
@@ -161,9 +160,9 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="24dp"
                 android:background="@null"
-                android:inputType="number"
+                android:numeric="integer"
                 android:drawableRight="@mipmap/ic_next"
-                android:hint="请输入悬赏数"
+                android:hint="请输入红包个数"
                 android:singleLine="true"
                 android:textColorHint="#ffc0c0c0"
                 android:textCursorDrawable="@drawable/color_cursor"
@@ -194,8 +193,9 @@
                 android:layout_marginRight="24dp"
                 android:layout_marginTop="8dp"
                 android:background="@null"
+                android:numeric="integer"
                 android:drawableRight="@mipmap/ic_next"
-                android:hint="请输入招聘人数:例如:电工2人,清洁工3人"
+                android:hint="请输入招聘人数"
                 android:singleLine="true"
                 android:textColorHint="#ffc0c0c0"
                 android:textCursorDrawable="@drawable/color_cursor"
@@ -403,7 +403,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="*营业执照（兼职选填，全职必填）"
+                android:text="*营业执照（兼职选填，全职必填否则会被下架）"
                 android:layout_marginTop="22dp"
                 android:layout_marginLeft="15dp"
                 android:textColor="#ff222222"

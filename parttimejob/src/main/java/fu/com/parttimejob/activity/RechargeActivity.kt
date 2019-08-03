@@ -144,6 +144,7 @@ class RechargeActivity : BaseActivity() {
                     // 判断resultStatus 为9000则代表支付成功
                     if (TextUtils.equals(resultStatus, "9000")) {
                         showToast("支付成功")
+
                     } else {
                         showToast("支付失败"+payResult.memo+payResult.result)
                     }

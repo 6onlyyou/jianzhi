@@ -75,7 +75,7 @@ class JobActivity : BaseActivity() {
             val addPopWindow = abelPopWindowL(this@JobActivity)
             addPopWindow.showPopupWindow(job_work) { jobName ->
                 job_label.text = if (TextUtils.isEmpty(jobName)) {
-                    "工作"
+                    "保姆"
                 } else {
                     jobName
                 }
@@ -88,6 +88,7 @@ class JobActivity : BaseActivity() {
 
     public fun getJobList() {
         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().sameCity(SPUtil.getString(this, "thirdAccount", ""), cityname.text.toString(), job_label.text.toString())).subscribe({
+            ToastUtils.showLongToast(this, "g个数"+it.size)
             homeJobListAdapter.addAll(it as List<BaseRecyclerModel>?)
             homeJobListAdapter.notifyDataSetChanged()
         }, {

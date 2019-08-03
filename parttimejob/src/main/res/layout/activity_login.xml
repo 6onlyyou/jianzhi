@@ -163,11 +163,12 @@
                 />
 
         <TextView
+            android:id="@+id/radyhxieyi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:textColor="@color/black"
-            android:text="是否接收用户隐私协议"/>
+            android:text="请点击右边园圈接受用户隐私协议"/>
         </LinearLayout>
 
     </LinearLayout>

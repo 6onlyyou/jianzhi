@@ -140,10 +140,10 @@ class JobInfoActivity : BaseActivity() {
             jobLocation.text = it.city
             content_job.text = "工作内容:" + it.workContent
             location_job.text = "工作地点：" + it.contactAddress
-            phone.text = it.phoneNumber
-            num_job.text = "招聘人数：" + it.numberOfVirtualCoins
-            job_jbi.text = "分享群领取" + it.recruitingNumbers / it.redEnvelopeNumber + "金币"
-            coid_job.text = "分享成功后可获得" + it.recruitingNumbers / it.redEnvelopeNumber + "虚拟币奖励"
+            phone.text = "手机号码:"+it.phoneNumber
+            num_job.text = "招聘人数：" + it.recruitingNumbers
+            job_jbi.text = "分享群领取" + it.numberOfVirtualCoins / it.redEnvelopeNumber + "金币"
+            coid_job.text = "分享成功后可获得" + it.numberOfVirtualCoins / it.redEnvelopeNumber + "虚拟币奖励"
             ji_gouton.setOnClickListener {
                 if (SPUtil.getString(this, "thirdAccount", "").equals("")) {
                     val intent = Intent(this, MainActivity::class.java)

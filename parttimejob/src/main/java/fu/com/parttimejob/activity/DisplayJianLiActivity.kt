@@ -88,7 +88,10 @@ class DisplayJianLiActivity : BaseActivity() {
         }, {
         })
         pushjianli.setOnClickListener {
-
+            if(selectList.size == 0){
+                ToastUtils.showLongToast(applicationContext, "请上传图片或者视频来介绍自己~")
+                return@setOnClickListener
+            }
             if (TextUtils.isEmpty(jianliname.text) || TextUtils.isEmpty(jianlisex.text)|| TextUtils.isEmpty(jianliage.text)|| TextUtils.isEmpty(jianlijianjie.text)){
                 ToastUtils.showLongToast(applicationContext, "请您把信息填写完整才能确定~")
             }else{
@@ -108,8 +111,6 @@ class DisplayJianLiActivity : BaseActivity() {
 //                    } catch (e: Exception) {
 //                        e.printStackTrace()
 //                    }
-
-
                     val f = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).toString() + "/compressor/videos")
                     if (f.mkdirs() || f.isDirectory)
                         VideoCompressAsyncTask(this).execute(selectList!!.get(0).path, f.path, fileInfoEntilty!!.get(0).filewidth, fileInfoEntilty!!.get(0).fileheight)
