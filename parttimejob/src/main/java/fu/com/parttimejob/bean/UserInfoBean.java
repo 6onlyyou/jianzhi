@@ -21,6 +21,15 @@ public class UserInfoBean {
     private  String headImg;
     private  String name;
     private  String companyName;
+    private  String nickName;
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
 
     public String getCompanyName() {
         return companyName;

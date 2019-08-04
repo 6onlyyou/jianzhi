@@ -28,6 +28,15 @@ public class RecruitInfoBean {
     private int state;
     private String headImg;
     public String name;
+    public String workTime;
+
+    public String getWorkTime() {
+        return workTime;
+    }
+
+    public void setWorkTime(String workTime) {
+        this.workTime = workTime;
+    }
 
     public String getName() {
         return name;

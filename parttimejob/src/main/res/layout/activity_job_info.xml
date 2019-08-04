@@ -86,7 +86,7 @@
 
                 <TextView
                     android:id="@+id/jobLocation"
-                    android:layout_width="20dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="14dp"
                     android:text="杭州"
                     android:textColor="@color/colorGray"
@@ -199,10 +199,9 @@
             </com.amap.api.maps.MapView>
 
             <TextView
-                android:id="@+id/phone"
+                android:id="@+id/phones"
                 android:layout_width="wrap_content"
                 android:layout_height="22dp"
-
                 android:layout_below="@+id/jobYixiangList"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"

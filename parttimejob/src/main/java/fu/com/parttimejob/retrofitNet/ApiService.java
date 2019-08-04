@@ -152,7 +152,7 @@ public interface ApiService {
      * @return
      */
     @POST("/appservice/app/jobhunter/sameCity")
-    Observable<ResponseBean<List<SameCityBean>>> sameCity(@Query("thirdAccount") String thirdAccount, @Query("city") String city, @Query("label") String label);
+    Observable<ResponseBean<List<JobInfoBean>>> sameCity(@Query("thirdAccount") String thirdAccount, @Query("city") String city, @Query("label") String label);
 
 
     /**
@@ -177,14 +177,14 @@ public interface ApiService {
      * @return
      */
     @POST("/appservice/app/recruitment/publichInfo")
-    Observable<ResponseBean<String>> publichInfo(@Query("thirdAccount") String thirdAccount, @Query("companyName") String companyName, @Query("label") String label, @Query("numberOfVirtualCoins") String numberOfVirtualCoins, @Query("redEnvelopeNumber") String redEnvelopeNumber, @Query("recruitingNumbers") String recruitingNumbers, @Query("salaryAndWelfare") String salaryAndWelfare, @Query("phoneNumber") String phoneNumber, @Query("contactAddress") String contactAddress, @Query("longitude") String longitude, @Query("latitude") String latitude, @Query("workContent") String workContent, @Body RequestBody file, @Query("city") String city);
+    Observable<ResponseBean<String>> publichInfo(@Query("thirdAccount") String thirdAccount, @Query("companyName") String companyName, @Query("label") String label, @Query("numberOfVirtualCoins") String numberOfVirtualCoins, @Query("redEnvelopeNumber") String redEnvelopeNumber, @Query("recruitingNumbers") String recruitingNumbers, @Query("salaryAndWelfare") String salaryAndWelfare, @Query("phoneNumber") String phoneNumber, @Query("contactAddress") String contactAddress, @Query("longitude") String longitude, @Query("latitude") String latitude, @Query("workContent") String workContent, @Body RequestBody file, @Query("city") String city, @Query("workTime") String workTime);
      /**
      *发布招聘订单
      *
      * @return
      */
     @POST("/appservice/app/recruitment/publichInfo")
-    Observable<ResponseBean<String>> publichNoImgInfo(@Query("thirdAccount") String thirdAccount, @Query("companyName") String companyName, @Query("label") String label, @Query("numberOfVirtualCoins") String numberOfVirtualCoins, @Query("redEnvelopeNumber") String redEnvelopeNumber, @Query("recruitingNumbers") String recruitingNumbers, @Query("salaryAndWelfare") String salaryAndWelfare, @Query("phoneNumber") String phoneNumber, @Query("contactAddress") String contactAddress, @Query("longitude") String longitude, @Query("latitude") String latitude, @Query("workContent") String workContent, @Query("city") String city);
+    Observable<ResponseBean<String>> publichNoImgInfo(@Query("thirdAccount") String thirdAccount, @Query("companyName") String companyName, @Query("label") String label, @Query("numberOfVirtualCoins") String numberOfVirtualCoins, @Query("redEnvelopeNumber") String redEnvelopeNumber, @Query("recruitingNumbers") String recruitingNumbers, @Query("salaryAndWelfare") String salaryAndWelfare, @Query("phoneNumber") String phoneNumber, @Query("contactAddress") String contactAddress, @Query("longitude") String longitude, @Query("latitude") String latitude, @Query("workContent") String workContent, @Query("city") String city, @Query("workTime") String workTime);
 
     /**
      * 添加沟通历史
@@ -256,7 +256,7 @@ public interface ApiService {
      *
      * @return
      */
-    @POST("/appservice/app/recruitment/openAdvertisementInfo")
+    @POST("/appservice/app/recruitment/openRecruitmentInfo")
     Observable<ResponseBean<String>> openAdvertisementInfo(@Query("thirdAccount") String thirdAccount, @Query("id") int id);
 
     /**

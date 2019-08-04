@@ -392,7 +392,7 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/item_qiuzhi_job"
                 android:gravity="left|top"
-                android:hint="请输入详细兼职内容..."
+                android:hint="请输入详细工作内容..."
                 android:paddingLeft="6dp"
                 android:paddingRight="6dp"
                 android:paddingTop="14dp"

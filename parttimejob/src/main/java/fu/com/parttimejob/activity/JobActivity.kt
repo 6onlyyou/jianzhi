@@ -30,7 +30,7 @@ class JobActivity : BaseActivity() {
 
     var list: ArrayList<GetLabelsBean>? = null
     var strarr: List<String>? = null
-    val list2: ArrayList<BaseRecyclerModel>? = ArrayList<BaseRecyclerModel>()
+    val list2: ArrayList<GetLabelsBean>? = ArrayList<GetLabelsBean>()
     override fun initViewClick() {
         cityname.text = SPUtil.getString(this, "city", "廊坊市")
         jobList.layoutManager = LinearLayoutManager(this)
@@ -50,7 +50,7 @@ class JobActivity : BaseActivity() {
                     index++//自增
                     list2!!.add(baseRecyclerModel)
                 }
-                job_label.text = list2!![0].viewTypeSt
+                job_label.text = list2!![0].labels
             }
         }
 //        if (SPUtil.getString(this@JobActivity,"labelName","")!= null && !SPUtil.getString(this@JobActivity,"labelName","").equals("")) {
@@ -88,7 +88,8 @@ class JobActivity : BaseActivity() {
 
     public fun getJobList() {
         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().sameCity(SPUtil.getString(this, "thirdAccount", ""), cityname.text.toString(), job_label.text.toString())).subscribe({
-            ToastUtils.showLongToast(this, "g个数"+it.size)
+            homeJobListAdapter.clear();
+            homeJobListAdapter.notifyDataSetChanged() ;
             homeJobListAdapter.addAll(it as List<BaseRecyclerModel>?)
             homeJobListAdapter.notifyDataSetChanged()
         }, {
@@ -121,6 +122,8 @@ class JobActivity : BaseActivity() {
                 //区县（如果设定了两级联动，那么该项返回空）
                 cityname.text = city
                 RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().sameCity(SPUtil.getString(this@JobActivity, "thirdAccount", ""), city, job_label.text.toString())).subscribe({
+                    homeJobListAdapter.clear();
+                    homeJobListAdapter.notifyDataSetChanged() ;
                     homeJobListAdapter.addAll(it as List<BaseRecyclerModel>?)
                     homeJobListAdapter.notifyDataSetChanged()
                 }, {

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.view.View
 import com.heixiu.errand.net.RetrofitFactory
 import com.lljjcoder.citylist.Toast.ToastUtils
 import com.luck.picture.lib.rxbus2.RxBus
@@ -29,7 +30,10 @@ import com.amap.api.maps.AMap
 import com.amap.api.maps.AMapOptions
 import com.amap.api.maps.CameraUpdateFactory
 import com.amap.api.maps.model.CameraPosition
+import com.tencent.connect.common.Constants
+import com.tencent.tauth.Tencent
 import fu.com.parttimejob.utils.MapUtils
+import fu.com.parttimejob.weight.BaseUiListener
 
 
 class JobInfoActivity : BaseActivity() {
@@ -74,7 +78,6 @@ class JobInfoActivity : BaseActivity() {
 
     override fun initViewParams() {
         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().addNumberOfRecruitView(SPUtil.getString(this@JobInfoActivity, "thirdAccount", ""), intent.getIntExtra("id", 0))).subscribe({
-            ToastUtils.showLongToast(applicationContext, it)
         }, {
             ToastUtils.showLongToast(applicationContext, it.message.toString())
         })
@@ -106,6 +109,7 @@ class JobInfoActivity : BaseActivity() {
     }
     var recruitInfoBean: RecruitInfoBean ? = null
     var jinbi = 0
+    var latLng : LatLng? = null
     override fun initViewClick() {
         recruitInfoBean = RecruitInfoBean()
 
@@ -121,26 +125,32 @@ class JobInfoActivity : BaseActivity() {
             } else {
                 ji_gouton.text = "立即沟通"
             }
-            it.latitude= 30.28582.toString()
-            it.longitude= 119.992592.toString()
-            val latLng = LatLng(java.lang.Double.valueOf(it.latitude), java.lang.Double.valueOf(it.longitude))
-            val marker = aMap?.addMarker(MarkerOptions().position(latLng).title("").snippet(it.contactAddress))
-            val LUJIAZUI = CameraPosition.Builder()
-                    .target(latLng).zoom(18f).bearing(0f).tilt(30f).build()
-            val aOptions =  AMapOptions()
-            aOptions.zoomGesturesEnabled(false)// 禁止通过手势缩放地图
-            aOptions.scrollGesturesEnabled(false)// 禁止通过手势移动地图
-            aOptions.tiltGesturesEnabled(false)// 禁止通过手势倾斜地图
-            aOptions.camera(LUJIAZUI)
-            val mCameraUpdate = CameraUpdateFactory.newCameraPosition(CameraPosition(latLng, 17f, 30f, 0f))
-            aMap?.moveCamera(mCameraUpdate)
+            if(it.latitude==null){
+                jobLocationMap.visibility = View.GONE
+            }else{
+                 latLng  = LatLng(java.lang.Double.valueOf(it.latitude), java.lang.Double.valueOf(it.longitude))
+                val marker = aMap?.addMarker(MarkerOptions().position(latLng).title("").snippet(it.contactAddress))
+                val LUJIAZUI = CameraPosition.Builder()
+                        .target(latLng).zoom(18f).bearing(0f).tilt(30f).build()
+                val aOptions =  AMapOptions()
+                aOptions.zoomGesturesEnabled(false)// 禁止通过手势缩放地图
+                aOptions.scrollGesturesEnabled(false)// 禁止通过手势移动地图
+                aOptions.tiltGesturesEnabled(false)// 禁止通过手势倾斜地图
+                aOptions.camera(LUJIAZUI)
+                val mCameraUpdate = CameraUpdateFactory.newCameraPosition(CameraPosition(latLng, 17f, 30f, 0f))
+                aMap?.moveCamera(mCameraUpdate)
+            }
+//            it.latitude= 30.28582.toString()
+//            it.longitude= 119.992592.toString()
+
             jinbi = it.unclaimedVirtualCoins
             label_job.text = it.label
             jobSalaryTv.text = it.salaryAndWelfare
             jobLocation.text = it.city
             content_job.text = "工作内容:" + it.workContent
             location_job.text = "工作地点：" + it.contactAddress
-            phone.text = "手机号码:"+it.phoneNumber
+            phones.text = "手机号码:"+it.phoneNumber
+            time_job.text = "工作时间:"+ it.workTime
             num_job.text = "招聘人数：" + it.recruitingNumbers
             job_jbi.text = "分享群领取" + it.numberOfVirtualCoins / it.redEnvelopeNumber + "金币"
             coid_job.text = "分享成功后可获得" + it.numberOfVirtualCoins / it.redEnvelopeNumber + "虚拟币奖励"
@@ -229,6 +239,23 @@ class JobInfoActivity : BaseActivity() {
 
             ToastUtils.showLongToast(this, it.message.toString())
         })
+
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+//        if (null != mTencent)
+//        {
+//            mTencent!!.onActivityResult(requestCode, resultCode, data)
+//        }
+        Tencent.onActivityResultData(requestCode, resultCode, data,  BaseUiListener());
+
+        if (requestCode == Constants.REQUEST_API) {
+            if (resultCode == Constants.REQUEST_QQ_SHARE ||
+                    resultCode == Constants.REQUEST_QZONE_SHARE ||
+                    resultCode == Constants.REQUEST_OLD_SHARE) {
+                Tencent.handleResultData(data,  BaseUiListener());
+            }
+        }
 
     }
 }

@@ -49,9 +49,11 @@ class MineFragment : Fragment() {
             setsgil.visibility = View.GONE
             ava.setImageResource(R.mipmap.ic_job_hunter_img)
         }
-
-        name.text = SPUtil.getString(context, "nickName", "")
-
+        if(SPUtil.getString(context, "nickName", "").equals("")){
+            name.text = SPUtil.getString(context, "jianliname", "")
+        }else{
+            name.text = SPUtil.getString(context, "nickName", "")
+        }
         sex_age.text =  SPUtil.getString(context, "phoneNumber", "")
         setsgil.setOnClickListener {
             startActivity(Intent(context, ChooseJobActivity::class.java))
@@ -65,7 +67,6 @@ class MineFragment : Fragment() {
             var intent = Intent(context, CommunicateHistoryActivity::class.java)
             intent.putExtra("title",CommunicateHistoryActivity.PublishHistory)
             startActivity(intent)
-
         }
         editGaogaohdon.setOnClickListener {
             startActivity(Intent(context, AdListActivity::class.java))
@@ -101,7 +102,6 @@ class MineFragment : Fragment() {
                 }
             })
                     .setTitle("").show()
-
         }
 
     }

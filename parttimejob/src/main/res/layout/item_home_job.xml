@@ -5,7 +5,8 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="71dp"
-
+        app:cardElevation="1dp"
+        android:layout_marginTop="7dp"
         app:cardCornerRadius="4dp">
 
         <LinearLayout
@@ -25,7 +26,7 @@
 
                 <TextView
                     android:id="@+id/job_name"
-                    android:layout_width="64dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="23dp"
                     android:layout_marginLeft="15dp"
                     android:text=""
@@ -72,7 +73,7 @@
 
                 <TextView
                     android:id="@+id/timejob"
-                    android:layout_width="20dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="14dp"
                     android:layout_marginLeft="15dp"
                     android:textColor="@color/colorGray"
@@ -92,10 +93,6 @@
                     android:textColor="@color/colorGray"
                     android:textSize="13sp" />
             </LinearLayout>
-<View
-    android:layout_width="match_parent"
-    android:layout_height="1dp"
-    android:background="@color/gray_text"></View>
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </layout>

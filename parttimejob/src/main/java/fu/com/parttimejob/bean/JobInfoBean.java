@@ -10,6 +10,7 @@ import fu.com.parttimejob.base.baseadapter.BaseRecyclerModel;
 public class JobInfoBean extends BaseRecyclerModel {
     private String thirdAccount;
     private String companyName;
+    private int  unclaimedVirtualCoins;
     private String label;
     private int numberOfVirtualCoins;
     private int recruitingNumbers;
@@ -25,6 +26,13 @@ public class JobInfoBean extends BaseRecyclerModel {
     private int forwordCount;
     private int viewCount;
 
+    public int getUnclaimedVirtualCoins() {
+        return unclaimedVirtualCoins;
+    }
+
+    public void setUnclaimedVirtualCoins(int unclaimedVirtualCoins) {
+        this.unclaimedVirtualCoins = unclaimedVirtualCoins;
+    }
 
     public int getRedEnvelopeNumber() {
         return redEnvelopeNumber;
