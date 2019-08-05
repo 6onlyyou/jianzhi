@@ -223,6 +223,13 @@ public interface ApiService {
      */
     @POST("/appservice/app/recruitment/publichAdvertisement")
     Observable<ResponseBean<String>> publichAdvertisement(@Query("thirdAccount") String thirdAccount, @Query("companyName") String companyName, @Query("redEnvelopeNumber ") String redEnvelopeNumber, @Query("numberOfVirtualCoins") String numberOfVirtualCoins, @Query("city") String city, @Query("latitude") String latitude, @Query("longitude") String longitude, @Query("advertisementContent") String advertisementContent, @Body RequestBody file);
+   /**
+     * 发布無圖片广告
+     *
+     * @return
+     */
+    @POST("/appservice/app/recruitment/publichAdvertisement")
+    Observable<ResponseBean<String>> publichAdvertisement(@Query("thirdAccount") String thirdAccount, @Query("companyName") String companyName, @Query("redEnvelopeNumber ") String redEnvelopeNumber, @Query("numberOfVirtualCoins") String numberOfVirtualCoins, @Query("city") String city, @Query("latitude") String latitude, @Query("longitude") String longitude, @Query("advertisementContent") String advertisementContent);
 
     /**
      * 招聘者名片创建

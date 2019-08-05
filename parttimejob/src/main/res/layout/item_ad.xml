@@ -52,7 +52,7 @@
             android:textSize="13sp" />
 
 
-        <view
+        <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#E8E8E8" />
@@ -82,7 +82,7 @@
                     android:text="0" />
             </LinearLayout>
 
-            <view
+            <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:background="#E8E8E8" />
@@ -107,7 +107,7 @@
                     android:text="0" />
             </LinearLayout>
 
-            <view
+            <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:background="#E8E8E8" />
@@ -135,7 +135,7 @@
 
         </LinearLayout>
 
-        <view
+        <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#E8E8E8" />

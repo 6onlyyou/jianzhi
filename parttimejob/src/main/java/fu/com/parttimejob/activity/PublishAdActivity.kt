@@ -84,23 +84,29 @@ class PublishAdActivity : BaseActivity() {
                                     showToast("金币不足请充值")
                                     startActivity(Intent(this@PublishAdActivity, MyMoneyActivity::class.java))
                                 }else{
-                                    val builder: MultipartBody.Builder = MultipartBody.Builder()
-                                            .setType(MultipartBody.FORM)
-                                    if (selectList.size == 1) {
-                                        builder.addFormDataPart("img", File(selectList.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList.get(0).compressPath)))
-                                    } else {
-                                        for (i in selectList.indices) {
-                                            builder.addFormDataPart("img", File(selectList.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList.get(0).compressPath)))
-                                        }
+                                    val builder: MultipartBody.Builder = MultipartBody.Builder().setType(MultipartBody.FORM)
+                                    var requestBody: RequestBody
+                                    if (selectList.isNotEmpty()) {
+                                        builder.addFormDataPart("img", File(selectList!!.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList!!.get(0).compressPath)));
+                                        requestBody = builder.build()
+                                        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().publichAdvertisement(SPUtil.getString(this@PublishAdActivity, "thirdAccount", "111"), jianliname.text.toString(), hongbaoSize.text.toString(), jiangliMoney.text.toString(), SPUtil.getString(this@PublishAdActivity, "city", "廊坊市"),poiItem!!.latLonPoint.latitude.toString(),poiItem!!.latLonPoint.longitude.toString(), guanggaoContent.text.toString(), requestBody)).subscribe({
+                                            ToastUtils.showLongToast(this@PublishAdActivity, it)
+                                            SPUtil.putInt(this@PublishAdActivity, "totalCount", SPUtil.getInt(this@PublishAdActivity, "totalCount", 0)-Integer.parseInt(jiangliMoney.text.toString()))
+                                            finish()
+                                        }, {
+                                            ToastUtils.showLongToast(this@PublishAdActivity, it.message.toString())
+                                        })
+                                    }else{
+                                        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().publichAdvertisement(SPUtil.getString(this@PublishAdActivity, "thirdAccount", "111"), jianliname.text.toString(), hongbaoSize.text.toString(), jiangliMoney.text.toString(), SPUtil.getString(this@PublishAdActivity, "city", "廊坊市"),poiItem!!.latLonPoint.latitude.toString(),poiItem!!.latLonPoint.longitude.toString(), guanggaoContent.text.toString())).subscribe({
+                                            ToastUtils.showLongToast(this@PublishAdActivity, it)
+                                            SPUtil.putInt(this@PublishAdActivity, "totalCount", SPUtil.getInt(this@PublishAdActivity, "totalCount", 0)-Integer.parseInt(jiangliMoney.text.toString()))
+                                            finish()
+                                        }, {
+                                            ToastUtils.showLongToast(this@PublishAdActivity, it.message.toString())
+                                        })
                                     }
-                                    val requestBody: RequestBody = builder.build()
-                                    RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().publichAdvertisement(SPUtil.getString(this@PublishAdActivity, "thirdAccount", "111"), jianliname.text.toString(), hongbaoSize.text.toString(), jiangliMoney.text.toString(), SPUtil.getString(this@PublishAdActivity, "city", "廊坊市"),poiItem!!.latLonPoint.latitude.toString(),poiItem!!.latLonPoint.longitude.toString(), guanggaoContent.text.toString(), requestBody)).subscribe({
-                                        ToastUtils.showLongToast(this@PublishAdActivity, it)
-                                        SPUtil.putInt(this@PublishAdActivity, "totalCount", SPUtil.getInt(this@PublishAdActivity, "totalCount", 0)-Integer.parseInt(jiangliMoney.text.toString()))
-                                        finish()
-                                    }, {
-                                        ToastUtils.showLongToast(this@PublishAdActivity, it.message.toString())
-                                    })
+
+
                                 }
 
                             } else {
