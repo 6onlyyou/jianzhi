@@ -62,7 +62,6 @@ class LoginActivity : BaseActivity() {
                             })
                 }, Consumer<Throwable> {
                     showToast("获取登陆信息失败")
-                    finish()
                 })
     }
 
@@ -134,7 +133,7 @@ class LoginActivity : BaseActivity() {
             if(radioButton2.isChecked){
                 if (judgeIsCanLogin()) {
 
-                    RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().login(loginPhoneEt.text.toString(), loginPwdEt.text.toString())).subscribe({
+                    RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().login(loginPhoneEt.text.toString(), loginPwdEt.text.toString(),SPUtil.getInt(applicationContext, "Profession", 1))).subscribe({
                         if (SPUtil.getBoolean(applicationContext,"",true)) {
                             ToastUtils.showLongToast(applicationContext, "登入成功")
                             SPUtil.putString(applicationContext,"thirdAccount",loginPhoneEt.text.toString())
@@ -250,17 +249,16 @@ class LoginActivity : BaseActivity() {
                             SPUtil.putString(this@LoginActivity, "token", it.token)
                             if(SPUtil.getInt(this@LoginActivity, "Profession", 1)==1){
                                 startActivity(ChooseJobActivity::class.java, true)
-
                             }else{
                                 startActivity(CreateJobCardActivity::class.java, true)
                             }
-
                         }
                         finish()
                     }, {
                         ToastUtils.showLongToast(applicationContext, it.message.toString())
                     })
                 } catch (e: Exception) {
+
 
                 }
 

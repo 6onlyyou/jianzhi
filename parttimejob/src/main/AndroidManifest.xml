@@ -178,7 +178,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data
-                    android:host="com.fushuaige.ky.likefish"
+                    android:host="fu.com.parttimejob"
                     android:pathPrefix="/conversation/"
                     android:scheme="rong" />
             </intent-filter>

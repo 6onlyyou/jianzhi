@@ -29,11 +29,9 @@ public class ExchangeShopListAdapter extends BaseRecyclerViewAdapter {
 
 
     class TouBaoHolder extends BaseRecyclerViewHolder<ItemExchangeShopBinding> {
-
         public TouBaoHolder(ViewGroup viewGroup, int layoutId) {
             super(viewGroup, layoutId);
         }
-
         @Override
         public void onBindViewHolder(BaseRecyclerModel object, int position) {
             final ExchangeBean exchangeBean = (ExchangeBean) object;
