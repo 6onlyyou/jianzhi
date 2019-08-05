@@ -4,6 +4,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
 import com.heixiu.errand.net.RetrofitFactory
 import com.lljjcoder.citylist.Toast.ToastUtils
 import fu.com.parttimejob.R
@@ -32,6 +33,12 @@ class AdListActivity : BaseActivity() {
             adListAdapter.notifyDataSetChanged() ;
             adListAdapter.addAll(it as List<BaseRecyclerModel>?)
             adListAdapter.notifyDataSetChanged()
+            if(it.size>0){
+                konkonshuj.visibility = View.GONE
+
+            }else{
+                konkonshuj.visibility = View.VISIBLE
+            }
         }, {
             ToastUtils.showLongToast(this, it.message.toString())
         })

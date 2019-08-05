@@ -3,6 +3,7 @@ package fu.com.parttimejob.activity
 import android.graphics.Color
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
+import android.view.View
 import com.heixiu.errand.net.RetrofitFactory
 import com.lljjcoder.citylist.Toast.ToastUtils
 import com.lljjcoder.citypickerview.widget.CityPicker
@@ -92,6 +93,12 @@ class JobActivity : BaseActivity() {
             homeJobListAdapter.notifyDataSetChanged() ;
             homeJobListAdapter.addAll(it as List<BaseRecyclerModel>?)
             homeJobListAdapter.notifyDataSetChanged()
+            if(it.size>0){
+                konkonshuj.visibility = View.GONE
+
+            }else{
+                konkonshuj.visibility = View.VISIBLE
+            }
         }, {
             ToastUtils.showLongToast(this, it.message.toString())
         })

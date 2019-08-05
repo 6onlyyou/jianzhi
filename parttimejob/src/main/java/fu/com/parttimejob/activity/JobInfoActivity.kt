@@ -161,8 +161,8 @@ class JobInfoActivity : BaseActivity() {
                     ToastUtils.showShortToast(this, "需要先登入才可以使用其他功能")
                 } else {
                     when (ji_gouton.text.toString()) {
-                        "关闭招聘" -> openD()
-                        "开启招聘" -> clossD()
+                        "关闭招聘" -> clossD()
+                        "开启招聘" -> openD()
                         "立即沟通" -> tallD()
 
                     }

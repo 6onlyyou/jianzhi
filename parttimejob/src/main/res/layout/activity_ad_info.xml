@@ -48,7 +48,7 @@
             android:layout_alignTop="@+id/ava"
             android:layout_marginLeft="13dp"
             android:layout_toRightOf="@+id/ava"
-            android:text="一点点奶茶"
+            android:text=""
             android:textColor="#ff222222"
             android:textSize="18sp" />
 
