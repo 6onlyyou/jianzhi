@@ -272,6 +272,42 @@
     </LinearLayout>
 
     <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorLine" />
+
+    <LinearLayout
+        android:id="@+id/myDuiHuanLayout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="17dp"
+            android:src="@mipmap/ic_duihuan" />
+
+        <TextView
+            android:layout_width="59dp"
+            android:layout_height="22dp"
+            android:layout_marginLeft="4dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="我的兑换"
+            android:textColor="@color/colorGray"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="11dp"
+            android:layout_height="11dp"
+            android:src="@mipmap/into" />
+    </LinearLayout>
+
+    <View
         android:id="@+id/setsgilview1"
         android:layout_width="match_parent"
         android:layout_height="1dp"

@@ -35,9 +35,9 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="19dp"
+        android:layout_marginRight="30dp"
         android:text="请输入想要充值金币的数量（1元可购买10金币）"
         android:textColor="#ff444444"
-        android:layout_marginRight="30dp"
         android:textSize="18sp" />
 
     <LinearLayout
@@ -48,18 +48,20 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <EditText
+        <TextView
             android:id="@+id/rechargeMoneyEd"
             android:layout_width="match_parent"
             android:layout_height="49dp"
             android:layout_marginRight="15dp"
             android:background="@null"
-            android:hint="请点击输入金币数量"
+            android:drawableRight="@mipmap/ic_next"
+            android:gravity="center_vertical"
+            android:hint="请选择金额"
             android:inputType="number"
             android:text=""
             android:textColorHint="@color/colorGray"
             android:textCursorDrawable="@drawable/cursor"
-            android:textSize="30sp" />
+            android:textSize="14sp" />
 
     </LinearLayout>
 
@@ -67,8 +69,8 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
         android:layout_marginTop="9dp"
+        android:layout_marginRight="15dp"
         android:background="@color/colorLine" />
 
     <TextView
@@ -84,8 +86,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
         android:layout_marginTop="20dp"
+        android:layout_marginRight="30dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -115,8 +117,8 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
         android:layout_marginTop="21dp"
+        android:layout_marginRight="15dp"
         android:background="@color/colorLine" />
 
 
@@ -124,8 +126,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
         android:layout_marginTop="21dp"
+        android:layout_marginRight="30dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -154,8 +156,8 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
         android:layout_marginTop="21dp"
+        android:layout_marginRight="15dp"
         android:background="@color/colorLine" />
 
     <TextView
@@ -169,4 +171,70 @@
         android:text="立即充值"
         android:textColor="#ffffffff"
         android:textSize="15sp" />
+
+    <RelativeLayout
+        android:id="@+id/pickView"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff">
+
+        <RelativeLayout
+            android:id="@+id/lala"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:text="取消"
+                android:layout_centerVertical="true"
+                android:textColor="#ff474245"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="选择金额"
+                android:textColor="#ff474245"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/picker_yes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:layout_alignParentRight="true"
+                android:text="确定"
+                android:textColor="#ff474245"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+
+        <View
+            android:background="@color/line_color"
+            android:layout_below="@+id/lala"
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+        <fu.com.parttimejob.view.PickerScrollView
+            android:id="@+id/pickerscrlllview"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_below="@+id/line"
+            android:background="#ffffff" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_below="@id/pickerscrlllview"
+            android:layout_marginTop="-95dp"
+            android:background="@mipmap/picker_tv_bg" />
+
+    </RelativeLayout>
+
 </LinearLayout>

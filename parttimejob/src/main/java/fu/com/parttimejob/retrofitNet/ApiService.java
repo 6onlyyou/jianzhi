@@ -8,9 +8,9 @@ import fu.com.parttimejob.bean.ExchangeBean;
 import fu.com.parttimejob.bean.GetLabelsBean;
 import fu.com.parttimejob.bean.GetTokenEntity;
 import fu.com.parttimejob.bean.JobInfoBean;
+import fu.com.parttimejob.bean.KuaiDiBean;
 import fu.com.parttimejob.bean.LoginBean;
 import fu.com.parttimejob.bean.MAdvertisingBean;
-import fu.com.parttimejob.bean.MyRecruitBean;
 import fu.com.parttimejob.bean.RecruitInfoBean;
 import fu.com.parttimejob.bean.RegisterBean;
 import fu.com.parttimejob.bean.ResponseBean;
@@ -110,6 +110,7 @@ public interface ApiService {
      */
     @POST("/appservice/app/jobhunter/customizeLabel")
     Observable<ResponseBean<String>> customizeLabel(@Query("thirdAccount") String thirdAccount, @Query("labelName") String labelName);
+
     /**
      * 获得融云token
      *
@@ -117,6 +118,7 @@ public interface ApiService {
      */
     @POST("/appservice/app/alluser/getCloudToken")
     Observable<ResponseBean<RunTokenBean>> getCloudToken(@Query("thirdAccount") String thirdAccount);
+
     /**
      * 查询个人信息
      *
@@ -124,6 +126,7 @@ public interface ApiService {
      */
     @POST("/appservice/app/alluser/queryUserInfo")
     Observable<ResponseBean<UserInfoBean>> getUserInfo(@Query("thirdAccount") String thirdAccount, @Query("identyType") int identyType, @Query("longitude") String longitude, @Query("latitude") String latitude, @Query("city") String city, @Query("token") String token);
+
     /**
      * 获取首页列表
      *
@@ -131,6 +134,7 @@ public interface ApiService {
      */
     @POST("/appservice/app/jobhunter/firstPage")
     Observable<ResponseBean<List<JobInfoBean>>> firstPage(@Query("thirdAccount") String thirdAccount);
+
     /**
      * 获取兑换商品列表
      *
@@ -138,6 +142,7 @@ public interface ApiService {
      */
     @POST("/appservice/app/alluser/exchange")
     Observable<ResponseBean<List<ExchangeBean>>> exchange(@Query("thirdAccount") String thirdAccount);
+
     /**
      * 获得简历详情接口
      *
@@ -172,14 +177,15 @@ public interface ApiService {
     Observable<ResponseBean<AdInfoBean>> randomGetOneAdvertisement(@Query("thirdAccount") String thirdAccount);
 
     /**
-     *发布招聘订单
+     * 发布招聘订单
      *
      * @return
      */
     @POST("/appservice/app/recruitment/publichInfo")
     Observable<ResponseBean<String>> publichInfo(@Query("thirdAccount") String thirdAccount, @Query("companyName") String companyName, @Query("label") String label, @Query("numberOfVirtualCoins") String numberOfVirtualCoins, @Query("redEnvelopeNumber") String redEnvelopeNumber, @Query("recruitingNumbers") String recruitingNumbers, @Query("salaryAndWelfare") String salaryAndWelfare, @Query("phoneNumber") String phoneNumber, @Query("contactAddress") String contactAddress, @Query("longitude") String longitude, @Query("latitude") String latitude, @Query("workContent") String workContent, @Body RequestBody file, @Query("city") String city, @Query("workTime") String workTime);
-     /**
-     *发布招聘订单
+
+    /**
+     * 发布招聘订单
      *
      * @return
      */
@@ -249,10 +255,10 @@ public interface ApiService {
      * @return
      */
     @POST("/appservice/app/recruitment/openAdvertisement")
-    Observable<ResponseBean<String>> openAdvertisement(@Query("thirdAccount") String thirdAccount,@Query("id") int id);
+    Observable<ResponseBean<String>> openAdvertisement(@Query("thirdAccount") String thirdAccount, @Query("id") int id);
 
     /**
-     *打开招聘
+     * 打开招聘
      *
      * @return
      */
@@ -278,37 +284,39 @@ public interface ApiService {
 
 
     /**
-     *增加广告转发次数
+     * 增加广告转发次数
      *
      * @return
      */
     @POST("/appservice/app/jobhunter/addNumberOfAdvertisingForwarding")
-    Observable<ResponseBean<String>> addNumberOfAdvertisingForwarding(@Query("thirdAccount") String thirdAccount,@Query("id") int id);
+    Observable<ResponseBean<String>> addNumberOfAdvertisingForwarding(@Query("thirdAccount") String thirdAccount, @Query("id") int id);
 
     /**
-     *增加广告查看次数
+     * 增加广告查看次数
      *
      * @return
      */
     @POST("/appservice/app/jobhunter/addNumberOfAdvertisingView")
-    Observable<ResponseBean<String>> addNumberOfAdvertisingView(@Query("thirdAccount") String thirdAccount,@Query("id") int id);
+    Observable<ResponseBean<String>> addNumberOfAdvertisingView(@Query("thirdAccount") String thirdAccount, @Query("id") int id);
+
     /**
-     *增加招聘转发次数
+     * 增加招聘转发次数
      *
      * @return
      */
     @POST("/appservice/app/jobhunter/addNumberOfRecruitForwarding")
-    Observable<ResponseBean<String>> addNumberOfRecruitForwarding(@Query("thirdAccount") String thirdAccount,@Query("id") int id);
+    Observable<ResponseBean<String>> addNumberOfRecruitForwarding(@Query("thirdAccount") String thirdAccount, @Query("id") int id);
 
     /**
-     *增加招聘查看次数
+     * 增加招聘查看次数
      *
      * @return
      */
     @POST("/appservice/app/jobhunter/addNumberOfRecruitView")
-    Observable<ResponseBean<String>> addNumberOfRecruitView(@Query("thirdAccount") String thirdAccount,@Query("id") int id);
+    Observable<ResponseBean<String>> addNumberOfRecruitView(@Query("thirdAccount") String thirdAccount, @Query("id") int id);
+
     /**
-     *广告详情
+     * 广告详情
      *
      * @return
      */
@@ -317,24 +325,24 @@ public interface ApiService {
 
 
     /**
-     *招聘详情接口
+     * 招聘详情接口
      *
      * @return
      */
     @POST("/appservice/app/jobhunter/singleRecruitmentDetail")
-    Observable<ResponseBean<RecruitInfoBean>> singleRecruitmentDetail(@Query("thirdAccount") String thirdAccount,@Query("id") int id);
+    Observable<ResponseBean<RecruitInfoBean>> singleRecruitmentDetail(@Query("thirdAccount") String thirdAccount, @Query("id") int id);
 
 
     /**
-     *领取广告虚拟币接口
+     * 领取广告虚拟币接口
      *
      * @return
      */
     @POST("/appservice/app/jobhunter/receiveOfAdVirtual")
-    Observable<ResponseBean<String>> receiveOfAdVirtual(@Query("thirdAccount") String thirdAccount,@Query("id") int id);
+    Observable<ResponseBean<String>> receiveOfAdVirtual(@Query("thirdAccount") String thirdAccount, @Query("id") int id);
 
     /**
-     *领取招聘虚拟币接口
+     * 领取招聘虚拟币接口
      *
      * @return
      */
@@ -348,14 +356,14 @@ public interface ApiService {
      */
     @POST("/appservice/app/alluser/bindPhoneNum")
     Observable<ResponseBean<String>> bindPhoneNum(@Query("thirdAccount") String thirdAccount, @Query("phoneNum") String phoneNum);
+
     /**
-     *填写邀请码接口
+     * 填写邀请码接口
      *
      * @return
      */
     @POST("/appservice/app/alluser/inputInvit")
-    Observable<ResponseBean<String>> inputInvit(@Query("thirdAccount") String thirdAccount,@Query("inviteCode") String inviteCode);
-
+    Observable<ResponseBean<String>> inputInvit(@Query("thirdAccount") String thirdAccount, @Query("inviteCode") String inviteCode);
 
 
     /**
@@ -373,6 +381,7 @@ public interface ApiService {
      */
     @POST("/appservice/app/pay/alipay")
     Observable<ResponseBean<String>> alipay(@Query("thirdAccount") String thirdAccount, @Query("totalPrice") int totalPrice, @Query("desc") String desc, @Query("detail") String detail);
+
     /**
      * 兑换商品
      *
@@ -381,6 +390,14 @@ public interface ApiService {
     @POST("/appservice/app/jobhunter/exchangeGoods")
     Observable<ResponseBean<String>> exchangeGoods(@Query("thirdAccount") String thirdAccount, @Query("goodsId") String goodsId, @Query("address") String address, @Query("phoneNumber") String phoneNumber, @Query("name") String name);
 
+
+    /**
+     * 用户已经兑换列表
+     *
+     * @return
+     */
+    @POST("/appservice/app/jobhunter/changeList")
+    Observable<ResponseBean<List<KuaiDiBean>>> changeList(@Query("thirdAccount") String thirdAccount);
 
 
 }

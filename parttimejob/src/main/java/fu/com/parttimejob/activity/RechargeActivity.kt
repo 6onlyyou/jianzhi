@@ -6,19 +6,21 @@ import android.net.wifi.WifiManager
 import android.os.Handler
 import android.os.Message
 import android.text.TextUtils
+import android.view.View
 import android.widget.CompoundButton
 import com.alipay.sdk.app.PayTask
 import com.heixiu.errand.net.RetrofitFactory
-import com.lljjcoder.citylist.Toast.ToastUtils
 import com.tencent.mm.opensdk.modelpay.PayReq
 import com.tencent.mm.opensdk.openapi.WXAPIFactory
 import fu.com.parttimejob.R
 import fu.com.parttimejob.base.BaseActivity
+import fu.com.parttimejob.bean.Pickers
 import fu.com.parttimejob.bean.WXPayEntity
 import fu.com.parttimejob.retrofitNet.RxUtils
 import fu.com.parttimejob.utils.PayResult
 import fu.com.parttimejob.utils.SPContants
 import fu.com.parttimejob.utils.SPUtil
+import fu.com.parttimejob.view.PickerScrollView
 import kotlinx.android.synthetic.main.activity_recharge.*
 
 
@@ -33,18 +35,34 @@ class RechargeActivity : BaseActivity() {
     override fun initViewParams() {
         aliPayCheck.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener {
             override fun onCheckedChanged(p0: CompoundButton?, p1: Boolean) {
-                if (p1){
+                if (p1) {
                     wxPayCheck.isChecked = false
                 }
             }
         })
         wxPayCheck.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener {
             override fun onCheckedChanged(p0: CompoundButton?, p1: Boolean) {
-                if (p1){
+                if (p1) {
                     aliPayCheck.isChecked = false
                 }
             }
         })
+
+        var datas = ArrayList<Pickers>()
+        datas.add(Pickers("10", "1"))
+        datas.add(Pickers("20", "2"))
+        datas.add(Pickers("50", "3"))
+        datas.add(Pickers("100", "4"))
+        datas.add(Pickers("200", "5"))
+        pickerscrlllview.setData(datas)
+        pickerscrlllview.setSelected(0)
+
+        pickerscrlllview.setOnSelectListener(pickerListener)
+
+    }
+
+    var pickerListener: PickerScrollView.onSelectListener = PickerScrollView.onSelectListener { pickers ->
+        rechargeMoneyEd.text = pickers.showConetnt
     }
 
     override fun initViewClick() {
@@ -60,6 +78,16 @@ class RechargeActivity : BaseActivity() {
                 getWxPayInfo()
             }
         }
+
+        rechargeMoneyEd.setOnClickListener {
+            pickView.visibility = View.VISIBLE
+        }
+        picker_yes.setOnClickListener {
+            pickView.visibility = View.GONE
+        }
+        cancel.setOnClickListener {
+            pickView.visibility = View.GONE
+        }
     }
 
     private fun getAliPayInfo() {
@@ -68,18 +96,18 @@ class RechargeActivity : BaseActivity() {
                 .subscribe({
                     startAliPay(it)
                 }, {
-                    showToast(it.message+"")
+                    showToast(it.message + "")
                 })
     }
 
     fun getWxPayInfo() {
 
         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().wxPay(SPUtil.getString(this@RechargeActivity, "thirdAccount", ""), Integer.valueOf(rechargeMoneyEd.text.toString())
-                , "1", "充值"+rechargeMoneyEd.text.toString()+"金币", getInNetIp(this)))
+                , "1", "充值" + rechargeMoneyEd.text.toString() + "金币", getInNetIp(this)))
                 .subscribe({
                     startWxPay(it)
                 }, {
-                    showToast(it.message+"")
+                    showToast(it.message + "")
                 })
     }
 
@@ -101,12 +129,12 @@ class RechargeActivity : BaseActivity() {
         //获取wifi服务
         val wifiManager = context.getSystemService(Context.WIFI_SERVICE) as WifiManager
         //判断wifi是否开启
-        if (!wifiManager.isWifiEnabled()) {
-            wifiManager.setWifiEnabled(true)
+        if (!wifiManager.isWifiEnabled) {
+            wifiManager.isWifiEnabled = true
         }
 
-        val wifiInfo = wifiManager.getConnectionInfo()
-        val ipAddress = wifiInfo.getIpAddress()
+        val wifiInfo = wifiManager.connectionInfo
+        val ipAddress = wifiInfo.ipAddress
 
         return intToIp(ipAddress)
     }
@@ -146,7 +174,7 @@ class RechargeActivity : BaseActivity() {
                         showToast("支付成功")
 
                     } else {
-                        showToast("支付失败"+payResult.memo+payResult.result)
+                        showToast("支付失败" + payResult.memo + payResult.result)
                     }
                 }
                 else -> {

@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="fu.com.parttimejob">
-
     <!-- 允许程序打开网络套接字 -->
     <uses-permission android:name="android.permission.INTERNET" /> <!-- 允许程序设置内置sd卡的写权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 允许程序获取网络状态 -->
@@ -27,6 +26,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activity.MyDuiHuanActivity"></activity>
         <activity
             android:name=".activity.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -165,8 +165,7 @@
             android:name=".activity.AdInfoActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.ChosseMapPositionActivity" />
-        <activity android:name=".activity.ShouHuoActivity"></activity>
-        <!-- 会话界面 -->
+        <activity android:name=".activity.ShouHuoActivity" /> <!-- 会话界面 -->
         <activity
             android:name=".activity.ConversationActivity"
             android:launchMode="singleTop"

@@ -39,6 +39,7 @@ class MineFragment : Fragment() {
             editGaogaohdon.visibility = View.GONE
             setsgil.visibility = View.VISIBLE
             ava.setImageResource(R.mipmap.ic_interviewer_img)
+            myDuiHuanLayout.visibility = View.VISIBLE
         } else {
             editJianLiLayout.visibility = View.GONE
             editGaogaohdon.visibility = View.VISIBLE
@@ -46,6 +47,7 @@ class MineFragment : Fragment() {
             historyLayout.visibility = View.GONE
             setsgilview.visibility = View.GONE
             setsgilview1.visibility = View.GONE
+            myDuiHuanLayout.visibility = View.GONE
             setsgil.visibility = View.GONE
             ava.setImageResource(R.mipmap.ic_job_hunter_img)
         }
@@ -57,6 +59,10 @@ class MineFragment : Fragment() {
         sex_age.text =  SPUtil.getString(context, "phoneNumber", "")
         setsgil.setOnClickListener {
             startActivity(Intent(context, ChooseJobActivity::class.java))
+        }
+
+        myDuiHuanLayout.setOnClickListener {
+            startActivity(Intent(context, MyDuiHuanActivity::class.java))
         }
         historyLayout.setOnClickListener {
             var intent = Intent(context, CommunicateHistoryActivity::class.java)
