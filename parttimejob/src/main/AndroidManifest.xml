@@ -147,8 +147,12 @@
             android:name=".activity.MyJianLiActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.DisplayJianLiActivity"
+        android:name=".activity.DisplayJianLiActivity"
+        android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.BindPhoneActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".activity.JobActivity"
             android:theme="@style/AppTheme.NoActionBar" /> <!-- 全面屏 -->
@@ -165,10 +169,12 @@
         <activity
             android:name=".activity.AdInfoActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.ChosseMapPositionActivity" />
-        <activity android:name=".activity.ShouHuoActivity" /> <!-- 会话界面 -->
-        <activity
-            android:name=".activity.BindPhoneActivity"
+        <activity android:name=".activity.ChosseMapPositionActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.ZPListActivity"
+            android:theme="@style/AppTheme.NoActionBar" /> <!-- 会话界面 -->
+
+        <activity android:name=".activity.ShouHuoActivity"
             android:theme="@style/AppTheme.NoActionBar" /> <!-- 会话界面 -->
         <activity
             android:name=".activity.ConversationActivity"

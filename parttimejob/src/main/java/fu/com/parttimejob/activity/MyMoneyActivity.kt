@@ -27,6 +27,9 @@ class MyMoneyActivity : BaseActivity() {
         recharge.setOnClickListener {
             startActivity(Intent(this, RechargeActivity::class.java))
         }
+        duihshop.setOnClickListener {
+            startActivity(Intent(this, ExchangeShopActivity::class.java))
+        }
     }
 
     override fun onResume() {

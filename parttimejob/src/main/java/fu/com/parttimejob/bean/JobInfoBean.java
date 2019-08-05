@@ -25,7 +25,6 @@ public class JobInfoBean extends BaseRecyclerModel {
     private String workContent;
     private int forwordCount;
     private int viewCount;
-
     public int getUnclaimedVirtualCoins() {
         return unclaimedVirtualCoins;
     }

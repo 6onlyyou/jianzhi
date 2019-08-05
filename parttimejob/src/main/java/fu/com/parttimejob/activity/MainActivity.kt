@@ -235,7 +235,7 @@ class MainActivity : BaseActivity() {
             SPUtil.putString(this@MainActivity, "inviteCode", it.inviteCode)
             SPUtil.putString(this@MainActivity, "labelName", it.labelName)
             SPUtil.putInt(this@MainActivity, "totalCount", it.totalCount)
-            SPUtil.putString(this@MainActivity, "phoneNumber", it.labelName)
+            SPUtil.putString(this@MainActivity, "phoneNumber", it.phoneNumber)
             SPUtil.putInt(this@MainActivity, "inviteCount", it.inviteCount)
             SPUtil.putString(this@MainActivity, "nickName", it.name)
             SPUtil.putString(this@MainActivity, "headImg", it.headImg)

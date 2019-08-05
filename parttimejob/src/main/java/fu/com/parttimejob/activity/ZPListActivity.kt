@@ -14,7 +14,7 @@ import fu.com.parttimejob.utils.SPUtil
 import kotlinx.android.synthetic.main.activity_zp_list.*
 
 /**
- * 广告活动
+ * 招聘列表
  */
 class ZPListActivity : BaseActivity() {
     var adListAdapter = ZpListAdapter()
@@ -25,14 +25,7 @@ class ZPListActivity : BaseActivity() {
     override fun initViewParams() {
         adList.layoutManager = LinearLayoutManager(this)
         adList.adapter = adListAdapter
-        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().myRecruitmentList(SPUtil.getString(this, "thirdAccount", ""))).subscribe({
-            adListAdapter.clear();
-            adListAdapter.notifyDataSetChanged() ;
-            adListAdapter.addAll(it as List<BaseRecyclerModel>?)
-            adListAdapter.notifyDataSetChanged()
-        }, {
-            ToastUtils.showLongToast(this, it.message.toString())
-        })
+
     }
 
     override fun initViewClick() {
@@ -46,5 +39,15 @@ class ZPListActivity : BaseActivity() {
         }
     }
 
-
+    override fun onResume() {
+        super.onResume()
+        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().myRecruitmentList(SPUtil.getString(this, "thirdAccount", ""))).subscribe({
+            adListAdapter.clear();
+            adListAdapter.notifyDataSetChanged() ;
+            adListAdapter.addAll(it as List<BaseRecyclerModel>?)
+            adListAdapter.notifyDataSetChanged()
+        }, {
+            ToastUtils.showLongToast(this, it.message.toString())
+        })
+    }
 }

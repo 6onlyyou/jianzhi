@@ -107,7 +107,7 @@ class SplashActivity : BaseActivity() {
                     SPUtil.putString(this@SplashActivity, "inviteCode", it.inviteCode)
                     SPUtil.putString(this@SplashActivity, "labelName", it.labelName)
                     SPUtil.putInt(this@SplashActivity, "totalCount", it.totalCount)
-                    SPUtil.putString(this@SplashActivity, "phoneNumber", it.labelName)
+                    SPUtil.putString(this@SplashActivity, "phoneNumber", it.phoneNumber)
                     SPUtil.putInt(this@SplashActivity, "inviteCount", it.inviteCount)
                     SPUtil.putString(this@SplashActivity, "nickName", it.name)
                     SPUtil.putString(this@SplashActivity, "headImg", it.headImg)
