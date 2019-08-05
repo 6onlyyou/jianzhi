@@ -1,5 +1,6 @@
 package fu.com.parttimejob.adapter;
 
+import android.text.TextUtils;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -28,9 +29,13 @@ public class DuiHuanListAdapter extends BaseRecyclerViewAdapter {
         @Override
         public void onBindViewHolder(BaseRecyclerModel object, int position) {
             final KuaiDiBean kuaiDiBean = (KuaiDiBean) object;
-            binding.name.setText(kuaiDiBean.getName());
-            binding.time.setText("兑换时间："+kuaiDiBean.getReceiveTime());
-//            binding.kuaidiNo.setText(kuaiDiBean.get().toString());
+            binding.name.setText(kuaiDiBean.getGoodsName());
+            binding.time.setText("兑换时间：" + kuaiDiBean.getReceiveTime());
+            if (TextUtils.isEmpty(kuaiDiBean.getTrackingNumber())) {
+                binding.kuaidiNo.setText("快递单号： 暂无快递单号" );
+            } else {
+                binding.kuaidiNo.setText("快递单号：" + kuaiDiBean.getTrackingNumber());
+            }
 
 //            binding.openAd.setOnClickListener(new View.OnClickListener() {
 //                @Override
