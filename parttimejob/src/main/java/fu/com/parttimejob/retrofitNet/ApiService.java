@@ -77,7 +77,7 @@ public interface ApiService {
      * @return
      */
     @POST("/appservice/app/alluser/login")
-    Observable<ResponseBean<LoginBean>> login(@Query("thirdAccount") String thirdAccount, @Query("password") String password);
+    Observable<ResponseBean<LoginBean>> login(@Query("thirdAccount") String thirdAccount, @Query("password") String password, @Query("identyType") int identyType);
 
     /**
      * 修改密码接口

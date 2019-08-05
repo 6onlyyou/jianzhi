@@ -45,6 +45,11 @@ class SplashActivity : BaseActivity() {
                                 SPUtil.putString(this@SplashActivity, "phoneNumber", it.phoneNumber)
                                 SPUtil.putInt(this@SplashActivity, "totalCount", it.totalCount)
                                 SPUtil.putInt(this@SplashActivity, "inviteCount", it.inviteCount)
+                                SPUtil.putString(this@SplashActivity, "nickName", it.name)
+                                SPUtil.putString(this@SplashActivity, "headImg", it.headImg)
+                                SPUtil.putString(this@SplashActivity, "companyName", it.companyName)
+
+                                SPUtil.putString(this@SplashActivity, "jianliname", it.nickName)
                                 if (SPUtil.getInt(this@SplashActivity, "Profession", 1) == 2) {
                                     if (!SPUtil.getString(this@SplashActivity, "companyName","").equals("")) {
                                         startActivity(MainActivity::class.java, true)
@@ -63,7 +68,9 @@ class SplashActivity : BaseActivity() {
                                 ToastUtils.showLongToast(applicationContext, it.message.toString())
                             })
                         }
-                    }
+                    }else if (time==-3){
+                        ToastUtils.showLongToast(applicationContext, "网络中断请连接网络重新打开")
+                }
                 }
             }
         }

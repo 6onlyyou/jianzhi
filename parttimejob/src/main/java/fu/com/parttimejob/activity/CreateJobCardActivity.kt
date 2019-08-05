@@ -33,7 +33,8 @@ class CreateJobCardActivity : BaseActivity() {
     }
 
     override fun initViewParams() {
-
+        nameEt.setText(SPUtil.getString(this, "nickName", ""))
+        shopEt.setText(SPUtil.getString(this, "companyName", ""))
     }
 
     override fun initViewClick() {
@@ -83,6 +84,10 @@ class CreateJobCardActivity : BaseActivity() {
                     .forResult(PictureConfig.CHOOSE_REQUEST)//结果回调onActivityResult code
         }
         next.setOnClickListener {
+            if(selectList.size == 0){
+                ToastUtils.showLongToast(applicationContext, "请上传头像图片~")
+                return@setOnClickListener
+            }
             if (TextUtils.isEmpty(nameEt.text) || TextUtils.isEmpty(phoneEt.text) || TextUtils.isEmpty(shopEt.text) ) {
                 showToast("您的信息未填写完整~")
             } else {
@@ -100,6 +105,7 @@ class CreateJobCardActivity : BaseActivity() {
                     ToastUtils.showLongToast(applicationContext, it)
                     SPUtil.putBoolean(this@CreateJobCardActivity, "sfcreateCard",true )
                     startActivity(Intent(applicationContext, MainActivity::class.java))
+                    finish()
                 }, {
                     ToastUtils.showLongToast(applicationContext, it.message.toString())
                 })

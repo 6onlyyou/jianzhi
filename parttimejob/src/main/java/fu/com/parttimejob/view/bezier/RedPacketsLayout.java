@@ -110,7 +110,7 @@ public class RedPacketsLayout extends RelativeLayout {
     private void addPacket() {
 
         dialogPro = new ProgressDialog(getContext());
-        dialogPro.setCanceledOnTouchOutside(false);
+        dialogPro.setCanceledOnTouchOutside(true);
         dialogPro.setMessage("小二加载中，大人请稍后~");
 //        dialogPro.setOnKeyListener(new DialogInterface.OnKeyListener() {
 //            @Override
@@ -152,6 +152,7 @@ public class RedPacketsLayout extends RelativeLayout {
                                         Intent intent = new Intent(getContext(), JobInfoActivity.class);
                                         intent.putExtra("id", sameCityBean.getId());
                                         getContext().startActivity(intent);
+                                        dialogPro.dismiss();
                                         dialog.dismiss();
                                     }
 
@@ -174,6 +175,7 @@ public class RedPacketsLayout extends RelativeLayout {
                                                 intent.putExtra("id", adInfoBean.getId());
                                                 getContext().startActivity(intent);
                                                 dialog.dismiss();
+                                                dialogPro.dismiss();
                                             }
                                         })
                                                 .setTitle("").show();
@@ -202,6 +204,7 @@ public class RedPacketsLayout extends RelativeLayout {
                                         intent.putExtra("id", adInfoBean.getId());
                                         getContext().startActivity(intent);
                                         dialog.dismiss();
+                                        dialogPro.dismiss();
                                     }
                                 })
                                         .setTitle("").show();

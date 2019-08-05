@@ -240,7 +240,7 @@ class MainActivity : BaseActivity() {
             SPUtil.putString(this@MainActivity, "nickName", it.name)
             SPUtil.putString(this@MainActivity, "headImg", it.headImg)
             SPUtil.putString(this@MainActivity, "companyName", it.companyName)
-
+            SPUtil.putString(this@MainActivity, "jianliname", it.nickName)
         }, {
             ToastUtils.showLongToast(applicationContext, it.message.toString())
         })
