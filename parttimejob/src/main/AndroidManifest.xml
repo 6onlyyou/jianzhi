@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="fu.com.parttimejob">
     <!-- 允许程序打开网络套接字 -->
     <uses-permission android:name="android.permission.INTERNET" /> <!-- 允许程序设置内置sd卡的写权限 -->
@@ -26,7 +25,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MyDuiHuanActivity"></activity>
+        <activity
+            android:name=".activity.MyDuiHuanActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -166,6 +167,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.ChosseMapPositionActivity" />
         <activity android:name=".activity.ShouHuoActivity" /> <!-- 会话界面 -->
+        <activity
+            android:name=".activity.BindPhoneActivity"
+            android:theme="@style/AppTheme.NoActionBar" /> <!-- 会话界面 -->
         <activity
             android:name=".activity.ConversationActivity"
             android:launchMode="singleTop"
