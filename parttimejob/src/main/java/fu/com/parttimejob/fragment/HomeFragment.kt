@@ -98,6 +98,12 @@ class HomeFragment : Fragment() {
             homeJobListAdapter.notifyDataSetChanged() ;
             homeJobListAdapter.addAll(it as List<BaseRecyclerModel>?)
             homeJobListAdapter.notifyDataSetChanged()
+            if(it.size<1){
+                konkonshuj.visibility = View.VISIBLE
+            }else{
+                konkonshuj.visibility = View.GONE
+            }
+
         }, {
             ToastUtils.showLongToast(context, it.message.toString())
         })
