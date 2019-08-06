@@ -95,6 +95,7 @@ class JobInfoActivity : BaseActivity() {
                         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().addNumberOfRecruitForwarding(SPUtil.getString(this@JobInfoActivity, "thirdAccount", ""), recruitInfoBean!!.id)).subscribe({
                             RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().receiveOfRecruitmentVirtual(SPUtil.getString(this@JobInfoActivity, "thirdAccount", ""), recruitInfoBean!!.id)).subscribe({
                                 RadDialog(this@JobInfoActivity, R.style.dialog, "恭喜获得" + recruitInfoBean!!.getNumberOfVirtualCoins() / recruitInfoBean!!.getRedEnvelopeNumber() + "金币", RadDialog.OnCloseListener { dialog, confirm ->
+                                    ToastUtils.showLongToast(applicationContext, "已经存入您的钱包")
                                     dialog.dismiss()
                                 })
                                         .setTitle("").show()
