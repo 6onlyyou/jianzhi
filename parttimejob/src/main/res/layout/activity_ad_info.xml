@@ -80,10 +80,10 @@
             android:layout_width="85dp"
             android:layout_height="27dp"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
             android:layout_marginRight="16dp"
             android:background="@color/colorPrimary"
             android:gravity="center"
+            android:layout_marginTop="20dp"
             android:text="关闭广告"
             android:textColor="#ffffffff"
             android:textSize="13sp" />

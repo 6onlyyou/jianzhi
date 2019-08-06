@@ -36,9 +36,8 @@ class CommunicateHistoryActivity : BaseActivity() {
 
     override fun initViewParams() {
 
-        var activity_title: String = intent.getStringExtra("title")
 
-        titleTv.text = activity_title
+        titleTv.text = "沟通历史"
 
         back.setOnClickListener {
             finish()
@@ -75,13 +74,10 @@ class CommunicateHistoryActivity : BaseActivity() {
         homeJobListAdapter.addAll(list)
 
 
-        if (activity_title.equals(CommuniHistory)) {
+//        if (activity_title.equals(CommuniHistory)) {
             queryCommunicationRecord()
-        }
+//        }
 
-        if (activity_title.equals(PublishHistory)) {
-            queryPublishRecord()
-        }
 
 
         homeJobListAdapter.setOnItemClickListener { view, t, position ->
@@ -115,7 +111,6 @@ class CommunicateHistoryActivity : BaseActivity() {
     }
 
     internal inner class SpaceItemDecoration(var bottom: Int, var left: Int, var right: Int) : RecyclerView.ItemDecoration() {
-
         override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
             super.getItemOffsets(outRect, view, parent, state)
             outRect.bottom = bottom

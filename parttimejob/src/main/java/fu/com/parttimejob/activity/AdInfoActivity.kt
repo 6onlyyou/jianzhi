@@ -57,19 +57,26 @@ class AdInfoActivity : BaseActivity() {
         })
         shareTypeFragment = ShareTypeFragment()
         advertisingInfoBean = AdvertisingInfoBean()
-        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().addNumberOfAdvertisingView(SPUtil.getString(this@AdInfoActivity, "thirdAccount", ""),intent.getIntExtra("id",0))).subscribe({
-            RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().receiveOfAdVirtual(SPUtil.getString(this@AdInfoActivity, "thirdAccount", ""), intent.getIntExtra("id",0))).subscribe({
-                ToastUtils.showShortToast(applicationContext, "领取金币成功")
+
+        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().singleAdDetail(SPUtil.getString(this,"thirdAccount",""),intent.getIntExtra("id",0))).subscribe({
+
+            advertisingInfoBean = it
+            RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().addNumberOfAdvertisingView(SPUtil.getString(this@AdInfoActivity, "thirdAccount", ""),intent.getIntExtra("id",0))).subscribe({
+                if(SPUtil.getString(this@AdInfoActivity, "thirdAccount", "").equals(advertisingInfoBean!!.thirdAccount)){
+
+                }else{
+                    RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().receiveOfAdVirtual(SPUtil.getString(this@AdInfoActivity, "thirdAccount", ""), intent.getIntExtra("id",0))).subscribe({
+                        ToastUtils.showShortToast(applicationContext, "领取金币成功")
+                    }, {
+                        ToastUtils.showShortToast(applicationContext, it.message.toString())
+                    })
+                }
+
             }, {
                 ToastUtils.showShortToast(applicationContext, it.message.toString())
             })
-        }, {
-            ToastUtils.showShortToast(applicationContext, it.message.toString())
-        })
-        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().singleAdDetail(SPUtil.getString(this,"thirdAccount",""),intent.getIntExtra("id",0))).subscribe({
-            advertisingInfoBean = it
             if (SPUtil.getString(this, "thirdAccount", "").equals(it.thirdAccount)) {
-                if (it.state == 1) {
+                if (it.state == 1||it.state == 2) {
                     ji_gouton.setText("关闭广告")
                 } else {
                     ji_gouton.setText("开启广告")
@@ -140,7 +147,7 @@ class AdInfoActivity : BaseActivity() {
     }
 
     fun openD() {
-        HintDialog(this, R.style.dialog, "重新打开广告需要" + advertisingInfoBean!!.unclaimedVirtualCoins + "金币,是否继续？", object : HintDialog.OnCloseListener {
+        HintDialog(this, R.style.dialog, "重新打开广告需要" + advertisingInfoBean!!.numberOfVirtualCoins + "金币,是否继续？", object : HintDialog.OnCloseListener {
             override fun onClick(dialog: Dialog, confirm: Boolean) {
                 if (confirm) {
                     RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().openAdvertisement(SPUtil.getString(this@AdInfoActivity, "thirdAccount", ""), intent.getIntExtra("id", 0))).subscribe({

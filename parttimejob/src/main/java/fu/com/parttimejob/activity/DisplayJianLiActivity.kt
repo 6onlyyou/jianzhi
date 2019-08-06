@@ -92,7 +92,7 @@ class DisplayJianLiActivity : BaseActivity() {
                 ToastUtils.showLongToast(applicationContext, "请上传图片或者视频来介绍自己~")
                 return@setOnClickListener
             }
-            if (TextUtils.isEmpty(jianliname.text) || TextUtils.isEmpty(jianlisex.text)|| TextUtils.isEmpty(jianliage.text)|| TextUtils.isEmpty(jianlijianjie.text)){
+            if (TextUtils.isEmpty(jianliname.text) || TextUtils.isEmpty(jianlisex.text)|| TextUtils.isEmpty(jianliage.text)|| TextUtils.isEmpty(jianlijianjie.text)||TextUtils.isEmpty(phonenum.text)){
                 ToastUtils.showLongToast(applicationContext, "请您把信息填写完整才能确定~")
             }else{
                 dialogPro!!.show()
@@ -131,7 +131,7 @@ class DisplayJianLiActivity : BaseActivity() {
                     }else{
                         sex = 2
                     }
-                    RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().createPR(SPUtil.getString(this, "thirdAccount", "111"), jianliname.text.toString(), sex,jianliage.text.toString(), jianlijianjie.text.toString(),requestBody,SPUtil.getString(this@DisplayJianLiActivity,"city","廊坊市"))).subscribe(Consumer<String> {
+                    RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().createPR(SPUtil.getString(this, "thirdAccount", "111"), jianliname.text.toString(), sex,jianliage.text.toString(), jianlijianjie.text.toString(),requestBody,SPUtil.getString(this@DisplayJianLiActivity,"city","廊坊市"),phonenum.text.toString())).subscribe(Consumer<String> {
                         ToastUtils.showLongToast(applicationContext, it.toString())
                         dialogPro!!.dismiss()
                         finish()
@@ -362,7 +362,7 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
                 }else{
                     sex = 2
                 }
-                RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().createPR(SPUtil.getString(this@DisplayJianLiActivity, "thirdAccount", "111"), jianliname.text.toString(), sex,jianliage.text.toString(), jianlijianjie.text.toString(),requestBody,SPUtil.getString(this@DisplayJianLiActivity,"city","廊坊市"))).subscribe(Consumer<String> {
+                RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().createPR(SPUtil.getString(this@DisplayJianLiActivity, "thirdAccount", "111"), jianliname.text.toString(), sex,jianliage.text.toString(), jianlijianjie.text.toString(),requestBody,SPUtil.getString(this@DisplayJianLiActivity,"city","廊坊市"),phonenum.text.toString())).subscribe(Consumer<String> {
                     ToastUtils.showLongToast(applicationContext, it.toString())
                     dialogPro!!.dismiss()
                     finish()

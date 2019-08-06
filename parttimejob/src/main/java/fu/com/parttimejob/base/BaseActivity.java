@@ -39,7 +39,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void showToast(String message) {
         if (!TextUtils.isEmpty(message))
-            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     protected abstract int getLayoutId();

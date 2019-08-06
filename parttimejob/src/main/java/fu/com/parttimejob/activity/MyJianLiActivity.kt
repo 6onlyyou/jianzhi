@@ -106,6 +106,7 @@ class MyJianLiActivity : BaseActivity() {
             } else {
                 sexs = "女"
             }
+
             sex.setText(sexs + "  " + it.age + "岁")
             myInfo.setText(it.personalProfile)
             myLocation.setText(it.city)
@@ -158,7 +159,7 @@ class MyJianLiActivity : BaseActivity() {
                 }
                 adapter.addAll(list as List<BaseRecyclerModel>?)
             }
-            phone.setText("联系电话：" + it.phoneNum)
+            phone.setText("联系电话：" + it.contactInformation)
             dialogPro!!.dismiss()
         }, {
             dialogPro!!.dismiss()
