@@ -146,7 +146,7 @@ public class RedPacketsLayout extends RelativeLayout {
                         RxUtils.wrapRestCall(RetrofitFactory.INSTANCE.getRetrofit().randomGetOne(SPUtil.getString(getContext(), "thirdAccount", ""))).subscribe(new Consumer<SameCityBean>() {
                             @Override
                             public void accept(final SameCityBean sameCityBean) throws Exception {
-                                new JobDialog(getContext(), R.style.dialog, sameCityBean.getCompanyName(), new JobDialog.OnCloseListener() {
+                                new JobDialog(getContext(), R.style.dialog, sameCityBean.getWorkContent(), new JobDialog.OnCloseListener() {
                                     @Override
                                     public void onClick(Dialog dialog, boolean confirm) {
                                         Intent intent = new Intent(getContext(), JobInfoActivity.class);

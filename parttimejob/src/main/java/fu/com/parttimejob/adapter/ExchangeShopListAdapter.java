@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.lljjcoder.citylist.Toast.ToastUtils;
 
 import fu.com.parttimejob.R;
@@ -35,7 +36,10 @@ public class ExchangeShopListAdapter extends BaseRecyclerViewAdapter {
         @Override
         public void onBindViewHolder(BaseRecyclerModel object, int position) {
             final ExchangeBean exchangeBean = (ExchangeBean) object;
-            GlideUtil.load(binding.getRoot().getContext(), exchangeBean.getGoodsImg(), (ImageView) binding.skuImgIv);
+            Glide.with(binding.getRoot().getContext())
+                    .load(exchangeBean.getGoodsImg())
+                    .placeholder(R.mipmap.defind)
+                    .into( (ImageView) binding.skuImgIv);
             binding.shopName.setText(exchangeBean.getGoodsName());
             binding.zan.setText("需要" + exchangeBean.getGoodsPrice() + "金币");
             binding.layclack.setOnClickListener(new View.OnClickListener() {

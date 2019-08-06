@@ -100,10 +100,7 @@ class AdInfoActivity : BaseActivity() {
                 ava.visibility = View.GONE
             }else{
                 ava.visibility = View.VISIBLE
-                Glide.with(this)
-                        .load( it.getHeadImg())
-                        .placeholder(R.mipmap.defind)
-                        .into(ava)
+                GlideUtil.load(this, it.getHeadImg(), ava)
 
             }
             ava.setOnClickListener {
@@ -113,7 +110,11 @@ class AdInfoActivity : BaseActivity() {
             time.setText("发布时间：" + it.publichDate)
             location.setText("地点：" + it.address)
             ad_content.setText(it.advertisementContent)
-            GlideUtil.load(this, it.advertisementImg, ad_cimg)
+            Glide.with(this)
+                    .load( it.advertisementImg)
+                    .placeholder(R.mipmap.defind)
+                    .into(ad_cimg)
+
             ji_gouton.setOnClickListener {
                 if (SPUtil.getString(this, "thirdAccount", "").equals("")) {
                     val intent = Intent(this, MainActivity::class.java)

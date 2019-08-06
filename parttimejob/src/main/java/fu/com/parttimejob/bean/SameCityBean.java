@@ -20,6 +20,15 @@ public class SameCityBean extends BaseRecyclerModel  {
     private String contactAddress;
     private String businessLicenseImg;
     private String city;
+    private String workContent;
+
+    public String getWorkContent() {
+        return workContent;
+    }
+
+    public void setWorkContent(String workContent) {
+        this.workContent = workContent;
+    }
 
     public String getCity() {
         return city;
