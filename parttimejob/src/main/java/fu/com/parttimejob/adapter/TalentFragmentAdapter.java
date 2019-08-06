@@ -59,9 +59,11 @@ public class TalentFragmentAdapter extends PagerAdapter {
         JZVideoPlayerStandard videoplayer  = view.findViewById(R.id.videoplayer);
         ImageView myPhoto  = view.findViewById(R.id.myPhoto);
 
+        TextView phone  = view.findViewById(R.id.phone);
         myLocation.setText(data.get(position).getCity());
         TextView name  = view.findViewById(R.id.name);
         name.setText(data.get(position).getName());
+        phone.setText("联系电话："+data.get(position).getContactInformation());
         TextView sex  = view.findViewById(R.id.sex);
         String sexs = "";
         if (data.get(position).getSex() == 1) {
@@ -72,8 +74,6 @@ public class TalentFragmentAdapter extends PagerAdapter {
         sex.setText(sexs+"  "+data.get(position).getAge()+"岁");
         TextView myInfo  = view.findViewById(R.id.myInfo);
         myInfo.setText(data.get(position).getPersonalProfile());
-        TextView phone  = view.findViewById(R.id.phone);
-        phone.setText("联系电话："+data.get(position).getPhoneNum());
         if (data.get(position).getPicOrVedioSource() != null && !data.get(position).getPicOrVedioSource().equals("")) {
             strarr = data.get(position).getPicOrVedioSource().substring(0, data.get(position).getPicOrVedioSource().length()).split(";");
             int index = 0;

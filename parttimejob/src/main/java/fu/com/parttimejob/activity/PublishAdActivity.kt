@@ -71,6 +71,14 @@ class PublishAdActivity : BaseActivity() {
         })
 
         publish.setOnClickListener {
+            if(Integer.parseInt(jiangliMoney.text.toString()) <10){
+                showToast("红包金额不能小于10金币")
+                return@setOnClickListener
+            }
+            if(Integer.parseInt(hongbaoSize.text.toString()) <1){
+                showToast("红包数量至少1个")
+                return@setOnClickListener
+            }
             if (TextUtils.isEmpty(jianliname.text) || TextUtils.isEmpty(hongbaoSize.text) || TextUtils.isEmpty(jiangliMoney.text) || TextUtils.isEmpty(guanggaoContent.text)) {
                 showToast("您的信息未填写完整!")
             } else {

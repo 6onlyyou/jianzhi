@@ -116,7 +116,7 @@ class JobInfoActivity : BaseActivity() {
         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().singleRecruitmentDetail(SPUtil.getString(this, "thirdAccount", ""), intent.getIntExtra("id", 0))).subscribe({
             recruitInfoBean = it
             if (SPUtil.getString(this, "thirdAccount", "").equals(it.thirdAccount)) {
-                if (it.state == 1) {
+                if (it.state == 1||it.state == 2) {
                     ji_gouton.text = "关闭招聘"
                 } else {
                     ji_gouton.text = "开启招聘"

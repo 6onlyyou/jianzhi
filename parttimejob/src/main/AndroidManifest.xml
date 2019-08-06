@@ -176,6 +176,8 @@
 
         <activity android:name=".activity.ShouHuoActivity"
             android:theme="@style/AppTheme.NoActionBar" /> <!-- 会话界面 -->
+        <activity android:name=".activity.WebActivity"
+            android:theme="@style/AppTheme.NoActionBar" /> <!-- 会话界面 -->
         <activity
             android:name=".activity.ConversationActivity"
             android:launchMode="singleTop"

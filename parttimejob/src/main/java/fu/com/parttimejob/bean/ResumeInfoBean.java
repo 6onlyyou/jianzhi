@@ -15,6 +15,24 @@ public class ResumeInfoBean {
     private String city;
     private String phoneNum;
     private String labelName;
+    public String headImg;
+    public String contactInformation;
+
+    public String getHeadImg() {
+        return headImg;
+    }
+
+    public void setHeadImg(String headImg) {
+        this.headImg = headImg;
+    }
+
+    public String getContactInformation() {
+        return contactInformation;
+    }
+
+    public void setContactInformation(String contactInformation) {
+        this.contactInformation = contactInformation;
+    }
 
     public String getLabelName() {
         return labelName;

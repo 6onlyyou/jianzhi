@@ -138,6 +138,14 @@ class PublishJobActivity : BaseActivity() {
             if (v === styles) {
                 picker_rel.visibility = View.VISIBLE
             } else if (v === pushjianli) {
+                if(Integer.parseInt(money.text.toString()) <10){
+                    showToast("红包金额不能小于10金币")
+                    return
+                }
+                if(Integer.parseInt(size.text.toString()) <1){
+                    showToast("红包数量至少1个")
+                    return
+                }
                 if (TextUtils.isEmpty(nameEt.text) || TextUtils.isEmpty(styles.text) || TextUtils.isEmpty(money.text) || TextUtils.isEmpty(size.text) || TextUtils.isEmpty(sizepe.text) || TextUtils.isEmpty(salary.text) || TextUtils.isEmpty(workTime.text) || TextUtils.isEmpty(phone.text.toString()) || TextUtils.isEmpty(detailLocation.text) || TextUtils.isEmpty(jianlijianjie.text)) {
                     showToast("您的信息未填写完整~")
                 } else {

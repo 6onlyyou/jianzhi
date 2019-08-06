@@ -25,7 +25,6 @@ class ZPListActivity : BaseActivity() {
     override fun initViewParams() {
         adList.layoutManager = LinearLayoutManager(this)
         adList.adapter = adListAdapter
-
     }
 
     override fun initViewClick() {

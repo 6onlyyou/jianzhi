@@ -133,7 +133,37 @@
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="12dp"
                 android:background="@color/colorLine" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="22dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:text="联系电话"
+                android:textColor="#ff8b8b8b"
+                android:textSize="15sp" />
 
+            <EditText
+                android:id="@+id/phonenum"
+                android:background="@null"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="8dp"
+                android:inputType="number"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:hint="请填写手机号"
+                android:textColorHint="@color/colorGray"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="12dp"
+                android:background="@color/colorLine" />
             <TextView
                 android:layout_width="57dp"
                 android:layout_height="22dp"
