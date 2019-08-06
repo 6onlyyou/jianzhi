@@ -222,7 +222,7 @@ public interface ApiService {
      * @return
      */
     @POST("/appservice/app/recruitment/publichAdvertisement")
-    Observable<ResponseBean<String>> publichAdvertisement(@Query("thirdAccount") String thirdAccount, @Query("companyName") String companyName, @Query("redEnvelopeNumber ") String redEnvelopeNumber, @Query("numberOfVirtualCoins") String numberOfVirtualCoins, @Query("city") String city, @Query("latitude") String latitude, @Query("longitude") String longitude, @Query("advertisementContent") String advertisementContent, @Body RequestBody file);
+    Observable<ResponseBean<String>> publichAdvertisement(@Query("thirdAccount") String thirdAccount, @Query("companyName") String companyName, @Query("redEnvelopeNumber ") String redEnvelopeNumber, @Query("numberOfVirtualCoins") String numberOfVirtualCoins, @Query("city") String city, @Query("latitude") String latitude, @Query("longitude") String longitude, @Query("advertisementContent") String advertisementContent, @Body RequestBody file,@Query("address") String address);
    /**
      * 发布無圖片广告
      *

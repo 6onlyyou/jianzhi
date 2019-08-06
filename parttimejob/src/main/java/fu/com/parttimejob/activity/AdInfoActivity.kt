@@ -1,9 +1,8 @@
 package fu.com.parttimejob.activity
 
 import android.app.Dialog
+import android.app.ProgressDialog
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
 import android.widget.ImageView
@@ -30,20 +29,26 @@ import kotlinx.android.synthetic.main.activity_ad_info.*
 class AdInfoActivity : BaseActivity() {
     private var subscribe: Disposable? = null
     private var shareTypeFragment: ShareTypeFragment? = null
+    var dialogPro: ProgressDialog? = null
     override fun getLayoutId(): Int {
         return R.layout.activity_ad_info
     }
+
     override fun onDestroy() {
         super.onDestroy()
         subscribe!!.dispose()
     }
-    var advertisingInfoBean: AdvertisingInfoBean ? = null
+
+    var advertisingInfoBean: AdvertisingInfoBean? = null
     override fun initViewParams() {
+        dialogPro = ProgressDialog(this)
+        dialogPro!!.setCanceledOnTouchOutside(true)
+        dialogPro!!.setMessage("小二加载中，大人请稍后~")
         subscribe = RxBus.getDefault().toObservable(RxBusEntity::class.java).subscribe(object : Consumer<RxBusEntity> {
             @Throws(Exception::class)
             override fun accept(catchDollUserInfoBean: RxBusEntity) {
                 if (catchDollUserInfoBean.msg.equals("101")) {
-                    RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().addNumberOfAdvertisingForwarding(SPUtil.getString(this@AdInfoActivity, "thirdAccount", ""), intent.getIntExtra("id",0))).subscribe({
+                    RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().addNumberOfAdvertisingForwarding(SPUtil.getString(this@AdInfoActivity, "thirdAccount", ""), intent.getIntExtra("id", 0))).subscribe({
                     }, {
                         ToastUtils.showLongToast(applicationContext, it.message.toString())
                     })
@@ -57,15 +62,22 @@ class AdInfoActivity : BaseActivity() {
         })
         shareTypeFragment = ShareTypeFragment()
         advertisingInfoBean = AdvertisingInfoBean()
+        getDate()
 
-        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().singleAdDetail(SPUtil.getString(this,"thirdAccount",""),intent.getIntExtra("id",0))).subscribe({
+    }
 
+    fun getDate() {
+        dialogPro!!.show()
+        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().singleAdDetail(SPUtil.getString(this, "thirdAccount", ""), intent.getIntExtra("id", 0))).subscribe({
+            if(dialogPro!!.isShowing){
+                dialogPro!!.dismiss()
+            }
             advertisingInfoBean = it
-            RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().addNumberOfAdvertisingView(SPUtil.getString(this@AdInfoActivity, "thirdAccount", ""),intent.getIntExtra("id",0))).subscribe({
-                if(SPUtil.getString(this@AdInfoActivity, "thirdAccount", "").equals(advertisingInfoBean!!.thirdAccount)){
+            RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().addNumberOfAdvertisingView(SPUtil.getString(this@AdInfoActivity, "thirdAccount", ""), intent.getIntExtra("id", 0))).subscribe({
+                if (SPUtil.getString(this@AdInfoActivity, "thirdAccount", "").equals(advertisingInfoBean!!.thirdAccount)) {
 
-                }else{
-                    RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().receiveOfAdVirtual(SPUtil.getString(this@AdInfoActivity, "thirdAccount", ""), intent.getIntExtra("id",0))).subscribe({
+                } else {
+                    RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().receiveOfAdVirtual(SPUtil.getString(this@AdInfoActivity, "thirdAccount", ""), intent.getIntExtra("id", 0))).subscribe({
                         ToastUtils.showShortToast(applicationContext, "领取金币成功")
                     }, {
                         ToastUtils.showShortToast(applicationContext, it.message.toString())
@@ -76,7 +88,7 @@ class AdInfoActivity : BaseActivity() {
                 ToastUtils.showShortToast(applicationContext, it.message.toString())
             })
             if (SPUtil.getString(this, "thirdAccount", "").equals(it.thirdAccount)) {
-                if (it.state == 1||it.state == 2) {
+                if (it.state == 1 || it.state == 2) {
                     ji_gouton.setText("关闭广告")
                 } else {
                     ji_gouton.setText("开启广告")
@@ -85,12 +97,12 @@ class AdInfoActivity : BaseActivity() {
             } else {
                 ji_gouton.visibility = View.GONE
             }
-            if(it.getHeadImg()==null||it.getHeadImg().equals("")){
+            if (it.getHeadImg() == null || it.getHeadImg().equals("")) {
                 ava.visibility = View.GONE
-            }else{
+            } else {
                 ava.visibility = View.VISIBLE
                 Glide.with(this)
-                        .load( it.getHeadImg())
+                        .load(it.getHeadImg())
                         .placeholder(R.mipmap.defind)
                         .into(ava)
 
@@ -99,10 +111,10 @@ class AdInfoActivity : BaseActivity() {
                 DlgForBigPhto(advertisingInfoBean!!.getHeadImg())
             }
             name.setText(it.companyName)
-            time.setText("发布时间："+it.publichDate)
-            location.setText("地点："+it.city)
+            time.setText("发布时间：" + it.publichDate)
+            location.setText("地点：" + it.address)
             ad_content.setText(it.advertisementContent)
-            GlideUtil.load(this, it.advertisementImg, ad_cimg )
+            GlideUtil.load(this, it.advertisementImg, ad_cimg)
             ji_gouton.setOnClickListener {
                 if (SPUtil.getString(this, "thirdAccount", "").equals("")) {
                     val intent = Intent(this, MainActivity::class.java)
@@ -117,6 +129,9 @@ class AdInfoActivity : BaseActivity() {
                 }
             }
         }, {
+            if(dialogPro!!.isShowing){
+                dialogPro!!.dismiss()
+            }
             ToastUtils.showLongToast(this, it.message.toString())
         })
     }
@@ -127,12 +142,14 @@ class AdInfoActivity : BaseActivity() {
 
         }
     }
+
     fun clossD() {
         HintDialog(this, R.style.dialog, "关闭广告返还" + advertisingInfoBean!!.unclaimedVirtualCoins + "金币,是否继续？", object : HintDialog.OnCloseListener {
             override fun onClick(dialog: Dialog, confirm: Boolean) {
                 if (confirm) {
                     RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().closeAdvertisement(SPUtil.getString(this@AdInfoActivity, "thirdAccount", ""), intent.getIntExtra("id", 0))).subscribe({
                         ToastUtils.showLongToast(this@AdInfoActivity, it)
+                        getDate()
                     }, {
                         ToastUtils.showLongToast(this@AdInfoActivity, it.message.toString())
                     })
@@ -152,6 +169,7 @@ class AdInfoActivity : BaseActivity() {
                 if (confirm) {
                     RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().openAdvertisement(SPUtil.getString(this@AdInfoActivity, "thirdAccount", ""), intent.getIntExtra("id", 0))).subscribe({
                         ToastUtils.showLongToast(this@AdInfoActivity, it)
+                        getDate()
                     }, {
                         ToastUtils.showLongToast(this@AdInfoActivity, it.message.toString())
                     })

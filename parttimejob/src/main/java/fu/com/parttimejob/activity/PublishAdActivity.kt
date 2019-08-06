@@ -97,7 +97,7 @@ class PublishAdActivity : BaseActivity() {
                                     if (selectList.isNotEmpty()) {
                                         builder.addFormDataPart("img", File(selectList!!.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList!!.get(0).compressPath)));
                                         requestBody = builder.build()
-                                        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().publichAdvertisement(SPUtil.getString(this@PublishAdActivity, "thirdAccount", "111"), jianliname.text.toString(), hongbaoSize.text.toString(), jiangliMoney.text.toString(), SPUtil.getString(this@PublishAdActivity, "city", "廊坊市"),poiItem!!.latLonPoint.latitude.toString(),poiItem!!.latLonPoint.longitude.toString(), guanggaoContent.text.toString(), requestBody)).subscribe({
+                                        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().publichAdvertisement(SPUtil.getString(this@PublishAdActivity, "thirdAccount", "111"), jianliname.text.toString(), hongbaoSize.text.toString(), jiangliMoney.text.toString(), SPUtil.getString(this@PublishAdActivity, "city", "廊坊市"),poiItem!!.latLonPoint.latitude.toString(),poiItem!!.latLonPoint.longitude.toString(), guanggaoContent.text.toString(), requestBody,location.text.toString())).subscribe({
                                             ToastUtils.showLongToast(this@PublishAdActivity, it)
                                             SPUtil.putInt(this@PublishAdActivity, "totalCount", SPUtil.getInt(this@PublishAdActivity, "totalCount", 0)-Integer.parseInt(jiangliMoney.text.toString()))
                                             finish()

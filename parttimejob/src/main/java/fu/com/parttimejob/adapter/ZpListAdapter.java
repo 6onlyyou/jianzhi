@@ -7,6 +7,7 @@ import android.widget.ImageView;
 
 import fu.com.parttimejob.R;
 import fu.com.parttimejob.activity.AdListActivity;
+import fu.com.parttimejob.activity.JobInfoActivity;
 import fu.com.parttimejob.base.baseadapter.BaseRecyclerModel;
 import fu.com.parttimejob.base.baseadapter.BaseRecyclerViewAdapter;
 import fu.com.parttimejob.base.baseadapter.BaseRecyclerViewHolder;
@@ -42,7 +43,7 @@ public class ZpListAdapter extends BaseRecyclerViewAdapter {
             binding.openAd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(view.getContext(), AdListActivity.class);
+                    Intent intent = new Intent(view.getContext(), JobInfoActivity.class);
                     intent.putExtra("id",adListAdapter.getId());
                     view.getContext().startActivity(intent);
                 }

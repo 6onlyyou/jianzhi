@@ -1,6 +1,7 @@
 package fu.com.parttimejob.activity
 
 import android.net.Uri
+import android.view.View
 import com.heixiu.errand.net.RetrofitFactory
 import com.lljjcoder.citylist.Toast.ToastUtils
 import fu.com.parttimejob.R
@@ -29,6 +30,11 @@ class TalentManagementActivity : BaseActivity() {
             data = it
             adapter.data = it
             adapter.notifyDataSetChanged()
+            if(it.size<1){
+                konkonshuj.visibility = View.VISIBLE
+            }else{
+                konkonshuj.visibility = View.GONE
+            }
         }, {
             ToastUtils.showLongToast(applicationContext, it.message.toString())
         })
