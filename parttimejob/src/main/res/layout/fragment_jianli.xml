@@ -4,24 +4,25 @@
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:cardCornerRadius="16dp"
     android:layout_gravity="center"
     android:layout_margin="25dp"
     app:cardUseCompatPadding="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="471dp">
+        android:layout_height="491dp">
 
         <LinearLayout
             android:id="@+id/myPhotos"
             android:layout_width="match_parent"
-            android:layout_height="216dp"
+            android:layout_height="206dp"
             android:orientation="vertical">
 
             <cn.jzvd.JZVideoPlayerStandard
                 android:id="@+id/videoplayer"
                 android:layout_width="match_parent"
-                android:layout_height="216dp"
+                android:layout_height="206dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:visibility="gone" />
@@ -83,7 +84,7 @@
         <TextView
             android:id="@+id/myInfo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="70dp"
             android:layout_below="@+id/sex"
             android:layout_margin="15dp"
             android:text="我是一个活泼开朗，我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗。"
@@ -91,11 +92,31 @@
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/phone"
+            android:id="@+id/qiuzhi"
             android:layout_width="wrap_content"
             android:layout_height="22dp"
-            android:layout_alignStart="@+id/myInfo"
+            android:text="求职意向"
             android:layout_below="@+id/myInfo"
+            android:layout_alignStart="@+id/myInfo"
+            android:textColor="#ff8b8b8b"
+            android:textSize="14sp"
+            />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/biaoQianList"
+            android:layout_alignStart="@+id/myInfo"
+            android:layout_below="@+id/qiuzhi"
+            android:layout_marginTop="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <TextView
+            android:id="@+id/phone"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="22dp"
+            android:layout_height="22dp"
+            android:layout_alignStart="@+id/myInfo"
+            android:layout_below="@+id/biaoQianList"
             android:text="联系电话："
             android:textColor="#ff8b8b8b"
             android:layout_marginBottom="12dp"

@@ -2,6 +2,7 @@ package fu.com.parttimejob.activity
 
 import android.content.Intent
 import android.text.TextUtils
+import android.util.Log
 import com.heixiu.errand.net.RetrofitFactory
 import com.lljjcoder.citylist.Toast.ToastUtils
 import com.luck.picture.lib.rxbus2.RxBus
@@ -55,10 +56,8 @@ class LoginActivity : BaseActivity() {
                             .subscribe(Consumer<WXInfoEntity> { wxInfoEntity ->
                                 RxBus.getDefault().post(wxInfoEntity)
                                 loginWithWx(wxInfoEntity)
-                                finish()
                             }, Consumer<Throwable> {
                                 showToast("获取登陆信息失败")
-                                finish()
                             })
                 }, Consumer<Throwable> {
                     showToast("获取登陆信息失败")
@@ -87,14 +86,13 @@ class LoginActivity : BaseActivity() {
                     startActivity(ChooseJobActivity::class.java, true)
                 }else{
                     startActivity(CreateJobCardActivity::class.java, true)
-
                 }
-
             }
             finish()
 
         }, {
-            ToastUtils.showLongToast(applicationContext, it.message.toString())
+            showToast(it.message)
+//            ToastUtils.showLongToast(applicationContext, it.message.toString())
         })
     }
 

@@ -6,9 +6,17 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.View
+import com.amap.api.maps.AMap
+import com.amap.api.maps.AMapOptions
+import com.amap.api.maps.CameraUpdateFactory
+import com.amap.api.maps.model.CameraPosition
+import com.amap.api.maps.model.LatLng
+import com.amap.api.maps.model.MarkerOptions
 import com.heixiu.errand.net.RetrofitFactory
 import com.lljjcoder.citylist.Toast.ToastUtils
 import com.luck.picture.lib.rxbus2.RxBus
+import com.tencent.connect.common.Constants
+import com.tencent.tauth.Tencent
 import fu.com.parttimejob.R
 import fu.com.parttimejob.base.BaseActivity
 import fu.com.parttimejob.bean.RecruitInfoBean
@@ -17,23 +25,14 @@ import fu.com.parttimejob.dialog.HintDialog
 import fu.com.parttimejob.dialog.RadDialog
 import fu.com.parttimejob.dialog.ShareTypeFragment
 import fu.com.parttimejob.retrofitNet.RxUtils
+import fu.com.parttimejob.utils.MapUtils
 import fu.com.parttimejob.utils.SPUtil
+import fu.com.parttimejob.weight.BaseUiListener
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Consumer
 import io.rong.imkit.RongIM
 import io.rong.imlib.model.UserInfo
 import kotlinx.android.synthetic.main.activity_job_info.*
-import com.amap.api.maps.model.MarkerOptions
-import com.amap.api.maps.model.Marker
-import com.amap.api.maps.model.LatLng
-import com.amap.api.maps.AMap
-import com.amap.api.maps.AMapOptions
-import com.amap.api.maps.CameraUpdateFactory
-import com.amap.api.maps.model.CameraPosition
-import com.tencent.connect.common.Constants
-import com.tencent.tauth.Tencent
-import fu.com.parttimejob.utils.MapUtils
-import fu.com.parttimejob.weight.BaseUiListener
 
 
 class JobInfoActivity : BaseActivity() {
@@ -51,6 +50,7 @@ class JobInfoActivity : BaseActivity() {
         subscribe!!.dispose()
         jobLocationMap.onDestroy()
     }
+
     override fun onResume() {
         super.onResume()
         jobLocationMap.onResume()
@@ -107,16 +107,17 @@ class JobInfoActivity : BaseActivity() {
         })
         shareTypeFragment = ShareTypeFragment()
     }
-    var recruitInfoBean: RecruitInfoBean ? = null
+
+    var recruitInfoBean: RecruitInfoBean? = null
     var jinbi = 0
-    var latLng : LatLng? = null
+    var latLng: LatLng? = null
     override fun initViewClick() {
         recruitInfoBean = RecruitInfoBean()
 
         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().singleRecruitmentDetail(SPUtil.getString(this, "thirdAccount", ""), intent.getIntExtra("id", 0))).subscribe({
             recruitInfoBean = it
             if (SPUtil.getString(this, "thirdAccount", "").equals(it.thirdAccount)) {
-                if (it.state == 1||it.state == 2) {
+                if (it.state == 1 || it.state == 2) {
                     ji_gouton.text = "关闭招聘"
                 } else {
                     ji_gouton.text = "开启招聘"
@@ -125,14 +126,14 @@ class JobInfoActivity : BaseActivity() {
             } else {
                 ji_gouton.text = "立即沟通"
             }
-            if(it.latitude==null){
+            if (it.latitude == null) {
                 jobLocationMap.visibility = View.GONE
-            }else{
-                 latLng  = LatLng(java.lang.Double.valueOf(it.latitude), java.lang.Double.valueOf(it.longitude))
+            } else {
+                latLng = LatLng(java.lang.Double.valueOf(it.latitude), java.lang.Double.valueOf(it.longitude))
                 val marker = aMap?.addMarker(MarkerOptions().position(latLng).title("").snippet(it.contactAddress))
                 val LUJIAZUI = CameraPosition.Builder()
                         .target(latLng).zoom(18f).bearing(0f).tilt(30f).build()
-                val aOptions =  AMapOptions()
+                val aOptions = AMapOptions()
                 aOptions.zoomGesturesEnabled(false)// 禁止通过手势缩放地图
                 aOptions.scrollGesturesEnabled(false)// 禁止通过手势移动地图
                 aOptions.tiltGesturesEnabled(false)// 禁止通过手势倾斜地图
@@ -149,8 +150,8 @@ class JobInfoActivity : BaseActivity() {
             jobLocation.text = it.city
             content_job.text = "工作内容:" + it.workContent
             location_job.text = "工作地点：" + it.contactAddress
-            phones.text = "手机号码:"+it.phoneNumber
-            time_job.text = "工作时间:"+ it.workTime
+            phones.text = "手机号码:" + it.phoneNumber
+            time_job.text = "工作时间:" + it.workTime
             num_job.text = "招聘人数：" + it.recruitingNumbers
             job_jbi.text = "分享群领取" + it.numberOfVirtualCoins / it.redEnvelopeNumber + "金币"
             coid_job.text = "分享成功后可获得" + it.numberOfVirtualCoins / it.redEnvelopeNumber + "虚拟币奖励"
@@ -169,8 +170,11 @@ class JobInfoActivity : BaseActivity() {
                 }
             }
             location_job.setOnClickListener {
-//                MapUtils.goToBaiduMap(this@JobInfoActivity, latLng.latitude.toString(), latLng.longitude.toString(),"浙江省杭州市余杭区东莲街")
-                MapUtils.goToGaodeMap(this@JobInfoActivity,latLng,recruitInfoBean?.contactAddress)
+                //                MapUtils.goToBaiduMap(this@JobInfoActivity, latLng.latitude.toString(), latLng.longitude.toString(),"浙江省杭州市余杭区东莲街")
+                MapUtils.goToGaodeMap(this@JobInfoActivity, latLng, recruitInfoBean?.contactAddress)
+            }
+            aMap?.setOnMapClickListener {
+                MapUtils.goToGaodeMap(this@JobInfoActivity, latLng, recruitInfoBean?.contactAddress)
             }
         }, {
             ToastUtils.showLongToast(this, it.message.toString())
@@ -241,19 +245,20 @@ class JobInfoActivity : BaseActivity() {
         })
 
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 //        if (null != mTencent)
 //        {
 //            mTencent!!.onActivityResult(requestCode, resultCode, data)
 //        }
-        Tencent.onActivityResultData(requestCode, resultCode, data,  BaseUiListener());
+        Tencent.onActivityResultData(requestCode, resultCode, data, BaseUiListener());
 
         if (requestCode == Constants.REQUEST_API) {
             if (resultCode == Constants.REQUEST_QQ_SHARE ||
                     resultCode == Constants.REQUEST_QZONE_SHARE ||
                     resultCode == Constants.REQUEST_OLD_SHARE) {
-                Tencent.handleResultData(data,  BaseUiListener());
+                Tencent.handleResultData(data, BaseUiListener());
             }
         }
 
