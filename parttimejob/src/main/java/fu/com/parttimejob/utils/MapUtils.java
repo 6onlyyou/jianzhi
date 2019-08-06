@@ -42,9 +42,9 @@ public class MapUtils {
     /**
      * 跳转百度地图
      */
-    public static void goToBaiduMap(Context context, String mLat, String mLng, String mAddressStr) {
+    public static void goToBaiduMap(Context context, double mLat, double mLng, String mAddressStr) {
         if (!isInstalled("com.baidu.BaiduMap", context)) {
-            Toast.makeText(context, "请先安装百度地图客户端", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "您手机内尚未安装百度或者高德地图", Toast.LENGTH_SHORT).show();
             return;
         }
         Intent intent = new Intent();
@@ -58,7 +58,7 @@ public class MapUtils {
 
     public static void goToGaodeMap(Context mContext, LatLng endPoint, String mAddressStr) {
         if (!isInstalled("com.autonavi.minimap", mContext)) {
-            Toast.makeText(mContext, "请先安装高德地图客户端", Toast.LENGTH_SHORT).show();
+            goToBaiduMap(mContext,endPoint.latitude,endPoint.longitude,mAddressStr);
             return;
         }
 //        LatLng endPoint = BD2GCJ(latLng);//坐标转换

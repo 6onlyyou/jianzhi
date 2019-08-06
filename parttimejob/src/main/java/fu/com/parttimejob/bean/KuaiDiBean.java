@@ -21,6 +21,42 @@ public class KuaiDiBean extends BaseRecyclerModel {
     private String phoneNumber;
     private String address;
     private int id;
+    private String goodsImg;
+    private String goodsPrice;
+    private String goodsName;
+    private String trackingNumber;
+
+    public String getGoodsImg() {
+        return goodsImg;
+    }
+
+    public void setGoodsImg(String goodsImg) {
+        this.goodsImg = goodsImg;
+    }
+
+    public String getGoodsPrice() {
+        return goodsPrice;
+    }
+
+    public void setGoodsPrice(String goodsPrice) {
+        this.goodsPrice = goodsPrice;
+    }
+
+    public String getGoodsName() {
+        return goodsName;
+    }
+
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName;
+    }
+
+    public String getTrackingNumber() {
+        return trackingNumber;
+    }
+
+    public void setTrackingNumber(String trackingNumber) {
+        this.trackingNumber = trackingNumber;
+    }
 
     public String getThirdAccount() {
         return thirdAccount;

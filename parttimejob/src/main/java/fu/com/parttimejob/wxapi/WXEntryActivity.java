@@ -56,7 +56,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                     RxBusEntity rxBusEntity = new RxBusEntity();
                     rxBusEntity.setMsg("101");
                     RxBus.getDefault().post(rxBusEntity);
-
+                    finish();
                     break;
                 case BaseResp.ErrCode.ERR_USER_CANCEL:
                     break;

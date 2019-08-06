@@ -7,9 +7,17 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.View
+import com.amap.api.maps.AMap
+import com.amap.api.maps.AMapOptions
+import com.amap.api.maps.CameraUpdateFactory
+import com.amap.api.maps.model.CameraPosition
+import com.amap.api.maps.model.LatLng
+import com.amap.api.maps.model.MarkerOptions
 import com.heixiu.errand.net.RetrofitFactory
 import com.lljjcoder.citylist.Toast.ToastUtils
 import com.luck.picture.lib.rxbus2.RxBus
+import com.tencent.connect.common.Constants
+import com.tencent.tauth.Tencent
 import fu.com.parttimejob.R
 import fu.com.parttimejob.base.BaseActivity
 import fu.com.parttimejob.bean.RecruitInfoBean
@@ -18,23 +26,14 @@ import fu.com.parttimejob.dialog.HintDialog
 import fu.com.parttimejob.dialog.RadDialog
 import fu.com.parttimejob.dialog.ShareTypeFragment
 import fu.com.parttimejob.retrofitNet.RxUtils
+import fu.com.parttimejob.utils.MapUtils
 import fu.com.parttimejob.utils.SPUtil
+import fu.com.parttimejob.weight.BaseUiListener
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Consumer
 import io.rong.imkit.RongIM
 import io.rong.imlib.model.UserInfo
 import kotlinx.android.synthetic.main.activity_job_info.*
-import com.amap.api.maps.model.MarkerOptions
-import com.amap.api.maps.model.Marker
-import com.amap.api.maps.model.LatLng
-import com.amap.api.maps.AMap
-import com.amap.api.maps.AMapOptions
-import com.amap.api.maps.CameraUpdateFactory
-import com.amap.api.maps.model.CameraPosition
-import com.tencent.connect.common.Constants
-import com.tencent.tauth.Tencent
-import fu.com.parttimejob.utils.MapUtils
-import fu.com.parttimejob.weight.BaseUiListener
 
 
 class JobInfoActivity : BaseActivity() {
@@ -52,6 +51,7 @@ class JobInfoActivity : BaseActivity() {
         subscribe!!.dispose()
         jobLocationMap.onDestroy()
     }
+
     override fun onResume() {
         super.onResume()
         jobLocationMap.onResume()
@@ -116,9 +116,10 @@ class JobInfoActivity : BaseActivity() {
         })
         shareTypeFragment = ShareTypeFragment()
     }
-    var recruitInfoBean: RecruitInfoBean ? = null
+
+    var recruitInfoBean: RecruitInfoBean? = null
     var jinbi = 0
-    var latLng : LatLng? = null
+    var latLng: LatLng? = null
     override fun initViewClick() {
         recruitInfoBean = RecruitInfoBean()
         getDate()
@@ -191,6 +192,9 @@ fun getDate(){
             //                MapUtils.goToBaiduMap(this@JobInfoActivity, latLng.latitude.toString(), latLng.longitude.toString(),"浙江省杭州市余杭区东莲街")
             MapUtils.goToGaodeMap(this@JobInfoActivity,latLng,recruitInfoBean?.contactAddress)
         }
+        aMap?.setOnMapClickListener {
+            MapUtils.goToGaodeMap(this@JobInfoActivity, latLng, recruitInfoBean?.contactAddress)
+        }
     }, {
         if(dialogPro!!.isShowing){
             dialogPro!!.dismiss()
@@ -198,6 +202,12 @@ fun getDate(){
 
         ToastUtils.showLongToast(this, it.message.toString())
     })
+    back.setOnClickListener {
+        finish()
+    }
+    job_jbi.setOnClickListener {
+        shareTypeFragment!!.show(getFragmentManager(), "11", "sss")
+    }
 }
     fun clossD() {
         HintDialog(this, R.style.dialog, "关闭招聘返还" + jinbi + "金币,是否继续？", object : HintDialog.OnCloseListener {
@@ -259,19 +269,20 @@ fun getDate(){
         })
 
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 //        if (null != mTencent)
 //        {
 //            mTencent!!.onActivityResult(requestCode, resultCode, data)
 //        }
-        Tencent.onActivityResultData(requestCode, resultCode, data,  BaseUiListener());
+        Tencent.onActivityResultData(requestCode, resultCode, data, BaseUiListener());
 
         if (requestCode == Constants.REQUEST_API) {
             if (resultCode == Constants.REQUEST_QQ_SHARE ||
                     resultCode == Constants.REQUEST_QZONE_SHARE ||
                     resultCode == Constants.REQUEST_OLD_SHARE) {
-                Tencent.handleResultData(data,  BaseUiListener());
+                Tencent.handleResultData(data, BaseUiListener());
             }
         }
 
