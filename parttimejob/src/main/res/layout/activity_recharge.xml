@@ -1,183 +1,191 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="fu.com.parttimejob.activity.MyMoneyActivity">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@color/colorPrimary"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="8dp"
-            android:padding="8dp"
-            android:src="@mipmap/ic_back" />
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="充值"
-            android:textColor="@color/colorWhite"
-            android:textSize="18sp" />
-    </RelativeLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="19dp"
-        android:layout_marginRight="30dp"
-        android:text="请输入想要充值金币的数量（1元可购买10金币）"
-        android:textColor="#ff444444"
-        android:textSize="18sp" />
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="9dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/rechargeMoneyEd"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="49dp"
+            android:layout_height="40dp"
+            android:background="@color/colorPrimary"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:padding="8dp"
+                android:src="@mipmap/ic_back" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="充值"
+                android:textColor="@color/colorWhite"
+                android:textSize="18sp" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="19dp"
+            android:layout_marginRight="30dp"
+            android:text="请输入想要充值金币的数量（1元可购买10金币）"
+            android:textColor="#ff444444"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="9dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/rechargeMoneyEd"
+                android:layout_width="match_parent"
+                android:layout_height="49dp"
+                android:layout_marginRight="15dp"
+                android:background="@null"
+                android:drawableRight="@mipmap/ic_next"
+                android:gravity="center_vertical"
+                android:hint="请选择金额"
+                android:inputType="number"
+                android:text=""
+                android:textColorHint="@color/colorGray"
+                android:textCursorDrawable="@drawable/cursor"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="9dp"
             android:layout_marginRight="15dp"
-            android:background="@null"
-            android:drawableRight="@mipmap/ic_next"
-            android:gravity="center_vertical"
-            android:hint="请选择金额"
-            android:inputType="number"
-            android:text=""
-            android:textColorHint="@color/colorGray"
-            android:textCursorDrawable="@drawable/cursor"
-            android:textSize="14sp" />
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="9dp"
-        android:layout_marginRight="15dp"
-        android:background="@color/colorLine" />
-
-    <TextView
-        android:layout_width="108dp"
-        android:layout_height="32dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="21dp"
-        android:text="选择支付方式"
-        android:textColor="#ff444444"
-        android:textSize="18sp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="30dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_ali_pay" />
+            android:background="@color/colorLine" />
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="6dp"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:text="支付宝支付"
-            android:textColor="#ff222222"
+            android:layout_width="108dp"
+            android:layout_height="32dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="21dp"
+            android:text="选择支付方式"
+            android:textColor="#ff444444"
             android:textSize="18sp" />
 
-        <CheckBox
-            android:id="@+id/aliPayCheck"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="21dp"
-        android:layout_marginRight="15dp"
-        android:background="@color/colorLine" />
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="21dp"
-        android:layout_marginRight="30dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_wx_pay" />
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="30dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_ali_pay" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="支付宝支付"
+                android:textColor="#ff222222"
+                android:textSize="18sp" />
+
+            <CheckBox
+                android:id="@+id/aliPayCheck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="21dp"
+            android:layout_marginRight="15dp"
+            android:background="@color/colorLine" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="21dp"
+            android:layout_marginRight="30dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_wx_pay" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="微信支付"
+                android:textColor="#ff222222"
+                android:textSize="18sp" />
+
+            <CheckBox
+                android:id="@+id/wxPayCheck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="21dp"
+            android:layout_marginRight="15dp"
+            android:background="@color/colorLine" />
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="6dp"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:text="微信支付"
-            android:textColor="#ff222222"
-            android:textSize="18sp" />
-
-        <CheckBox
-            android:id="@+id/wxPayCheck"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:id="@+id/recharge"
+            android:layout_width="252dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="90dp"
+            android:background="@drawable/bg_round_bq"
+            android:gravity="center"
+            android:text="立即充值"
+            android:textColor="#ffffffff"
+            android:textSize="15sp" />
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="21dp"
-        android:layout_marginRight="15dp"
-        android:background="@color/colorLine" />
-
-    <TextView
-        android:id="@+id/recharge"
-        android:layout_width="252dp"
-        android:layout_height="36dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="90dp"
-        android:background="@drawable/bg_round_bq"
-        android:gravity="center"
-        android:text="立即充值"
-        android:textColor="#ffffffff"
-        android:textSize="15sp" />
 
     <RelativeLayout
         android:id="@+id/pickView"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ffffff">
+        android:background="#ffffff"
+        android:layout_gravity="bottom"
+        android:visibility="gone"
+        >
 
         <RelativeLayout
             android:id="@+id/lala"
@@ -188,9 +196,9 @@
                 android:id="@+id/cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="16dp"
                 android:text="取消"
-                android:layout_centerVertical="true"
                 android:textColor="#ff474245"
                 android:textSize="14sp" />
 
@@ -206,8 +214,8 @@
                 android:id="@+id/picker_yes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@null"
                 android:layout_alignParentRight="true"
+                android:background="@null"
                 android:text="确定"
                 android:textColor="#ff474245"
                 android:textSize="14sp" />
@@ -215,11 +223,11 @@
 
 
         <View
-            android:background="@color/line_color"
-            android:layout_below="@+id/lala"
             android:id="@+id/line"
             android:layout_width="match_parent"
-            android:layout_height="1dp" />
+            android:layout_height="1dp"
+            android:layout_below="@+id/lala"
+            android:background="@color/line_color" />
 
         <fu.com.parttimejob.view.PickerScrollView
             android:id="@+id/pickerscrlllview"
@@ -237,4 +245,4 @@
 
     </RelativeLayout>
 
-</LinearLayout>
+</FrameLayout>
