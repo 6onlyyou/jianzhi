@@ -1,6 +1,7 @@
 package fu.com.parttimejob.activity
 
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
 import com.heixiu.errand.net.RetrofitFactory
 import com.lljjcoder.citylist.Toast.ToastUtils
 import fu.com.parttimejob.R
@@ -23,8 +24,15 @@ class MyDuiHuanActivity : BaseActivity() {
         duihuanList.adapter = adapter
 
         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().changeList(SPUtil.getString(this,"thirdAccount",""))).subscribe({
+            adapter.clear();
+            adapter.notifyDataSetChanged() ;
             adapter.addAll(it as List<BaseRecyclerModel>?)
             adapter.notifyDataSetChanged()
+            if(it.size<1){
+                konkonshuj.visibility = View.VISIBLE
+            }else{
+                konkonshuj.visibility = View.GONE
+            }
         }, {
 
             ToastUtils.showLongToast(this, it.message.toString())

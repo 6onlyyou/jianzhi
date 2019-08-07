@@ -72,8 +72,10 @@
             android:layout_marginLeft="13dp"
             android:layout_toRightOf="@+id/ava"
             android:text="地点：杭州"
+            android:drawableRight="@mipmap/ic_location"
+            android:drawablePadding="10dp"
             android:textColor="#ff8b8b8b"
-            android:textSize="12sp" />
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/ji_gouton"

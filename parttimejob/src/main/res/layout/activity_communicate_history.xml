@@ -31,7 +31,26 @@
             android:textSize="18sp" />
 
     </RelativeLayout>
-
+    <LinearLayout
+        android:id="@+id/konkonshuj"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="100dp"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/dingdan"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:textColor="#BABABA"
+            android:textSize="15sp"
+            android:layout_gravity="center"
+            android:text="空空如也"/>
+    </LinearLayout>
     <com.yanzhenjie.recyclerview.SwipeRecyclerView
         android:id="@+id/swipeList"
         android:layout_marginTop="10dp"

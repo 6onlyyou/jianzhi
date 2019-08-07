@@ -55,7 +55,7 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="501dp"
+        android:layout_height="471dp"
         android:layout_below="@+id/titleLayout"
         android:layout_gravity="bottom"
         android:layout_marginTop="20dp"
@@ -72,7 +72,7 @@
         android:layout_height="36dp"
         android:layout_below="@+id/viewPager"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="31dp"
+        android:layout_marginTop="10dp"
         android:background="#ff71c9c0"
         android:gravity="center"
         android:text="立即沟通"

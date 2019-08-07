@@ -77,7 +77,7 @@ class AdInfoActivity : BaseActivity() {
 
                 }else{
                     RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().receiveOfAdVirtual(SPUtil.getString(this@AdInfoActivity, "thirdAccount", ""), intent.getIntExtra("id",0))).subscribe({
-                        ToastUtils.showShortToast(applicationContext, "领取金币成功")
+                        ToastUtils.showShortToast(applicationContext, "领取成功，金币已存入钱包")
                     }, {
                         ToastUtils.showShortToast(applicationContext, it.message.toString())
                     })

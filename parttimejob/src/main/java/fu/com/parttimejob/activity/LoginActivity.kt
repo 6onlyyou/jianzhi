@@ -57,10 +57,10 @@ class LoginActivity : BaseActivity() {
                                 RxBus.getDefault().post(wxInfoEntity)
                                 loginWithWx(wxInfoEntity)
                             }, Consumer<Throwable> {
-                                showToast("获取登陆信息失败")
+//                                showToast("获取登陆信息失败")
                             })
                 }, Consumer<Throwable> {
-                    showToast("获取登陆信息失败")
+//                    showToast("获取登陆信息失败")
                 })
     }
 

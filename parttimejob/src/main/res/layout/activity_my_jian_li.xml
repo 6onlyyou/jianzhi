@@ -130,6 +130,7 @@
                 android:layout_below="@+id/sex"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
                 android:text="我是一个活泼开朗，我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗。"
                 android:textColor="#cccccc"
                 android:textSize="14sp" />
@@ -140,6 +141,7 @@
                 android:layout_height="22dp"
                 android:layout_below="@+id/myInfo"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
                 android:text="求职意向"
                 android:textColor="#8b8b8b"
                 android:textSize="14sp" />
