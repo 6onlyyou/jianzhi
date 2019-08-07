@@ -109,7 +109,6 @@ public class RedPacketsLayout extends RelativeLayout {
 
     private void addPacket() {
 
-        dialogPro = new ProgressDialog(getContext());
         dialogPro.setCanceledOnTouchOutside(true);
         dialogPro.setMessage("小二加载中，大人请稍后~");
 //        dialogPro.setOnKeyListener(new DialogInterface.OnKeyListener() {
