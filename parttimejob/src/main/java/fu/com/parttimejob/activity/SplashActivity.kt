@@ -48,7 +48,7 @@ class SplashActivity : BaseActivity() {
                                 SPUtil.putString(this@SplashActivity, "nickName", it.name)
                                 SPUtil.putString(this@SplashActivity, "headImg", it.headImg)
                                 SPUtil.putString(this@SplashActivity, "companyName", it.companyName)
-
+                                SPUtil.putString(this@SplashActivity, "cardHeadImg", it.cardHeadImg)
                                 SPUtil.putString(this@SplashActivity, "jianliname", it.nickName)
                                 if (SPUtil.getInt(this@SplashActivity, "Profession", 1) == 2) {
                                     if (!SPUtil.getString(this@SplashActivity, "companyName","").equals("")) {
@@ -112,7 +112,7 @@ class SplashActivity : BaseActivity() {
                     SPUtil.putString(this@SplashActivity, "nickName", it.name)
                     SPUtil.putString(this@SplashActivity, "headImg", it.headImg)
                     SPUtil.putString(this@SplashActivity, "companyName", it.companyName)
-
+                    SPUtil.putString(this@SplashActivity, "cardHeadImg", it.cardHeadImg)
                     SPUtil.putString(this@SplashActivity, "jianliname", it.nickName)
                     if (SPUtil.getInt(this@SplashActivity, "Profession", 1) == 2) {
                         if (!SPUtil.getString(this@SplashActivity, "companyName","").equals("")) {

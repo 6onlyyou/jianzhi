@@ -48,7 +48,11 @@ public class ZpListAdapter extends BaseRecyclerViewAdapter {
                     view.getContext().startActivity(intent);
                 }
             });
-            GlideUtil.load(binding.getRoot().getContext(), SPUtil.getString(binding.getRoot().getContext(),"headImg",""), (ImageView) binding.ava);
+            if (SPUtil.getString(binding.getRoot().getContext(), "cardHeadImg", "").equals("")) {
+                GlideUtil.load(binding.getRoot().getContext(), SPUtil.getString(binding.getRoot().getContext(), "headImg", ""), binding.ava);
+            }else{
+                GlideUtil.load(binding.getRoot().getContext(), SPUtil.getString(binding.getRoot().getContext(), "cardHeadImg", ""), binding.ava);
+            }
         }
     }
 }

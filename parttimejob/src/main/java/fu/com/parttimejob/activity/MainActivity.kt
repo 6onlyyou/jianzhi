@@ -241,6 +241,7 @@ class MainActivity : BaseActivity() {
             SPUtil.putString(this@MainActivity, "headImg", it.headImg)
             SPUtil.putString(this@MainActivity, "companyName", it.companyName)
             SPUtil.putString(this@MainActivity, "jianliname", it.nickName)
+            SPUtil.putString(this@MainActivity, "cardHeadImg", it.cardHeadImg)
         }, {
             ToastUtils.showLongToast(applicationContext, it.message.toString())
         })

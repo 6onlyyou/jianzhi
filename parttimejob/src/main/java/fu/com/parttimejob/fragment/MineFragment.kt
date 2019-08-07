@@ -51,7 +51,12 @@ class MineFragment : Fragment() {
             setsgil.visibility = View.GONE
             ava.setImageResource(R.mipmap.ic_job_hunter_img)
         }
-        GlideUtil.load(context, SPUtil.getString(context, "headImg", ""), ava)
+        if (SPUtil.getString(context, "cardHeadImg", "").equals("")) {
+            GlideUtil.load(context, SPUtil.getString(context, "headImg", ""), ava)
+        }else{
+            GlideUtil.load(context, SPUtil.getString(context, "cardHeadImg", ""), ava)
+        }
+
 
         if (SPUtil.getString(context, "nickName", "").equals("")) {
             name.text = SPUtil.getString(context, "jianliname", "")

@@ -13,6 +13,7 @@ import fu.com.parttimejob.base.baseadapter.BaseRecyclerViewHolder;
 import fu.com.parttimejob.bean.MAdvertisingBean;
 import fu.com.parttimejob.databinding.ItemAdBinding;
 import fu.com.parttimejob.utils.GlideUtil;
+import fu.com.parttimejob.utils.SPUtil;
 
 
 public class AdListAdapter extends BaseRecyclerViewAdapter {
@@ -45,7 +46,11 @@ public class AdListAdapter extends BaseRecyclerViewAdapter {
                     view.getContext().startActivity(intent);
                 }
             });
-            GlideUtil.load(binding.getRoot().getContext(), adListAdapter.getHeadImg(), (ImageView) binding.ava);
+            if (SPUtil.getString(binding.getRoot().getContext(), "cardHeadImg", "").equals("")) {
+                GlideUtil.load(binding.getRoot().getContext(), SPUtil.getString(binding.getRoot().getContext(), "headImg", ""), binding.ava);
+            }else{
+                GlideUtil.load(binding.getRoot().getContext(), SPUtil.getString(binding.getRoot().getContext(), "cardHeadImg", ""), binding.ava);
+            }
         }
     }
 }

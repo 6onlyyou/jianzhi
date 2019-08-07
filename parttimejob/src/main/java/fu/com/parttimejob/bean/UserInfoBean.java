@@ -23,6 +23,16 @@ public class UserInfoBean {
     private  String companyName;
     private  String nickName;
 
+    public String getCardHeadImg() {
+        return cardHeadImg;
+    }
+
+    public void setCardHeadImg(String cardHeadImg) {
+        this.cardHeadImg = cardHeadImg;
+    }
+
+    private  String cardHeadImg;
+
     public String getNickName() {
         return nickName;
     }
