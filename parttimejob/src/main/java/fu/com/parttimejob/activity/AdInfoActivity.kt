@@ -114,7 +114,9 @@ class AdInfoActivity : BaseActivity() {
                     .load( it.advertisementImg)
                     .placeholder(R.mipmap.defind)
                     .into(ad_cimg)
-
+            ad_cimg.setOnClickListener {
+                DlgForBigPhto(advertisingInfoBean!!.advertisementImg)
+            }
             ji_gouton.setOnClickListener {
                 if (SPUtil.getString(this, "thirdAccount", "").equals("")) {
                     val intent = Intent(this, MainActivity::class.java)

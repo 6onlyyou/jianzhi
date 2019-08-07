@@ -41,6 +41,9 @@ class MineFragment : Fragment() {
             ava.setImageResource(R.mipmap.ic_interviewer_img)
             myDuiHuanLayout.visibility = View.VISIBLE
         } else {
+            jianliview.visibility = View.GONE
+            vidwdiz.visibility = View.GONE
+            viewgout.visibility = View.GONE
             editJianLiLayout.visibility = View.GONE
             editGaogaohdon.visibility = View.VISIBLE
             zhaopinlishi.visibility = View.VISIBLE

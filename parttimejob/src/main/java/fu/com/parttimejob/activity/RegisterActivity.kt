@@ -109,7 +109,6 @@ class RegisterActivity : BaseActivity() {
                             if (it.register) {
                                 ToastUtils.showLongToast(applicationContext, it.tip+"，请直接登入")
                             } else {
-                                SPUtil.putString(this@RegisterActivity,"thirdAccount",phoneEt.text.toString())
                                 ToastUtils.showLongToast(applicationContext, "注册成功")
 //                                  if(SPUtil.getInt(this@RegisterActivity, "Profession", 2)==1){
 //                                    startActivity(CreateJobCardActivity::class.java, true)
