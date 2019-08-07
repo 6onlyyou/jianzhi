@@ -163,7 +163,6 @@ fun getDate(){
         }
 //            it.latitude= 30.28582.toString()
 //            it.longitude= 119.992592.toString()
-
         jinbi = it.unclaimedVirtualCoins
         label_job.text = it.label
         jobSalaryTv.text = it.salaryAndWelfare
@@ -211,7 +210,7 @@ fun getDate(){
     }
 }
     fun clossD() {
-        HintDialog(this, R.style.dialog, "关闭招聘返还" + jinbi + "金币,是否继续？", object : HintDialog.OnCloseListener {
+        HintDialog(this, R.style.dialog, "关闭招聘返还" + recruitInfoBean!!.numberOfVirtualCoins + "金币,是否继续？", object : HintDialog.OnCloseListener {
             override fun onClick(dialog: Dialog, confirm: Boolean) {
                 if (confirm) {
                     RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().closeRecruitmentInfo(SPUtil.getString(this@JobInfoActivity, "thirdAccount", ""), intent.getIntExtra("id", 0))).subscribe({

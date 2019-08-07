@@ -132,14 +132,15 @@ class LoginActivity : BaseActivity() {
                 if (judgeIsCanLogin()) {
 
                     RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().login(loginPhoneEt.text.toString(), loginPwdEt.text.toString(),SPUtil.getInt(applicationContext, "Profession", 1))).subscribe({
-                        if (SPUtil.getBoolean(applicationContext,"",true)) {
+                        if (SPUtil.getBoolean(applicationContext,"register",true)) {
                             ToastUtils.showLongToast(applicationContext, "登入成功")
                             SPUtil.putString(applicationContext,"thirdAccount",loginPhoneEt.text.toString())
                             SPUtil.putString(this, "token", it.token.toString())
                             startPwdLogin()
                         } else {
                             SPUtil.putString(applicationContext,"thirdAccount",loginPhoneEt.text.toString())
-                            ToastUtils.showLongToast(applicationContext, "注册成功")
+                            ToastUtils.showLongToast(applicationContext, "登入成功")
+                            SPUtil.putString(this, "token", it.token.toString())
                             if(SPUtil.getInt(applicationContext, "Profession", 1)==1){
                                 startActivity(ChooseJobActivity::class.java, true)
                             }else{

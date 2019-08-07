@@ -188,7 +188,6 @@ public class RedPacketsLayout extends RelativeLayout {
                                         ToastUtils.showLongToast(getContext(), throwable.getMessage().toString());
                                     }
                                 });
-//                                ToastUtils.showLongToast(getContext(), throwable.getMessage().toString());
                             }
                         });
                     } else {
@@ -214,12 +213,57 @@ public class RedPacketsLayout extends RelativeLayout {
                             @Override
                             public void accept(Throwable throwable) throws Exception {
                                 dialogPro.dismiss();
-                                ToastUtils.showLongToast(getContext(), throwable.getMessage().toString());
+                                RxUtils.wrapRestCall(RetrofitFactory.INSTANCE.getRetrofit().randomGetOne(SPUtil.getString(getContext(), "thirdAccount", ""))).subscribe(new Consumer<SameCityBean>() {
+                                    @Override
+                                    public void accept(final SameCityBean sameCityBean) throws Exception {
+                                        new JobDialog(getContext(), R.style.dialog, sameCityBean.getWorkContent(), new JobDialog.OnCloseListener() {
+                                            @Override
+                                            public void onClick(Dialog dialog, boolean confirm) {
+                                                Intent intent = new Intent(getContext(), JobInfoActivity.class);
+                                                intent.putExtra("id", sameCityBean.getId());
+                                                getContext().startActivity(intent);
+                                                dialogPro.dismiss();
+                                                dialog.dismiss();
+                                            }
+
+                                        })
+                                                .setTitle(sameCityBean.getLabel()).show();
+                                        dialogPro.dismiss();
+                                    }
+
+                                }, new Consumer<Throwable>() {
+                                    @Override
+                                    public void accept(Throwable throwable) throws Exception {
+                                        dialogPro.dismiss();
+                                        RxUtils.wrapRestCall(RetrofitFactory.INSTANCE.getRetrofit().randomGetOneAdvertisement(SPUtil.getString(getContext(), "thirdAccount", ""))).subscribe(new Consumer<AdInfoBean>() {
+                                            @Override
+                                            public void accept(final AdInfoBean adInfoBean) throws Exception {
+                                                new RadDialog(getContext(), R.style.dialog, "恭喜获得" + adInfoBean.getNumberOfVirtualCoins() / adInfoBean.getRedEnvelopeNumber() + "金币", new RadDialog.OnCloseListener() {
+                                                    @Override
+                                                    public void onClick(Dialog dialog, boolean confirm) {
+                                                        Intent intent = new Intent(getContext(), AdInfoActivity.class);
+                                                        intent.putExtra("id", adInfoBean.getId());
+                                                        getContext().startActivity(intent);
+                                                        dialog.dismiss();
+                                                        dialogPro.dismiss();
+                                                    }
+                                                })
+                                                        .setTitle("").show();
+                                                dialogPro.dismiss();
+                                            }
+
+                                        }, new Consumer<Throwable>() {
+                                            @Override
+                                            public void accept(Throwable throwable) throws Exception {
+                                                dialogPro.dismiss();
+                                                ToastUtils.showLongToast(getContext(), throwable.getMessage().toString());
+                                            }
+                                        });
+                                    }
+                                });
                             }
                         });
                     }
-
-
                 }
             });
         } else {
