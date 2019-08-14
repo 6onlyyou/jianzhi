@@ -60,7 +60,7 @@
                 android:layout_width="217dp"
                 android:layout_height="40dp"
                 android:gravity="center"
-                android:text="填写对方验证码可获得60虚拟币，可提现为现金哦"
+                android:text="填写对方验证码可获得60金币，可提现为现金哦"
                 android:textColor="#ff8b8b8b"
                 android:textSize="14sp" />
 

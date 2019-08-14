@@ -4,6 +4,7 @@ import java.util.List;
 
 import fu.com.parttimejob.bean.AdInfoBean;
 import fu.com.parttimejob.bean.AdvertisingInfoBean;
+import fu.com.parttimejob.bean.BannerInfo;
 import fu.com.parttimejob.bean.ExchangeBean;
 import fu.com.parttimejob.bean.GetLabelsBean;
 import fu.com.parttimejob.bean.GetTokenEntity;
@@ -341,7 +342,7 @@ public interface ApiService {
 
 
     /**
-     * 领取广告虚拟币接口
+     * 领取广告金币接口
      *
      * @return
      */
@@ -349,7 +350,7 @@ public interface ApiService {
     Observable<ResponseBean<String>> receiveOfAdVirtual(@Query("thirdAccount") String thirdAccount, @Query("id") int id);
 
     /**
-     * 领取招聘虚拟币接口
+     * 领取招聘金币接口
      *
      * @return
      */
@@ -357,7 +358,7 @@ public interface ApiService {
     Observable<ResponseBean<String>> receiveOfRecruitmentVirtual(@Query("thirdAccount") String thirdAccount, @Query("id") int id);
 
     /**
-     * 领取招聘虚拟币接口
+     * 领取招聘金币接口
      *
      * @return
      */
@@ -405,6 +406,13 @@ public interface ApiService {
      */
     @POST("/appservice/app/jobhunter/changeList")
     Observable<ResponseBean<List<KuaiDiBean>>> changeList(@Query("thirdAccount") String thirdAccount);
+    /**
+     * 用户已经兑换列表
+     *
+     * @return
+     */
+    @POST("/appservice/app/alluser/bannerInfo")
+    Observable<ResponseBean<List<BannerInfo>>> bannerInfo();
 
 
 }

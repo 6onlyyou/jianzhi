@@ -56,10 +56,11 @@ class MineFragment : Fragment() {
         }
         if (SPUtil.getString(context, "cardHeadImg", "").equals("")) {
             GlideUtil.load(context, SPUtil.getString(context, "headImg", ""), ava)
-        }else{
+        } else {
             GlideUtil.load(context, SPUtil.getString(context, "cardHeadImg", ""), ava)
         }
 
+        money.text = SPUtil.getInt(context, "totalCount", 0).toString() + "金币"
 
         if (SPUtil.getString(context, "nickName", "").equals("")) {
             name.text = SPUtil.getString(context, "jianliname", "")
@@ -118,7 +119,7 @@ class MineFragment : Fragment() {
                         SPUtil.putString(context, "latitude", "")
                         SPUtil.putString(context, "inviteCode", "")
                         SPUtil.putString(context, "labelName", "")
-                        SPUtil.putString(context, "phoneNumber","")
+                        SPUtil.putString(context, "phoneNumber", "")
                         SPUtil.putInt(context, "totalCount", 0)
                         SPUtil.putInt(context, "inviteCount", 0)
                         SPUtil.putString(context, "nickName", "")

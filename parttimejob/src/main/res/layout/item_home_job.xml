@@ -45,7 +45,7 @@
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp"
                     android:paddingTop="2dp"
-                    android:text="赏20虚拟币"
+                    android:text="赏20金币"
                     android:textColor="#ffffffff"
                     android:textSize="10sp" />
 

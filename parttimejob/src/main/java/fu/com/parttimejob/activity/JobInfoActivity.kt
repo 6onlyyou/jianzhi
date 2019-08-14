@@ -173,7 +173,7 @@ fun getDate(){
         time_job.text = "工作时间："+ it.workTime
         num_job.text = "招聘人数：" + it.recruitingNumbers
         job_jbi.text = "分享群领取" + it.numberOfVirtualCoins / it.redEnvelopeNumber + "金币"
-        coid_job.text = "分享成功后可获得" + it.numberOfVirtualCoins / it.redEnvelopeNumber + "虚拟币奖励"
+        coid_job.text = "分享成功后可获得" + it.numberOfVirtualCoins / it.redEnvelopeNumber + "金币奖励"
         ji_gouton.setOnClickListener {
             if (SPUtil.getString(this, "thirdAccount", "").equals("")) {
                 val intent = Intent(this, MainActivity::class.java)
