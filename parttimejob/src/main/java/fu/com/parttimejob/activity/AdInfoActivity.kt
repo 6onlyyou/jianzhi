@@ -106,6 +106,10 @@ class AdInfoActivity : BaseActivity() {
             ava.setOnClickListener {
                 DlgForBigPhto(advertisingInfoBean!!.getHeadImg())
             }
+            zhuanfa_ad.setOnClickListener {
+                shareTypeFragment!!.show(getFragmentManager(), "2", advertisingInfoBean!!.companyName,advertisingInfoBean!!.publichDate,advertisingInfoBean!!.city,advertisingInfoBean!!.advertisementContent,advertisingInfoBean!!.advertisementImg,SPUtil.getString(this@AdInfoActivity, "inviteCode", ""),"https://www.pgyer.com/Tbl7",advertisingInfoBean!!.headImg)
+
+            }
             name.setText(it.companyName)
             time.setText("发布时间：" + it.publichDate)
             location.setText("地点：" + it.address)
@@ -146,10 +150,7 @@ class AdInfoActivity : BaseActivity() {
     }
 
     override fun initViewClick() {
-        zhuanfa_ad.setOnClickListener {
-            shareTypeFragment!!.show(getFragmentManager(), "11", "sss")
 
-        }
     }
     fun clossD() {
         HintDialog(this, R.style.dialog, "关闭广告返还" + advertisingInfoBean!!.unclaimedVirtualCoins + "金币,是否继续？", object : HintDialog.OnCloseListener {

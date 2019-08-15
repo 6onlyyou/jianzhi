@@ -48,7 +48,7 @@ class MyInviteActivity : BaseActivity() {
     override fun initViewClick() {
         mTencent = Tencent.createInstance("1109483400", this)
         share.setOnClickListener {
-            shareTypeFragment!!.show(getFragmentManager(), "11", "sss")
+            shareTypeFragment!!.show(getFragmentManager(), "3" )
         }
 
         back.setOnClickListener {
