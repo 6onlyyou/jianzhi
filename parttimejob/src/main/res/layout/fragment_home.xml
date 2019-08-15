@@ -1,118 +1,149 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context="fu.com.parttimejob.fragment.HomeFragment">
+    android:layout_height="match_parent">
 
-    <ImageView
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="190dp"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/ic_banner" />
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="match_parent"
-        android:layout_height="96dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="150dp"
-        app:cardCornerRadius="4dp">
-
-        <LinearLayout
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:background="@color/white"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <ImageView
-                android:id="@+id/same_city_iv"
-                android:layout_width="56dp"
-                android:layout_height="72dp"
-                android:layout_weight="1"
-                android:src="@mipmap/ic_same_city" />
+            <com.youth.banner.Banner
+                android:id="@+id/banner"
+                android:layout_width="match_parent"
+                android:layout_height="190dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_banner" />
 
-            <ImageView
-                android:id="@+id/brief_iv"
-                android:layout_width="56dp"
-                android:layout_height="72dp"
-                android:layout_weight="1"
-                android:src="@mipmap/ic_brief" />
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="match_parent"
+                android:layout_height="96dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="150dp"
+                android:layout_marginRight="15dp"
+                app:cardCornerRadius="4dp">
 
-            <ImageView
-                android:id="@+id/management"
-                android:layout_width="56dp"
-                android:layout_height="72dp"
-                android:layout_weight="1"
-                android:src="@mipmap/management" />
-            <ImageView
-                android:id="@+id/campaign"
-                android:layout_width="56dp"
-                android:layout_height="72dp"
-                android:layout_weight="1"
-                android:src="@mipmap/campaign" />
-            <ImageView
-            android:id="@+id/pushzp"
-            android:layout_width="56dp"
-            android:layout_height="72dp"
-            android:layout_weight="1"
-            android:src="@mipmap/pushzp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/exchange_shop_iv"
-                android:layout_width="56dp"
-                android:layout_height="72dp"
-                android:layout_weight="1"
-                android:src="@mipmap/ic_exchange_shop" />
+                    <ImageView
+                        android:id="@+id/same_city_iv"
+                        android:layout_width="56dp"
+                        android:layout_height="72dp"
+                        android:layout_weight="1"
+                        android:src="@mipmap/ic_same_city" />
 
-            <ImageView
-                android:id="@+id/make_money_iv"
-                android:layout_width="56dp"
-                android:layout_height="72dp"
-                android:layout_weight="1"
-                android:src="@mipmap/ic_make_money" />
+                    <ImageView
+                        android:id="@+id/brief_iv"
+                        android:layout_width="56dp"
+                        android:layout_height="72dp"
+                        android:layout_weight="1"
+                        android:src="@mipmap/ic_brief" />
 
-        </LinearLayout>
+                    <ImageView
+                        android:id="@+id/management"
+                        android:layout_width="56dp"
+                        android:layout_height="72dp"
+                        android:layout_weight="1"
+                        android:src="@mipmap/management" />
+
+                    <ImageView
+                        android:id="@+id/campaign"
+                        android:layout_width="56dp"
+                        android:layout_height="72dp"
+                        android:layout_weight="1"
+                        android:src="@mipmap/campaign" />
+
+                    <ImageView
+                        android:id="@+id/pushzp"
+                        android:layout_width="56dp"
+                        android:layout_height="72dp"
+                        android:layout_weight="1"
+                        android:src="@mipmap/pushzp" />
+
+                    <ImageView
+                        android:id="@+id/exchange_shop_iv"
+                        android:layout_width="56dp"
+                        android:layout_height="72dp"
+                        android:layout_weight="1"
+                        android:src="@mipmap/ic_exchange_shop" />
+
+                    <ImageView
+                        android:id="@+id/make_money_iv"
+                        android:layout_width="56dp"
+                        android:layout_height="72dp"
+                        android:layout_weight="1"
+                        android:src="@mipmap/ic_make_money" />
+
+                </LinearLayout>
 
 
-    </android.support.v7.widget.CardView>
+            </android.support.v7.widget.CardView>
 
-    <TextView
-        android:layout_width="64dp"
-        android:layout_height="23dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="258dp"
-        android:text="热门推荐"
-        android:textColor="@color/colorBlack"
-        android:textSize="16sp" />
-    <LinearLayout
-        android:id="@+id/konkonshuj"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="400dp"
-        android:layout_gravity="center_horizontal"
-        android:orientation="vertical">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/dingdan"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:textColor="#BABABA"
-            android:textSize="15sp"
-            android:layout_gravity="center"
-            android:text="空空如也"/>
-    </LinearLayout>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/jobList"
+            <TextView
+                android:layout_width="64dp"
+                android:layout_height="23dp"
+                android:layout_marginTop="260dp"
+                android:layout_marginLeft="15dp"
+                android:text="热门推荐"
+                android:textColor="@color/colorBlack"
+                android:textSize="16sp" />
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="288dp" />
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-</FrameLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/jobList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/konkonshuj"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="100dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@mipmap/dingdan" />
+
+            <TextView
+                android:id="@+id/konkonshuTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="210dp"
+                android:text="空空如也"
+                android:textColor="#BABABA"
+                android:textSize="15sp" />
+
+        </FrameLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>

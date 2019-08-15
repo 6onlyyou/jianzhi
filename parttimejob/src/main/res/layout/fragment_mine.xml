@@ -51,6 +51,22 @@
                 android:textSize="23sp" />
 
             <TextView
+                android:layout_marginTop="5dp"
+                android:id="@+id/money"
+                android:layout_width="wrap_content"
+                android:layout_height="18dp"
+                android:layout_alignTop="@+id/ava"
+                android:layout_marginLeft="16dp"
+                android:layout_toRightOf="@+id/name"
+                android:background="@mipmap/bg_item_money"
+                android:gravity="center"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:text="9999金币"
+                android:textColor="#ffffffff"
+                android:textSize="10sp" />
+
+            <TextView
                 android:id="@+id/sex_age"
                 android:layout_width="wrap_content"
                 android:layout_height="17dp"

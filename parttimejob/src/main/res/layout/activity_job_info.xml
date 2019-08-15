@@ -111,7 +111,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/jobLocation"
                     android:layout_marginTop="7dp"
-                    android:text="分享成功后可获得398虚拟币奖励"
+                    android:text="分享成功后可获得398金币奖励"
                     android:textColor="@color/colorRed"
                     android:textSize="12sp" />
             </RelativeLayout>

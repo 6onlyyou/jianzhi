@@ -10,15 +10,15 @@ import android.view.View
 import android.view.ViewGroup
 import com.heixiu.errand.net.RetrofitFactory
 import com.lljjcoder.citylist.Toast.ToastUtils
-
 import fu.com.parttimejob.R
 import fu.com.parttimejob.activity.*
 import fu.com.parttimejob.adapter.HomeJobListAdapter
 import fu.com.parttimejob.base.baseadapter.BaseRecyclerModel
-import fu.com.parttimejob.bean.JobInfoBean
 import fu.com.parttimejob.retrofitNet.RxUtils
+import fu.com.parttimejob.utils.GlideImageLoader
 import fu.com.parttimejob.utils.SPUtil
 import kotlinx.android.synthetic.main.fragment_home.*
+import java.util.*
 
 
 /**
@@ -48,7 +48,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun initClickListener() {
-        if( SPUtil.getInt(activity, "Profession", 1)==1){
+        if (SPUtil.getInt(activity, "Profession", 1) == 1) {
             make_money_iv.visibility = View.VISIBLE
             exchange_shop_iv.visibility = View.VISIBLE
             brief_iv.visibility = View.VISIBLE
@@ -56,7 +56,7 @@ class HomeFragment : Fragment() {
             campaign.visibility = View.GONE
             brief_iv.visibility = View.VISIBLE
             pushzp.visibility = View.GONE
-        }else{
+        } else {
             make_money_iv.visibility = View.GONE
             exchange_shop_iv.visibility = View.GONE
             brief_iv.visibility = View.GONE
@@ -93,17 +93,42 @@ class HomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().firstPage(SPUtil.getString(context,"thirdAccount",""))).subscribe({
+        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().firstPage(SPUtil.getString(context, "thirdAccount", ""))).subscribe({
             homeJobListAdapter.clear();
-            homeJobListAdapter.notifyDataSetChanged() ;
+            homeJobListAdapter.notifyDataSetChanged();
             homeJobListAdapter.addAll(it as List<BaseRecyclerModel>?)
             homeJobListAdapter.notifyDataSetChanged()
-            if(it.size<1){
-            konkonshuj.visibility = View.VISIBLE
-        }else{
-            konkonshuj.visibility = View.GONE
-        }
+            if (it.size < 1) {
+                konkonshuj.visibility = View.VISIBLE
+                konkonshuTv.visibility = View.VISIBLE
+                jobList.visibility = View.GONE
 
+            } else {
+                konkonshuj.visibility = View.GONE
+                konkonshuTv.visibility = View.GONE
+                jobList.visibility = View.VISIBLE
+
+            }
+
+        }, {
+            ToastUtils.showLongToast(context, it.message.toString())
+        })
+
+        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().bannerInfo()).subscribe({
+            banner.setImageLoader(GlideImageLoader())
+            //设置图片集合
+            val imageUrls = ArrayList<Any>()
+            if (it.size > 0) {
+                for (bannerBean in it) {
+                    imageUrls.add(bannerBean.imgAddress)
+                }
+                banner.setOnBannerListener { position ->
+                    WebActivity.startSelf(context, it[position].title, it[position].netAddress)
+                }
+                banner.setImages(imageUrls)
+                banner.start()
+                banner.setDelayTime(3000)
+            }
         }, {
             ToastUtils.showLongToast(context, it.message.toString())
         })
