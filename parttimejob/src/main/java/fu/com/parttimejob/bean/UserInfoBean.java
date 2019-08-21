@@ -22,6 +22,15 @@ public class UserInfoBean {
     private  String name;
     private  String companyName;
     private  String nickName;
+    private int vipLevel;
+
+    public int getVipLevel() {
+        return vipLevel;
+    }
+
+    public void setVipLevel(int vipLevel) {
+        this.vipLevel = vipLevel;
+    }
 
     public String getCardHeadImg() {
         return cardHeadImg;

@@ -27,6 +27,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import fu.com.parttimejob.R;
 import fu.com.parttimejob.activity.AdInfoActivity;
+import fu.com.parttimejob.activity.BindPhoneActivity;
 import fu.com.parttimejob.activity.JobInfoActivity;
 import fu.com.parttimejob.bean.AdInfoBean;
 import fu.com.parttimejob.bean.SameCityBean;
@@ -137,133 +138,140 @@ public class RedPacketsLayout extends RelativeLayout {
             imageView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    dialogPro.show();
-                    removeView(view);
-                    Random rdm = new Random();
+                    if(SPUtil.getString(view.getContext(), "phoneNumber", "").equals("")){
+                        ToastUtils.showLongToast(getContext(), "请先绑定手机号才可以查看噢");
+                        Intent intent = new Intent(getContext(), BindPhoneActivity.class);
+                        view.getContext().startActivity(intent);
+                    }else{
+                        dialogPro.show();
+                        removeView(view);
+                        Random rdm = new Random();
 
-                    if (rdm.nextBoolean()) {
-                        RxUtils.wrapRestCall(RetrofitFactory.INSTANCE.getRetrofit().randomGetOne(SPUtil.getString(getContext(), "thirdAccount", ""))).subscribe(new Consumer<SameCityBean>() {
-                            @Override
-                            public void accept(final SameCityBean sameCityBean) throws Exception {
-                                new JobDialog(getContext(), R.style.dialog, sameCityBean.getWorkContent(), new JobDialog.OnCloseListener() {
-                                    @Override
-                                    public void onClick(Dialog dialog, boolean confirm) {
-                                        Intent intent = new Intent(getContext(), JobInfoActivity.class);
-                                        intent.putExtra("id", sameCityBean.getId());
-                                        getContext().startActivity(intent);
-                                        dialogPro.dismiss();
-                                        dialog.dismiss();
-                                    }
+                        if (rdm.nextBoolean()) {
+                            RxUtils.wrapRestCall(RetrofitFactory.INSTANCE.getRetrofit().randomGetOne(SPUtil.getString(getContext(), "thirdAccount", ""))).subscribe(new Consumer<SameCityBean>() {
+                                @Override
+                                public void accept(final SameCityBean sameCityBean) throws Exception {
+                                    new JobDialog(getContext(), R.style.dialog, sameCityBean.getWorkContent(), new JobDialog.OnCloseListener() {
+                                        @Override
+                                        public void onClick(Dialog dialog, boolean confirm) {
+                                            Intent intent = new Intent(getContext(), JobInfoActivity.class);
+                                            intent.putExtra("id", sameCityBean.getId());
+                                            getContext().startActivity(intent);
+                                            dialogPro.dismiss();
+                                            dialog.dismiss();
+                                        }
 
-                                })
-                                        .setTitle(sameCityBean.getLabel()).show();
-                                dialogPro.dismiss();
-                            }
+                                    })
+                                            .setTitle(sameCityBean.getLabel()).show();
+                                    dialogPro.dismiss();
+                                }
 
-                        }, new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-                                dialogPro.dismiss();
-                                RxUtils.wrapRestCall(RetrofitFactory.INSTANCE.getRetrofit().randomGetOneAdvertisement(SPUtil.getString(getContext(), "thirdAccount", ""))).subscribe(new Consumer<AdInfoBean>() {
-                                    @Override
-                                    public void accept(final AdInfoBean adInfoBean) throws Exception {
-                                        new RadDialog(getContext(), R.style.dialog, "恭喜获得" + adInfoBean.getNumberOfVirtualCoins() / adInfoBean.getRedEnvelopeNumber() + "金币", new RadDialog.OnCloseListener() {
-                                            @Override
-                                            public void onClick(Dialog dialog, boolean confirm) {
-                                                Intent intent = new Intent(getContext(), AdInfoActivity.class);
-                                                intent.putExtra("id", adInfoBean.getId());
-                                                getContext().startActivity(intent);
-                                                dialog.dismiss();
-                                                dialogPro.dismiss();
-                                            }
-                                        })
-                                                .setTitle("").show();
-                                        dialogPro.dismiss();
-                                    }
+                            }, new Consumer<Throwable>() {
+                                @Override
+                                public void accept(Throwable throwable) throws Exception {
+                                    dialogPro.dismiss();
+                                    RxUtils.wrapRestCall(RetrofitFactory.INSTANCE.getRetrofit().randomGetOneAdvertisement(SPUtil.getString(getContext(), "thirdAccount", ""))).subscribe(new Consumer<AdInfoBean>() {
+                                        @Override
+                                        public void accept(final AdInfoBean adInfoBean) throws Exception {
+                                            new RadDialog(getContext(), R.style.dialog, "恭喜获得" + adInfoBean.getNumberOfVirtualCoins() / adInfoBean.getRedEnvelopeNumber() + "金币", new RadDialog.OnCloseListener() {
+                                                @Override
+                                                public void onClick(Dialog dialog, boolean confirm) {
+                                                    Intent intent = new Intent(getContext(), AdInfoActivity.class);
+                                                    intent.putExtra("id", adInfoBean.getId());
+                                                    getContext().startActivity(intent);
+                                                    dialog.dismiss();
+                                                    dialogPro.dismiss();
+                                                }
+                                            })
+                                                    .setTitle("").show();
+                                            dialogPro.dismiss();
+                                        }
 
-                                }, new Consumer<Throwable>() {
-                                    @Override
-                                    public void accept(Throwable throwable) throws Exception {
-                                        dialogPro.dismiss();
-                                        ToastUtils.showLongToast(getContext(), throwable.getMessage().toString());
-                                    }
-                                });
-                            }
-                        });
-                    } else {
+                                    }, new Consumer<Throwable>() {
+                                        @Override
+                                        public void accept(Throwable throwable) throws Exception {
+                                            dialogPro.dismiss();
+                                            ToastUtils.showLongToast(getContext(), throwable.getMessage().toString());
+                                        }
+                                    });
+                                }
+                            });
+                        } else {
 
-                        RxUtils.wrapRestCall(RetrofitFactory.INSTANCE.getRetrofit().randomGetOneAdvertisement(SPUtil.getString(getContext(), "thirdAccount", ""))).subscribe(new Consumer<AdInfoBean>() {
-                            @Override
-                            public void accept(final AdInfoBean adInfoBean) throws Exception {
-                                new RadDialog(getContext(), R.style.dialog, "恭喜获得" + adInfoBean.getNumberOfVirtualCoins() / adInfoBean.getRedEnvelopeNumber() + "金币", new RadDialog.OnCloseListener() {
-                                    @Override
-                                    public void onClick(Dialog dialog, boolean confirm) {
-                                        Intent intent = new Intent(getContext(), AdInfoActivity.class);
-                                        intent.putExtra("id", adInfoBean.getId());
-                                        getContext().startActivity(intent);
-                                        dialog.dismiss();
-                                        dialogPro.dismiss();
-                                    }
-                                })
-                                        .setTitle("").show();
-                                dialogPro.dismiss();
-                            }
+                            RxUtils.wrapRestCall(RetrofitFactory.INSTANCE.getRetrofit().randomGetOneAdvertisement(SPUtil.getString(getContext(), "thirdAccount", ""))).subscribe(new Consumer<AdInfoBean>() {
+                                @Override
+                                public void accept(final AdInfoBean adInfoBean) throws Exception {
+                                    new RadDialog(getContext(), R.style.dialog, "恭喜获得" + adInfoBean.getNumberOfVirtualCoins() / adInfoBean.getRedEnvelopeNumber() + "金币", new RadDialog.OnCloseListener() {
+                                        @Override
+                                        public void onClick(Dialog dialog, boolean confirm) {
+                                            Intent intent = new Intent(getContext(), AdInfoActivity.class);
+                                            intent.putExtra("id", adInfoBean.getId());
+                                            getContext().startActivity(intent);
+                                            dialog.dismiss();
+                                            dialogPro.dismiss();
+                                        }
+                                    })
+                                            .setTitle("").show();
+                                    dialogPro.dismiss();
+                                }
 
-                        }, new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-                                dialogPro.dismiss();
-                                RxUtils.wrapRestCall(RetrofitFactory.INSTANCE.getRetrofit().randomGetOne(SPUtil.getString(getContext(), "thirdAccount", ""))).subscribe(new Consumer<SameCityBean>() {
-                                    @Override
-                                    public void accept(final SameCityBean sameCityBean) throws Exception {
-                                        new JobDialog(getContext(), R.style.dialog, sameCityBean.getWorkContent(), new JobDialog.OnCloseListener() {
-                                            @Override
-                                            public void onClick(Dialog dialog, boolean confirm) {
-                                                Intent intent = new Intent(getContext(), JobInfoActivity.class);
-                                                intent.putExtra("id", sameCityBean.getId());
-                                                getContext().startActivity(intent);
-                                                dialogPro.dismiss();
-                                                dialog.dismiss();
-                                            }
+                            }, new Consumer<Throwable>() {
+                                @Override
+                                public void accept(Throwable throwable) throws Exception {
+                                    dialogPro.dismiss();
+                                    RxUtils.wrapRestCall(RetrofitFactory.INSTANCE.getRetrofit().randomGetOne(SPUtil.getString(getContext(), "thirdAccount", ""))).subscribe(new Consumer<SameCityBean>() {
+                                        @Override
+                                        public void accept(final SameCityBean sameCityBean) throws Exception {
+                                            new JobDialog(getContext(), R.style.dialog, sameCityBean.getWorkContent(), new JobDialog.OnCloseListener() {
+                                                @Override
+                                                public void onClick(Dialog dialog, boolean confirm) {
+                                                    Intent intent = new Intent(getContext(), JobInfoActivity.class);
+                                                    intent.putExtra("id", sameCityBean.getId());
+                                                    getContext().startActivity(intent);
+                                                    dialogPro.dismiss();
+                                                    dialog.dismiss();
+                                                }
 
-                                        })
-                                                .setTitle(sameCityBean.getLabel()).show();
-                                        dialogPro.dismiss();
-                                    }
+                                            })
+                                                    .setTitle(sameCityBean.getLabel()).show();
+                                            dialogPro.dismiss();
+                                        }
 
-                                }, new Consumer<Throwable>() {
-                                    @Override
-                                    public void accept(Throwable throwable) throws Exception {
-                                        dialogPro.dismiss();
-                                        RxUtils.wrapRestCall(RetrofitFactory.INSTANCE.getRetrofit().randomGetOneAdvertisement(SPUtil.getString(getContext(), "thirdAccount", ""))).subscribe(new Consumer<AdInfoBean>() {
-                                            @Override
-                                            public void accept(final AdInfoBean adInfoBean) throws Exception {
-                                                new RadDialog(getContext(), R.style.dialog, "恭喜获得" + adInfoBean.getNumberOfVirtualCoins() / adInfoBean.getRedEnvelopeNumber() + "金币", new RadDialog.OnCloseListener() {
-                                                    @Override
-                                                    public void onClick(Dialog dialog, boolean confirm) {
-                                                        Intent intent = new Intent(getContext(), AdInfoActivity.class);
-                                                        intent.putExtra("id", adInfoBean.getId());
-                                                        getContext().startActivity(intent);
-                                                        dialog.dismiss();
-                                                        dialogPro.dismiss();
-                                                    }
-                                                })
-                                                        .setTitle("").show();
-                                                dialogPro.dismiss();
-                                            }
+                                    }, new Consumer<Throwable>() {
+                                        @Override
+                                        public void accept(Throwable throwable) throws Exception {
+                                            dialogPro.dismiss();
+                                            RxUtils.wrapRestCall(RetrofitFactory.INSTANCE.getRetrofit().randomGetOneAdvertisement(SPUtil.getString(getContext(), "thirdAccount", ""))).subscribe(new Consumer<AdInfoBean>() {
+                                                @Override
+                                                public void accept(final AdInfoBean adInfoBean) throws Exception {
+                                                    new RadDialog(getContext(), R.style.dialog, "恭喜获得" + adInfoBean.getNumberOfVirtualCoins() / adInfoBean.getRedEnvelopeNumber() + "金币", new RadDialog.OnCloseListener() {
+                                                        @Override
+                                                        public void onClick(Dialog dialog, boolean confirm) {
+                                                            Intent intent = new Intent(getContext(), AdInfoActivity.class);
+                                                            intent.putExtra("id", adInfoBean.getId());
+                                                            getContext().startActivity(intent);
+                                                            dialog.dismiss();
+                                                            dialogPro.dismiss();
+                                                        }
+                                                    })
+                                                            .setTitle("").show();
+                                                    dialogPro.dismiss();
+                                                }
 
-                                        }, new Consumer<Throwable>() {
-                                            @Override
-                                            public void accept(Throwable throwable) throws Exception {
-                                                dialogPro.dismiss();
-                                                ToastUtils.showLongToast(getContext(), throwable.getMessage().toString());
-                                            }
-                                        });
-                                    }
-                                });
-                            }
-                        });
+                                            }, new Consumer<Throwable>() {
+                                                @Override
+                                                public void accept(Throwable throwable) throws Exception {
+                                                    dialogPro.dismiss();
+                                                    ToastUtils.showLongToast(getContext(), throwable.getMessage().toString());
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            });
+                        }
                     }
+
                 }
             });
         } else {

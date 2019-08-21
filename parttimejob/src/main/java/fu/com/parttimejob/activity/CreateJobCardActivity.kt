@@ -35,6 +35,8 @@ class CreateJobCardActivity : BaseActivity() {
     override fun initViewParams() {
         nameEt.setText(SPUtil.getString(this, "nickName", ""))
         shopEt.setText(SPUtil.getString(this, "companyName", ""))
+        GlideUtil.load(this,   SPUtil.getString(this, "cardHeadImg", ""),ava)
+        phoneEt.setText(SPUtil.getString(this, "phoneNumber", ""))
     }
 
     override fun initViewClick() {

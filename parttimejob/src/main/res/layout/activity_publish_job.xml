@@ -453,11 +453,11 @@
             android:layout_alignParentBottom="true"
             android:background="#ffffff" >
 
-            <fu.com.parttimejob.view.PickerScrollView
-                android:id="@+id/pickerscrlllview"
-                android:layout_width="match_parent"
-                android:layout_height="160dp"
-                android:background="#ffffff"/>
+            <!--<fu.com.parttimejob.view.PickerScrollView-->
+                <!--android:id="@+id/pickerscrlllview"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="160dp"-->
+                <!--android:background="#ffffff"/>-->
 
             <View
                 android:layout_width="match_parent"

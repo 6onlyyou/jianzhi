@@ -45,9 +45,8 @@ class TalentManagementActivity : BaseActivity() {
         back.setOnClickListener { finish() }
         communicationNow.setOnClickListener {
             if (data!!.size < 1) {
-                ToastUtils.showLongToast(applicationContext, "请选择沟通对象")
+                ToastUtils.showLongToast(applicationContext, "没有人可以沟通噢")
             } else {
-                ToastUtils.showLongToast(applicationContext, data!![viewPager.currentItem].thirdAccount.toString())
                 RongIM.setUserInfoProvider({
                     //在这里，根据userId，使用同步的请求，去请求服务器，就可以完美做到显示用户的头像，昵称了
                     if (data!![viewPager.currentItem]!!.headImg == null || data!![viewPager.currentItem]!!.headImg.equals("")) {

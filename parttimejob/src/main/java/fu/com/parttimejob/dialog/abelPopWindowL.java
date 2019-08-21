@@ -83,11 +83,13 @@ public class abelPopWindowL extends PopupWindow {
                 if (adapter.getSelectPositions().size() == 0) {
                     onPopListClick.onItemClick("");
                     SPUtil.putString(context, "searchLabelName", "");
+
                 } else {
                     String labels = ((GetLabelsBean) adapter.getData().get(adapter.getSelectPositions().get(0))).getLabels();
                     SPUtil.putString(context, "searchLabelName", labels);
                     onPopListClick.onItemClick(labels);
                 }
+                dismiss();
             }
         });
         if (SPUtil.getString(context, "searchLabelName", "") != null && !SPUtil.getString(context, "searchLabelName", "").equals("")) {

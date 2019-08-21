@@ -29,6 +29,24 @@ public class RecruitInfoBean {
     private String headImg;
     public String name;
     public String workTime;
+    public Boolean  compliment;
+    private int complimentCount;
+
+    public Boolean getCompliment() {
+        return compliment;
+    }
+
+    public void setCompliment(Boolean compliment) {
+        this.compliment = compliment;
+    }
+
+    public int getComplimentCount() {
+        return complimentCount;
+    }
+
+    public void setComplimentCount(int complimentCount) {
+        this.complimentCount = complimentCount;
+    }
 
     public String getWorkTime() {
         return workTime;

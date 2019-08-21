@@ -31,6 +31,7 @@ import fu.com.parttimejob.base.BaseActivity
 import fu.com.parttimejob.bean.FileInfoEntilty
 import fu.com.parttimejob.retrofitNet.RxUtils
 import fu.com.parttimejob.utils.FullyGridLayoutManager
+import fu.com.parttimejob.utils.RegexUtils
 import fu.com.parttimejob.utils.SPUtil
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
@@ -88,6 +89,10 @@ class DisplayJianLiActivity : BaseActivity() {
         }, {
         })
         pushjianli.setOnClickListener {
+            if(!RegexUtils.isBasePhone(phonenum.text.toString())){
+                showToast("请输入正确的手机号")
+                return@setOnClickListener
+            }
             if(selectList.size == 0){
                 ToastUtils.showLongToast(applicationContext, "请上传图片或者视频来介绍自己~")
                 return@setOnClickListener

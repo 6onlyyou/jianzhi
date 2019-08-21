@@ -49,6 +49,7 @@ class SplashActivity : BaseActivity() {
                                 SPUtil.putString(this@SplashActivity, "headImg", it.headImg)
                                 SPUtil.putString(this@SplashActivity, "companyName", it.companyName)
                                 SPUtil.putString(this@SplashActivity, "cardHeadImg", it.cardHeadImg)
+                                SPUtil.putInt(this@SplashActivity, "vipLevel", it.vipLevel)
                                 SPUtil.putString(this@SplashActivity, "jianliname", it.nickName)
                                 if (SPUtil.getInt(this@SplashActivity, "Profession", 1) == 2) {
                                     if (!SPUtil.getString(this@SplashActivity, "companyName","").equals("")) {
@@ -109,6 +110,8 @@ class SplashActivity : BaseActivity() {
                     SPUtil.putInt(this@SplashActivity, "totalCount", it.totalCount)
                     SPUtil.putString(this@SplashActivity, "phoneNumber", it.phoneNumber)
                     SPUtil.putInt(this@SplashActivity, "inviteCount", it.inviteCount)
+                    SPUtil.putInt(this@SplashActivity, "vipLevel", it.vipLevel)
+
                     SPUtil.putString(this@SplashActivity, "nickName", it.name)
                     SPUtil.putString(this@SplashActivity, "headImg", it.headImg)
                     SPUtil.putString(this@SplashActivity, "companyName", it.companyName)

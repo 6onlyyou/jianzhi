@@ -3,7 +3,6 @@ package fu.com.parttimejob.activity
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
-import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.text.TextUtils
 import android.util.Log
@@ -21,6 +20,7 @@ import fu.com.parttimejob.base.BaseActivity
 import fu.com.parttimejob.dialog.HintDialog
 import fu.com.parttimejob.retrofitNet.RxUtils
 import fu.com.parttimejob.utils.FullyGridLayoutManager
+import fu.com.parttimejob.utils.RegexUtils
 import fu.com.parttimejob.utils.SPUtil
 import kotlinx.android.synthetic.main.activity_publish_ad.*
 import okhttp3.MediaType
@@ -71,47 +71,58 @@ class PublishAdActivity : BaseActivity() {
         })
 
         publish.setOnClickListener {
-            if(Integer.parseInt(jiangliMoney.text.toString()) <10){
+            if (Integer.parseInt(jiangliMoney.text.toString()) < 10) {
                 showToast("红包金额不能小于10金币")
                 return@setOnClickListener
             }
-            if(Integer.parseInt(hongbaoSize.text.toString()) <1){
+            if (Integer.parseInt(hongbaoSize.text.toString()) < 1) {
                 showToast("红包数量至少1个")
                 return@setOnClickListener
             }
             if (TextUtils.isEmpty(jianliname.text) || TextUtils.isEmpty(hongbaoSize.text) || TextUtils.isEmpty(jiangliMoney.text) || TextUtils.isEmpty(guanggaoContent.text)) {
                 showToast("您的信息未填写完整!")
             } else {
-                if(Integer.parseInt(jiangliMoney.text.toString())<Integer.parseInt(hongbaoSize.text.toString())){
+                if (Integer.parseInt(jiangliMoney.text.toString()) < Integer.parseInt(hongbaoSize.text.toString())) {
                     showToast("红包数量不能高于金币数量~")
-                }else{
-                    HintDialog(this@PublishAdActivity, R.style.dialog, "需要支付"+jiangliMoney.text.toString()+"个金币是否继续？", object : HintDialog.OnCloseListener {
+                } else {
+                    HintDialog(this@PublishAdActivity, R.style.dialog, "需要支付" + jiangliMoney.text.toString() + "个金币是否继续？", object : HintDialog.OnCloseListener {
                         override fun onClick(dialog: Dialog, confirm: Boolean) {
                             if (confirm) {
-                                if( Integer.parseInt(jiangliMoney.text.toString())>   SPUtil.getInt(this@PublishAdActivity, "totalCount", 0)){
+                                if (Integer.parseInt(jiangliMoney.text.toString()) > SPUtil.getInt(this@PublishAdActivity, "totalCount", 0)) {
                                     showToast("金币不足请充值")
                                     startActivity(Intent(this@PublishAdActivity, MyMoneyActivity::class.java))
-                                }else{
+                                } else {
                                     val builder: MultipartBody.Builder = MultipartBody.Builder().setType(MultipartBody.FORM)
                                     var requestBody: RequestBody
                                     if (selectList.isNotEmpty()) {
                                         builder.addFormDataPart("img", File(selectList!!.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList!!.get(0).compressPath)));
                                         requestBody = builder.build()
-                                        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().publichAdvertisement(SPUtil.getString(this@PublishAdActivity, "thirdAccount", "111"), jianliname.text.toString(), hongbaoSize.text.toString(), jiangliMoney.text.toString(), SPUtil.getString(this@PublishAdActivity, "city", "廊坊市"),poiItem!!.latLonPoint.latitude.toString(),poiItem!!.latLonPoint.longitude.toString(), guanggaoContent.text.toString(), requestBody,location.text.toString())).subscribe({
+                                        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().publichAdvertisement(SPUtil.getString(this@PublishAdActivity, "thirdAccount", "111"), jianliname.text.toString(), hongbaoSize.text.toString(), jiangliMoney.text.toString(), SPUtil.getString(this@PublishAdActivity, "city", "廊坊市"), poiItem!!.latLonPoint.latitude.toString(), poiItem!!.latLonPoint.longitude.toString(), guanggaoContent.text.toString(), requestBody, location.text.toString())).subscribe({
                                             ToastUtils.showLongToast(this@PublishAdActivity, it)
-                                            SPUtil.putInt(this@PublishAdActivity, "totalCount", SPUtil.getInt(this@PublishAdActivity, "totalCount", 0)-Integer.parseInt(jiangliMoney.text.toString()))
+                                            SPUtil.putInt(this@PublishAdActivity, "totalCount", SPUtil.getInt(this@PublishAdActivity, "totalCount", 0) - Integer.parseInt(jiangliMoney.text.toString()))
                                             finish()
                                         }, {
                                             ToastUtils.showLongToast(this@PublishAdActivity, it.message.toString())
                                         })
-                                    }else{
-                                        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().publichAdvertisement(SPUtil.getString(this@PublishAdActivity, "thirdAccount", "111"), jianliname.text.toString(), hongbaoSize.text.toString(), jiangliMoney.text.toString(), SPUtil.getString(this@PublishAdActivity, "city", "廊坊市"),poiItem!!.latLonPoint.latitude.toString(),poiItem!!.latLonPoint.longitude.toString(), guanggaoContent.text.toString())).subscribe({
-                                            ToastUtils.showLongToast(this@PublishAdActivity, it)
-                                            SPUtil.putInt(this@PublishAdActivity, "totalCount", SPUtil.getInt(this@PublishAdActivity, "totalCount", 0)-Integer.parseInt(jiangliMoney.text.toString()))
-                                            finish()
-                                        }, {
-                                            ToastUtils.showLongToast(this@PublishAdActivity, it.message.toString())
-                                        })
+                                    } else {
+                                        if (poiItem== null ) {
+                                            RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().publichAdvertisement(SPUtil.getString(this@PublishAdActivity, "thirdAccount", "111"), jianliname.text.toString(), hongbaoSize.text.toString(), jiangliMoney.text.toString(), SPUtil.getString(this@PublishAdActivity, "city", "廊坊市"),"", "", guanggaoContent.text.toString())).subscribe({
+                                                ToastUtils.showLongToast(this@PublishAdActivity, it)
+                                                SPUtil.putInt(this@PublishAdActivity, "totalCount", SPUtil.getInt(this@PublishAdActivity, "totalCount", 0) - Integer.parseInt(jiangliMoney.text.toString()))
+                                                finish()
+                                            }, {
+                                                ToastUtils.showLongToast(this@PublishAdActivity, it.message.toString())
+                                            })
+                                        }else{
+                                            RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().publichAdvertisement(SPUtil.getString(this@PublishAdActivity, "thirdAccount", "111"), jianliname.text.toString(), hongbaoSize.text.toString(), jiangliMoney.text.toString(), SPUtil.getString(this@PublishAdActivity, "city", "廊坊市"), poiItem!!.latLonPoint.latitude.toString(), poiItem!!.latLonPoint.longitude.toString(), guanggaoContent.text.toString())).subscribe({
+                                                ToastUtils.showLongToast(this@PublishAdActivity, it)
+                                                SPUtil.putInt(this@PublishAdActivity, "totalCount", SPUtil.getInt(this@PublishAdActivity, "totalCount", 0) - Integer.parseInt(jiangliMoney.text.toString()))
+                                                finish()
+                                            }, {
+                                                ToastUtils.showLongToast(this@PublishAdActivity, it.message.toString())
+                                            })
+                                        }
+
                                     }
 
 

@@ -2,8 +2,11 @@ package fu.com.parttimejob.activity
 
 import android.Manifest
 import android.app.Dialog
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Handler
 import android.support.design.widget.TabLayout
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
@@ -38,14 +41,22 @@ import io.rong.imkit.RongContext
 import io.rong.imkit.RongIM
 import io.rong.imlib.RongIMClient
 import io.rong.imlib.model.Conversation
+import io.rong.imlib.model.Message
 import io.rong.imlib.model.UserInfo
+import io.rong.message.TextMessage
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity() , RongIMClient.OnReceiveMessageListener{
     private lateinit var adapter: FragmentAdapter
     private val titles = ArrayList<String>()
     private val imgs = ArrayList<Int>()
+    private var numcon: TextView? = null
+
+    override fun onReceived(p0: Message?, p1: Int): Boolean {
+        return false;
+    }
+
 
 
     override fun getLayoutId(): Int {
@@ -56,6 +67,7 @@ class MainActivity : BaseActivity() {
     override fun isTranslucent(): Boolean {
         return true
     }
+
     private fun initConversationList(): Fragment {
 
         val listFragment = ConversationListImFragment()
@@ -89,6 +101,7 @@ class MainActivity : BaseActivity() {
             val tabView = LayoutInflater.from(this).inflate(R.layout.item_tab_main, null)
             val tabImg: ImageView = tabView.findViewById(R.id.tabImg)
             val tabTitle: TextView = tabView.findViewById(R.id.tab)
+            numcon = tabView.findViewById(R.id.numcon)
             tabImg.setImageResource(imgs[i])
             if (i == 0) {
                 tabImg.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary))
@@ -171,10 +184,17 @@ class MainActivity : BaseActivity() {
                     .setTitle("").show()
 
         }
-        main_vp.setCurrentItem(1)
+        if (SPUtil.getInt(this@MainActivity, "Profession", 1) == 2) {
+            main_vp.setCurrentItem(0)
+            incl_titles.visibility = View.GONE
+        }else{
+            main_vp.setCurrentItem(1)
+        }
+
     }
 
     override fun initViewClick() {
+        initRongMessage()
         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().getCloudToken( SPUtil.getString(this@MainActivity, "thirdAccount", ""))).subscribe({
             SPUtil.putString(this@MainActivity,"tokenryun",it.token)
             connect(it.token)
@@ -241,9 +261,99 @@ class MainActivity : BaseActivity() {
             SPUtil.putString(this@MainActivity, "headImg", it.headImg)
             SPUtil.putString(this@MainActivity, "companyName", it.companyName)
             SPUtil.putString(this@MainActivity, "jianliname", it.nickName)
+            SPUtil.putInt(this@MainActivity, "vipLevel", it.vipLevel)
             SPUtil.putString(this@MainActivity, "cardHeadImg", it.cardHeadImg)
         }, {
             ToastUtils.showLongToast(applicationContext, it.message.toString())
         })
+    }
+    private fun initRongMessage() {
+        if (SPUtil.getString(this, "phonenumber", "").equals("")) {
+            return
+        }
+        val conversationTypes = arrayOf(Conversation.ConversationType.PRIVATE, Conversation.ConversationType.DISCUSSION, Conversation.ConversationType.GROUP, Conversation.ConversationType.SYSTEM, Conversation.ConversationType.PUBLIC_SERVICE, Conversation.ConversationType.APP_PUBLIC_SERVICE)
+        val handler = Handler()
+        handler.postDelayed({
+            RongIM.getInstance().setOnReceiveUnreadCountChangedListener(mCountListener, *conversationTypes)
+        }, 1000)
+        RongIM.setOnReceiveMessageListener(this)
+    }
+    var mCountListener: RongIM.OnReceiveUnreadCountChangedListener = RongIM.OnReceiveUnreadCountChangedListener { count ->
+        if (count == 0) {
+            numcon!!.visibility = View.GONE
+        } else if (count in 1..99) {
+            numcon!!.visibility = View.VISIBLE
+            numcon!!.setText(count.toString())
+        }
+        RongIM.setConversationClickListener(MyConversationClickListener())
+    }
+    /**
+     * 融云消息接收，及初始化
+     */
+    private inner class MyConversationClickListener : RongIM.ConversationClickListener {
+        /**
+         * 当点击用户头像后执行。
+         *
+         * @param context          上下文。
+         * @param conversationType 会话类型。
+         * @param user             被点击的用户的信息。
+         * @param targetId         会话 id
+         * @return 如果用户自己处理了点击后的逻辑处理，则返回 true，否则返回 false，false 走融云默认处理方式。
+         */
+        override fun onUserPortraitClick(context: Context, conversationType: Conversation.ConversationType, user: UserInfo, targetId: String): Boolean {
+//            val intent = Intent(mContext, PersonalInfoActivity::class.java)
+//            intent.putExtra("phones", user.userId)
+//            startActivity(intent)
+            return true
+        }
+
+        /**
+         * 当长按用户头像后执行。
+         *
+         * @param context          上下文。
+         * @param conversationType 会话类型。
+         * @param user             被点击的用户的信息。
+         * @param targetId         会话 id
+         * @return 如果用户自己处理了点击后的逻辑处理，则返回 true，否则返回 false，false 走融云默认处理方式。
+         */
+        override fun onUserPortraitLongClick(context: Context, conversationType: Conversation.ConversationType, user: UserInfo, targetId: String): Boolean {
+            return false
+        }
+
+        /**
+         * 当点击消息时执行。
+         *
+         * @param context 上下文。
+         * @param view    触发点击的 View。
+         * @param message 被点击的消息的实体信息。
+         * @return 如果用户自己处理了点击后的逻辑处理，则返回 true， 否则返回 false, false 走融云默认处理方式。
+         */
+        override fun onMessageClick(context: Context, view: View, message: Message): Boolean {
+            return false
+        }
+
+        /**
+         * 当点击链接消息时执行。
+         *
+         * @param context 上下文。
+         * @param link    被点击的链接。
+         * @param message 被点击的消息的实体信息
+         * @return 如果用户自己处理了点击后的逻辑处理，则返回 true， 否则返回 false, false 走融云默认处理方式。
+         */
+        override fun onMessageLinkClick(context: Context, link: String, message: Message): Boolean {
+            return false
+        }
+
+        /**
+         * 当长按消息时执行。
+         *
+         * @param context 上下文。
+         * @param view    触发点击的 View。
+         * @param message 被长按的消息的实体信息。
+         * @return 如果用户自己处理了长按后的逻辑处理，则返回 true，否则返回 false，false 走融云默认处理方式。
+         */
+        override fun onMessageLongClick(context: Context, view: View, message: Message): Boolean {
+            return false
+        }
     }
 }

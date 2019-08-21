@@ -31,7 +31,7 @@ class RechargeActivity : BaseActivity() {
     override fun getLayoutId(): Int {
         return (R.layout.activity_recharge)
     }
-
+var numpay = ""
     override fun initViewParams() {
         aliPayCheck.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener {
             override fun onCheckedChanged(p0: CompoundButton?, p1: Boolean) {
@@ -50,19 +50,19 @@ class RechargeActivity : BaseActivity() {
 
         var datas = ArrayList<Pickers>()
         datas.add(Pickers("10", "1"))
-        datas.add(Pickers("20", "2"))
-        datas.add(Pickers("50", "3"))
-        datas.add(Pickers("100", "4"))
-        datas.add(Pickers("200", "5"))
+        datas.add(Pickers("50", "2"))
+        datas.add(Pickers("100", "3"))
+        datas.add(Pickers("200", "4"))
+        datas.add(Pickers("500", "5"))
         pickerscrlllview.setData(datas)
         pickerscrlllview.setSelected(0)
-
         pickerscrlllview.setOnSelectListener(pickerListener)
 
     }
 
     var pickerListener: PickerScrollView.onSelectListener = PickerScrollView.onSelectListener { pickers ->
-        rechargeMoneyEd.text = pickers.showConetnt
+        numpay = pickers.showConetnt
+        rechargeMoneyEd.text = pickers.showConetnt+"个"
     }
 
     override fun initViewClick() {
@@ -71,6 +71,10 @@ class RechargeActivity : BaseActivity() {
         }
 
         recharge.setOnClickListener {
+            if(rechargeMoneyEd.equals("")){
+                showToast(  "请选择购买金币数量")
+                return@setOnClickListener
+            }
             if (aliPayCheck.isChecked) {
                 getAliPayInfo()
             }
@@ -91,8 +95,8 @@ class RechargeActivity : BaseActivity() {
     }
 
     private fun getAliPayInfo() {
-        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().alipay(SPUtil.getString(this@RechargeActivity, "thirdAccount", ""), Integer.valueOf(rechargeMoneyEd.text.toString())
-                , "1", "2"))
+        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().alipay(SPUtil.getString(this@RechargeActivity, "thirdAccount", ""), Integer.valueOf(numpay)
+                , "1", "充值" + numpay + "个金币"))
                 .subscribe({
                     startAliPay(it)
                 }, {
@@ -102,8 +106,8 @@ class RechargeActivity : BaseActivity() {
 
     fun getWxPayInfo() {
 
-        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().wxPay(SPUtil.getString(this@RechargeActivity, "thirdAccount", ""), Integer.valueOf(rechargeMoneyEd.text.toString())
-                , "1", "充值" + rechargeMoneyEd.text.toString() + "金币", getInNetIp(this)))
+        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().wxPay(SPUtil.getString(this@RechargeActivity, "thirdAccount", ""), Integer.valueOf(numpay)
+                , "1", "充值" + numpay + "个金币", getInNetIp(this)))
                 .subscribe({
                     startWxPay(it)
                 }, {

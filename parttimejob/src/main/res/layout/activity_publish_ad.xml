@@ -43,7 +43,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="50dp"
+                android:layout_width="wrap_content"
                 android:layout_height="22dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="20dp"
@@ -73,35 +73,7 @@
                 android:layout_marginRight="15dp"
                 android:background="@color/colorLine" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="22dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="20dp"
-                android:text="红包奖励数量"
-                android:textColor="#ff8b8b8b"
-                android:textSize="15sp" />
 
-            <EditText
-                android:id="@+id/hongbaoSize"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="8dp"
-                android:numeric="integer"
-                android:background="@null"
-                android:layout_marginRight="15dp"
-                android:hint="请输入红包总金币数量"
-                android:singleLine="true"
-                android:textSize="16sp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginRight="15dp"
-                android:background="@color/colorLine" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -135,7 +107,35 @@
                 android:layout_marginTop="12dp"
                 android:layout_marginRight="15dp"
                 android:background="@color/colorLine" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="22dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:text="红包数量"
+                android:textColor="#ff8b8b8b"
+                android:textSize="15sp" />
 
+            <EditText
+                android:id="@+id/hongbaoSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="8dp"
+                android:numeric="integer"
+                android:background="@null"
+                android:layout_marginRight="15dp"
+                android:hint="请输入红包总金币数量"
+                android:singleLine="true"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="15dp"
+                android:background="@color/colorLine" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="22dp"

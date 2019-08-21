@@ -4,9 +4,9 @@
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="16dp"
     android:layout_gravity="center"
     android:layout_margin="15dp"
+    app:cardCornerRadius="16dp"
     app:cardUseCompatPadding="true">
 
     <RelativeLayout
@@ -70,22 +70,36 @@
                 android:textSize="12sp" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/sex"
-            android:layout_width="57dp"
-            android:layout_height="22dp"
+        <RelativeLayout
+            android:id="@+id/sexd"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/nameLayout"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="9dp"
-            android:text="男 30岁"
-            android:textColor="#8b8b8b"
-            android:textSize="14sp" />
+            android:layout_marginTop="9dp">
+
+            <TextView
+                android:id="@+id/sex"
+                android:layout_width="57dp"
+                android:layout_height="22dp"
+                android:text="男 30岁"
+                android:textColor="#8b8b8b"
+                android:textSize="14sp" />
+                <ImageView
+                    android:id="@+id/playphone"
+                    android:layout_width="70dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    android:src="@mipmap/playphone"/>
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/myInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/sex"
+            android:layout_below="@+id/sexd"
             android:layout_margin="15dp"
             android:text="我是一个活泼开朗，我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗。"
             android:textColor="#cfcfcf"
@@ -95,31 +109,31 @@
             android:id="@+id/qiuzhi"
             android:layout_width="wrap_content"
             android:layout_height="22dp"
-            android:text="求职意向"
-            android:layout_below="@+id/myInfo"
             android:layout_alignStart="@+id/myInfo"
+            android:layout_below="@+id/myInfo"
+            android:text="求职意向"
             android:textColor="#ff8b8b8b"
-            android:textSize="14sp"
-            />
+            android:textSize="14sp" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/biaoQianList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignStart="@+id/myInfo"
             android:layout_below="@+id/qiuzhi"
-            android:layout_marginTop="4dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_marginTop="4dp" />
 
         <TextView
             android:id="@+id/phone"
             android:layout_width="wrap_content"
-            android:layout_marginTop="12dp"
             android:layout_height="22dp"
             android:layout_alignStart="@+id/myInfo"
             android:layout_below="@+id/biaoQianList"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="12dp"
             android:text="联系电话："
             android:textColor="#ff8b8b8b"
-            android:layout_marginBottom="12dp"
+            android:visibility="gone"
             android:textSize="14sp" />
     </RelativeLayout>
 

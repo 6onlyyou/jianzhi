@@ -112,7 +112,12 @@ class AdInfoActivity : BaseActivity() {
             }
             name.setText(it.companyName)
             time.setText("发布时间：" + it.publichDate)
-            location.setText("地点：" + it.address)
+            if(it.address.equals("")){
+                location.setText("地点：" + it.city)
+            }else{
+                location.setText("地点：" + it.address)
+            }
+
             ad_content.setText(it.advertisementContent)
             Glide.with(this)
                     .load( it.advertisementImg)

@@ -1,5 +1,11 @@
 package fu.com.parttimejob.adapter;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.lljjcoder.citylist.Toast.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +29,7 @@ import fu.com.parttimejob.R;
 import fu.com.parttimejob.base.baseadapter.BaseRecyclerModel;
 import fu.com.parttimejob.bean.GetLabelsBean;
 import fu.com.parttimejob.bean.ResumeInfoBean;
+import fu.com.parttimejob.utils.SPUtil;
 
 public class TalentFragmentAdapter extends PagerAdapter {
 
@@ -52,8 +60,11 @@ public class TalentFragmentAdapter extends PagerAdapter {
         return view == object;
     }
 
+    ViewGroup contvi = null;
+
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+    public Object instantiateItem(final ViewGroup container, final int position) {
+        contvi = container;
         View view = LayoutInflater.from(container.getContext()).inflate(R.layout.fragment_jianli, container, false);
         container.addView(view);
         String[] strarr = null;
@@ -70,6 +81,19 @@ public class TalentFragmentAdapter extends PagerAdapter {
         TextView name = view.findViewById(R.id.name);
         name.setText(data.get(position).getName());
         phone.setText("联系电话：" + data.get(position).getContactInformation());
+
+        ImageView playphone = view.findViewById(R.id.playphone);
+        playphone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                        if (SPUtil.getInt(container.getContext(), "vipLevel", 0) <1) {
+                            ToastUtils.showShortToast(container.getContext(), "充值后才可以拨打电话噢");
+                        } else {
+                            callPhone(data.get(position).getContactInformation());
+                        }
+
+            }
+        });
         TextView sex = view.findViewById(R.id.sex);
         RecyclerView biaoQian = view.findViewById(R.id.biaoQianList);
         biaoQian.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false));
@@ -138,6 +162,17 @@ public class TalentFragmentAdapter extends PagerAdapter {
             biaoQian.setVisibility(View.GONE);
         }
         return view;
+    }
+
+    /**
+     * 拨打电话（直接拨打电话）
+     * @param phoneNum 电话号码
+     */
+    public void callPhone(String phoneNum) {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        Uri data = Uri.parse("tel:" + phoneNum);
+        intent.setData(data);
+        contvi.getContext().startActivity(intent);
     }
 
     @Override

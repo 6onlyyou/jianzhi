@@ -83,7 +83,9 @@ class JobActivity : BaseActivity() {
                 getJobList()
             }
         }
-
+        back.setOnClickListener {
+            finish()
+        }
         getJobList()
     }
 

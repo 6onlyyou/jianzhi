@@ -78,6 +78,8 @@ class JobInfoActivity : BaseActivity() {
     }
 
     override fun initViewParams() {
+
+
         dialogPro = ProgressDialog(this)
         dialogPro!!.setCanceledOnTouchOutside(true)
         dialogPro!!.setMessage("小二加载中，大人请稍后~")
@@ -146,7 +148,8 @@ fun getDate(){
         } else {
             ji_gouton.text = "立即沟通"
         }
-        if(it.latitude==null){
+
+        if(it.latitude==null||it.latitude.equals("")||it.latitude.equals("0.0")){
             jobLocationMap.visibility = View.GONE
         }else{
             latLng  = LatLng(java.lang.Double.valueOf(it.latitude), java.lang.Double.valueOf(it.longitude))
@@ -161,13 +164,30 @@ fun getDate(){
             val mCameraUpdate = CameraUpdateFactory.newCameraPosition(CameraPosition(latLng, 17f, 30f, 0f))
             aMap?.moveCamera(mCameraUpdate)
         }
-//            it.latitude= 30.28582.toString()
-//            it.longitude= 119.992592.toString()
+        pries_job.setOnClickListener {
+            RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().recruitmentLike(SPUtil.getString(this@JobInfoActivity, "thirdAccount", ""), intent.getIntExtra("id", 0))).subscribe({
+                ToastUtils.showShortToast(applicationContext, it)
+                var drawable = getResources().getDrawable(R.mipmap.selecp);
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());// 设置边界
+                pries_job.setCompoundDrawables(drawable,null,null,null);
+
+            }, {
+                ToastUtils.showShortToast(applicationContext, it.message.toString())
+            })
+        }
+        pries_job.setText(it.complimentCount.toString()+"个人赞了")
+        if(it.compliment){
+            var drawable = getResources().getDrawable(R.mipmap.selecp);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());// 设置边界
+            pries_job.setCompoundDrawables(drawable,null,null,null);
+        }else{
+
+        }
         jinbi = it.unclaimedVirtualCoins
         label_job.text = it.label
         jobSalaryTv.text = it.salaryAndWelfare
         jobLocation.text = it.city
-        content_job.text = "工作内容：" + it.workContent
+        content_job.text = "工作内容：" +"\n"+ it.workContent
         location_job.text = "工作地点：" + it.contactAddress
         phones.text = "手机号码："+it.phoneNumber
         time_job.text = "工作时间："+ it.workTime

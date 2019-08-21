@@ -14,21 +14,17 @@ import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureConfig
 import com.luck.picture.lib.config.PictureMimeType
 import com.luck.picture.lib.entity.LocalMedia
-import com.tencent.connect.common.Constants
-import com.tencent.tauth.Tencent
-import com.umeng.socialize.UMShareAPI
 import fu.com.parttimejob.R
 import fu.com.parttimejob.adapter.GridImageAdapter
 import fu.com.parttimejob.base.BaseActivity
 import fu.com.parttimejob.bean.Pickers
 import fu.com.parttimejob.dialog.HintDialog
+import fu.com.parttimejob.dialog.abelPopWindowL
 import fu.com.parttimejob.retrofitNet.RxUtils
 import fu.com.parttimejob.utils.FullyGridLayoutManager
+import fu.com.parttimejob.utils.RegexUtils
 import fu.com.parttimejob.utils.SPUtil
 import fu.com.parttimejob.view.PickerScrollView.onSelectListener
-import fu.com.parttimejob.weight.BaseUiListener
-import io.rong.imkit.RongIM
-import kotlinx.android.synthetic.main.activity_job_info.*
 import kotlinx.android.synthetic.main.activity_publish_job.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -57,7 +53,9 @@ class PublishJobActivity : BaseActivity() {
         picker_yes.setOnClickListener(onClickListener);
         pushjianli.setOnClickListener(onClickListener);
         styles.setOnClickListener(onClickListener);
-        pickerscrlllview.setOnSelectListener(pickerListener);
+
+
+//        pickerscrlllview.setOnSelectListener(pickerListener);
         val manager = FullyGridLayoutManager(this@PublishJobActivity, 1, GridLayoutManager.VERTICAL, false)
         recyclerView.setLayoutManager(manager)
 
@@ -118,8 +116,8 @@ class PublishJobActivity : BaseActivity() {
                     list!!.add(Pickers(name!![i], i.toString()))
                 }
                 // 设置数据，默认选择第一条
-                pickerscrlllview.setData(list)
-                pickerscrlllview.setSelected(0)
+//                pickerscrlllview.setData(list)
+//                pickerscrlllview.setSelected(0)
             }
         }, {
             ToastUtils.showLongToast(applicationContext, it.message.toString())
@@ -127,58 +125,84 @@ class PublishJobActivity : BaseActivity() {
     }
 
     // 滚动选择器选中事件
-    var pickerListener: onSelectListener = onSelectListener { pickers ->
-        styles.setText(pickers.showConetnt)
-    }
+//    var pickerListener: onSelectListener = onSelectListener { pickers ->
+//        styles.setText(pickers.showConetnt)
+//    }
 
     // 点击监听事件
     var onClickListener: View.OnClickListener = object : View.OnClickListener {
 
         override fun onClick(v: View) {
             if (v === styles) {
-                picker_rel.visibility = View.VISIBLE
+                val addPopWindow = abelPopWindowL(this@PublishJobActivity)
+                addPopWindow.showPopupWindow(styles) { jobName ->
+                    styles.text = if (TextUtils.isEmpty(jobName)) {
+                        ""
+                    } else {
+                        jobName
+                    }
+
+                }
+//                picker_rel.visibility = View.VISIBLE
             } else if (v === pushjianli) {
-                if(Integer.parseInt(money.text.toString()) <10){
+
+                if (Integer.parseInt(money.text.toString()) < 10) {
                     showToast("红包金额不能小于10金币")
                     return
                 }
-                if(Integer.parseInt(size.text.toString()) <1){
+                if (Integer.parseInt(size.text.toString()) < 1) {
                     showToast("红包数量至少1个")
                     return
                 }
-                if (TextUtils.isEmpty(nameEt.text) || TextUtils.isEmpty(styles.text) || TextUtils.isEmpty(money.text) || TextUtils.isEmpty(size.text) || TextUtils.isEmpty(sizepe.text) || TextUtils.isEmpty(salary.text) || TextUtils.isEmpty(workTime.text) || TextUtils.isEmpty(phone.text.toString()) || TextUtils.isEmpty(detailLocation.text) || TextUtils.isEmpty(jianlijianjie.text)) {
+                if(!RegexUtils.isBasePhone(phone.text.toString())){
+                    showToast("请输入正确的手机号")
+                    return
+                }
+
+                if (TextUtils.isEmpty(nameEt.text) || TextUtils.isEmpty(styles.text) || TextUtils.isEmpty(money.text) || TextUtils.isEmpty(size.text) || TextUtils.isEmpty(sizepe.text) || TextUtils.isEmpty(salary.text) || TextUtils.isEmpty(workTime.text) || TextUtils.isEmpty(phone.text.toString())  || TextUtils.isEmpty(jianlijianjie.text)) {
                     showToast("您的信息未填写完整~")
                 } else {
-                    if(Integer.parseInt(money.text.toString())<Integer.parseInt(size.text.toString())){
+                    if (Integer.parseInt(money.text.toString()) < Integer.parseInt(size.text.toString())) {
                         showToast("红包数量不能高于金币数量~")
-                    }else{
-                        HintDialog(this@PublishJobActivity, R.style.dialog, "需要支付"+money.text.toString()+"个金币是否继续？", object : HintDialog.OnCloseListener {
+                    } else {
+                        HintDialog(this@PublishJobActivity, R.style.dialog, "需要支付" + money.text.toString() + "个金币是否继续？", object : HintDialog.OnCloseListener {
                             override fun onClick(dialog: Dialog, confirm: Boolean) {
                                 if (confirm) {
-                                    if( Integer.parseInt(money.text.toString())>   SPUtil.getInt(this@PublishJobActivity, "totalCount", 0)){
+                                    if (Integer.parseInt(money.text.toString()) > SPUtil.getInt(this@PublishJobActivity, "totalCount", 0)) {
                                         showToast("金币不足请充值")
                                         startActivity(Intent(this@PublishJobActivity, MyMoneyActivity::class.java))
-                                    }else{
+                                    } else {
                                         val builder: MultipartBody.Builder = MultipartBody.Builder().setType(MultipartBody.FORM)
                                         var requestBody: RequestBody
                                         if (selectList.isNotEmpty()) {
                                             builder.addFormDataPart("img", File(selectList!!.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList!!.get(0).compressPath)));
                                             requestBody = builder.build()
-                                            RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().publichInfo(SPUtil.getString(this@PublishJobActivity, "thirdAccount", "111"), nameEt.text.toString(), styles.text.toString(), money.text.toString(), size.text.toString(), sizepe.text.toString(), salary.text.toString(), phone.text.toString(), detailLocation.text.toString(), poiItem!!.latLonPoint.longitude.toString(), poiItem!!.latLonPoint.latitude.toString(), jianlijianjie.text.toString(), requestBody, SPUtil.getString(this@PublishJobActivity, "city", ""),workTime.text.toString())).subscribe({
+                                            RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().publichInfo(SPUtil.getString(this@PublishJobActivity, "thirdAccount", "111"), nameEt.text.toString(), styles.text.toString(), money.text.toString(), size.text.toString(), sizepe.text.toString(), salary.text.toString(), phone.text.toString(), detailLocation.text.toString(), poiItem!!.latLonPoint.longitude.toString(), poiItem!!.latLonPoint.latitude.toString(), jianlijianjie.text.toString(), requestBody, SPUtil.getString(this@PublishJobActivity, "city", ""), workTime.text.toString())).subscribe({
                                                 ToastUtils.showLongToast(this@PublishJobActivity, it)
-                                                SPUtil.putInt(this@PublishJobActivity, "totalCount", SPUtil.getInt(this@PublishJobActivity, "totalCount", 0)-Integer.parseInt(money.text.toString()))
+                                                SPUtil.putInt(this@PublishJobActivity, "totalCount", SPUtil.getInt(this@PublishJobActivity, "totalCount", 0) - Integer.parseInt(money.text.toString()))
                                                 finish()
                                             }, {
                                                 ToastUtils.showLongToast(this@PublishJobActivity, it.message.toString())
                                             })
-                                        }else{
-                                            RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().publichNoImgInfo(SPUtil.getString(this@PublishJobActivity, "thirdAccount", "111"), nameEt.text.toString(), styles.text.toString(), money.text.toString(), size.text.toString(), sizepe.text.toString(), salary.text.toString(), phone.text.toString(), detailLocation.text.toString(), poiItem!!.latLonPoint.longitude.toString(), poiItem!!.latLonPoint.latitude.toString(), jianlijianjie.text.toString(),  SPUtil.getString(this@PublishJobActivity, "city", ""),workTime.text.toString())).subscribe({
-                                                ToastUtils.showLongToast(this@PublishJobActivity, it)
-                                                SPUtil.putInt(this@PublishJobActivity, "totalCount", SPUtil.getInt(this@PublishJobActivity, "totalCount", 0)-Integer.parseInt(money.text.toString()))
-                                                finish()
-                                            }, {
-                                                ToastUtils.showLongToast(this@PublishJobActivity, it.message.toString())
-                                            })
+                                        } else {
+                                            if (poiItem== null ) {
+                                                RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().publichNoImgInfo(SPUtil.getString(this@PublishJobActivity, "thirdAccount", "111"), nameEt.text.toString(), styles.text.toString(), money.text.toString(), size.text.toString(), sizepe.text.toString(), salary.text.toString(), phone.text.toString(), detailLocation.text.toString(), "", "", jianlijianjie.text.toString(), SPUtil.getString(this@PublishJobActivity, "city", ""), workTime.text.toString())).subscribe({
+                                                    ToastUtils.showLongToast(this@PublishJobActivity, it)
+                                                    SPUtil.putInt(this@PublishJobActivity, "totalCount", SPUtil.getInt(this@PublishJobActivity, "totalCount", 0) - Integer.parseInt(money.text.toString()))
+                                                    finish()
+                                                }, {
+                                                    ToastUtils.showLongToast(this@PublishJobActivity, it.message.toString())
+                                                })
+                                            } else {
+                                                RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().publichNoImgInfo(SPUtil.getString(this@PublishJobActivity, "thirdAccount", "111"), nameEt.text.toString(), styles.text.toString(), money.text.toString(), size.text.toString(), sizepe.text.toString(), salary.text.toString(), phone.text.toString(), detailLocation.text.toString(), poiItem!!.latLonPoint.longitude.toString(), poiItem!!.latLonPoint.latitude.toString(), jianlijianjie.text.toString(), SPUtil.getString(this@PublishJobActivity, "city", ""), workTime.text.toString())).subscribe({
+                                                    ToastUtils.showLongToast(this@PublishJobActivity, it)
+                                                    SPUtil.putInt(this@PublishJobActivity, "totalCount", SPUtil.getInt(this@PublishJobActivity, "totalCount", 0) - Integer.parseInt(money.text.toString()))
+                                                    finish()
+                                                }, {
+                                                    ToastUtils.showLongToast(this@PublishJobActivity, it.message.toString())
+                                                })
+                                            }
+
                                         }
                                     }
 

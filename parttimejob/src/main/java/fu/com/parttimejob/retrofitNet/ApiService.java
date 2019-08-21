@@ -398,6 +398,14 @@ public interface ApiService {
     @POST("/appservice/app/jobhunter/exchangeGoods")
     Observable<ResponseBean<String>> exchangeGoods(@Query("thirdAccount") String thirdAccount, @Query("goodsId") String goodsId, @Query("address") String address, @Query("phoneNumber") String phoneNumber, @Query("name") String name);
 
+    /**
+     * 兑换商品
+     *
+     * @return
+     */
+    @POST("/appservice/app/alluser/recruitmentLike")
+    Observable<ResponseBean<String>> recruitmentLike(@Query("thirdAccount") String thirdAccount, @Query("id ") int id );
+
 
     /**
      * 用户已经兑换列表
