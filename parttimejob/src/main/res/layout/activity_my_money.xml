@@ -31,6 +31,17 @@
             android:textColor="@color/colorWhite"
             android:textSize="18sp" />
 
+        <TextView
+            android:id="@+id/bill"
+            android:layout_width="wrap_content"
+            android:layout_marginRight="18dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:text="账单"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp" />
+
     </RelativeLayout>
 
     <ImageView

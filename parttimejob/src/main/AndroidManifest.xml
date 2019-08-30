@@ -26,6 +26,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".activity.BillActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".activity.MyDuiHuanActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -147,12 +150,11 @@
             android:name=".activity.MyJianLiActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-        android:name=".activity.DisplayJianLiActivity"
-        android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".activity.DisplayJianLiActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.BindPhoneActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".activity.JobActivity"
             android:theme="@style/AppTheme.NoActionBar" /> <!-- 全面屏 -->
@@ -169,14 +171,17 @@
         <activity
             android:name=".activity.AdInfoActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.ChosseMapPositionActivity"
+        <activity
+            android:name=".activity.ChosseMapPositionActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.ZPListActivity"
+        <activity
+            android:name=".activity.ZPListActivity"
             android:theme="@style/AppTheme.NoActionBar" /> <!-- 会话界面 -->
-
-        <activity android:name=".activity.ShouHuoActivity"
+        <activity
+            android:name=".activity.ShouHuoActivity"
             android:theme="@style/AppTheme.NoActionBar" /> <!-- 会话界面 -->
-        <activity android:name=".activity.WebActivity"
+        <activity
+            android:name=".activity.WebActivity"
             android:theme="@style/AppTheme.NoActionBar" /> <!-- 会话界面 -->
         <activity
             android:name=".activity.ConversationActivity"

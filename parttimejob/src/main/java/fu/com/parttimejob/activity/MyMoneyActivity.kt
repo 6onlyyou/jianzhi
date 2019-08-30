@@ -1,8 +1,6 @@
 package fu.com.parttimejob.activity
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
 import com.heixiu.errand.net.RetrofitFactory
 import com.lljjcoder.citylist.Toast.ToastUtils
 import fu.com.parttimejob.R
@@ -30,6 +28,8 @@ class MyMoneyActivity : BaseActivity() {
         duihshop.setOnClickListener {
             startActivity(Intent(this, ExchangeShopActivity::class.java))
         }
+
+        bill.setOnClickListener { startActivity(Intent(this, BillActivity::class.java)) }
     }
 
     override fun onResume() {
@@ -48,7 +48,7 @@ class MyMoneyActivity : BaseActivity() {
             SPUtil.putString(this@MyMoneyActivity, "nickName", it.name)
             SPUtil.putString(this@MyMoneyActivity, "headImg", it.headImg)
             SPUtil.putString(this@MyMoneyActivity, "companyName", it.companyName)
-            myMoneyTv.setText( it.totalCount.toString())
+            myMoneyTv.setText(it.totalCount.toString())
 
         }, {
             ToastUtils.showLongToast(applicationContext, it.message.toString())
