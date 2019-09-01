@@ -5,6 +5,7 @@ import java.util.List;
 import fu.com.parttimejob.bean.AdInfoBean;
 import fu.com.parttimejob.bean.AdvertisingInfoBean;
 import fu.com.parttimejob.bean.BannerInfo;
+import fu.com.parttimejob.bean.BillBean;
 import fu.com.parttimejob.bean.ExchangeBean;
 import fu.com.parttimejob.bean.GetLabelsBean;
 import fu.com.parttimejob.bean.GetTokenEntity;
@@ -143,6 +144,13 @@ public interface ApiService {
      */
     @POST("/appservice/app/alluser/exchange")
     Observable<ResponseBean<List<ExchangeBean>>> exchange(@Query("thirdAccount") String thirdAccount);
+    /**
+     * 获取兑换商品列表
+     *
+     * @return
+     */
+    @POST("/appservice/app/alluser/myBill")
+    Observable<ResponseBean<List<BillBean>>> myBill(@Query("thirdAccount") String thirdAccount);
 
     /**
      * 获得简历详情接口
