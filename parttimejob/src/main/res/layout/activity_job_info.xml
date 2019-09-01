@@ -111,7 +111,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/jobLocation"
                     android:layout_marginTop="7dp"
-                    android:text="分享成功后可获得398金币奖励"
+                    android:text=""
                     android:textColor="@color/colorRed"
                     android:textSize="12sp" />
             </RelativeLayout>
@@ -156,7 +156,7 @@
         android:textSize="15sp"
         android:textColor="@color/black"
         android:layout_alignParentRight="true"
-        android:text="13个人赞了"
+        android:text="0个人赞了"
         android:drawablePadding="6dp"
         android:drawableLeft="@mipmap/unselecp"/>
 </RelativeLayout>

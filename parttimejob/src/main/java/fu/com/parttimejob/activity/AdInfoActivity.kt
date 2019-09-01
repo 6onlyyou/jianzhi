@@ -17,6 +17,7 @@ import fu.com.parttimejob.base.BaseActivity
 import fu.com.parttimejob.bean.AdvertisingInfoBean
 import fu.com.parttimejob.bean.RxBusEntity
 import fu.com.parttimejob.dialog.HintDialog
+import fu.com.parttimejob.dialog.RadDialog
 import fu.com.parttimejob.dialog.ShareTypeFragment
 import fu.com.parttimejob.retrofitNet.RxUtils
 import fu.com.parttimejob.utils.*
@@ -48,6 +49,7 @@ class AdInfoActivity : BaseActivity() {
             override fun accept(catchDollUserInfoBean: RxBusEntity) {
                 if (catchDollUserInfoBean.msg.equals("101")) {
                     RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().addNumberOfAdvertisingForwarding(SPUtil.getString(this@AdInfoActivity, "thirdAccount", ""), intent.getIntExtra("id", 0))).subscribe({
+
                     }, {
                         ToastUtils.showLongToast(applicationContext, it.message.toString())
                     })
@@ -77,7 +79,11 @@ class AdInfoActivity : BaseActivity() {
 
                 }else{
                     RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().receiveOfAdVirtual(SPUtil.getString(this@AdInfoActivity, "thirdAccount", ""), intent.getIntExtra("id",0))).subscribe({
-                        ToastUtils.showShortToast(applicationContext, "领取成功，金币已存入钱包")
+                            RadDialog(this@AdInfoActivity, R.style.dialog, "恭喜抢到" +it + "金币", RadDialog.OnCloseListener { dialog, confirm ->
+                                    ToastUtils.showLongToast(applicationContext, "已经存入您的钱包")
+                                    dialog.dismiss()
+                                })
+                                        .setTitle("").show()
                     }, {
                         ToastUtils.showShortToast(applicationContext, it.message.toString())
                     })

@@ -177,16 +177,30 @@ public interface ApiService {
     @POST("/appservice/app/jobhunter/randomGetOneAdvertisement")
     Observable<ResponseBean<AdInfoBean>> randomGetOneAdvertisement(@Query("thirdAccount") String thirdAccount);
 
-    /**
+     /**
      * 发布招聘订单
      *
      * @return
      */
     @POST("/appservice/app/recruitment/publichInfo")
     Observable<ResponseBean<String>> publichInfo(@Query("thirdAccount") String thirdAccount, @Query("companyName") String companyName, @Query("label") String label, @Query("numberOfVirtualCoins") String numberOfVirtualCoins, @Query("redEnvelopeNumber") String redEnvelopeNumber, @Query("recruitingNumbers") String recruitingNumbers, @Query("salaryAndWelfare") String salaryAndWelfare, @Query("phoneNumber") String phoneNumber, @Query("contactAddress") String contactAddress, @Query("longitude") String longitude, @Query("latitude") String latitude, @Query("workContent") String workContent, @Body RequestBody file, @Query("city") String city, @Query("workTime") String workTime);
-
     /**
      * 发布招聘订单
+     *
+     * @return
+     */
+    @POST("/appservice/app/recruitment/publichInfo")
+    Observable<ResponseBean<String>> publichInfo(@Query("thirdAccount") String thirdAccount, @Query("companyName") String companyName, @Query("label") String label, @Query("numberOfVirtualCoins") String numberOfVirtualCoins, @Query("redEnvelopeNumber") String redEnvelopeNumber, @Query("recruitingNumbers") String recruitingNumbers, @Query("salaryAndWelfare") String salaryAndWelfare, @Query("phoneNumber") String phoneNumber, @Query("contactAddress") String contactAddress, @Query("workContent") String workContent, @Body RequestBody file, @Query("city") String city, @Query("workTime") String workTime);
+
+      /**
+     * 发布招聘订单无图片无地址
+     *
+     * @return
+     */
+    @POST("/appservice/app/recruitment/publichInfo")
+    Observable<ResponseBean<String>> publichNoImgInfo(@Query("thirdAccount") String thirdAccount, @Query("companyName") String companyName, @Query("label") String label, @Query("numberOfVirtualCoins") String numberOfVirtualCoins, @Query("redEnvelopeNumber") String redEnvelopeNumber, @Query("recruitingNumbers") String recruitingNumbers, @Query("salaryAndWelfare") String salaryAndWelfare, @Query("phoneNumber") String phoneNumber, @Query("contactAddress") String contactAddress, @Query("workContent") String workContent, @Query("city") String city, @Query("workTime") String workTime);
+    /**
+     * 发布招聘订单无图片无地址
      *
      * @return
      */
@@ -216,7 +230,20 @@ public interface ApiService {
      */
     @POST("/appservice/app/recruitment/searchSameCity")
     Observable<ResponseBean<List<ResumeInfoBean>>> searchSameCity(@Query("thirdAccount") String thirdAccount, @Query("city") String city);
-
+    /**
+     * 发布广告无地址有图片
+     *
+     * @return
+     */
+    @POST("/appservice/app/recruitment/publichAdvertisement")
+    Observable<ResponseBean<String>> publichnuntupAdvertisement(@Query("thirdAccount") String thirdAccount, @Query("companyName") String companyName, @Query("redEnvelopeNumber") String redEnvelopeNumber, @Query("numberOfVirtualCoins") String numberOfVirtualCoins, @Query("city") String city,  @Query("advertisementContent") String advertisementContent,@Body RequestBody file,@Query("address") String address);
+    /**
+     * 发布广告无地址
+     *
+     * @return
+     */
+    @POST("/appservice/app/recruitment/publichAdvertisement")
+    Observable<ResponseBean<String>> publichnunAdvertisement(@Query("thirdAccount") String thirdAccount, @Query("companyName") String companyName, @Query("redEnvelopeNumber") String redEnvelopeNumber, @Query("numberOfVirtualCoins") String numberOfVirtualCoins, @Query("city") String city ,@Query("advertisementContent") String advertisementContent);
     /**
      * 发布广告
      *
@@ -230,7 +257,7 @@ public interface ApiService {
      * @return
      */
     @POST("/appservice/app/recruitment/publichAdvertisement")
-    Observable<ResponseBean<String>> publichAdvertisement(@Query("thirdAccount") String thirdAccount, @Query("companyName") String companyName, @Query("redEnvelopeNumber ") String redEnvelopeNumber, @Query("numberOfVirtualCoins") String numberOfVirtualCoins, @Query("city") String city, @Query("latitude") String latitude, @Query("longitude") String longitude, @Query("advertisementContent") String advertisementContent);
+    Observable<ResponseBean<String>> publichAdvertisement(@Query("thirdAccount") String thirdAccount, @Query("companyName") String companyName, @Query("redEnvelopeNumber") String redEnvelopeNumber, @Query("numberOfVirtualCoins") String numberOfVirtualCoins, @Query("city") String city, @Query("latitude") String latitude, @Query("longitude") String longitude, @Query("advertisementContent") String advertisementContent);
 
     /**
      * 招聘者名片创建
@@ -404,7 +431,7 @@ public interface ApiService {
      * @return
      */
     @POST("/appservice/app/alluser/recruitmentLike")
-    Observable<ResponseBean<String>> recruitmentLike(@Query("thirdAccount") String thirdAccount, @Query("id ") int id );
+    Observable<ResponseBean<String>> recruitmentLike(@Query("thirdAccount") String thirdAccount, @Query("id") int id );
 
 
     /**

@@ -177,16 +177,27 @@ class PublishJobActivity : BaseActivity() {
                                         if (selectList.isNotEmpty()) {
                                             builder.addFormDataPart("img", File(selectList!!.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList!!.get(0).compressPath)));
                                             requestBody = builder.build()
-                                            RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().publichInfo(SPUtil.getString(this@PublishJobActivity, "thirdAccount", "111"), nameEt.text.toString(), styles.text.toString(), money.text.toString(), size.text.toString(), sizepe.text.toString(), salary.text.toString(), phone.text.toString(), detailLocation.text.toString(), poiItem!!.latLonPoint.longitude.toString(), poiItem!!.latLonPoint.latitude.toString(), jianlijianjie.text.toString(), requestBody, SPUtil.getString(this@PublishJobActivity, "city", ""), workTime.text.toString())).subscribe({
-                                                ToastUtils.showLongToast(this@PublishJobActivity, it)
-                                                SPUtil.putInt(this@PublishJobActivity, "totalCount", SPUtil.getInt(this@PublishJobActivity, "totalCount", 0) - Integer.parseInt(money.text.toString()))
-                                                finish()
-                                            }, {
-                                                ToastUtils.showLongToast(this@PublishJobActivity, it.message.toString())
-                                            })
+                                            if (poiItem== null ) {
+                                                RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().publichInfo(SPUtil.getString(this@PublishJobActivity, "thirdAccount", "111"), nameEt.text.toString(), styles.text.toString(), money.text.toString(), size.text.toString(), sizepe.text.toString(), salary.text.toString(), phone.text.toString(), detailLocation.text.toString(), jianlijianjie.text.toString(), requestBody, SPUtil.getString(this@PublishJobActivity, "city", ""), workTime.text.toString())).subscribe({
+                                                    ToastUtils.showLongToast(this@PublishJobActivity, it)
+                                                    SPUtil.putInt(this@PublishJobActivity, "totalCount", SPUtil.getInt(this@PublishJobActivity, "totalCount", 0) - Integer.parseInt(money.text.toString()))
+                                                    finish()
+                                                }, {
+                                                    ToastUtils.showLongToast(this@PublishJobActivity, it.message.toString())
+                                                })
+                                            }else{
+                                                RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().publichInfo(SPUtil.getString(this@PublishJobActivity, "thirdAccount", "111"), nameEt.text.toString(), styles.text.toString(), money.text.toString(), size.text.toString(), sizepe.text.toString(), salary.text.toString(), phone.text.toString(), detailLocation.text.toString(), poiItem!!.latLonPoint.longitude.toString(), poiItem!!.latLonPoint.latitude.toString(), jianlijianjie.text.toString(), requestBody, SPUtil.getString(this@PublishJobActivity, "city", ""), workTime.text.toString())).subscribe({
+                                                    ToastUtils.showLongToast(this@PublishJobActivity, it)
+                                                    SPUtil.putInt(this@PublishJobActivity, "totalCount", SPUtil.getInt(this@PublishJobActivity, "totalCount", 0) - Integer.parseInt(money.text.toString()))
+                                                    finish()
+                                                }, {
+                                                    ToastUtils.showLongToast(this@PublishJobActivity, it.message.toString())
+                                                })
+                                            }
+
                                         } else {
                                             if (poiItem== null ) {
-                                                RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().publichNoImgInfo(SPUtil.getString(this@PublishJobActivity, "thirdAccount", "111"), nameEt.text.toString(), styles.text.toString(), money.text.toString(), size.text.toString(), sizepe.text.toString(), salary.text.toString(), phone.text.toString(), detailLocation.text.toString(), "", "", jianlijianjie.text.toString(), SPUtil.getString(this@PublishJobActivity, "city", ""), workTime.text.toString())).subscribe({
+                                                RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().publichNoImgInfo(SPUtil.getString(this@PublishJobActivity, "thirdAccount", "111"), nameEt.text.toString(), styles.text.toString(), money.text.toString(), size.text.toString(), sizepe.text.toString(), salary.text.toString(), phone.text.toString(), detailLocation.text.toString(),  jianlijianjie.text.toString(), SPUtil.getString(this@PublishJobActivity, "city", ""), workTime.text.toString())).subscribe({
                                                     ToastUtils.showLongToast(this@PublishJobActivity, it)
                                                     SPUtil.putInt(this@PublishJobActivity, "totalCount", SPUtil.getInt(this@PublishJobActivity, "totalCount", 0) - Integer.parseInt(money.text.toString()))
                                                     finish()

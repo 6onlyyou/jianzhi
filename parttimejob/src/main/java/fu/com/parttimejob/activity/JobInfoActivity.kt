@@ -78,8 +78,6 @@ class JobInfoActivity : BaseActivity() {
     }
 
     override fun initViewParams() {
-
-
         dialogPro = ProgressDialog(this)
         dialogPro!!.setCanceledOnTouchOutside(true)
         dialogPro!!.setMessage("小二加载中，大人请稍后~")
@@ -96,7 +94,7 @@ class JobInfoActivity : BaseActivity() {
                     }else{
                         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().addNumberOfRecruitForwarding(SPUtil.getString(this@JobInfoActivity, "thirdAccount", ""), recruitInfoBean!!.id)).subscribe({
                             RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().receiveOfRecruitmentVirtual(SPUtil.getString(this@JobInfoActivity, "thirdAccount", ""), recruitInfoBean!!.id)).subscribe({
-                                RadDialog(this@JobInfoActivity, R.style.dialog, "恭喜获得" + recruitInfoBean!!.getNumberOfVirtualCoins() / recruitInfoBean!!.getRedEnvelopeNumber() + "金币", RadDialog.OnCloseListener { dialog, confirm ->
+                                RadDialog(this@JobInfoActivity, R.style.dialog, "恭喜抢到" +it + "金币", RadDialog.OnCloseListener { dialog, confirm ->
                                     ToastUtils.showLongToast(applicationContext, "已经存入您的钱包")
                                     dialog.dismiss()
                                 })
@@ -170,7 +168,7 @@ fun getDate(){
                 var drawable = getResources().getDrawable(R.mipmap.selecp);
                 drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());// 设置边界
                 pries_job.setCompoundDrawables(drawable,null,null,null);
-
+                pries_job.setText((Integer.parseInt(recruitInfoBean!!.complimentCount.toString())+1).toString()+"个人赞了")
             }, {
                 ToastUtils.showShortToast(applicationContext, it.message.toString())
             })
@@ -193,7 +191,7 @@ fun getDate(){
         time_job.text = "工作时间："+ it.workTime
         num_job.text = "招聘人数：" + it.recruitingNumbers
         job_jbi.text = "分享群领取" + it.numberOfVirtualCoins / it.redEnvelopeNumber + "金币"
-        coid_job.text = "分享成功后可获得" + it.numberOfVirtualCoins / it.redEnvelopeNumber + "金币奖励"
+        coid_job.text = "分享成功后即可抢最高" + it.numberOfVirtualCoins + "金币的随机红包"
         ji_gouton.setOnClickListener {
             if (SPUtil.getString(this, "thirdAccount", "").equals("")) {
                 val intent = Intent(this, MainActivity::class.java)

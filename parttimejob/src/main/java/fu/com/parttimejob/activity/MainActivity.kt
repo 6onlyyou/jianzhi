@@ -301,8 +301,8 @@ class MainActivity : BaseActivity() , RongIMClient.OnReceiveMessageListener{
          * @return 如果用户自己处理了点击后的逻辑处理，则返回 true，否则返回 false，false 走融云默认处理方式。
          */
         override fun onUserPortraitClick(context: Context, conversationType: Conversation.ConversationType, user: UserInfo, targetId: String): Boolean {
-//            val intent = Intent(mContext, PersonalInfoActivity::class.java)
-//            intent.putExtra("phones", user.userId)
+
+//            intent.putExtra("beViewedAccount", user.userId)
 //            startActivity(intent)
             return true
         }
