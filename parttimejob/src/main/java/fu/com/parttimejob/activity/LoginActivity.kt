@@ -71,7 +71,7 @@ class LoginActivity : BaseActivity() {
         }else{
             sex = 2
         }
-        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().register(wxInfoEntity!!.getmOpenid(), SPUtil.getInt(this@LoginActivity, "Profession", 1),
+        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().register(wxInfoEntity!!.getmUnionid(), SPUtil.getInt(this@LoginActivity, "Profession", 1),
                 wxInfoEntity.getmNickname(), wxInfoEntity.getmHeadimgurl(),sex , 1, "wx23456")).subscribe({
             if (it.register) {
                 ToastUtils.showLongToast(applicationContext, "登入成功")
