@@ -3,6 +3,7 @@ package fu.com.parttimejob.activity
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Intent
+import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.View
 import android.widget.ImageView
@@ -70,20 +71,20 @@ class AdInfoActivity : BaseActivity() {
     fun getDate() {
         dialogPro!!.show()
         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().singleAdDetail(SPUtil.getString(this, "thirdAccount", ""), intent.getIntExtra("id", 0))).subscribe({
-            if(dialogPro!!.isShowing){
+            if (dialogPro!!.isShowing) {
                 dialogPro!!.dismiss()
             }
             advertisingInfoBean = it
-            RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().addNumberOfAdvertisingView(SPUtil.getString(this@AdInfoActivity, "thirdAccount", ""),intent.getIntExtra("id",0))).subscribe({
-                if(SPUtil.getString(this@AdInfoActivity, "thirdAccount", "").equals(advertisingInfoBean!!.thirdAccount)){
+            RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().addNumberOfAdvertisingView(SPUtil.getString(this@AdInfoActivity, "thirdAccount", ""), intent.getIntExtra("id", 0))).subscribe({
+                if (SPUtil.getString(this@AdInfoActivity, "thirdAccount", "").equals(advertisingInfoBean!!.thirdAccount)) {
 
-                }else{
-                    RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().receiveOfAdVirtual(SPUtil.getString(this@AdInfoActivity, "thirdAccount", ""), intent.getIntExtra("id",0))).subscribe({
-                            RadDialog(this@AdInfoActivity, R.style.dialog, "恭喜抢到" +it + "金币", RadDialog.OnCloseListener { dialog, confirm ->
-                                    ToastUtils.showLongToast(applicationContext, "已经存入您的钱包")
-                                    dialog.dismiss()
-                                })
-                                        .setTitle("").show()
+                } else {
+                    RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().receiveOfAdVirtual(SPUtil.getString(this@AdInfoActivity, "thirdAccount", ""), intent.getIntExtra("id", 0))).subscribe({
+                        RadDialog(this@AdInfoActivity, R.style.dialog, "恭喜抢到" + it + "金币", RadDialog.OnCloseListener { dialog, confirm ->
+                            ToastUtils.showLongToast(applicationContext, "已经存入您的钱包")
+                            dialog.dismiss()
+                        })
+                                .setTitle("").show()
                     }, {
                         ToastUtils.showShortToast(applicationContext, it.message.toString())
                     })
@@ -93,7 +94,7 @@ class AdInfoActivity : BaseActivity() {
                 ToastUtils.showShortToast(applicationContext, it.message.toString())
             })
             if (SPUtil.getString(this, "thirdAccount", "").equals(it.thirdAccount)) {
-                if (it.state == 1||it.state == 2) {
+                if (it.state == 1 || it.state == 2) {
                     ji_gouton.setText("关闭广告")
                 } else {
                     ji_gouton.setText("开启广告")
@@ -102,9 +103,9 @@ class AdInfoActivity : BaseActivity() {
             } else {
                 ji_gouton.visibility = View.GONE
             }
-            if(it.getHeadImg()==null||it.getHeadImg().equals("")){
+            if (it.getHeadImg() == null || it.getHeadImg().equals("")) {
                 ava.visibility = View.GONE
-            }else{
+            } else {
                 ava.visibility = View.VISIBLE
                 GlideUtil.load(this, it.getHeadImg(), ava)
 
@@ -113,24 +114,27 @@ class AdInfoActivity : BaseActivity() {
                 DlgForBigPhto(advertisingInfoBean!!.getHeadImg())
             }
             zhuanfa_ad.setOnClickListener {
-                shareTypeFragment!!.show(getFragmentManager(), "2", advertisingInfoBean!!.companyName,advertisingInfoBean!!.publichDate,advertisingInfoBean!!.city,advertisingInfoBean!!.advertisementContent,advertisingInfoBean!!.advertisementImg,SPUtil.getString(this@AdInfoActivity, "inviteCode", ""),"https://www.pgyer.com/Tbl7",advertisingInfoBean!!.headImg)
+                shareTypeFragment!!.show(getFragmentManager(), "2", advertisingInfoBean!!.companyName, advertisingInfoBean!!.publichDate, advertisingInfoBean!!.city, advertisingInfoBean!!.advertisementContent, advertisingInfoBean!!.advertisementImg, SPUtil.getString(this@AdInfoActivity, "inviteCode", ""), "https://www.pgyer.com/Tbl7", advertisingInfoBean!!.headImg)
 
             }
             name.setText(it.companyName)
             time.setText("发布时间：" + it.publichDate)
-            if(it.address.equals("")){
-                location.setText("地点：" + it.city)
-            }else{
-                location.setText("地点：" + it.address)
+            if (!TextUtils.isEmpty(it.address)) {
+                if (it.address.equals("")) {
+                    location.setText("地点：" + it.city)
+                } else {
+                    location.setText("地点：" + it.address)
+                }
             }
 
             ad_content.setText(it.advertisementContent)
             Glide.with(this)
-                    .load( it.advertisementImg)
+                    .load(it.advertisementImg)
                     .placeholder(R.mipmap.defind)
                     .into(ad_cimg)
             ad_cimg.setOnClickListener {
-                DlgForBigPhto(advertisingInfoBean!!.advertisementImg)
+                if (!TextUtils.isEmpty(advertisingInfoBean?.advertisementImg))
+                    DlgForBigPhto(advertisingInfoBean!!.advertisementImg)
             }
             ji_gouton.setOnClickListener {
                 if (SPUtil.getString(this, "thirdAccount", "").equals("")) {
@@ -145,15 +149,15 @@ class AdInfoActivity : BaseActivity() {
                     }
                 }
             }
-            if (it.latitude!=null){
+            if (it.latitude != null) {
 
-            var latLng :LatLng = LatLng (Double.valueOf(it.latitude), Double.valueOf(it.longitude))
-            location.setOnClickListener {
-                MapUtils.goToGaodeMap(this@AdInfoActivity, latLng, advertisingInfoBean?.city)
-            }
+                var latLng: LatLng = LatLng(Double.valueOf(it.latitude), Double.valueOf(it.longitude))
+                location.setOnClickListener {
+                    MapUtils.goToGaodeMap(this@AdInfoActivity, latLng, advertisingInfoBean?.city)
+                }
             }
         }, {
-            if(dialogPro!!.isShowing){
+            if (dialogPro!!.isShowing) {
                 dialogPro!!.dismiss()
             }
             ToastUtils.showLongToast(this, it.message.toString())
@@ -163,6 +167,7 @@ class AdInfoActivity : BaseActivity() {
     override fun initViewClick() {
 
     }
+
     fun clossD() {
         HintDialog(this, R.style.dialog, "关闭广告返还" + advertisingInfoBean!!.unclaimedVirtualCoins + "金币,是否继续？", object : HintDialog.OnCloseListener {
             override fun onClick(dialog: Dialog, confirm: Boolean) {

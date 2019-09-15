@@ -14,6 +14,7 @@ import fu.com.parttimejob.bean.KuaiDiBean;
 import fu.com.parttimejob.bean.LoginBean;
 import fu.com.parttimejob.bean.MAdvertisingBean;
 import fu.com.parttimejob.bean.RecruitInfoBean;
+import fu.com.parttimejob.bean.RedPackageBean;
 import fu.com.parttimejob.bean.RegisterBean;
 import fu.com.parttimejob.bean.ResponseBean;
 import fu.com.parttimejob.bean.ResumeInfoBean;
@@ -176,6 +177,13 @@ public interface ApiService {
      */
     @POST("/appservice/app/jobhunter/randomGetOne")
     Observable<ResponseBean<SameCityBean>> randomGetOne(@Query("thirdAccount") String thirdAccount);
+    /**
+     * 随机获得三个红包接口
+     *
+     * @return
+     */
+    @POST("/appservice/app/jobhunter/randomGetThreeRedPacket")
+    Observable<ResponseBean<List<RedPackageBean>>> randomGetThreeRedPacket(@Query("thirdAccount") String thirdAccount);
 
     /**
      * 随机获得一个广告接口
