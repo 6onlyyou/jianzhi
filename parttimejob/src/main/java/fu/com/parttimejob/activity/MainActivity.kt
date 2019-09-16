@@ -93,7 +93,7 @@ class MainActivity : BaseActivity() , RongIMClient.OnReceiveMessageListener{
         adapter.addFragments(MineFragment())
 
         titles.add("首页")
-        titles.add("红包")
+        titles.add("家园")
         titles.add("消息")
         titles.add("我的")
 

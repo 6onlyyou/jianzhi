@@ -52,7 +52,6 @@ class PublishAdActivity : BaseActivity() {
                 if (selectList.size > 0) {
                     val media = selectList[position]
                     val pictureType = media.pictureType
-
                     val mediaType = PictureMimeType.pictureToVideo(pictureType)
                     when (mediaType) {
                         1 ->

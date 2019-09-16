@@ -76,12 +76,12 @@ class LoginActivity : BaseActivity() {
             if (it.register) {
                 ToastUtils.showLongToast(applicationContext, "登入成功")
                 SPUtil.putString(this@LoginActivity, "token", it.token)
-                SPUtil.putString(applicationContext,"thirdAccount",wxInfoEntity!!.getmOpenid())
+                SPUtil.putString(applicationContext,"thirdAccount",wxInfoEntity!!.getmUnionid())
                 startActivity(MainActivity::class.java, true)
             } else {
                 ToastUtils.showLongToast(applicationContext, "登入成功")
                 SPUtil.putString(this@LoginActivity, "token", it.token)
-                SPUtil.putString(applicationContext,"thirdAccount",wxInfoEntity!!.getmOpenid())
+                SPUtil.putString(applicationContext,"thirdAccount",wxInfoEntity!!.getmUnionid())
                 if(SPUtil.getInt(this@LoginActivity, "Profession", 1)==1){
                     startActivity(ChooseJobActivity::class.java, true)
                 }else{

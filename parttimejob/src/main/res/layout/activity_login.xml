@@ -28,7 +28,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="返回重选"
-    android:textSize="18sp"
+    android:textSize="15sp"
     android:textColor="@color/white"/>
     </LinearLayout>
     <TextView
