@@ -12,12 +12,12 @@
 
         <TextView
             android:id="@+id/title"
-            android:paddingTop="45px"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="我的家园"
+            android:paddingTop="45px"
+            android:text="红包广场"
             android:textColor="@color/colorWhite"
             android:textSize="18sp" />
 
@@ -25,33 +25,36 @@
 
 
     <FrameLayout
-        android:layout_marginTop="175px"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="184px">
 
         <ImageView
             android:id="@+id/bg"
-            android:layout_width="1080px"
+            android:scaleType="fitXY"
+            android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
         <ImageView
             android:id="@+id/box1"
-            android:layout_marginTop="704px"
-            android:layout_marginLeft="99px"
-            android:layout_width="498px"
-            android:layout_height="439px" />
+            android:layout_width="430px"
+            android:layout_height="430px"
+            android:layout_marginLeft="152px"
+            android:layout_marginTop="642px" />
+
         <ImageView
             android:id="@+id/box2"
-            android:layout_width="498px"
-            android:layout_marginLeft="550px"
-            android:layout_marginTop="507px"
-            android:layout_height="447px" />
+            android:layout_width="430px"
+            android:layout_height="430px"
+            android:layout_marginLeft="553px"
+            android:layout_marginTop="498px" />
+
         <ImageView
             android:id="@+id/box3"
-            android:layout_marginLeft="500px"
-            android:layout_marginTop="1001px"
-            android:layout_width="562px"
-            android:layout_height="472px" />
+            android:layout_width="430px"
+            android:layout_height="430px"
+            android:layout_marginLeft="553px"
+            android:layout_marginTop="1031px" />
 
     </FrameLayout>
 

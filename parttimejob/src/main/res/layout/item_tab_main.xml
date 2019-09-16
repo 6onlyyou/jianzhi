@@ -1,44 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="40dp"
-    android:layout_height="70dp"
-    >
-<LinearLayout
-    android:layout_width="40dp"
-    android:layout_height="70dp"
-    android:layout_marginBottom="2dp"
-    android:gravity="center"
-    android:orientation="vertical">
-    <ImageView
-        android:id="@+id/tabImg"
-        android:layout_weight="3"
-        android:scaleType="centerInside"
-        android:layout_width="34dp"
-        android:layout_height="34dp"
-        />
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70dp">
+
+    <LinearLayout
+        android:id="@+id/tablayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/tabImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            />
+
+        <TextView
+            android:id="@+id/tab"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="1111"
+            android:layout_weight="2"
+            android:textColor="@color/custom_tab"
+            android:textSize="10sp" />
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/tab"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="1111"
-        android:layout_gravity="center"
-        android:textSize="14sp"
-        android:gravity="center"
-        android:textColor="@color/custom_tab"/>
-</LinearLayout>
-    <TextView
         android:id="@+id/numcon"
+        android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
-        android:textSize="8sp"
+        android:layout_marginLeft="15dp"
         android:textColor="@color/colorRed"
-        android:layout_centerInParent="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_alignParentTop="true"
-        />
-</RelativeLayout>
+        android:textSize="8sp" />
+</FrameLayout>
