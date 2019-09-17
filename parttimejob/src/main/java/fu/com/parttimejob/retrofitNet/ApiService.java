@@ -282,6 +282,13 @@ public interface ApiService {
      */
     @POST("/appservice/app/recruitment/createCard")
     Observable<ResponseBean<String>> createCard(@Query("thirdAccount") String thirdAccount, @Body RequestBody file, @Query("name") String name, @Query("phoneNumber") String phoneNumber, @Query("companyName") String companyName);
+    /**
+     * 招聘者名片创建无图片
+     *
+     * @return
+     */
+    @POST("/appservice/app/recruitment/createCard")
+    Observable<ResponseBean<String>> createCard(@Query("thirdAccount") String thirdAccount, @Query("name") String name, @Query("phoneNumber") String phoneNumber, @Query("companyName") String companyName);
 
     /**
      * 关闭招聘

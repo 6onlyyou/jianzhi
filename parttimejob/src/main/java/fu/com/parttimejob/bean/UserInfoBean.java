@@ -24,6 +24,16 @@ public class UserInfoBean {
     private  String nickName;
     private int vipLevel;
 
+    private String cardPhoneNum;
+
+    public String getCardPhoneNum() {
+        return cardPhoneNum;
+    }
+
+    public void setCardPhoneNum(String cardPhoneNum) {
+        this.cardPhoneNum = cardPhoneNum;
+    }
+
     public int getVipLevel() {
         return vipLevel;
     }

@@ -45,6 +45,7 @@ import io.rong.imlib.model.Message
 import io.rong.imlib.model.UserInfo
 import io.rong.message.TextMessage
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_talent_management.view.*
 import java.util.*
 
 class MainActivity : BaseActivity() , RongIMClient.OnReceiveMessageListener{
@@ -91,7 +92,6 @@ class MainActivity : BaseActivity() , RongIMClient.OnReceiveMessageListener{
         adapter.addFragments(SquareFragment())
         adapter.addFragments(initConversationList())
         adapter.addFragments(MineFragment())
-
         titles.add("首页")
         titles.add("家园")
         titles.add("消息")
@@ -114,7 +114,7 @@ class MainActivity : BaseActivity() , RongIMClient.OnReceiveMessageListener{
 
             main_tab.addTab(tab)
         }
-
+        main_vp.setOffscreenPageLimit(3)
         main_vp.adapter = adapter
         main_vp.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
@@ -250,6 +250,7 @@ class MainActivity : BaseActivity() , RongIMClient.OnReceiveMessageListener{
             SPUtil.putInt(this@MainActivity, "loginType", it.loginType)
             SPUtil.putString(this@MainActivity, "registrationDate", it.registrationDate)
             SPUtil.putString(this@MainActivity, "city", it.city)
+            SPUtil.putString(this@MainActivity, "cardPhoneNum", it.cardPhoneNum)
             SPUtil.putString(this@MainActivity, "longitude", it.longitude)
             SPUtil.putString(this@MainActivity, "latitude", it.latitude)
             SPUtil.putString(this@MainActivity, "inviteCode", it.inviteCode)

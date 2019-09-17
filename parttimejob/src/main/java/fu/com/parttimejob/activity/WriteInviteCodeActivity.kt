@@ -20,12 +20,15 @@ class WriteInviteCodeActivity : BaseActivity() {
         back.setOnClickListener {
             finish()
         }
-        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().inputInvit(SPUtil.getString(this@WriteInviteCodeActivity, "thirdAccount", ""), writeInvite.text.toString())).subscribe({
-            ToastUtils.showLongToast(applicationContext, "绑定成功")
+        confirm.setOnClickListener {
+            RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().inputInvit(SPUtil.getString(this@WriteInviteCodeActivity, "thirdAccount", ""), writeInvite.text.toString())).subscribe({
+                ToastUtils.showLongToast(applicationContext, "绑定成功")
 
-        }, {
-            ToastUtils.showLongToast(applicationContext, it.message.toString())
-        })
+            }, {
+                ToastUtils.showLongToast(applicationContext, it.message.toString())
+            })
+        }
+
     }
 
 }
