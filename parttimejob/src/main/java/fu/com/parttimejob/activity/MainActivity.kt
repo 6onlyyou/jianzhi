@@ -55,7 +55,7 @@ class MainActivity : BaseActivity() , RongIMClient.OnReceiveMessageListener{
     private var numcon: TextView? = null
 
     override fun onReceived(p0: Message?, p1: Int): Boolean {
-        return false;
+        return false
     }
 
 
@@ -72,7 +72,7 @@ class MainActivity : BaseActivity() , RongIMClient.OnReceiveMessageListener{
     private fun initConversationList(): Fragment {
 
         val listFragment = ConversationListImFragment()
-        listFragment.setAdapter(ConversationListAdapterEx(RongContext.getInstance()));
+        listFragment.setAdapter(ConversationListAdapterEx(RongContext.getInstance()))
         val uri = Uri.parse("rong://" + applicationInfo.packageName).buildUpon()
                 .appendPath("conversationList")
                 .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false")
@@ -114,7 +114,7 @@ class MainActivity : BaseActivity() , RongIMClient.OnReceiveMessageListener{
 
             main_tab.addTab(tab)
         }
-        main_vp.setOffscreenPageLimit(3)
+        main_vp.offscreenPageLimit = 3
         main_vp.adapter = adapter
         main_vp.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
@@ -161,8 +161,8 @@ class MainActivity : BaseActivity() , RongIMClient.OnReceiveMessageListener{
         })
         LocationUtils().getLocation(this, object : AMapLocationListener {
             override fun onLocationChanged(amapLocation: AMapLocation?) {
-                SPUtil.putString(this@MainActivity,"longitude", amapLocation!!.getLongitude().toString())
-                SPUtil.putString(this@MainActivity,"latitude", amapLocation!!.getLatitude().toString())
+                SPUtil.putString(this@MainActivity,"longitude", amapLocation!!.longitude.toString())
+                SPUtil.putString(this@MainActivity,"latitude", amapLocation.latitude.toString())
                 SPUtil.putString(this@MainActivity,"city",amapLocation.city)
             }
         })
@@ -185,12 +185,12 @@ class MainActivity : BaseActivity() , RongIMClient.OnReceiveMessageListener{
 
         }
         if (SPUtil.getInt(this@MainActivity, "Profession", 1) == 2) {
-            main_vp.setCurrentItem(0)
+            main_vp.currentItem = 0
             incl_titles.visibility = View.GONE
         }else{
-            main_vp.setCurrentItem(1)
+            main_vp.currentItem = 1
         }
-
+        main_vp.offscreenPageLimit = 4
     }
 
     override fun initViewClick() {
@@ -230,13 +230,13 @@ class MainActivity : BaseActivity() , RongIMClient.OnReceiveMessageListener{
     }
     private var firstTime: Long = 0
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_DOWN) {
 
-            val secondTime = System.currentTimeMillis();
+            val secondTime = System.currentTimeMillis()
             if (secondTime - firstTime > 2000) {
-                Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
-                firstTime = secondTime;
-                return true;
+                Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show()
+                firstTime = secondTime
+                return true
             } else {
                 ActivityManager.exitApp()
             }
@@ -284,7 +284,7 @@ class MainActivity : BaseActivity() , RongIMClient.OnReceiveMessageListener{
             numcon!!.visibility = View.GONE
         } else if (count in 1..99) {
             numcon!!.visibility = View.VISIBLE
-            numcon!!.setText(count.toString())
+            numcon!!.text = count.toString()
         }
         RongIM.setConversationClickListener(MyConversationClickListener())
     }
