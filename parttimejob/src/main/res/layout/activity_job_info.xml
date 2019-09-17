@@ -235,7 +235,7 @@
                 android:layout_marginTop="48dp"
                 android:background="@mipmap/rectangle"
                 android:gravity="center"
-                android:text="分享群领取20金币"
+                android:text="分享群领取更多金币"
                 android:layout_marginBottom="100dp"
                 android:textColor="@color/white"
                 android:textSize="15sp" />

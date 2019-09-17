@@ -15,6 +15,8 @@ import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.widget.Toast
+import cn.jzvd.JZVideoPlayerStandard
+import com.bumptech.glide.Glide
 import com.heixiu.errand.net.RetrofitFactory
 import com.iceteck.silicompressorr.SiliCompressor
 import com.lljjcoder.citylist.Toast.ToastUtils
@@ -47,13 +49,18 @@ import java.util.*
 
 class DisplayJianLiActivity : BaseActivity() {
     private var selectList: List<LocalMedia> = ArrayList()
+    private var getdata: ArrayList<LocalMedia> = ArrayList()
     var dialogPro: ProgressDialog? = null
     private var adapter: GridImageAdapter? = null
+    var localMedia: LocalMedia? = null
     override fun getLayoutId(): Int {
         return R.layout.activity_display_jian_li
     }
 
     override fun initViewParams() {
+        localMedia = LocalMedia()
+        var strarr: List<String>
+        var listimg: ArrayList<String> = ArrayList()
         dialogPro = ProgressDialog(this)
         dialogPro!!.setCanceledOnTouchOutside(false)
         dialogPro!!.setMessage("小二加载中，大人请稍后~")
@@ -83,8 +90,39 @@ class DisplayJianLiActivity : BaseActivity() {
             }else{
                  sexs = "女"
             }
+            phonenum.setText(it.phoneNum)
             jianlisex.setText(sexs)
             jianliage.setText(it.age)
+            if (it.picOrVedioSource != null && !it.picOrVedioSource.equals("")) {
+                strarr = it.picOrVedioSource.substring(0, it.picOrVedioSource.length).split(";")
+                var index = 0;
+                while (index < strarr.size) {
+                    listimg.add(strarr[index])
+                    index++//自
+                }
+                if (listimg.size < 1) {
+
+                } else if (listimg.size == 1) {
+                    jina_pic.visibility = View.VISIBLE
+                    Glide.with(this)
+                            .load(listimg[0])
+                            .placeholder(R.mipmap.defind)
+                            .into(jina_pic)
+                } else {
+                    jina_pic.visibility = View.GONE
+                    videoplayer.visibility = View.VISIBLE
+                    val jzVideoPlayerStandard = findViewById<View>(R.id.videoplayer) as JZVideoPlayerStandard
+                    jzVideoPlayerStandard.setUp(listimg[0],
+                            JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL,
+                            "视频简历")
+                    Glide.with(this)
+                            .load(listimg[1])
+                            .placeholder(R.mipmap.defind)
+                            .into(jzVideoPlayerStandard.thumbImageView)
+                }
+
+
+            }
             jianlijianjie.setText(it.personalProfile)
         }, {
         })
@@ -290,6 +328,8 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
                 }
                 adapter!!.setList(selectList)
                 adapter!!.notifyDataSetChanged()
+                videoplayer.visibility = View.GONE
+                jina_pic.visibility = View.GONE
             }
         }
     }

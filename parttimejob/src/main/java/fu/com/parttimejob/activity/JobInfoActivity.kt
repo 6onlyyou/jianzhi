@@ -190,7 +190,7 @@ fun getDate(){
         phones.text = "手机号码："+it.phoneNumber
         time_job.text = "工作时间："+ it.workTime
         num_job.text = "招聘人数：" + it.recruitingNumbers
-        job_jbi.text = "分享群领取" + it.numberOfVirtualCoins / it.redEnvelopeNumber + "金币"
+        job_jbi.text = "分享群领取抢" + it.numberOfVirtualCoins + "金币红包"
         coid_job.text = "分享成功后即可抢最高" + it.numberOfVirtualCoins + "金币的随机红包"
         ji_gouton.setOnClickListener {
             if (SPUtil.getString(this, "thirdAccount", "").equals("")) {
