@@ -32,7 +32,7 @@
 
                 <TextView
                     android:id="@+id/name"
-                    android:layout_width="47dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="19dp"
                     android:text="娃娃熊"
                     android:textColor="#ff474245"
@@ -40,7 +40,7 @@
 
                 <TextView
                     android:id="@+id/kuaidiNo"
-                    android:layout_width="47dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="19dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
@@ -50,7 +50,7 @@
 
                 <TextView
                     android:id="@+id/time"
-                    android:layout_width="47dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="19dp"
                     android:text="娃娃熊"
                     android:textColor="#ff474245"
