@@ -60,7 +60,7 @@ public class ExchangeShopListAdapter extends BaseRecyclerViewAdapter {
                                     binding.getRoot().getContext().startActivity(i);
                                 }
                             }
-
+                        dialog.dismiss();
                         }
                     }).show();
 

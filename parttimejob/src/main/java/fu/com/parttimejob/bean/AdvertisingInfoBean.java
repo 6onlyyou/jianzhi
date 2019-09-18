@@ -25,6 +25,15 @@ public class AdvertisingInfoBean extends BaseRecyclerModel {
     private String headImg;
     private int state;
     private String address;
+    private String cardHeadImg;
+
+    public String getCardHeadImg() {
+        return cardHeadImg;
+    }
+
+    public void setCardHeadImg(String cardHeadImg) {
+        this.cardHeadImg = cardHeadImg;
+    }
 
     public String getAddress() {
         return address;

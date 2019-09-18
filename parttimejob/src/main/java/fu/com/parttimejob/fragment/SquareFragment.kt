@@ -54,7 +54,11 @@ class SquareFragment : Fragment(), View.OnClickListener {
 
     private fun openBox( isopen: Boolean, position: Int, view: ImageView) {
         if (!isopen) {
+            if(position>data.size-1){
+                return
+            }
             dialogPro.show()
+
             if (data[position].isAdvertiseType) {
                 getGuangGao(data[position], view)
             }

@@ -91,6 +91,7 @@
                 android:background="@null"
                 android:textColorHint="@color/colorGray"
                 android:textCursorDrawable="@drawable/cursor"
+                android:inputType="phone"
                 android:singleLine="true"
                 android:textSize="16sp" />
 

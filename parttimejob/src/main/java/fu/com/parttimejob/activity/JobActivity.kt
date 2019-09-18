@@ -110,7 +110,7 @@ class JobActivity : BaseActivity() {
         val cityPicker = CityPicker.Builder(this@JobActivity)
                 .textSize(14)
                 .title("地址选择")
-                .titleBackgroundColor("#FFFFFF")
+                .titleBackgroundColor("#696969")
                 .confirTextColor("#696969")
                 .cancelTextColor("#696969")
                 .province("江苏省")
