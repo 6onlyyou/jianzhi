@@ -110,7 +110,7 @@ class JobActivity : BaseActivity() {
         val cityPicker = CityPicker.Builder(this@JobActivity)
                 .textSize(14)
                 .title("地址选择")
-                .titleBackgroundColor("#696969")
+                .titleBackgroundColor("#FFFFFF")
                 .confirTextColor("#696969")
                 .cancelTextColor("#696969")
                 .province("江苏省")
@@ -135,6 +135,12 @@ class JobActivity : BaseActivity() {
                     homeJobListAdapter.notifyDataSetChanged() ;
                     homeJobListAdapter.addAll(it as List<BaseRecyclerModel>?)
                     homeJobListAdapter.notifyDataSetChanged()
+                    if(it.size>0){
+                        konkonshuj.visibility = View.GONE
+
+                    }else{
+                        konkonshuj.visibility = View.VISIBLE
+                    }
                 }, {
                     ToastUtils.showLongToast(this@JobActivity, it.message.toString())
                 })

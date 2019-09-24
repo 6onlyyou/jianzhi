@@ -99,12 +99,11 @@
             android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
-            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
-            android:screenOrientation="portrait" />
+       />
         <activity
             android:name=".activity.ExchangeShopActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -186,7 +185,6 @@
         <activity
             android:name=".activity.ConversationActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

@@ -113,7 +113,7 @@
                 android:layout_width="103dp"
                 android:layout_height="22dp"
                 android:layout_marginLeft="15dp"
-                android:text="红包金币数量"
+                android:text="奖励金币数额"
                 android:textColor="#ff8b8b8b"
                 android:textSize="15sp" />
 
@@ -126,7 +126,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="24dp"
                 android:background="@null"
-                android:hint="请输入红包总金币数量"
+                android:hint="请输入奖励金币数额"
                 android:numeric="integer"
                 android:singleLine="true"
                 android:textColorHint="#ffc0c0c0"
@@ -146,7 +146,6 @@
                 android:layout_height="22dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="7dp"
-
                 android:text="红包数量"
                 android:textColor="#ff8b8b8b"
                 android:textSize="15sp" />

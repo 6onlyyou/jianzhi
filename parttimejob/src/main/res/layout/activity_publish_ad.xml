@@ -81,7 +81,7 @@
                 android:layout_marginLeft="15dp"
                 android:numeric="integer"
                 android:layout_marginTop="20dp"
-                android:text="金币奖励金额"
+                android:text="奖励金币数额"
                 android:textColor="#ff8b8b8b"
                 android:textSize="15sp" />
 
@@ -93,7 +93,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="15dp"
                 android:background="@null"
-                android:hint="请输入红包个数"
+                android:hint="请输入奖励金币数额"
                 android:numeric="integer"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
@@ -125,7 +125,7 @@
                 android:numeric="integer"
                 android:background="@null"
                 android:layout_marginRight="15dp"
-                android:hint="请输入红包总金币数量"
+                android:hint="请输入红包数量"
                 android:singleLine="true"
                 android:textSize="16sp" />
 

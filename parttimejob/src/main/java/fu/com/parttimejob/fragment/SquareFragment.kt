@@ -191,7 +191,6 @@ class SquareFragment : Fragment(), View.OnClickListener {
             3 -> {
                 view.setImageResource(R.mipmap.zuan_open)
             }
-
         }
         dialogPro.dismiss()
     }

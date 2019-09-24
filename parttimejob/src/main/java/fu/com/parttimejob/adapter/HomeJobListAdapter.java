@@ -34,7 +34,7 @@ public class HomeJobListAdapter extends BaseRecyclerViewAdapter {
         public void onBindViewHolder(BaseRecyclerModel object, int position) {
             final JobInfoBean jobInfoBean = (JobInfoBean)object;
             binding.jobName.setText(jobInfoBean.getLabel());
-            binding.jobReward.setText("奖励"+jobInfoBean.getNumberOfVirtualCoins()/jobInfoBean.getRedEnvelopeNumber()+"金币");
+            binding.jobReward.setText("抢"+jobInfoBean.getNumberOfVirtualCoins()+"金币红包");
             binding.jobSalaryTv.setText(jobInfoBean.getSalaryAndWelfare()+"");
             binding.jobLocation.setText(jobInfoBean.getCity()+"");
             binding.timejob.setText(jobInfoBean.getPublichDate());

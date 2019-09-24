@@ -2,6 +2,7 @@ package fu.com.parttimejob.activity
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.text.TextUtils
 import android.util.Log
 import android.widget.ImageView
@@ -17,6 +18,8 @@ import fu.com.parttimejob.base.BaseActivity
 import fu.com.parttimejob.retrofitNet.RxUtils
 import fu.com.parttimejob.utils.GlideUtil
 import fu.com.parttimejob.utils.SPUtil
+import io.rong.imkit.RongIM
+import io.rong.imlib.model.UserInfo
 import kotlinx.android.synthetic.main.activity_create_job_card.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -37,6 +40,7 @@ class CreateJobCardActivity : BaseActivity() {
         shopEt.setText(SPUtil.getString(this, "companyName", ""))
         GlideUtil.load(this,   SPUtil.getString(this, "cardHeadImg", ""),ava)
         phoneEt.setText(SPUtil.getString(this, "cardPhoneNum", ""))
+
     }
 
     override fun initViewClick() {
@@ -106,6 +110,7 @@ class CreateJobCardActivity : BaseActivity() {
                         ToastUtils.showLongToast(applicationContext, it.message.toString())
                     })
                 } else {
+
                     for (i in selectList!!.indices) {
                         builder.addFormDataPart("img", File(selectList!!.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList!!.get(0).compressPath)));
                     }
@@ -113,6 +118,10 @@ class CreateJobCardActivity : BaseActivity() {
                     RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().createCard(SPUtil.getString(this,"thirdAccount",""),requestBody,nameEt.text.toString(),phoneEt.text.toString(),shopEt.text.toString())).subscribe({
                         ToastUtils.showLongToast(applicationContext, it)
                         SPUtil.putBoolean(this@CreateJobCardActivity, "sfcreateCard",true )
+                        RongIM.setUserInfoProvider({
+                            //在这里，根据userId，使用同步的请求，去请求服务器，就可以完美做到显示用户的头像，昵称了
+                            UserInfo(SPUtil.getString(this@CreateJobCardActivity, "thirdAccount", "").toString(), SPUtil.getString(this, "nickname", "默认用户名"), Uri.parse( SPUtil.getString(this, "cardHeadImg", "")))
+                        }, true)
                         startActivity(Intent(applicationContext, MainActivity::class.java))
                         finish()
                     }, {

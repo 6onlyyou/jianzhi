@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.media.MediaMetadataRetriever
+import android.net.Uri
 import android.os.AsyncTask
 import android.os.Environment
 import android.support.v7.widget.GridLayoutManager
@@ -38,6 +39,8 @@ import fu.com.parttimejob.utils.SPUtil
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Consumer
+import io.rong.imkit.RongIM
+import io.rong.imlib.model.UserInfo
 import kotlinx.android.synthetic.main.activity_display_jian_li.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -90,7 +93,7 @@ class DisplayJianLiActivity : BaseActivity() {
             }else{
                  sexs = "女"
             }
-            phonenum.setText(it.phoneNum)
+            phonenum.setText(it.contactInformation)
             jianlisex.setText(sexs)
             jianliage.setText(it.age)
             if (it.picOrVedioSource != null && !it.picOrVedioSource.equals("")) {
@@ -177,6 +180,10 @@ class DisplayJianLiActivity : BaseActivity() {
                     RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().createPR(SPUtil.getString(this, "thirdAccount", "111"), jianliname.text.toString(), sex,jianliage.text.toString(), jianlijianjie.text.toString(),requestBody,SPUtil.getString(this@DisplayJianLiActivity,"city","廊坊市"),phonenum.text.toString())).subscribe(Consumer<String> {
                         ToastUtils.showLongToast(applicationContext, it.toString())
                         dialogPro!!.dismiss()
+                        RongIM.setUserInfoProvider({
+                            //在这里，根据userId，使用同步的请求，去请求服务器，就可以完美做到显示用户的头像，昵称了
+                            UserInfo(SPUtil.getString(this, "thirdAccount", "").toString(), SPUtil.getString(this, "nickname", "默认用户名"), Uri.parse( SPUtil.getString(this, "cardHeadImg", "")))
+                        }, true)
                         finish()
                     }, Consumer<Throwable> {
                         dialogPro!!.dismiss()

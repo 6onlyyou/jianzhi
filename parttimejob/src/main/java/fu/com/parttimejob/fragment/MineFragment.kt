@@ -83,10 +83,21 @@ class MineFragment : Fragment() {
             setsgil.visibility = View.GONE
             ava.setImageResource(R.mipmap.ic_job_hunter_img)
         }
-        if (SPUtil.getString(context, "cardHeadImg", "").equals("")) {
-            GlideUtil.load(context, SPUtil.getString(context, "headImg", ""), ava)
-        } else {
-            GlideUtil.load(context, SPUtil.getString(context, "cardHeadImg", ""), ava)
+
+            if(SPUtil.getInt(context, "Profession", 1)==1){
+                if(SPUtil.getString(context, "contactInformationheadImg", "").equals("")){
+                    GlideUtil.load(context, SPUtil.getString(context, "headImg", ""), ava)
+                }else{
+                    GlideUtil.load(context, SPUtil.getString(context, "contactInformationheadImg", ""), ava)
+                }
+
+            }else{
+                if (SPUtil.getString(context, "cardHeadImg", "").equals("")) {
+                    GlideUtil.load(context, SPUtil.getString(context, "headImg", ""), ava)
+                } else {
+                    GlideUtil.load(context, SPUtil.getString(context, "cardHeadImg", ""), ava)
+            }
+
         }
 
         money.text = SPUtil.getInt(context, "totalCount", 0).toString() + "金币"
@@ -126,7 +137,14 @@ class MineFragment : Fragment() {
             startActivity(Intent(context, MyInviteActivity::class.java))
         }
         goset.setOnClickListener {
-            startActivity(Intent(context, CreateJobCardActivity::class.java))
+            if(SPUtil.getInt(context, "Profession", 1)==1){
+                val intent = Intent(context, MyJianLiActivity::class.java)
+                intent.putExtra("beViewedAccount", "")
+                context!!.startActivity(intent)
+            }else{
+                startActivity(Intent(context, CreateJobCardActivity::class.java))
+            }
+
         }
         myMoneyLayout.setOnClickListener {
             startActivity(Intent(context, MyMoneyActivity::class.java))
