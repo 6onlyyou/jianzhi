@@ -53,7 +53,9 @@ class PublishJobActivity : BaseActivity() {
         picker_yes.setOnClickListener(onClickListener);
         pushjianli.setOnClickListener(onClickListener);
         styles.setOnClickListener(onClickListener);
-
+        back.setOnClickListener {
+            finish()
+        }
 
 //        pickerscrlllview.setOnSelectListener(pickerListener);
         val manager = FullyGridLayoutManager(this@PublishJobActivity, 1, GridLayoutManager.VERTICAL, false)

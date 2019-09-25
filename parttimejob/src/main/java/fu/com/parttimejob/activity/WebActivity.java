@@ -77,7 +77,6 @@ public class WebActivity extends AppCompatActivity {
             }
         });
 
-
         gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
             @Override
             public void onLongPress(MotionEvent e) {

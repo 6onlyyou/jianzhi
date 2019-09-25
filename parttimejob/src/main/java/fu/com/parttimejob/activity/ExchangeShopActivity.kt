@@ -47,9 +47,7 @@ class ExchangeShopActivity : BaseActivity() {
         var list: ArrayList<ExchangeBean> = ArrayList()
         adapter.addAll(list as List<BaseRecyclerModel>?)
 
-        back.setOnClickListener({
-            finish()
-        })
+
     }
 
     override fun initViewClick() {

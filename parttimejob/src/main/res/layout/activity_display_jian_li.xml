@@ -232,6 +232,15 @@
                     android:layout_marginTop="7dp"
                     android:visibility="gone"
                     android:background="@mipmap/ic_add_photo" />
+            <cn.jzvd.JZVideoPlayerStandard
+                android:id="@+id/videoplayer"
+                android:layout_width="91dp"
+                android:layout_height="91dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="7dp"
+                android:visibility="gone"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"/>
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerView"
                     android:layout_width="91dp"

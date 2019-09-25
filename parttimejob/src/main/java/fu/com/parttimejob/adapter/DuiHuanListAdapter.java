@@ -4,6 +4,8 @@ import android.text.TextUtils;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+
 import fu.com.parttimejob.R;
 import fu.com.parttimejob.base.baseadapter.BaseRecyclerModel;
 import fu.com.parttimejob.base.baseadapter.BaseRecyclerViewAdapter;
@@ -45,7 +47,10 @@ public class DuiHuanListAdapter extends BaseRecyclerViewAdapter {
 //                    view.getContext().startActivity(intent);
 //                }
 //            });
-            GlideUtil.load(binding.getRoot().getContext(), kuaiDiBean.getAddress(), (ImageView) binding.img);
+            Glide.with(binding.getRoot().getContext())
+                    .load(kuaiDiBean.getGoodsImg())
+                    .placeholder(R.mipmap.defind)
+                    .into(binding.img);
         }
     }
 }

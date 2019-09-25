@@ -46,6 +46,7 @@ class BindPhoneActivity : BaseActivity() {
 
     private var time: TimeCount? = null
     override fun initViewClick() {
+
         time = TimeCount(60000, 1000)
         mCountDownTimerUtils = CountDownTimerUtils(getPhoneCodeTv, 60000, 1000)
         getPhoneCodeTv.setOnClickListener({
@@ -55,7 +56,9 @@ class BindPhoneActivity : BaseActivity() {
                 showToast("手机号码为空或者格式错误!")
             }
         })
-
+        back.setOnClickListener {
+            finish()
+        }
         registerTv.setOnClickListener({
             if (judgeIsCanRegister()) {
                 submitCode("86", phoneEt.text.toString(), smsCodeEt.text.toString())

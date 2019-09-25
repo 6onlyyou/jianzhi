@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.util.concurrent.Callable;
 
+import fu.com.parttimejob.bean.MyThrowable;
 import fu.com.parttimejob.bean.ResponseBean;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
@@ -33,7 +34,9 @@ public class RxUtils {
                     @Override
                     public ObservableSource<? extends T> apply(Throwable throwable) {
                         Log.e("API ERROR", throwable.toString());
-                        return Observable.error(throwable);
+//                        MyThrowable throwable1 = new MyThrowable();
+//                        throwable1.setMsg("亲~网络不好请检查网络");
+                        return Observable.error(new Exception("亲~网络不好请检查网络"));
                     }
                 }, new Callable<ObservableSource<? extends T>>() {
                     @Override

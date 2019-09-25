@@ -18,6 +18,9 @@ class ShouHuoActivity : BaseActivity() {
     }
 
     override fun initViewParams() {
+        back.setOnClickListener {
+            finish()
+        }
     }
 
     override fun initViewClick() {

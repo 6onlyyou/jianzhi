@@ -41,6 +41,9 @@ class PublishAdActivity : BaseActivity() {
     private var themeId: Int = 0
     override fun initViewClick() {
         themeId = R.style.picture_default_style
+        back.setOnClickListener {
+            finish()
+        }
         val manager = FullyGridLayoutManager(this@PublishAdActivity, 1, GridLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = manager
         adapter = GridImageAdapter(this@PublishAdActivity, onAddPicClickListener)

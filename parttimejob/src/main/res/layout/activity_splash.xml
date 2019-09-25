@@ -7,8 +7,8 @@
 
     <TextView
         android:id="@+id/time_txt"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_margin="16dp"
         android:text="10S"
@@ -22,7 +22,7 @@
         android:layout_centerInParent="true"
         android:ems="1"
         android:lineSpacingExtra="2sp"
-        android:text="欢迎选择兼职网"
+        android:text="欢迎来到九九招工"
         android:textColor="@color/colorBlack"
         android:textSize="30sp" />
 
@@ -34,7 +34,7 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/bg_cornor_main"
         android:gravity="center"
-        android:text="立即体验"
+        android:text="立即进入"
         android:textColor="@color/colorPrimary" />
 
     <TextView

@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -96,7 +97,7 @@ public class TalentFragmentAdapter extends PagerAdapter {
         });
         TextView sex = view.findViewById(R.id.sex);
         RecyclerView biaoQian = view.findViewById(R.id.biaoQianList);
-        biaoQian.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false));
+        biaoQian.setLayoutManager(new GridLayoutManager(view.getContext(),3));
         ChooseDreamJobListAdapter adapter = new ChooseDreamJobListAdapter();
         biaoQian.setAdapter(adapter);
         String sexs = "";

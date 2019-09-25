@@ -135,6 +135,12 @@ class JobActivity : BaseActivity() {
                     homeJobListAdapter.notifyDataSetChanged() ;
                     homeJobListAdapter.addAll(it as List<BaseRecyclerModel>?)
                     homeJobListAdapter.notifyDataSetChanged()
+                    if(it.size>0){
+                        konkonshuj.visibility = View.GONE
+
+                    }else{
+                        konkonshuj.visibility = View.VISIBLE
+                    }
                 }, {
                     ToastUtils.showLongToast(this@JobActivity, it.message.toString())
                 })

@@ -65,7 +65,9 @@ class AdInfoActivity : BaseActivity() {
         shareTypeFragment = ShareTypeFragment()
         advertisingInfoBean = AdvertisingInfoBean()
         getDate()
-
+        back.setOnClickListener {
+            finish()
+        }
     }
 
     fun getDate() {
@@ -77,7 +79,6 @@ class AdInfoActivity : BaseActivity() {
             advertisingInfoBean = it
             RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().addNumberOfAdvertisingView(SPUtil.getString(this@AdInfoActivity, "thirdAccount", ""), intent.getIntExtra("id", 0))).subscribe({
                 if (SPUtil.getString(this@AdInfoActivity, "thirdAccount", "").equals(advertisingInfoBean!!.thirdAccount)) {
-
                 } else {
                     RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().receiveOfAdVirtual(SPUtil.getString(this@AdInfoActivity, "thirdAccount", ""), intent.getIntExtra("id", 0))).subscribe({
                         RadDialog(this@AdInfoActivity, R.style.dialog, "恭喜抢到" + it + "金币", RadDialog.OnCloseListener { dialog, confirm ->
@@ -103,12 +104,12 @@ class AdInfoActivity : BaseActivity() {
             } else {
                 ji_gouton.visibility = View.GONE
             }
-            if (it.getHeadImg() == null || it.getHeadImg().equals("")) {
-                ava.visibility = View.GONE
+            val status = it.getHeadImg().contains("defaultHeadImg")
+            ava.visibility = View.VISIBLE
+            if (status) {
+                GlideUtil.load(this, it.cardHeadImg, ava)
             } else {
-                ava.visibility = View.VISIBLE
                 GlideUtil.load(this, it.getHeadImg(), ava)
-
             }
             ava.setOnClickListener {
                 DlgForBigPhto(advertisingInfoBean!!.getHeadImg())
@@ -128,10 +129,16 @@ class AdInfoActivity : BaseActivity() {
             }
 
             ad_content.setText(it.advertisementContent)
-            Glide.with(this)
-                    .load(it.advertisementImg)
-                    .placeholder(R.mipmap.defind)
-                    .into(ad_cimg)
+            if(null == it.advertisementImg||it.advertisementImg.equals("")){
+                ad_cimg.visibility = View.GONE
+            }else{
+                ad_cimg.visibility = View.VISIBLE
+                Glide.with(this)
+                        .load(it.advertisementImg)
+                        .placeholder(R.mipmap.defind)
+                        .into(ad_cimg)
+            }
+
             ad_cimg.setOnClickListener {
                 if (!TextUtils.isEmpty(advertisingInfoBean?.advertisementImg))
                     DlgForBigPhto(advertisingInfoBean!!.advertisementImg)

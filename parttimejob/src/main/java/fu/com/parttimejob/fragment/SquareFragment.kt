@@ -56,7 +56,11 @@ class SquareFragment : Fragment(), View.OnClickListener {
             return
         }
         if (!isopen) {
+            if(position>data.size-1){
+                return
+            }
             dialogPro.show()
+
             if (data[position].isAdvertiseType) {
                 getGuangGao(data[position], view)
             }
@@ -189,19 +193,18 @@ class SquareFragment : Fragment(), View.OnClickListener {
             3 -> {
                 view.setImageResource(R.mipmap.zuan_open)
             }
-
         }
         dialogPro.dismiss()
     }
 
     fun getGuangGao(bean: RedPackageBean, view: ImageView) {
-        RadDialog(context, R.style.dialog, "恭喜获得" + bean.numberOfVirtualCoins / bean.redEnvelopeNumber + "金币", RadDialog.OnCloseListener { dialog, confirm ->
+//        RadDialog(context, R.style.dialog, "恭喜获得" + bean.numberOfVirtualCoins / bean.redEnvelopeNumber + "金币", RadDialog.OnCloseListener { dialog, confirm ->
             val intent = Intent(context, AdInfoActivity::class.java)
             intent.putExtra("id", bean.id)
             startActivity(intent)
-            dialog.dismiss()
+//            dialog.dismiss()
             dialogPro.dismiss()
-        }).setTitle("").show()
+//        }).setTitle("").show()
         when (bean.bitType) {
             1 -> {
                 view.setImageResource(R.mipmap.tie_open)

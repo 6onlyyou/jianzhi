@@ -8,9 +8,12 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.heixiu.errand.net.RetrofitFactory
+import com.lljjcoder.citylist.Toast.ToastUtils
 import fu.com.parttimejob.R
 import fu.com.parttimejob.activity.*
 import fu.com.parttimejob.dialog.HintDialog
+import fu.com.parttimejob.retrofitNet.RxUtils
 import fu.com.parttimejob.utils.GlideUtil
 import fu.com.parttimejob.utils.SPUtil
 import io.rong.imkit.RongIM
@@ -27,6 +30,32 @@ class MineFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_mine, container, false)
+    }
+
+    override fun onResume() {
+
+        super.onResume()
+        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().getUserInfo(SPUtil.getString(activity, "thirdAccount", ""), SPUtil.getInt(activity, "Profession", 1), SPUtil.getString(activity, "longitude", ""), SPUtil.getString(activity, "latitude", ""), SPUtil.getString(activity, "city", ""), SPUtil.getString(activity, "token", ""))).subscribe({
+            SPUtil.putInt(activity, "loginType", it.loginType)
+            SPUtil.putString(activity, "registrationDate", it.registrationDate)
+            SPUtil.putString(activity, "city", it.city)
+            SPUtil.putString(activity, "cardPhoneNum", it.cardPhoneNum)
+            SPUtil.putString(activity, "longitude", it.longitude)
+            SPUtil.putString(activity, "latitude", it.latitude)
+            SPUtil.putString(activity, "inviteCode", it.inviteCode)
+            SPUtil.putString(activity, "labelName", it.labelName)
+            SPUtil.putInt(activity, "totalCount", it.totalCount)
+            SPUtil.putString(activity, "phoneNumber", it.phoneNumber)
+            SPUtil.putInt(activity, "inviteCount", it.inviteCount)
+            SPUtil.putString(activity, "nickName", it.name)
+            SPUtil.putString(activity, "headImg", it.headImg)
+            SPUtil.putString(activity, "companyName", it.companyName)
+            SPUtil.putString(activity, "jianliname", it.nickName)
+            SPUtil.putInt(activity, "vipLevel", it.vipLevel)
+            SPUtil.putString(activity, "cardHeadImg", it.cardHeadImg)
+        }, {
+            ToastUtils.showLongToast(activity, it.message.toString())
+        })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -50,14 +79,25 @@ class MineFragment : Fragment() {
             historyLayout.visibility = View.GONE
             setsgilview.visibility = View.GONE
             setsgilview1.visibility = View.GONE
-            myDuiHuanLayout.visibility = View.GONE
+            myDuiHuanLayout.visibility = View.VISIBLE
             setsgil.visibility = View.GONE
             ava.setImageResource(R.mipmap.ic_job_hunter_img)
         }
-        if (SPUtil.getString(context, "cardHeadImg", "").equals("")) {
-            GlideUtil.load(context, SPUtil.getString(context, "headImg", ""), ava)
-        } else {
-            GlideUtil.load(context, SPUtil.getString(context, "cardHeadImg", ""), ava)
+
+            if(SPUtil.getInt(context, "Profession", 1)==1){
+                if(SPUtil.getString(context, "contactInformationheadImg", "").equals("")){
+                    GlideUtil.load(context, SPUtil.getString(context, "headImg", ""), ava)
+                }else{
+                    GlideUtil.load(context, SPUtil.getString(context, "contactInformationheadImg", ""), ava)
+                }
+
+            }else{
+                if (SPUtil.getString(context, "cardHeadImg", "").equals("")) {
+                    GlideUtil.load(context, SPUtil.getString(context, "headImg", ""), ava)
+                } else {
+                    GlideUtil.load(context, SPUtil.getString(context, "cardHeadImg", ""), ava)
+            }
+
         }
 
         money.text = SPUtil.getInt(context, "totalCount", 0).toString() + "金币"
@@ -97,7 +137,14 @@ class MineFragment : Fragment() {
             startActivity(Intent(context, MyInviteActivity::class.java))
         }
         goset.setOnClickListener {
-            startActivity(Intent(context, CreateJobCardActivity::class.java))
+            if(SPUtil.getInt(context, "Profession", 1)==1){
+                val intent = Intent(context, MyJianLiActivity::class.java)
+                intent.putExtra("beViewedAccount", "")
+                context!!.startActivity(intent)
+            }else{
+                startActivity(Intent(context, CreateJobCardActivity::class.java))
+            }
+
         }
         myMoneyLayout.setOnClickListener {
             startActivity(Intent(context, MyMoneyActivity::class.java))

@@ -8,9 +8,25 @@
         android:layout_height="232dp"
         android:scaleType="centerCrop"
         android:src="@mipmap/bg_login_top" />
+    <LinearLayout
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
 
+        android:layout_centerVertical="true"
+        android:orientation="horizontal">
+    <ImageView
+
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:padding="8dp"
+        android:src="@mipmap/ic_back" />
+    </LinearLayout>
     <TextView
-        android:layout_width="152dp"
+        android:layout_width="wrap_content"
         android:layout_height="42dp"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="59dp"

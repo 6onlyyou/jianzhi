@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.media.MediaMetadataRetriever
+import android.net.Uri
 import android.os.AsyncTask
 import android.os.Environment
 import android.support.v7.widget.GridLayoutManager
@@ -15,6 +16,8 @@ import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.widget.Toast
+import cn.jzvd.JZVideoPlayerStandard
+import com.bumptech.glide.Glide
 import com.heixiu.errand.net.RetrofitFactory
 import com.iceteck.silicompressorr.SiliCompressor
 import com.lljjcoder.citylist.Toast.ToastUtils
@@ -36,6 +39,8 @@ import fu.com.parttimejob.utils.SPUtil
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Consumer
+import io.rong.imkit.RongIM
+import io.rong.imlib.model.UserInfo
 import kotlinx.android.synthetic.main.activity_display_jian_li.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -47,13 +52,18 @@ import java.util.*
 
 class DisplayJianLiActivity : BaseActivity() {
     private var selectList: List<LocalMedia> = ArrayList()
+    private var getdata: ArrayList<LocalMedia> = ArrayList()
     var dialogPro: ProgressDialog? = null
     private var adapter: GridImageAdapter? = null
+    var localMedia: LocalMedia? = null
     override fun getLayoutId(): Int {
         return R.layout.activity_display_jian_li
     }
 
     override fun initViewParams() {
+        localMedia = LocalMedia()
+        var strarr: List<String>
+        var listimg: ArrayList<String> = ArrayList()
         dialogPro = ProgressDialog(this)
         dialogPro!!.setCanceledOnTouchOutside(false)
         dialogPro!!.setMessage("小二加载中，大人请稍后~")
@@ -83,8 +93,39 @@ class DisplayJianLiActivity : BaseActivity() {
             }else{
                  sexs = "女"
             }
+            phonenum.setText(it.contactInformation)
             jianlisex.setText(sexs)
             jianliage.setText(it.age)
+            if (it.picOrVedioSource != null && !it.picOrVedioSource.equals("")) {
+                strarr = it.picOrVedioSource.substring(0, it.picOrVedioSource.length).split(";")
+                var index = 0;
+                while (index < strarr.size) {
+                    listimg.add(strarr[index])
+                    index++//自
+                }
+                if (listimg.size < 1) {
+
+                } else if (listimg.size == 1) {
+                    jina_pic.visibility = View.VISIBLE
+                    Glide.with(this)
+                            .load(listimg[0])
+                            .placeholder(R.mipmap.defind)
+                            .into(jina_pic)
+                } else {
+                    jina_pic.visibility = View.GONE
+                    videoplayer.visibility = View.VISIBLE
+                    val jzVideoPlayerStandard = findViewById<View>(R.id.videoplayer) as JZVideoPlayerStandard
+                    jzVideoPlayerStandard.setUp(listimg[0],
+                            JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL,
+                            "视频简历")
+                    Glide.with(this)
+                            .load(listimg[1])
+                            .placeholder(R.mipmap.defind)
+                            .into(jzVideoPlayerStandard.thumbImageView)
+                }
+
+
+            }
             jianlijianjie.setText(it.personalProfile)
         }, {
         })
@@ -139,6 +180,10 @@ class DisplayJianLiActivity : BaseActivity() {
                     RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().createPR(SPUtil.getString(this, "thirdAccount", "111"), jianliname.text.toString(), sex,jianliage.text.toString(), jianlijianjie.text.toString(),requestBody,SPUtil.getString(this@DisplayJianLiActivity,"city","廊坊市"),phonenum.text.toString())).subscribe(Consumer<String> {
                         ToastUtils.showLongToast(applicationContext, it.toString())
                         dialogPro!!.dismiss()
+                        RongIM.setUserInfoProvider({
+                            //在这里，根据userId，使用同步的请求，去请求服务器，就可以完美做到显示用户的头像，昵称了
+                            UserInfo(SPUtil.getString(this, "thirdAccount", "").toString(), SPUtil.getString(this, "nickname", "默认用户名"), Uri.parse( SPUtil.getString(this, "cardHeadImg", "")))
+                        }, true)
                         finish()
                     }, Consumer<Throwable> {
                         dialogPro!!.dismiss()
@@ -290,6 +335,8 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
                 }
                 adapter!!.setList(selectList)
                 adapter!!.notifyDataSetChanged()
+                videoplayer.visibility = View.GONE
+                jina_pic.visibility = View.GONE
             }
         }
     }

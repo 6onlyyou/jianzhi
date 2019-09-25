@@ -228,6 +228,7 @@ class MainActivity : BaseActivity() , RongIMClient.OnReceiveMessageListener{
             }
         })
     }
+
     private var firstTime: Long = 0
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_DOWN) {
@@ -246,6 +247,8 @@ class MainActivity : BaseActivity() , RongIMClient.OnReceiveMessageListener{
 
     override fun onResume() {
         super.onResume()
+        var strarr: List<String>
+        var listimg: ArrayList<String> = ArrayList()
         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().getUserInfo(SPUtil.getString(this@MainActivity, "thirdAccount", ""), SPUtil.getInt(this@MainActivity, "Profession", 1), SPUtil.getString(this@MainActivity, "longitude", ""), SPUtil.getString(this@MainActivity, "latitude", ""), SPUtil.getString(this@MainActivity, "city", ""), SPUtil.getString(this@MainActivity, "token", ""))).subscribe({
             SPUtil.putInt(this@MainActivity, "loginType", it.loginType)
             SPUtil.putString(this@MainActivity, "registrationDate", it.registrationDate)
@@ -266,6 +269,28 @@ class MainActivity : BaseActivity() , RongIMClient.OnReceiveMessageListener{
             SPUtil.putString(this@MainActivity, "cardHeadImg", it.cardHeadImg)
         }, {
             ToastUtils.showLongToast(applicationContext, it.message.toString())
+        })
+        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().getResumeInfo(SPUtil.getString(this,"thirdAccount",""),SPUtil.getString(this,"thirdAccount",""))).subscribe({
+            if (it.picOrVedioSource != null && !it.picOrVedioSource.equals("")) {
+                strarr = it.picOrVedioSource.substring(0, it.picOrVedioSource.length).split(";")
+                var index = 0;
+                while (index < strarr.size) {
+                    listimg.add(strarr[index])
+                    index++//自
+                }
+                if (listimg.size < 1) {
+
+                } else if (listimg.size == 1) {
+                    SPUtil.putString(this@MainActivity, "contactInformationheadImg",listimg[0])
+                } else {
+                    SPUtil.putString(this@MainActivity, "contactInformationheadImg",listimg[1])
+                }
+
+
+            }
+
+        }, {
+
         })
     }
     private fun initRongMessage() {
