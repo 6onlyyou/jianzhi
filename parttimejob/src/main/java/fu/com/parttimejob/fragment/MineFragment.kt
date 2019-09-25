@@ -53,6 +53,30 @@ class MineFragment : Fragment() {
             SPUtil.putString(activity, "jianliname", it.nickName)
             SPUtil.putInt(activity, "vipLevel", it.vipLevel)
             SPUtil.putString(activity, "cardHeadImg", it.cardHeadImg)
+            if(SPUtil.getInt(context, "Profession", 1)==1){
+                if(SPUtil.getString(context, "contactInformationheadImg", "").equals("")){
+                    GlideUtil.load(context, SPUtil.getString(context, "headImg", ""), ava)
+                }else{
+                    GlideUtil.load(context, SPUtil.getString(context, "contactInformationheadImg", ""), ava)
+                }
+
+            }else{
+                if (SPUtil.getString(context, "cardHeadImg", "").equals("")) {
+                    GlideUtil.load(context, SPUtil.getString(context, "headImg", ""), ava)
+                } else {
+                    GlideUtil.load(context, SPUtil.getString(context, "cardHeadImg", ""), ava)
+                }
+
+            }
+
+            money.text = SPUtil.getInt(context, "totalCount", 0).toString() + "金币"
+
+            if (SPUtil.getString(context, "nickName", "").equals("")) {
+                name.text = SPUtil.getString(context, "jianliname", "")
+            } else {
+                name.text = SPUtil.getString(context, "nickName", "")
+            }
+            sex_age.text = SPUtil.getString(context, "phoneNumber", "")
         }, {
             ToastUtils.showLongToast(activity, it.message.toString())
         })
@@ -84,18 +108,18 @@ class MineFragment : Fragment() {
             ava.setImageResource(R.mipmap.ic_job_hunter_img)
         }
 
-            if(SPUtil.getInt(context, "Profession", 1)==1){
-                if(SPUtil.getString(context, "contactInformationheadImg", "").equals("")){
-                    GlideUtil.load(context, SPUtil.getString(context, "headImg", ""), ava)
-                }else{
-                    GlideUtil.load(context, SPUtil.getString(context, "contactInformationheadImg", ""), ava)
-                }
-
+        if(SPUtil.getInt(context, "Profession", 1)==1){
+            if(SPUtil.getString(context, "contactInformationheadImg", "").equals("")){
+                GlideUtil.load(context, SPUtil.getString(context, "headImg", ""), ava)
             }else{
-                if (SPUtil.getString(context, "cardHeadImg", "").equals("")) {
-                    GlideUtil.load(context, SPUtil.getString(context, "headImg", ""), ava)
-                } else {
-                    GlideUtil.load(context, SPUtil.getString(context, "cardHeadImg", ""), ava)
+                GlideUtil.load(context, SPUtil.getString(context, "contactInformationheadImg", ""), ava)
+            }
+
+        }else{
+            if (SPUtil.getString(context, "cardHeadImg", "").equals("")) {
+                GlideUtil.load(context, SPUtil.getString(context, "headImg", ""), ava)
+            } else {
+                GlideUtil.load(context, SPUtil.getString(context, "cardHeadImg", ""), ava)
             }
 
         }
@@ -172,6 +196,10 @@ class MineFragment : Fragment() {
                         SPUtil.putString(context, "nickName", "")
                         SPUtil.putString(context, "headImg", "")
                         SPUtil.putString(context, "companyName", "")
+                        SPUtil.putString(activity, "jianliname","")
+                        SPUtil.putString(activity, "contactInformationheadImg","")
+                        SPUtil.putInt(activity, "vipLevel", 0)
+                        SPUtil.putString(activity, "cardHeadImg", "")
                         activity!!.finish()
                         startActivity(Intent(context, ChooseProfessionActivity::class.java))
                     } else {

@@ -1,5 +1,6 @@
 package fu.com.parttimejob.activity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.rong.imkit.fragment.ConversationListFragment;
@@ -24,6 +25,11 @@ public class ConversationListImFragment extends ConversationListFragment {
             public void onSuccess(List<Conversation> conversations) {
 
                 if (callback != null) {
+                    List<Conversation> conversationsl = new ArrayList<Conversation>();
+                    Conversation conversation = new Conversation();
+
+                    conversations.get(0).getSenderUserName();
+//                    conversationsl.add()
                     callback.onResult(conversations);
                 }
 
@@ -43,6 +49,6 @@ public class ConversationListImFragment extends ConversationListFragment {
             }
 
         }, conversationTypes);
-        super.getConversationList(conversationTypes,callback);
+//        super.getConversationList(conversationTypes,callback);
     }
 }

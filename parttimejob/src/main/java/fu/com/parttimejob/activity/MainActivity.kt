@@ -71,7 +71,7 @@ class MainActivity : BaseActivity() , RongIMClient.OnReceiveMessageListener{
 
     private fun initConversationList(): Fragment {
 
-        val listFragment = ConversationListImFragment()
+        val listFragment = fu.com.parttimejob.activity.ConversationListImFragment()
         listFragment.setAdapter(ConversationListAdapterEx(RongContext.getInstance()))
         val uri = Uri.parse("rong://" + applicationInfo.packageName).buildUpon()
                 .appendPath("conversationList")
