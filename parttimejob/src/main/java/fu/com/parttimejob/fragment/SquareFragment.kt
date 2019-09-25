@@ -42,7 +42,6 @@ class SquareFragment : Fragment(), View.OnClickListener {
             R.id.box1 -> {
                 openBox(box1IsOpen, 0, box1)
             }
-
             R.id.box2 -> {
                 openBox(box2IsOpen, 1, box2)
             }
@@ -53,6 +52,9 @@ class SquareFragment : Fragment(), View.OnClickListener {
     }
 
     private fun openBox( isopen: Boolean, position: Int, view: ImageView) {
+        if (data.size<=position){
+            return
+        }
         if (!isopen) {
             if(position>data.size-1){
                 return
