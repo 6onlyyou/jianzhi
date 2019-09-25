@@ -79,7 +79,7 @@
             android:background="@color/colorLine" />
 
         <TextView
-            android:layout_width="108dp"
+            android:layout_width="wrap_content"
             android:layout_height="32dp"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="21dp"

@@ -8,7 +8,7 @@
     tools:context="fu.com.parttimejob.activity.ChooseProfessionActivity">
 
     <TextView
-        android:layout_width="161dp"
+        android:layout_width="wrap_content"
         android:layout_height="33dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="56dp"
@@ -48,9 +48,10 @@
 
 
     <TextView
-        android:layout_width="141dp"
+        android:layout_width="wrap_content"
         android:layout_height="22dp"
         android:layout_marginTop="80dp"
+        android:layout_gravity="center_horizontal"
         android:text="请选择你的身份进入"
         android:textColor="@color/colorGray"
         android:textSize="15sp" />
