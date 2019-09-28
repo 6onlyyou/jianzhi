@@ -9,7 +9,6 @@ import fu.com.parttimejob.R
 import kotlinx.android.synthetic.main.conversation.*
 
 class ConversationActivity : FragmentActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.conversation)

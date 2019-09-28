@@ -129,6 +129,15 @@ public interface ApiService {
      */
     @POST("/appservice/app/alluser/queryUserInfo")
     Observable<ResponseBean<UserInfoBean>> getUserInfo(@Query("thirdAccount") String thirdAccount, @Query("identyType") int identyType, @Query("longitude") String longitude, @Query("latitude") String latitude, @Query("city") String city, @Query("token") String token);
+    /**
+     * 查询他人信息
+     *
+     * @return
+     */
+    @POST("/appservice/app/alluser/h5queryUserInfo")
+    Observable<ResponseBean<UserInfoBean>> h5queryUserInfo(@Query("thirdAccount") String thirdAccount);
+
+
 
     /**
      * 获取首页列表

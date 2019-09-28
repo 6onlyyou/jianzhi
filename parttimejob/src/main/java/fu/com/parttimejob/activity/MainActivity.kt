@@ -23,10 +23,12 @@ import com.amap.api.location.AMapLocation
 import com.amap.api.location.AMapLocationListener
 import com.heixiu.errand.net.RetrofitFactory
 import com.lljjcoder.citylist.Toast.ToastUtils
+import com.luck.picture.lib.rxbus2.RxBus
 import fu.com.parttimejob.R
 import fu.com.parttimejob.adapter.FragmentAdapter
 import fu.com.parttimejob.base.ActivityManager
 import fu.com.parttimejob.base.BaseActivity
+import fu.com.parttimejob.bean.RxBusEntity
 import fu.com.parttimejob.dialog.DingPDialog
 import fu.com.parttimejob.fragment.HomeFragment
 import fu.com.parttimejob.fragment.MessageFragment
@@ -37,6 +39,8 @@ import fu.com.parttimejob.utils.ConversationListAdapterEx
 import fu.com.parttimejob.utils.LocationUtils
 import fu.com.parttimejob.utils.SPUtil
 import fu.com.parttimejob.weight.ConversationListImFragment
+import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Consumer
 import io.rong.imkit.RongContext
 import io.rong.imkit.RongIM
 import io.rong.imlib.RongIMClient
@@ -48,15 +52,12 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_talent_management.view.*
 import java.util.*
 
-class MainActivity : BaseActivity() , RongIMClient.OnReceiveMessageListener{
+class MainActivity : BaseActivity() {
     private lateinit var adapter: FragmentAdapter
     private val titles = ArrayList<String>()
     private val imgs = ArrayList<Int>()
     private var numcon: TextView? = null
-
-    override fun onReceived(p0: Message?, p1: Int): Boolean {
-        return false
-    }
+    private var subscribe: Disposable? = null
 
 
 
@@ -81,6 +82,19 @@ class MainActivity : BaseActivity() , RongIMClient.OnReceiveMessageListener{
         return listFragment
     }
     override fun initViewParams() {
+        subscribe = RxBus.getDefault().toObservable(RxBusEntity::class.java).subscribe(object : Consumer<RxBusEntity> {
+            @Throws(Exception::class)
+            override fun accept(catchDollUserInfoBean: RxBusEntity) {
+                if (catchDollUserInfoBean.msg.equals("103")) {
+
+                    initConversationList()
+                }
+            }
+        }, object : Consumer<Throwable> {
+            @Throws(Exception::class)
+            override fun accept(throwable: Throwable) {
+            }
+        })
         adapter = FragmentAdapter(supportFragmentManager)
 
         imgs.add(R.mipmap.ic_home_select)
@@ -302,7 +316,7 @@ class MainActivity : BaseActivity() , RongIMClient.OnReceiveMessageListener{
         handler.postDelayed({
             RongIM.getInstance().setOnReceiveUnreadCountChangedListener(mCountListener, *conversationTypes)
         }, 1000)
-        RongIM.setOnReceiveMessageListener(this)
+
     }
     var mCountListener: RongIM.OnReceiveUnreadCountChangedListener = RongIM.OnReceiveUnreadCountChangedListener { count ->
         if (count == 0) {
@@ -381,5 +395,11 @@ class MainActivity : BaseActivity() , RongIMClient.OnReceiveMessageListener{
         override fun onMessageLongClick(context: Context, view: View, message: Message): Boolean {
             return false
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        RongIM.getInstance().disconnect()
+        subscribe!!.dispose()
     }
 }
