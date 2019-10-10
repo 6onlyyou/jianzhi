@@ -32,28 +32,34 @@ public class ConversationListAdapterEx extends ConversationListAdapter {
     UserInfo  userInfo=null;
     @Override
     protected void bindView(View v, int position, final UIConversation data) {
+            if(null==data.getUIConversationTitle()){
 
-        if(data.getUIConversationTitle().equals("")||data.getUIConversationTitle().length()>12){
-            RxUtils.wrapRestCall(RetrofitFactory.INSTANCE.getRetrofit().h5queryUserInfo(data.getConversationSenderId())).subscribe(new Consumer<UserInfoBean>() {
-                @Override
-                public void accept(UserInfoBean userInfoBean) throws Exception {
-                    userInfo = new UserInfo(data.getConversationTargetId(), userInfoBean.getName(), Uri.parse(userInfoBean.getHeadImg()));
+            }else{
+                if(data.getUIConversationTitle().equals("")||data.getUIConversationTitle().length()>12){
+                    RxUtils.wrapRestCall(RetrofitFactory.INSTANCE.getRetrofit().h5queryUserInfo(data.getConversationSenderId())).subscribe(new Consumer<UserInfoBean>() {
+                        @Override
+                        public void accept(UserInfoBean userInfoBean) throws Exception {
+                            userInfo = new UserInfo(data.getConversationTargetId(), userInfoBean.getName(), Uri.parse(userInfoBean.getHeadImg()));
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            userInfo = new UserInfo(data.getConversationTargetId(), "公众号用户", Uri.parse("https://jiujiuqihan.oss-cn-beijing.aliyuncs.com/default/defaultHeadImg.png"));
+                        }
+                    });
+                }else{
+                    userInfo = new UserInfo(data.getConversationTargetId(),data.getUIConversationTitle() ,data.getIconUrl());
                 }
-            }, new Consumer<Throwable>() {
-                @Override
-                public void accept(Throwable throwable) throws Exception {
-                    userInfo = new UserInfo(data.getConversationTargetId(), "公众号用户", Uri.parse("https://jiujiuqihan.oss-cn-beijing.aliyuncs.com/default/defaultHeadImg.png"));
-                }
-            });
-        }else{
-             userInfo = new UserInfo(data.getConversationTargetId(),data.getUIConversationTitle() ,data.getIconUrl());
-        }
+            }
+
 
         if (data.getConversationType().equals(Conversation.ConversationType.DISCUSSION))
 
             data.setUnreadType(UIConversation.UnreadRemindType.REMIND_ONLY);
+        if(userInfo != null){
+            data.updateConversation(userInfo);
+        }
 
-        data.updateConversation(userInfo);
         super.bindView(v, position, data);
     }
 }

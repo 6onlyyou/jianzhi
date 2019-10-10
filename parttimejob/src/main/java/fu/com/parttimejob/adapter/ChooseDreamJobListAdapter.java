@@ -62,18 +62,23 @@ public class ChooseDreamJobListAdapter extends BaseRecyclerViewAdapter {
             binding.jobName.setText(object1.getLabels());
             if(object1.getLabelssel()==null){
                 binding.jobName.setBackgroundResource(R.drawable.item_qiuzhi_job);
+                binding.jobName.setTextColor(binding.getRoot().getRootView().getResources().getColor(R.color.gray_text));
             }else{
                 if(object1.getLabelssel()){
                     binding.jobName.setBackgroundResource(R.drawable.bg_round_bq);
+                    binding.jobName.setTextColor(binding.getRoot().getRootView().getResources().getColor(R.color.white));
                 }else{
                     binding.jobName.setBackgroundResource(R.drawable.item_qiuzhi_job);
+                    binding.jobName.setTextColor(binding.getRoot().getRootView().getResources().getColor(R.color.gray_text));
                 }
             }
 
             if (selectPositions.contains(position)){
                 binding.jobName.setBackgroundResource(R.drawable.bg_round_bq);
+                binding.jobName.setTextColor(binding.getRoot().getRootView().getResources().getColor(R.color.white));
             }else {
                 binding.jobName.setBackgroundResource(R.drawable.item_qiuzhi_job);
+                binding.jobName.setTextColor(binding.getRoot().getRootView().getResources().getColor(R.color.gray_text));
             }
         }
     }
