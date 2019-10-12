@@ -32,44 +32,42 @@ public class ConversationListImFragment extends ConversationListFragment {
             @Override
             public void onSuccess(final List<Conversation> conversations) {
                 if (callback != null) {
-                    final List<Conversation> conversationsl = new ArrayList<Conversation>();
-                    final Conversation conversation = new Conversation();
-//                    conversations.get(i).setSenderUserName(userInfoBean.getNickName());
-                    if(conversations ==null){
+//                    final List<Conversation> conversationsl = new ArrayList<Conversation>();
+//                    final Conversation conversation = new Conversation();
+////                    conversations.get(i).setSenderUserName(userInfoBean.getNickName());
+//                    if(conversations ==null){
                         callback.onResult(conversations);
-                    }else{
-                        for(int i=0;i<conversations.size();i++){
-                            final int finalI = i;
-                            RxUtils.wrapRestCall(RetrofitFactory.INSTANCE.getRetrofit().h5queryUserInfo(conversations.get(i).getTargetId())).subscribe(new Consumer<UserInfoBean>() {
-                                @Override
-                                public void accept(UserInfoBean userInfoBean) throws Exception {
-                                    conversation.setSenderUserName(userInfoBean.getName());
-                                    conversation.setConversationTitle(userInfoBean.getName());
-                                    conversation.setLatestMessage(conversations.get(finalI).getLatestMessage());
-                                    conversation.setPortraitUrl(userInfoBean.getHeadImg());
-                                    conversation.setSenderUserId(conversations.get(finalI).getSenderUserId());
-                                    conversation.setTargetId(conversations.get(finalI).getTargetId());
-                                    conversation.setObjectName(conversations.get(finalI).getObjectName());
-                                    conversation.setConversationType(conversations.get(finalI).getConversationType());
-                                    conversationsl.add(conversation);
-                                    callback.onResult(conversationsl);
-                                }
-                            }, new Consumer<Throwable>() {
-                                @Override
-                                public void accept(Throwable throwable) throws Exception {
-                                    callback.onResult(conversationsl);
-                                }
-                            });
-                        }
-                    }
+//                    }else{
+//                        for(int i=0;i<conversations.size();i++){
+//                            final int finalI = i;
+//                            RxUtils.wrapRestCall(RetrofitFactory.INSTANCE.getRetrofit().h5queryUserInfo(conversations.get(i).getTargetId())).subscribe(new Consumer<UserInfoBean>() {
+//                                @Override
+//                                public void accept(UserInfoBean userInfoBean) throws Exception {
+//                                    conversation.setSenderUserName(userInfoBean.getName());
+//                                    conversation.setConversationTitle(userInfoBean.getName());
+//                                    conversation.setLatestMessage(conversations.get(finalI).getLatestMessage());
+//                                    conversation.setPortraitUrl(userInfoBean.getHeadImg());
+//                                    conversation.setSenderUserId(conversations.get(finalI).getSenderUserId());
+//                                    conversation.setTargetId(conversations.get(finalI).getTargetId());
+//                                    conversation.setObjectName(conversations.get(finalI).getObjectName());
+//                                    conversation.setConversationType(conversations.get(finalI).getConversationType());
+//                                    conversationsl.add(conversation);
+//                                    callback.onResult(conversationsl);
+//                                }
+//                            }, new Consumer<Throwable>() {
+//                                @Override
+//                                public void accept(Throwable throwable) throws Exception {
 
-
+//                                    callback.onResult(conversationsl);
+//                                }
+//                            });
+//                        }
+//                    }
 //                    conversationsl.add()
 
-                }
+        }
 
-            }
-
+    }
 
             @Override
 
