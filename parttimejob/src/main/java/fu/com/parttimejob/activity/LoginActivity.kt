@@ -83,7 +83,10 @@ class LoginActivity : BaseActivity() {
                 SPUtil.putString(this@LoginActivity, "token", it.token)
                 SPUtil.putString(applicationContext,"thirdAccount",wxInfoEntity!!.getmUnionid())
                 if(SPUtil.getInt(this@LoginActivity, "Profession", 1)==1){
-                    startActivity(ChooseJobActivity::class.java, true)
+                    val intent = Intent(this, ChooseJobActivity::class.java)
+                    intent.putExtra("starpage", "")
+                    startActivity(intent)
+                    finish()
                 }else{
                     startActivity(CreateJobCardActivity::class.java, true)
                 }
@@ -142,7 +145,10 @@ class LoginActivity : BaseActivity() {
                             ToastUtils.showLongToast(applicationContext, "登入成功")
                             SPUtil.putString(this, "token", it.token.toString())
                             if(SPUtil.getInt(applicationContext, "Profession", 1)==1){
-                                startActivity(ChooseJobActivity::class.java, true)
+                                val intent = Intent(this, ChooseJobActivity::class.java)
+                                intent.putExtra("starpage", "")
+                                startActivity(intent)
+                                finish()
                             }else{
                                 startActivity(CreateJobCardActivity::class.java, true)
 
@@ -249,7 +255,10 @@ class LoginActivity : BaseActivity() {
                             if(SPUtil.getInt(this@LoginActivity, "Profession", 1)==1){
                                 startActivity(ChooseJobActivity::class.java, true)
                             }else{
-                                startActivity(CreateJobCardActivity::class.java, true)
+                                val intent = Intent(this@LoginActivity, ChooseJobActivity::class.java)
+                                intent.putExtra("starpage", "")
+                                startActivity(intent)
+                                finish()
                             }
                         }
                         finish()

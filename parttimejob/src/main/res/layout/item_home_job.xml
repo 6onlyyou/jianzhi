@@ -4,9 +4,9 @@
     <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="71dp"
+        android:layout_height="wrap_content"
         app:cardElevation="1dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="6dp"
         app:cardCornerRadius="4dp">
 
         <LinearLayout
@@ -14,6 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:paddingBottom="15dp"
             android:orientation="vertical">
 
 
@@ -27,11 +28,11 @@
                 <TextView
                     android:id="@+id/job_name"
                     android:layout_width="wrap_content"
-                    android:layout_height="23dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:text=""
                     android:textColor="@color/colorBlack"
-                    android:textSize="16sp" />
+                    android:textSize="17sp" />
 
                 <TextView
                     android:id="@+id/job_reward"
@@ -47,7 +48,7 @@
                     android:paddingTop="2dp"
                     android:text="赏20金币"
                     android:textColor="#ffffffff"
-                    android:textSize="10sp" />
+                    android:textSize="12sp" />
 
                 <View
                     android:layout_width="0dp"
@@ -69,6 +70,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
+                android:layout_marginTop="15dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -77,7 +79,7 @@
                     android:layout_height="14dp"
                     android:layout_marginLeft="15dp"
                     android:textColor="@color/colorGray"
-                    android:textSize="12sp" />
+                    android:textSize="13sp" />
 
                 <View
                     android:layout_width="0dp"

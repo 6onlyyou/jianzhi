@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="人才管理"
+            android:text="在线选人"
             android:textColor="@color/colorWhite"
             android:textSize="18sp" />
 

@@ -104,6 +104,8 @@ class CreateJobCardActivity : BaseActivity() {
                     RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().createCard(SPUtil.getString(this,"thirdAccount",""),nameEt.text.toString(),phoneEt.text.toString(),shopEt.text.toString())).subscribe({
                         ToastUtils.showLongToast(applicationContext, it)
                         SPUtil.putBoolean(this@CreateJobCardActivity, "sfcreateCard",true )
+
+                        SPUtil.putString(this@CreateJobCardActivity, "redEnvelopeNumber", nameEt.text.toString())
                         startActivity(Intent(applicationContext, MainActivity::class.java))
                         finish()
                     }, {
@@ -118,10 +120,7 @@ class CreateJobCardActivity : BaseActivity() {
                     RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().createCard(SPUtil.getString(this,"thirdAccount",""),requestBody,nameEt.text.toString(),phoneEt.text.toString(),shopEt.text.toString())).subscribe({
                         ToastUtils.showLongToast(applicationContext, it)
                         SPUtil.putBoolean(this@CreateJobCardActivity, "sfcreateCard",true )
-                        RongIM.setUserInfoProvider({
-                            //在这里，根据userId，使用同步的请求，去请求服务器，就可以完美做到显示用户的头像，昵称了
-                            UserInfo(SPUtil.getString(this@CreateJobCardActivity, "thirdAccount", "").toString(), SPUtil.getString(this, "nickname", "默认用户名"), Uri.parse( SPUtil.getString(this, "cardHeadImg", "")))
-                        }, true)
+                        SPUtil.putString(this@CreateJobCardActivity, "redEnvelopename", nameEt.text.toString())
                         startActivity(Intent(applicationContext, MainActivity::class.java))
                         finish()
                     }, {

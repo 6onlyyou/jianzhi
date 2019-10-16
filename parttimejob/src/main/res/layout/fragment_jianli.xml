@@ -34,7 +34,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/defind" />
         </LinearLayout>
 
         <LinearLayout
@@ -100,8 +100,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/sexd"
-            android:layout_margin="15dp"
-            android:text="我是一个活泼开朗，我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗。"
+            android:text=""
             android:textColor="#cfcfcf"
             android:textSize="14sp" />
 
@@ -111,12 +110,14 @@
             android:layout_height="22dp"
             android:layout_alignStart="@+id/myInfo"
             android:layout_below="@+id/myInfo"
+            android:layout_marginLeft="15dp"
             android:text="求职意向"
             android:textColor="#ff8b8b8b"
             android:textSize="14sp" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/biaoQianList"
+            android:layout_marginLeft="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/myInfo"

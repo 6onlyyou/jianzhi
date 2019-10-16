@@ -43,8 +43,8 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="50dp"
-                android:layout_height="22dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="20dp"
                 android:text="姓名"
@@ -74,8 +74,8 @@
                 android:background="@color/colorLine" />
 
             <TextView
-                android:layout_width="50dp"
-                android:layout_height="22dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="20dp"
                 android:text="性别"
@@ -103,8 +103,8 @@
                 android:background="@color/colorLine" />
 
             <TextView
-                android:layout_width="50dp"
-                android:layout_height="22dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="20dp"
                 android:text="年龄"
@@ -165,12 +165,41 @@
                 android:layout_marginTop="12dp"
                 android:background="@color/colorLine" />
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="22dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:text="寻找工作"
+                android:textColor="#ff8b8b8b"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/jianlibiaoqian"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="8dp"
+                android:drawableRight="@mipmap/ic_next"
+                android:hint="请选择要找的工作"
+                android:singleLine="true"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="12dp"
+                android:background="@color/colorLine" />
+            <TextView
                 android:layout_width="57dp"
                 android:layout_height="22dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="20dp"
                 android:text="个人简介"
                 android:textColor="#ff222222"
+                android:visibility="gone"
                 android:textSize="14sp" />
 
 
@@ -180,6 +209,7 @@
                 android:layout_height="119dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
+                android:visibility="gone"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/item_qiuzhi_job"
                 android:gravity="left|top"
@@ -216,7 +246,7 @@
                 android:layout_height="35dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:text="录制视频或者图片给老板看，录制您会做什么工作，以前做过什么工作，做了多久等介绍让老板更想招你"
+                android:text="录制视频:请简单描述下您想找什么工作，之前做过什么工作"
                 android:textColor="@color/colorRed"
                 android:textSize="14sp" />
 

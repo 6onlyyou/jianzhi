@@ -1,6 +1,7 @@
 package fu.com.parttimejob.activity
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
@@ -62,7 +63,10 @@ class SplashActivity : BaseActivity() {
 
                                         startActivity(MainActivity::class.java, true)
                                     } else {
-                                        startActivity(ChooseJobActivity::class.java, true)
+                                        val intent = Intent(this@SplashActivity, ChooseJobActivity::class.java)
+                                        intent.putExtra("starpage", "")
+                                        startActivity(intent)
+                                        finish()
                                     }
                                 }
                             }, {
@@ -129,7 +133,10 @@ class SplashActivity : BaseActivity() {
 
                             startActivity(MainActivity::class.java, true)
                         } else {
-                            startActivity(ChooseJobActivity::class.java, true)
+                            val intent = Intent(this, ChooseJobActivity::class.java)
+                            intent.putExtra("starpage", "")
+                            startActivity(intent)
+                            finish()
                         }
                     }
                 }, {

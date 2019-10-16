@@ -59,7 +59,6 @@ class DisplayJianLiActivity : BaseActivity() {
     override fun getLayoutId(): Int {
         return R.layout.activity_display_jian_li
     }
-
     override fun initViewParams() {
         localMedia = LocalMedia()
         var strarr: List<String>
@@ -83,15 +82,14 @@ class DisplayJianLiActivity : BaseActivity() {
             override fun onKey(p0: View?, p1: Int, p2: KeyEvent?): Boolean {
                 return false
             }
-
         })
-        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().getResumeInfo(SPUtil.getString(this,"thirdAccount",""),SPUtil.getString(this,"thirdAccount",""))).subscribe({
+        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().getResumeInfo(SPUtil.getString(this, "thirdAccount", ""), SPUtil.getString(this, "thirdAccount", ""))).subscribe({
             jianliname.setText(it.name)
             var sexs = ""
-            if(it.sex ==1){
-                 sexs = "男"
-            }else{
-                 sexs = "女"
+            if (it.sex == 1) {
+                sexs = "男"
+            } else {
+                sexs = "女"
             }
             phonenum.setText(it.contactInformation)
             jianlisex.setText(sexs)
@@ -123,24 +121,23 @@ class DisplayJianLiActivity : BaseActivity() {
                             .placeholder(R.mipmap.defind)
                             .into(jzVideoPlayerStandard.thumbImageView)
                 }
-
-
             }
             jianlijianjie.setText(it.personalProfile)
         }, {
+
         })
         pushjianli.setOnClickListener {
-            if(!RegexUtils.isBasePhone(phonenum.text.toString())){
+            if (!RegexUtils.isBasePhone(phonenum.text.toString())) {
                 showToast("请输入正确的手机号")
                 return@setOnClickListener
             }
-            if(selectList.size == 0){
+            if (selectList.size == 0) {
                 ToastUtils.showLongToast(applicationContext, "请上传图片或者视频来介绍自己~")
                 return@setOnClickListener
             }
-            if (TextUtils.isEmpty(jianliname.text) || TextUtils.isEmpty(jianlisex.text)|| TextUtils.isEmpty(jianliage.text)|| TextUtils.isEmpty(jianlijianjie.text)||TextUtils.isEmpty(phonenum.text)){
+            if (TextUtils.isEmpty(jianliname.text) || TextUtils.isEmpty(jianlisex.text) || TextUtils.isEmpty(jianliage.text)  || TextUtils.isEmpty(phonenum.text)) {
                 ToastUtils.showLongToast(applicationContext, "请您把信息填写完整才能确定~")
-            }else{
+            } else {
                 dialogPro!!.show()
                 if (selectList!!.get(0).path.contains(".rmvb") || selectList!!.get(0).path.contains(".avi") || selectList!!.get(0).path.contains(".mkv") || selectList!!.get(0).path.contains(".mov") || selectList!!.get(0).path.contains(".flv") || selectList!!.get(0).path.contains(".3gp") || selectList!!.get(0).path.contains(".mp4")) {
 //                    val folder = File(CameraApp.getInstance().getAllSdPaths(this@TakePictureActivity)[0] + "/CameraJXD")
@@ -160,7 +157,7 @@ class DisplayJianLiActivity : BaseActivity() {
                     val f = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).toString() + "/compressor/videos")
                     if (f.mkdirs() || f.isDirectory)
                         VideoCompressAsyncTask(this).execute(selectList!!.get(0).path, f.path, fileInfoEntilty!!.get(0).filewidth, fileInfoEntilty!!.get(0).fileheight)
-                }else{
+                } else {
                     val builder: MultipartBody.Builder = MultipartBody.Builder()
                             .setType(MultipartBody.FORM)
                     if (selectList!!.size < 1) {
@@ -172,17 +169,17 @@ class DisplayJianLiActivity : BaseActivity() {
                     }
                     val requestBody: RequestBody = builder.build();
                     var sex = 0
-                    if( jianlisex.text.toString().equals("男")){
+                    if (jianlisex.text.toString().equals("男")) {
                         sex = 1
-                    }else{
+                    } else {
                         sex = 2
                     }
-                    RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().createPR(SPUtil.getString(this, "thirdAccount", "111"), jianliname.text.toString(), sex,jianliage.text.toString(), jianlijianjie.text.toString(),requestBody,SPUtil.getString(this@DisplayJianLiActivity,"city","廊坊市"),phonenum.text.toString())).subscribe(Consumer<String> {
+                    RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().createPR(SPUtil.getString(this, "thirdAccount", "111"), jianliname.text.toString(), sex, jianliage.text.toString(), jianlijianjie.text.toString(), requestBody, SPUtil.getString(this@DisplayJianLiActivity, "city", "廊坊市"), phonenum.text.toString())).subscribe(Consumer<String> {
                         ToastUtils.showLongToast(applicationContext, it.toString())
                         dialogPro!!.dismiss()
                         RongIM.setUserInfoProvider({
                             //在这里，根据userId，使用同步的请求，去请求服务器，就可以完美做到显示用户的头像，昵称了
-                            UserInfo(SPUtil.getString(this, "thirdAccount", "").toString(), SPUtil.getString(this, "nickname", "默认用户名"), Uri.parse( SPUtil.getString(this, "cardHeadImg", "")))
+                            UserInfo(SPUtil.getString(this, "thirdAccount", "").toString(), SPUtil.getString(this, "nickname", "默认用户名"), Uri.parse(SPUtil.getString(this, "cardHeadImg", "")))
                         }, true)
                         finish()
                     }, Consumer<Throwable> {
@@ -197,150 +194,165 @@ class DisplayJianLiActivity : BaseActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        jianlibiaoqian.setText(SPUtil.getString(this@DisplayJianLiActivity, "labelName", ""))
+    }
 
-private var themeId: Int = 0
-override fun initViewClick() {
-    jianlisex.setOnClickListener {
-        val list = java.util.ArrayList<String>()
-        list.add("男")
-        list.add("女")
-        val optionCenterDialog = OptionCenterDialog()
-        optionCenterDialog.show(this, list)
-        optionCenterDialog.setItemClickListener { parent, view, position, id ->
-                if(position == 0){
+    private var themeId: Int = 0
+    override fun initViewClick() {
+        jianlibiaoqian.setOnClickListener {
+            val intent = Intent(this, ChooseJobActivity::class.java)
+            intent.putExtra("starpage", "jianli")
+            startActivity(intent)
+        }
+        back.setOnClickListener {
+            finish()
+        }
+        jianlisex.setOnClickListener {
+            val list = java.util.ArrayList<String>()
+            list.add("男")
+            list.add("女")
+            val optionCenterDialog = OptionCenterDialog()
+            optionCenterDialog.show(this, list)
+            optionCenterDialog.setItemClickListener { parent, view, position, id ->
+                if (position == 0) {
                     jianlisex.setText("男")
-                }else if(position == 1){
+                } else if (position == 1) {
                     jianlisex.setText("女")
                 }
-            optionCenterDialog.dismiss() }
-    }
-    themeId = R.style.picture_default_style
-    val manager = FullyGridLayoutManager(this@DisplayJianLiActivity, 1, GridLayoutManager.VERTICAL, false)
-    recyclerView.setLayoutManager(manager)
-    adapter = GridImageAdapter(this@DisplayJianLiActivity, onAddPicClickListener)
-    adapter!!.setList(selectList)
-    adapter!!.setSelectMax(1)
-    recyclerView.setAdapter(adapter)
-    adapter!!.setOnItemClickListener(object : GridImageAdapter.OnItemClickListener {
-        override fun onItemClick(position: Int, v: View) {
-            if (selectList.size > 0) {
-                val media = selectList[position]
-                val pictureType = media.pictureType
+                optionCenterDialog.dismiss()
+            }
+        }
+        themeId = R.style.picture_default_style
+        val manager = FullyGridLayoutManager(this@DisplayJianLiActivity, 1, GridLayoutManager.VERTICAL, false)
+        recyclerView.setLayoutManager(manager)
+        adapter = GridImageAdapter(this@DisplayJianLiActivity, onAddPicClickListener)
+        adapter!!.setList(selectList)
+        adapter!!.setSelectMax(1)
+        recyclerView.setAdapter(adapter)
+        adapter!!.setOnItemClickListener(object : GridImageAdapter.OnItemClickListener {
+            override fun onItemClick(position: Int, v: View) {
+                if (selectList.size > 0) {
+                    val media = selectList[position]
+                    val pictureType = media.pictureType
 
-                val mediaType = PictureMimeType.pictureToVideo(pictureType)
-                when (mediaType) {
-                    1 ->
-                        // 预览图片 可自定长按保存路径
-                        //PictureSelector.create(MainActivity.this).themeStyle(themeId).externalPicturePreview(position, "/custom_file", selectList);
-                        PictureSelector.create(this@DisplayJianLiActivity).themeStyle(themeId).openExternalPreview(position, selectList)
-                    2 ->
-                        // 预览视频
-                        PictureSelector.create(this@DisplayJianLiActivity).externalPictureVideo(media.path)
-                    3 ->
-                        // 预览音频
-                        PictureSelector.create(this@DisplayJianLiActivity).externalPictureAudio(media.path)
+                    val mediaType = PictureMimeType.pictureToVideo(pictureType)
+                    when (mediaType) {
+                        1 ->
+                            // 预览图片 可自定长按保存路径
+                            //PictureSelector.create(MainActivity.this).themeStyle(themeId).externalPicturePreview(position, "/custom_file", selectList);
+                            PictureSelector.create(this@DisplayJianLiActivity).themeStyle(themeId).openExternalPreview(position, selectList)
+                        2 ->
+                            // 预览视频
+                            PictureSelector.create(this@DisplayJianLiActivity).externalPictureVideo(media.path)
+                        3 ->
+                            // 预览音频
+                            PictureSelector.create(this@DisplayJianLiActivity).externalPictureAudio(media.path)
+                    }
                 }
             }
-        }
-    })
+        })
 
-    // 清空图片缓存，包括裁剪、压缩后的图片 注意:必须要在上传完成后调用 必须要获取权限
-    val permissions = RxPermissions(this)
-    permissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(object : Observer<Boolean> {
-        override fun onNext(aBoolean: Boolean) {
-            if (aBoolean!!) {
-                PictureFileUtils.deleteCacheDirFile(this@DisplayJianLiActivity)
-            } else {
-                Toast.makeText(this@DisplayJianLiActivity,
-                        getString(R.string.picture_jurisdiction), Toast.LENGTH_SHORT).show()
+        // 清空图片缓存，包括裁剪、压缩后的图片 注意:必须要在上传完成后调用 必须要获取权限
+        val permissions = RxPermissions(this)
+        permissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(object : Observer<Boolean> {
+            override fun onNext(aBoolean: Boolean) {
+                if (aBoolean!!) {
+                    PictureFileUtils.deleteCacheDirFile(this@DisplayJianLiActivity)
+                } else {
+                    Toast.makeText(this@DisplayJianLiActivity,
+                            getString(R.string.picture_jurisdiction), Toast.LENGTH_SHORT).show()
+                }
             }
-        }
-//
-        override fun onSubscribe(d: Disposable) {}
+
+            //
+            override fun onSubscribe(d: Disposable) {}
 
 
-        override fun onError(e: Throwable) {}
+            override fun onError(e: Throwable) {}
 
-        override fun onComplete() {}
-    })
-}
+            override fun onComplete() {}
+        })
+    }
 
-private val onAddPicClickListener = object : GridImageAdapter.onAddPicClickListener {
-    override fun onAddPicClick() {
-        PictureSelector.create(this@DisplayJianLiActivity)
-                .openGallery(PictureMimeType.ofAll())// 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
-                .theme(R.style.picture_default_style)// 主题样式设置 具体参考 values/styles   用法：R.style.picture.white.style
-                .maxSelectNum(1)// 最大图片选择数量
-                .minSelectNum(1)// 最小选择数量
-                .imageSpanCount(4)// 每行显示个数
-                .selectionMode(
-                        PictureConfig.SINGLE)// 多选 or 单选
-                .previewImage(true)// 是否可预览图片
-                .previewVideo(true)// 是否可预览视频
-                .enablePreviewAudio(true) // 是否可播放音频
-                .isCamera(true)// 是否显示拍照按钮
-                .isZoomAnim(true)// 图片列表点击 缩放效果 默认true
-                //.imageFormat(PictureMimeType.PNG)// 拍照保存图片格式后缀,默认jpeg
-                //.setOutputCameraPath("/CustomPath")// 自定义拍照保存路径
-                .enableCrop(false)// 是否裁剪
-                .compress(true)// 是否压缩
-                .synOrAsy(true)//同步true或异步false 压缩 默认同步
-                //.compressSavePath(getPath())//压缩图片保存地址
-                //.sizeMultiplier(0.5f)// glide 加载图片大小 0~1之间 如设置 .glideOverride()无效
-                .glideOverride(160, 160)// glide 加载宽高，越小图片列表越流畅，但会影响列表图片浏览的清晰度
-                .withAspectRatio(1, 1)// 裁剪比例 如16:9 3:2 3:4 1:1 可自定义
-                .hideBottomControls(true)// 是否显示uCrop工具栏，默认不显示
-                .isGif(true)// 是否显示gif图片
-                .freeStyleCropEnabled(true)// 裁剪框是否可拖拽
-                .circleDimmedLayer(true)// 是否圆形裁剪
-                .showCropFrame(false)// 是否显示裁剪矩形边框 圆形裁剪时建议设为false
-                .showCropGrid(false)// 是否显示裁剪矩形网格 圆形裁剪时建议设为false
-                .openClickSound(true)// 是否开启点击声音
+    private val onAddPicClickListener = object : GridImageAdapter.onAddPicClickListener {
+        override fun onAddPicClick() {
+            PictureSelector.create(this@DisplayJianLiActivity)
+                    .openGallery(PictureMimeType.ofAll())// 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
+                    .theme(R.style.picture_default_style)// 主题样式设置 具体参考 values/styles   用法：R.style.picture.white.style
+                    .maxSelectNum(1)// 最大图片选择数量
+                    .minSelectNum(1)// 最小选择数量
+                    .imageSpanCount(4)// 每行显示个数
+                    .selectionMode(
+                            PictureConfig.SINGLE)// 多选 or 单选
+                    .previewImage(true)// 是否可预览图片
+                    .previewVideo(true)// 是否可预览视频
+                    .enablePreviewAudio(true) // 是否可播放音频
+                    .isCamera(true)// 是否显示拍照按钮
+                    .isZoomAnim(true)// 图片列表点击 缩放效果 默认true
+                    //.imageFormat(PictureMimeType.PNG)// 拍照保存图片格式后缀,默认jpeg
+                    //.setOutputCameraPath("/CustomPath")// 自定义拍照保存路径
+                    .enableCrop(false)// 是否裁剪
+                    .compress(true)// 是否压缩
+                    .synOrAsy(true)//同步true或异步false 压缩 默认同步
+                    //.compressSavePath(getPath())//压缩图片保存地址
+                    //.sizeMultiplier(0.5f)// glide 加载图片大小 0~1之间 如设置 .glideOverride()无效
+                    .glideOverride(160, 160)// glide 加载宽高，越小图片列表越流畅，但会影响列表图片浏览的清晰度
+                    .withAspectRatio(1, 1)// 裁剪比例 如16:9 3:2 3:4 1:1 可自定义
+                    .hideBottomControls(true)// 是否显示uCrop工具栏，默认不显示
+                    .isGif(true)// 是否显示gif图片
+                    .freeStyleCropEnabled(true)// 裁剪框是否可拖拽
+                    .circleDimmedLayer(true)// 是否圆形裁剪
+                    .showCropFrame(false)// 是否显示裁剪矩形边框 圆形裁剪时建议设为false
+                    .showCropGrid(false)// 是否显示裁剪矩形网格 圆形裁剪时建议设为false
+                    .openClickSound(true)// 是否开启点击声音
 //                   .selectionMedia(selectList)// 是否传入已选图片
-                //.isDragFrame(false)// 是否可拖动裁剪框(固定)
-                //                        .videoMaxSecond(15)
-                //                        .videoMinSecond(10)
-                //.previewEggs(false)// 预览图片时 是否增强左右滑动图片体验(图片滑动一半即可看到上一张是否选中)
-                .cropCompressQuality(90)// 裁剪压缩质量 默认100
-                .minimumCompressSize(100)// 小于100kb的图片不压缩
-                //.cropWH()// 裁剪宽高比，设置如果大于图片本身宽高则无效
-                //.rotateEnabled(true) // 裁剪是否可旋转图片
-                //.scaleEnabled(true)// 裁剪是否可放大缩小图片
-                //.videoQuality()// 视频录制质量 0 or 1
-                //.videoSecond()//显示多少秒以内的视频or音频也可适用
-                //.recordVideoSecond()//录制视频秒数 默认60s
-                .forResult(PictureConfig.CHOOSE_REQUEST)//结果回调onActivityResult code
+                    //.isDragFrame(false)// 是否可拖动裁剪框(固定)
+                    //                        .videoMaxSecond(15)
+                    //                        .videoMinSecond(10)
+                    //.previewEggs(false)// 预览图片时 是否增强左右滑动图片体验(图片滑动一半即可看到上一张是否选中)
+                    .cropCompressQuality(90)// 裁剪压缩质量 默认100
+                    .minimumCompressSize(100)// 小于100kb的图片不压缩
+                    //.cropWH()// 裁剪宽高比，设置如果大于图片本身宽高则无效
+                    //.rotateEnabled(true) // 裁剪是否可旋转图片
+                    //.scaleEnabled(true)// 裁剪是否可放大缩小图片
+                    //.videoQuality()// 视频录制质量 0 or 1
+                    //.videoSecond()//显示多少秒以内的视频or音频也可适用
+                    //.recordVideoSecond()//录制视频秒数 默认60s
+                    .forResult(PictureConfig.CHOOSE_REQUEST)//结果回调onActivityResult code
+        }
+
     }
 
-}
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                PictureConfig.CHOOSE_REQUEST -> {
+                    // 图片选择结果回调
 
-override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-    super.onActivityResult(requestCode, resultCode, data)
-    if (resultCode == Activity.RESULT_OK) {
-        when (requestCode) {
-            PictureConfig.CHOOSE_REQUEST -> {
-                // 图片选择结果回调
+                    selectList = PictureSelector.obtainMultipleResult(data)
 
-                selectList = PictureSelector.obtainMultipleResult(data)
+                    getPlayTime(selectList.get(0).path, 0)
+                    // 例如 LocalMedia 里面返回三种path
+                    // 1.media.getPath(); 为原图path
+                    // 2.media.getCutPath();为裁剪后path，需判断media.isCut();是否为true
+                    // 3.media.getCompressPath();为压缩后path，需判断media.isCompressed();是否为true
+                    // 如果裁剪并压缩了，已取压缩路径为准，因为是先裁剪后压缩的
 
-                getPlayTime(selectList.get(0).path, 0)
-                // 例如 LocalMedia 里面返回三种path
-                // 1.media.getPath(); 为原图path
-                // 2.media.getCutPath();为裁剪后path，需判断media.isCut();是否为true
-                // 3.media.getCompressPath();为压缩后path，需判断media.isCompressed();是否为true
-                // 如果裁剪并压缩了，已取压缩路径为准，因为是先裁剪后压缩的
-
-                for (media in selectList) {
-                    Log.i("图片-----》", media.getPath())
+                    for (media in selectList) {
+                        Log.i("图片-----》", media.getPath())
+                    }
+                    adapter!!.setList(selectList)
+                    adapter!!.notifyDataSetChanged()
+                    videoplayer.visibility = View.GONE
+                    jina_pic.visibility = View.GONE
                 }
-                adapter!!.setList(selectList)
-                adapter!!.notifyDataSetChanged()
-                videoplayer.visibility = View.GONE
-                jina_pic.visibility = View.GONE
             }
         }
     }
-}
+
     var fileInfoEntilty: ArrayList<FileInfoEntilty>? = null
     fun getPlayTime(mUri: String, type: Int): String {
         fileInfoEntilty = ArrayList<FileInfoEntilty>()
@@ -367,6 +379,7 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
 
         return "";
     }
+
     internal inner class VideoCompressAsyncTask(var mContext: Context) : AsyncTask<String, String, String>() {
 
         override fun onPreExecute() {
@@ -398,31 +411,32 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
 
         override fun onPostExecute(compressedFilePath: String) {
             super.onPostExecute(compressedFilePath)
-                val builder: MultipartBody.Builder = MultipartBody.Builder()
-                        .setType(MultipartBody.FORM)
-                if (selectList!!.size < 1) {
+            val builder: MultipartBody.Builder = MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+            if (selectList!!.size < 1) {
+                builder.addFormDataPart("picOrVedio", File(compressedFilePath).name, RequestBody.create(MediaType.parse("image/*"), File(compressedFilePath)));
+            } else {
+                for (i in selectList!!.indices) {
                     builder.addFormDataPart("picOrVedio", File(compressedFilePath).name, RequestBody.create(MediaType.parse("image/*"), File(compressedFilePath)));
-                } else {
-                    for (i in selectList!!.indices) {
-                        builder.addFormDataPart("picOrVedio", File(compressedFilePath).name, RequestBody.create(MediaType.parse("image/*"), File(compressedFilePath)));
-                    }
                 }
-                val requestBody: RequestBody = builder.build();
-                var sex = 0
-                if( jianlisex.text.toString().equals("男")){
-                    sex = 1
-                }else{
-                    sex = 2
-                }
-                RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().createPR(SPUtil.getString(this@DisplayJianLiActivity, "thirdAccount", "111"), jianliname.text.toString(), sex,jianliage.text.toString(), jianlijianjie.text.toString(),requestBody,SPUtil.getString(this@DisplayJianLiActivity,"city","廊坊市"),phonenum.text.toString())).subscribe(Consumer<String> {
-                    ToastUtils.showLongToast(applicationContext, it.toString())
-                    dialogPro!!.dismiss()
-                    finish()
-                }, Consumer<Throwable> {
-                    dialogPro!!.dismiss()
-                    ToastUtils.showLongToast(applicationContext, it.message.toString())
-                })
-
             }
+            val requestBody: RequestBody = builder.build();
+            var sex = 0
+            if (jianlisex.text.toString().equals("男")) {
+                sex = 1
+            } else {
+                sex = 2
+            }
+            RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().createPR(SPUtil.getString(this@DisplayJianLiActivity, "thirdAccount", "111"), jianliname.text.toString(), sex, jianliage.text.toString(), "", requestBody, SPUtil.getString(this@DisplayJianLiActivity, "city", "廊坊市"), phonenum.text.toString())).subscribe(Consumer<String> {
+                ToastUtils.showLongToast(applicationContext, it.toString())
+                dialogPro!!.dismiss()
+                finish()
+            }, Consumer<Throwable> {
+                dialogPro!!.dismiss()
+                ToastUtils.showLongToast(applicationContext, it.message.toString())
+            })
+
         }
+    }
+
 }

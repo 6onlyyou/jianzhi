@@ -22,6 +22,7 @@ import fu.com.parttimejob.R
 import fu.com.parttimejob.base.BaseActivity
 import fu.com.parttimejob.bean.RecruitInfoBean
 import fu.com.parttimejob.bean.RxBusEntity
+import fu.com.parttimejob.bean.UserInfoH
 import fu.com.parttimejob.dialog.HintDialog
 import fu.com.parttimejob.dialog.RadDialog
 import fu.com.parttimejob.dialog.ShareTypeFragment
@@ -278,11 +279,11 @@ fun getDate(){
 
             }, true)
             RongIM.getInstance().setCurrentUserInfo(UserInfo(SPUtil.getString(this, "thirdAccount", ""), SPUtil.getString(this, "nickName", ""), Uri.parse(SPUtil.getString(this, "headImg", ""))))
+//            RongIM.getInstance().setCurrentUserInfo(UserInfoH(SPUtil.getString(this, "thirdAccount", ""), SPUtil.getString(this, "nickName", ""), Uri.parse(SPUtil.getString(this, "headImg", "")),"1","1","1"))
             RongIM.getInstance().setMessageAttachedUserInfo(true)
             RongIM.getInstance().startPrivateChat(this, recruitInfoBean!!.thirdAccount.toString(), recruitInfoBean!!.companyName + "的" + recruitInfoBean!!.name.toString())
 
         }, {
-
             ToastUtils.showLongToast(this, it.message.toString())
         })
 

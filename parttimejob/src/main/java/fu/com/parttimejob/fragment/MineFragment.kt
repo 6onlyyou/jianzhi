@@ -133,7 +133,9 @@ class MineFragment : Fragment() {
         }
         sex_age.text = SPUtil.getString(context, "phoneNumber", "")
         setsgil.setOnClickListener {
-            startActivity(Intent(context, ChooseJobActivity::class.java))
+            val intent = Intent(context, ChooseJobActivity::class.java)
+            intent.putExtra("starpage", "")
+            startActivity(intent)
         }
 
         myDuiHuanLayout.setOnClickListener {
@@ -200,6 +202,8 @@ class MineFragment : Fragment() {
                         SPUtil.putString(activity, "contactInformationheadImg","")
                         SPUtil.putInt(activity, "vipLevel", 0)
                         SPUtil.putString(activity, "cardHeadImg", "")
+                        SPUtil.putString(activity, "protocol", "")
+
                         activity!!.finish()
                         startActivity(Intent(context, ChooseProfessionActivity::class.java))
                     } else {

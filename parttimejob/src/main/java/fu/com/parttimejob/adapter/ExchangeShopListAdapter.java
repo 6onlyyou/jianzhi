@@ -18,6 +18,7 @@ import fu.com.parttimejob.base.baseadapter.BaseRecyclerViewHolder;
 import fu.com.parttimejob.bean.ExchangeBean;
 import fu.com.parttimejob.databinding.ItemExchangeShopBinding;
 import fu.com.parttimejob.dialog.HintDialog;
+import fu.com.parttimejob.dialog.ProtocolDialog;
 import fu.com.parttimejob.utils.GlideUtil;
 import fu.com.parttimejob.utils.SPUtil;
 
@@ -45,25 +46,52 @@ public class ExchangeShopListAdapter extends BaseRecyclerViewAdapter {
             binding.layclack.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
-                    new HintDialog(binding.getRoot().getContext(), R.style.dialog, "需要支付" + exchangeBean.getGoodsPrice() + "个金币是否继续？", new HintDialog.OnCloseListener() {
-                        @Override
-                        public void onClick(Dialog dialog, boolean confirm) {
-                            if (confirm) {
-                                if (exchangeBean.getGoodsPrice() > SPUtil.getInt(binding.getRoot().getContext(), "totalCount", 0)) {
-                                    ToastUtils.showLongToast(binding.getRoot().getContext(), "余额不足请充值");
-                                    Intent i = new Intent(binding.getRoot().getContext(), MyMoneyActivity.class);
-                                    binding.getRoot().getContext().startActivity(i);
-                                } else {
-                                    Intent i = new Intent(binding.getRoot().getContext(), ShouHuoActivity.class);
-                                    i.putExtra("exchangeBean", exchangeBean);
-                                    binding.getRoot().getContext().startActivity(i);
+                    if(SPUtil.getString(binding.getRoot().getContext(),"protocol","").equals("")){
+                        new ProtocolDialog(binding.getRoot().getContext(), R.style.dialog, "个金币是否继续d斯大林的空间阿斯利康到家啦觉得垃圾堆了", new ProtocolDialog.OnCloseListener() {
+                            @Override
+                            public void onClick(Dialog dialog, boolean confirm) {
+                                if (confirm) {
+                                    SPUtil.putString(binding.getRoot().getContext(), "protocol", "1");
+                                    new HintDialog(binding.getRoot().getContext(), R.style.dialog, "需要支付" + exchangeBean.getGoodsPrice() + "个金币是否继续？", new HintDialog.OnCloseListener() {
+                                        @Override
+                                        public void onClick(Dialog dialog, boolean confirm) {
+                                            if (confirm) {
+                                                if (exchangeBean.getGoodsPrice() > SPUtil.getInt(binding.getRoot().getContext(), "totalCount", 0)) {
+                                                    ToastUtils.showLongToast(binding.getRoot().getContext(), "余额不足请充值");
+                                                    Intent i = new Intent(binding.getRoot().getContext(), MyMoneyActivity.class);
+                                                    binding.getRoot().getContext().startActivity(i);
+                                                } else {
+                                                    Intent i = new Intent(binding.getRoot().getContext(), ShouHuoActivity.class);
+                                                    i.putExtra("exchangeBean", exchangeBean);
+                                                    binding.getRoot().getContext().startActivity(i);
+                                                }
+                                            }
+                                            dialog.dismiss();
+                                        }
+                                    }).show();
                                 }
+                                dialog.dismiss();
                             }
-                        dialog.dismiss();
-                        }
-                    }).show();
-
+                        }).show();
+                    }else{
+                        new HintDialog(binding.getRoot().getContext(), R.style.dialog, "需要支付" + exchangeBean.getGoodsPrice() + "个金币是否继续？", new HintDialog.OnCloseListener() {
+                            @Override
+                            public void onClick(Dialog dialog, boolean confirm) {
+                                if (confirm) {
+                                    if (exchangeBean.getGoodsPrice() > SPUtil.getInt(binding.getRoot().getContext(), "totalCount", 0)) {
+                                        ToastUtils.showLongToast(binding.getRoot().getContext(), "余额不足请充值");
+                                        Intent i = new Intent(binding.getRoot().getContext(), MyMoneyActivity.class);
+                                        binding.getRoot().getContext().startActivity(i);
+                                    } else {
+                                        Intent i = new Intent(binding.getRoot().getContext(), ShouHuoActivity.class);
+                                        i.putExtra("exchangeBean", exchangeBean);
+                                        binding.getRoot().getContext().startActivity(i);
+                                    }
+                                }
+                                dialog.dismiss();
+                            }
+                        }).show();
+                    }
 
                 }
             });

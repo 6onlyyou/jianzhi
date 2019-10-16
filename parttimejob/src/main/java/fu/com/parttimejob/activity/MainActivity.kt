@@ -71,8 +71,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun initConversationList(): Fragment {
-
-        val listFragment = fu.com.parttimejob.activity.ConversationListImFragment()
+        val listFragment = ConversationListImFragment()
         listFragment.setAdapter(ConversationListAdapterEx(RongContext.getInstance()))
         val uri = Uri.parse("rong://" + applicationInfo.packageName).buildUpon()
                 .appendPath("conversationList")
@@ -198,12 +197,12 @@ class MainActivity : BaseActivity() {
                     .setTitle("").show()
 
         }
-        if (SPUtil.getInt(this@MainActivity, "Profession", 1) == 2) {
+//        if (SPUtil.getInt(this@MainActivity, "Profession", 1) == 2) {
             main_vp.currentItem = 0
             incl_titles.visibility = View.GONE
-        }else{
-            main_vp.currentItem = 1
-        }
+//        }else{
+//            main_vp.currentItem = 1
+//        }
         main_vp.offscreenPageLimit = 4
     }
 
@@ -258,7 +257,7 @@ class MainActivity : BaseActivity() {
         }
         return super.onKeyDown(keyCode, event)
     }
-
+    var userInfo: UserInfo? = null
     override fun onResume() {
         super.onResume()
         var strarr: List<String>
@@ -281,6 +280,22 @@ class MainActivity : BaseActivity() {
             SPUtil.putString(this@MainActivity, "jianliname", it.nickName)
             SPUtil.putInt(this@MainActivity, "vipLevel", it.vipLevel)
             SPUtil.putString(this@MainActivity, "cardHeadImg", it.cardHeadImg)
+
+            if(SPUtil.getInt(this@MainActivity, "Profession", 1)==1){
+                if(SPUtil.getString(this@MainActivity, "jianliname", "").toString().equals("")){
+                }else{
+                    userInfo = UserInfo(SPUtil.getString(this@MainActivity, "thirdAccount", "").toString(), SPUtil.getString(this@MainActivity, "jianliname", "").toString(), Uri.parse(SPUtil.getString(this@MainActivity, "jianlihead", "https://apic.douyucdn.cn/upload/avatar_v3/201811/1fc77337cf1c0460659ccc6b9583d812_middle.jpg")))
+                }
+
+            }else{
+                if(SPUtil.getString(this@MainActivity, "redEnvelopename", "").toString().equals("")){
+                }else{
+                    userInfo = UserInfo(SPUtil.getString(this@MainActivity, "thirdAccount", "").toString(), SPUtil.getString(this@MainActivity, "redEnvelopename", "").toString(), Uri.parse(SPUtil.getString(this@MainActivity, "cardHeadImg", "https://apic.douyucdn.cn/upload/avatar_v3/201811/1fc77337cf1c0460659ccc6b9583d812_middle.jpg")))
+                }
+
+            }
+
+            RongIM.getInstance().refreshUserInfoCache(userInfo)
         }, {
             ToastUtils.showLongToast(applicationContext, it.message.toString())
         })

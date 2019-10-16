@@ -14,7 +14,7 @@
             android:background="@drawable/item_qiuzhi_job"
             android:gravity="center"
             android:textColor="@color/colorGray"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
     </LinearLayout>
 </layout>

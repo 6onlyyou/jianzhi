@@ -20,13 +20,14 @@ class ChooseJobActivity : BaseActivity() {
     override fun getLayoutId(): Int {
         return R.layout.activity_choose_job
     }
-
+    var starpage = ""
     var listself: ArrayList<GetLabelsBean>? = null
     var strarr: List<String>? = null
     var labelName: String = ""
     override fun initViewParams() {
         listself = ArrayList<GetLabelsBean>()
         adapter = ChooseDreamJobListAdapter()
+        starpage = intent.getStringExtra("starpage")
         dreamJobList.layoutManager = GridLayoutManager(this, 4)
         dreamJobList.adapter = adapter
         adapter.setOnItemClickListener { view, t, position -> adapter.changeSelectPosition(position) }
@@ -104,7 +105,13 @@ class ChooseJobActivity : BaseActivity() {
                 ToastUtils.showLongToast(applicationContext, it)
                 SPUtil.putBoolean(this@ChooseJobActivity, "sfcustomizeLabel", true)
                 SPUtil.putString(this, "labelName", labelName)
-                startActivity(MainActivity::class.java, true)
+                if(starpage==null||starpage.equals("")){
+                    startActivity(MainActivity::class.java, true)
+                }else if(starpage.equals("jianli")){
+                    finish()
+                }
+
+
             }, {
                 ToastUtils.showLongToast(applicationContext, it.message.toString())
             })

@@ -132,6 +132,7 @@ class MyJianLiActivity : BaseActivity() {
                             .into(myPhoto)
                     myPhoto.visibility = View.VISIBLE
                     videoplayer.visibility = View.GONE
+                    SPUtil.putString(this@MyJianLiActivity, "jianlihead", listimg[0])
                 } else {
                     val jzVideoPlayerStandard = findViewById<View>(R.id.videoplayer) as JZVideoPlayerStandard
                     jzVideoPlayerStandard.setUp(listimg[0],
@@ -141,6 +142,7 @@ class MyJianLiActivity : BaseActivity() {
                             .load(listimg[1])
                             .placeholder(R.mipmap.defind)
                             .into(jzVideoPlayerStandard.thumbImageView)
+                    SPUtil.putString(this@MyJianLiActivity, "jianlihead", listimg[1])
                     myPhoto.visibility = View.GONE
                     videoplayer.visibility = View.VISIBLE
                 }
@@ -159,6 +161,7 @@ class MyJianLiActivity : BaseActivity() {
                 }
                 adapter.addAll(list as List<BaseRecyclerModel>?)
             }
+
             phone.setText("联系电话：" + it.contactInformation)
             dialogPro!!.dismiss()
         }, {
