@@ -21,9 +21,11 @@ public class BaseUiListener implements IUiListener {
         doComplete(response);
     }
     protected void doComplete(Object values) {
-        RxBusEntity rxBusEntity =  new RxBusEntity();
-        rxBusEntity.setMsg("101");
-        RxBus.getDefault().post(rxBusEntity);
+        if(!values.equals("s")){
+            RxBusEntity rxBusEntity =  new RxBusEntity();
+            rxBusEntity.setMsg("101");
+            RxBus.getDefault().post(rxBusEntity);
+        }
     }
 
     @Override

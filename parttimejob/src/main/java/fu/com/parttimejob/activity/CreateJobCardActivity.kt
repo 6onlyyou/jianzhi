@@ -73,7 +73,7 @@ class CreateJobCardActivity : BaseActivity() {
                     .circleDimmedLayer(true)// 是否圆形裁剪
                     .showCropFrame(false)// 是否显示裁剪矩形边框 圆形裁剪时建议设为false
                     .showCropGrid(false)// 是否显示裁剪矩形网格 圆形裁剪时建议设为false
-                    .openClickSound(true)// 是否开启点击声音
+                    .openClickSound(false)// 是否开启点击声音
 //                   .selectionMedia(selectList)// 是否传入已选图片
                     //.isDragFrame(false)// 是否可拖动裁剪框(固定)
                     //                        .videoMaxSecond(15)

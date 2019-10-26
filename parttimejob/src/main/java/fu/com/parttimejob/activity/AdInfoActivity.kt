@@ -115,8 +115,7 @@ class AdInfoActivity : BaseActivity() {
                 DlgForBigPhto(advertisingInfoBean!!.getHeadImg())
             }
             zhuanfa_ad.setOnClickListener {
-                shareTypeFragment!!.show(getFragmentManager(), "2", advertisingInfoBean!!.companyName, advertisingInfoBean!!.publichDate, advertisingInfoBean!!.city, advertisingInfoBean!!.advertisementContent, advertisingInfoBean!!.advertisementImg, SPUtil.getString(this@AdInfoActivity, "inviteCode", ""), "https://www.pgyer.com/Tbl7", advertisingInfoBean!!.headImg)
-
+                shareTypeFragment!!.show(getFragmentManager(), "2", advertisingInfoBean!!.companyName, advertisingInfoBean!!.publichDate, advertisingInfoBean!!.city, advertisingInfoBean!!.advertisementContent, advertisingInfoBean!!.advertisementImg, SPUtil.getString(this@AdInfoActivity, "inviteCode", ""), "http://www.jjqhkj.com/appservice/99zhaogon.apk", advertisingInfoBean!!.headImg)
             }
             name.setText(it.companyName)
             time.setText("发布时间：" + it.publichDate)
@@ -127,7 +126,6 @@ class AdInfoActivity : BaseActivity() {
                     location.setText("地点：" + it.address)
                 }
             }
-
             ad_content.setText(it.advertisementContent)
             if(null == it.advertisementImg||it.advertisementImg.equals("")){
                 ad_cimg.visibility = View.GONE

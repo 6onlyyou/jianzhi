@@ -1,6 +1,7 @@
 package fu.com.parttimejob.activity
 
 import android.content.Intent
+import android.view.View
 import com.heixiu.errand.net.RetrofitFactory
 import com.lljjcoder.citylist.Toast.ToastUtils
 import fu.com.parttimejob.R
@@ -24,6 +25,11 @@ class MyMoneyActivity : BaseActivity() {
         }
         recharge.setOnClickListener {
             startActivity(Intent(this, RechargeActivity::class.java))
+        }
+        if (SPUtil.getInt(this, "Profession", 1) == 1) {
+            duihshop.visibility = View.VISIBLE
+        }else{
+            duihshop.visibility = View.GONE
         }
         duihshop.setOnClickListener {
             startActivity(Intent(this, ExchangeShopActivity::class.java))
@@ -49,7 +55,6 @@ class MyMoneyActivity : BaseActivity() {
             SPUtil.putString(this@MyMoneyActivity, "headImg", it.headImg)
             SPUtil.putString(this@MyMoneyActivity, "companyName", it.companyName)
             myMoneyTv.setText(it.totalCount.toString())
-
         }, {
             ToastUtils.showLongToast(applicationContext, it.message.toString())
         })

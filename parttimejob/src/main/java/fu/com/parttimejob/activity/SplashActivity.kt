@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.activity_splash.*
 import java.util.*
 
 class SplashActivity : BaseActivity() {
-    var time: Int = 10
+    var time: Int = 3
     var timer = Timer()
 
     override fun getLayoutId(): Int {
@@ -107,8 +107,6 @@ class SplashActivity : BaseActivity() {
                     SPUtil.putInt(this@SplashActivity, "loginType", it.loginType)
                     SPUtil.putString(this@SplashActivity, "registrationDate", it.registrationDate)
                     SPUtil.putString(this@SplashActivity, "city", it.city)
-                    SPUtil.putString(this@SplashActivity, "longitude", it.longitude)
-                    SPUtil.putString(this@SplashActivity, "latitude", it.latitude)
                     SPUtil.putString(this@SplashActivity, "inviteCode", it.inviteCode)
                     SPUtil.putString(this@SplashActivity, "labelName", it.labelName)
                     SPUtil.putInt(this@SplashActivity, "totalCount", it.totalCount)

@@ -172,13 +172,6 @@ class MainActivity : BaseActivity() {
 
             }
         })
-        LocationUtils().getLocation(this, object : AMapLocationListener {
-            override fun onLocationChanged(amapLocation: AMapLocation?) {
-                SPUtil.putString(this@MainActivity,"longitude", amapLocation!!.longitude.toString())
-                SPUtil.putString(this@MainActivity,"latitude", amapLocation.latitude.toString())
-                SPUtil.putString(this@MainActivity,"city",amapLocation.city)
-            }
-        })
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -198,6 +191,7 @@ class MainActivity : BaseActivity() {
 
         }
 //        if (SPUtil.getInt(this@MainActivity, "Profession", 1) == 2) {
+
             main_vp.currentItem = 0
             incl_titles.visibility = View.GONE
 //        }else{
@@ -262,43 +256,44 @@ class MainActivity : BaseActivity() {
         super.onResume()
         var strarr: List<String>
         var listimg: ArrayList<String> = ArrayList()
-        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().getUserInfo(SPUtil.getString(this@MainActivity, "thirdAccount", ""), SPUtil.getInt(this@MainActivity, "Profession", 1), SPUtil.getString(this@MainActivity, "longitude", ""), SPUtil.getString(this@MainActivity, "latitude", ""), SPUtil.getString(this@MainActivity, "city", ""), SPUtil.getString(this@MainActivity, "token", ""))).subscribe({
-            SPUtil.putInt(this@MainActivity, "loginType", it.loginType)
-            SPUtil.putString(this@MainActivity, "registrationDate", it.registrationDate)
-            SPUtil.putString(this@MainActivity, "city", it.city)
-            SPUtil.putString(this@MainActivity, "cardPhoneNum", it.cardPhoneNum)
-            SPUtil.putString(this@MainActivity, "longitude", it.longitude)
-            SPUtil.putString(this@MainActivity, "latitude", it.latitude)
-            SPUtil.putString(this@MainActivity, "inviteCode", it.inviteCode)
-            SPUtil.putString(this@MainActivity, "labelName", it.labelName)
-            SPUtil.putInt(this@MainActivity, "totalCount", it.totalCount)
-            SPUtil.putString(this@MainActivity, "phoneNumber", it.phoneNumber)
-            SPUtil.putInt(this@MainActivity, "inviteCount", it.inviteCount)
-            SPUtil.putString(this@MainActivity, "nickName", it.name)
-            SPUtil.putString(this@MainActivity, "headImg", it.headImg)
-            SPUtil.putString(this@MainActivity, "companyName", it.companyName)
-            SPUtil.putString(this@MainActivity, "jianliname", it.nickName)
-            SPUtil.putInt(this@MainActivity, "vipLevel", it.vipLevel)
-            SPUtil.putString(this@MainActivity, "cardHeadImg", it.cardHeadImg)
+        if(SPUtil.getString(this@MainActivity, "longitude", "")!=null&&!SPUtil.getString(this@MainActivity, "longitude", "").equals("")){
+            RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().getUserInfo(SPUtil.getString(this@MainActivity, "thirdAccount", ""), SPUtil.getInt(this@MainActivity, "Profession", 1), SPUtil.getString(this@MainActivity, "longitude", ""), SPUtil.getString(this@MainActivity, "latitude", ""), SPUtil.getString(this@MainActivity, "city", ""), SPUtil.getString(this@MainActivity, "token", ""))).subscribe({
+                SPUtil.putInt(this@MainActivity, "loginType", it.loginType)
+                SPUtil.putString(this@MainActivity, "registrationDate", it.registrationDate)
+                SPUtil.putString(this@MainActivity, "city", it.city)
+                SPUtil.putString(this@MainActivity, "cardPhoneNum", it.cardPhoneNum)
+                SPUtil.putString(this@MainActivity, "inviteCode", it.inviteCode)
+                SPUtil.putString(this@MainActivity, "labelName", it.labelName)
+                SPUtil.putInt(this@MainActivity, "totalCount", it.totalCount)
+                SPUtil.putString(this@MainActivity, "phoneNumber", it.phoneNumber)
+                SPUtil.putInt(this@MainActivity, "inviteCount", it.inviteCount)
+                SPUtil.putString(this@MainActivity, "nickName", it.name)
+                SPUtil.putString(this@MainActivity, "headImg", it.headImg)
+                SPUtil.putString(this@MainActivity, "companyName", it.companyName)
+                SPUtil.putString(this@MainActivity, "jianliname", it.nickName)
+                SPUtil.putInt(this@MainActivity, "vipLevel", it.vipLevel)
+                SPUtil.putString(this@MainActivity, "cardHeadImg", it.cardHeadImg)
 
-            if(SPUtil.getInt(this@MainActivity, "Profession", 1)==1){
-                if(SPUtil.getString(this@MainActivity, "jianliname", "").toString().equals("")){
+                if(SPUtil.getInt(this@MainActivity, "Profession", 1)==1){
+                    if(SPUtil.getString(this@MainActivity, "jianliname", "").toString().equals("")){
+                    }else{
+                        userInfo = UserInfo(SPUtil.getString(this@MainActivity, "thirdAccount", "").toString(), SPUtil.getString(this@MainActivity, "jianliname", "").toString(), Uri.parse(SPUtil.getString(this@MainActivity, "jianlihead", "https://apic.douyucdn.cn/upload/avatar_v3/201811/1fc77337cf1c0460659ccc6b9583d812_middle.jpg")))
+                    }
+
                 }else{
-                    userInfo = UserInfo(SPUtil.getString(this@MainActivity, "thirdAccount", "").toString(), SPUtil.getString(this@MainActivity, "jianliname", "").toString(), Uri.parse(SPUtil.getString(this@MainActivity, "jianlihead", "https://apic.douyucdn.cn/upload/avatar_v3/201811/1fc77337cf1c0460659ccc6b9583d812_middle.jpg")))
+                    if(SPUtil.getString(this@MainActivity, "redEnvelopename", "").toString().equals("")){
+                    }else{
+                        userInfo = UserInfo(SPUtil.getString(this@MainActivity, "thirdAccount", "").toString(), SPUtil.getString(this@MainActivity, "redEnvelopename", "").toString(), Uri.parse(SPUtil.getString(this@MainActivity, "cardHeadImg", "https://apic.douyucdn.cn/upload/avatar_v3/201811/1fc77337cf1c0460659ccc6b9583d812_middle.jpg")))
+                    }
+
                 }
 
-            }else{
-                if(SPUtil.getString(this@MainActivity, "redEnvelopename", "").toString().equals("")){
-                }else{
-                    userInfo = UserInfo(SPUtil.getString(this@MainActivity, "thirdAccount", "").toString(), SPUtil.getString(this@MainActivity, "redEnvelopename", "").toString(), Uri.parse(SPUtil.getString(this@MainActivity, "cardHeadImg", "https://apic.douyucdn.cn/upload/avatar_v3/201811/1fc77337cf1c0460659ccc6b9583d812_middle.jpg")))
-                }
+                RongIM.getInstance().refreshUserInfoCache(userInfo)
+            }, {
+                ToastUtils.showLongToast(applicationContext, it.message.toString())
+            })
+        }
 
-            }
-
-            RongIM.getInstance().refreshUserInfoCache(userInfo)
-        }, {
-            ToastUtils.showLongToast(applicationContext, it.message.toString())
-        })
         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().getResumeInfo(SPUtil.getString(this,"thirdAccount",""),SPUtil.getString(this,"thirdAccount",""))).subscribe({
             if (it.picOrVedioSource != null && !it.picOrVedioSource.equals("")) {
                 strarr = it.picOrVedioSource.substring(0, it.picOrVedioSource.length).split(";")
@@ -310,8 +305,10 @@ class MainActivity : BaseActivity() {
                 if (listimg.size < 1) {
 
                 } else if (listimg.size == 1) {
+
                     SPUtil.putString(this@MainActivity, "contactInformationheadImg",listimg[0])
                 } else {
+
                     SPUtil.putString(this@MainActivity, "contactInformationheadImg",listimg[1])
                 }
 

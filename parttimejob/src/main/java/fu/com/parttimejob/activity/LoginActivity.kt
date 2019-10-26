@@ -2,7 +2,6 @@ package fu.com.parttimejob.activity
 
 import android.content.Intent
 import android.text.TextUtils
-import android.util.Log
 import com.heixiu.errand.net.RetrofitFactory
 import com.lljjcoder.citylist.Toast.ToastUtils
 import com.luck.picture.lib.rxbus2.RxBus
@@ -57,37 +56,37 @@ class LoginActivity : BaseActivity() {
                                 RxBus.getDefault().post(wxInfoEntity)
                                 loginWithWx(wxInfoEntity)
                             }, Consumer<Throwable> {
-//                                showToast("获取登陆信息失败")
+                                //                                showToast("获取登陆信息失败")
                             })
                 }, Consumer<Throwable> {
-//                    showToast("获取登陆信息失败")
+                    //                    showToast("获取登陆信息失败")
                 })
     }
 
     private fun loginWithWx(wxInfoEntity: WXInfoEntity) {
         var sex = 0
-        if( wxInfoEntity.getmSex().equals("男")){
+        if (wxInfoEntity.getmSex().equals("男")) {
             sex = 1
-        }else{
+        } else {
             sex = 2
         }
         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().register(wxInfoEntity!!.getmUnionid(), SPUtil.getInt(this@LoginActivity, "Profession", 1),
-                wxInfoEntity.getmNickname(), wxInfoEntity.getmHeadimgurl(),sex , 1, "wx23456")).subscribe({
+                wxInfoEntity.getmNickname(), wxInfoEntity.getmHeadimgurl(), sex, 1, "wx23456")).subscribe({
             if (it.register) {
                 ToastUtils.showLongToast(applicationContext, "登入成功")
                 SPUtil.putString(this@LoginActivity, "token", it.token)
-                SPUtil.putString(applicationContext,"thirdAccount",wxInfoEntity!!.getmUnionid())
+                SPUtil.putString(applicationContext, "thirdAccount", wxInfoEntity!!.getmUnionid())
                 startActivity(MainActivity::class.java, true)
             } else {
                 ToastUtils.showLongToast(applicationContext, "登入成功")
                 SPUtil.putString(this@LoginActivity, "token", it.token)
-                SPUtil.putString(applicationContext,"thirdAccount",wxInfoEntity!!.getmUnionid())
-                if(SPUtil.getInt(this@LoginActivity, "Profession", 1)==1){
+                SPUtil.putString(applicationContext, "thirdAccount", wxInfoEntity!!.getmUnionid())
+                if (SPUtil.getInt(this@LoginActivity, "Profession", 1) == 1) {
                     val intent = Intent(this, ChooseJobActivity::class.java)
                     intent.putExtra("starpage", "")
                     startActivity(intent)
                     finish()
-                }else{
+                } else {
                     startActivity(CreateJobCardActivity::class.java, true)
                 }
             }
@@ -112,44 +111,44 @@ class LoginActivity : BaseActivity() {
         }
 
         login_with_wx.setOnClickListener {
-            if(radioButton2.isChecked){
+            if (radioButton2.isChecked) {
                 startWxLogin()
-            }else{
-                ToastUtils.showShortToast(this,"请先同意隐私协议")
+            } else {
+                ToastUtils.showShortToast(this, "请先同意隐私协议")
             }
         }
         radyhxieyi.setOnClickListener {
             WebActivity.startSelf(this, "隐私协议", "http://www.jjqhkj.com/appservice/user_agreement.html")
         }
         login_with_qq.setOnClickListener {
-            if(radioButton2.isChecked){
+            if (radioButton2.isChecked) {
                 login()
-            }else{
-                ToastUtils.showShortToast(this,"请先同意隐私协议")
+            } else {
+                ToastUtils.showShortToast(this, "请先同意隐私协议")
             }
 
         }
 
         login_with_pwd.setOnClickListener {
-            if(radioButton2.isChecked){
+            if (radioButton2.isChecked) {
                 if (judgeIsCanLogin()) {
 
-                    RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().login(loginPhoneEt.text.toString(), loginPwdEt.text.toString(),SPUtil.getInt(applicationContext, "Profession", 1))).subscribe({
-                        if (SPUtil.getBoolean(applicationContext,"register",true)) {
+                    RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().login(loginPhoneEt.text.toString(), loginPwdEt.text.toString(), SPUtil.getInt(applicationContext, "Profession", 1))).subscribe({
+                        if (SPUtil.getBoolean(applicationContext, "register", true)) {
                             ToastUtils.showLongToast(applicationContext, "登入成功")
-                            SPUtil.putString(applicationContext,"thirdAccount",loginPhoneEt.text.toString())
+                            SPUtil.putString(applicationContext, "thirdAccount", loginPhoneEt.text.toString())
                             SPUtil.putString(this, "token", it.token.toString())
                             startPwdLogin()
                         } else {
-                            SPUtil.putString(applicationContext,"thirdAccount",loginPhoneEt.text.toString())
+                            SPUtil.putString(applicationContext, "thirdAccount", loginPhoneEt.text.toString())
                             ToastUtils.showLongToast(applicationContext, "登入成功")
                             SPUtil.putString(this, "token", it.token.toString())
-                            if(SPUtil.getInt(applicationContext, "Profession", 1)==1){
+                            if (SPUtil.getInt(applicationContext, "Profession", 1) == 1) {
                                 val intent = Intent(this, ChooseJobActivity::class.java)
                                 intent.putExtra("starpage", "")
                                 startActivity(intent)
                                 finish()
-                            }else{
+                            } else {
                                 startActivity(CreateJobCardActivity::class.java, true)
 
                             }
@@ -161,8 +160,8 @@ class LoginActivity : BaseActivity() {
                     })
 
                 }
-            }else{
-                ToastUtils.showShortToast(this,"请先同意隐私协议")
+            } else {
+                ToastUtils.showShortToast(this, "请先同意隐私协议")
             }
 
         }
@@ -237,28 +236,28 @@ class LoginActivity : BaseActivity() {
                     val figureurl = jo.getString("figureurl").toString()
                     val city = jo.getString("city")
                     var sex = 0
-                    if( gender.equals("男")){
+                    if (gender.equals("男")) {
                         sex = 1
-                    }else{
+                    } else {
                         sex = 2
                     }
                     RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().register(mTencent!!.openId, SPUtil.getInt(this@LoginActivity, "Profession", 1), nickName, figureurl, sex, 1, "qq123456")).subscribe({
                         if (it.register) {
-                            SPUtil.putString(applicationContext,"thirdAccount",mTencent!!.openId)
+                            SPUtil.putString(applicationContext, "thirdAccount", mTencent!!.openId)
                             ToastUtils.showLongToast(applicationContext, "登入成功")
                             SPUtil.putString(this@LoginActivity, "token", it.token)
                             startActivity(MainActivity::class.java, true)
                         } else {
-                            SPUtil.putString(applicationContext,"thirdAccount",mTencent!!.openId)
+                            SPUtil.putString(applicationContext, "thirdAccount", mTencent!!.openId)
                             ToastUtils.showLongToast(applicationContext, "登入成功")
                             SPUtil.putString(this@LoginActivity, "token", it.token)
-                            if(SPUtil.getInt(this@LoginActivity, "Profession", 1)==1){
-                                startActivity(ChooseJobActivity::class.java, true)
-                            }else{
+                            if (SPUtil.getInt(this@LoginActivity, "Profession", 1) == 1) {
                                 val intent = Intent(this@LoginActivity, ChooseJobActivity::class.java)
                                 intent.putExtra("starpage", "")
                                 startActivity(intent)
                                 finish()
+                            } else {
+                                startActivity(CreateJobCardActivity::class.java, true)
                             }
                         }
                         finish()

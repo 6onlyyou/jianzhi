@@ -27,6 +27,7 @@ class ChooseJobActivity : BaseActivity() {
     override fun initViewParams() {
         listself = ArrayList<GetLabelsBean>()
         adapter = ChooseDreamJobListAdapter()
+
         starpage = intent.getStringExtra("starpage")
         dreamJobList.layoutManager = GridLayoutManager(this, 4)
         dreamJobList.adapter = adapter

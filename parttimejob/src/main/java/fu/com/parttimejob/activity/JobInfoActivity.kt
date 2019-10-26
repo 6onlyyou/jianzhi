@@ -182,7 +182,7 @@ fun getDate(){
         }else{
 
         }
-        jinbi = it.unclaimedVirtualCoins
+        jinbi = it.numberOfVirtualCoins
         label_job.text = it.label
         jobSalaryTv.text = it.salaryAndWelfare
         jobLocation.text = it.city
@@ -225,7 +225,7 @@ fun getDate(){
         finish()
     }
     job_jbi.setOnClickListener {
-        shareTypeFragment!!.show(getFragmentManager(), "1",recruitInfoBean!!.label,recruitInfoBean!!.city,recruitInfoBean!!.salaryAndWelfare,recruitInfoBean!!.workContent,recruitInfoBean!!.phoneNumber,SPUtil.getString(this@JobInfoActivity, "inviteCode", ""),SPUtil.getString(this@JobInfoActivity, "longitude", ""),SPUtil.getString(this@JobInfoActivity, "latitude", ""),"https://www.pgyer.com/Tbl7",recruitInfoBean!!.recruitingNumbers.toString(),recruitInfoBean!!.workTime,recruitInfoBean!!.contactAddress)
+        shareTypeFragment!!.show(getFragmentManager(), "1",recruitInfoBean!!.label,recruitInfoBean!!.city,recruitInfoBean!!.salaryAndWelfare,recruitInfoBean!!.workContent,recruitInfoBean!!.phoneNumber,SPUtil.getString(this@JobInfoActivity, "inviteCode", ""),SPUtil.getString(this@JobInfoActivity, "longitude", ""),SPUtil.getString(this@JobInfoActivity, "latitude", ""),"http://www.jjqhkj.com/appservice/99zhaogon.apk",recruitInfoBean!!.recruitingNumbers.toString(),recruitInfoBean!!.workTime,recruitInfoBean!!.contactAddress)
     }
 }
     fun clossD() {

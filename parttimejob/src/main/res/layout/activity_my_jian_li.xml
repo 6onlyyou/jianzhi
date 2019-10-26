@@ -53,7 +53,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:gravity="center"
-            android:layout_height="471dp">
+            android:layout_height="450dp">
             <LinearLayout
                 android:id="@+id/myPhotos"
                 android:layout_width="match_parent"
@@ -131,6 +131,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="10dp"
+                android:visibility="gone"
                 android:text="我是一个活泼开朗，我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗我是一个活泼开朗。"
                 android:textColor="#cccccc"
                 android:textSize="14sp" />

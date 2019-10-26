@@ -1,12 +1,15 @@
 package fu.com.parttimejob.adapter;
 
 import android.text.TextUtils;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.lljjcoder.citylist.Toast.ToastUtils;
 
 import fu.com.parttimejob.R;
+import fu.com.parttimejob.activity.WebActivity;
 import fu.com.parttimejob.base.baseadapter.BaseRecyclerModel;
 import fu.com.parttimejob.base.baseadapter.BaseRecyclerViewAdapter;
 import fu.com.parttimejob.base.baseadapter.BaseRecyclerViewHolder;
@@ -38,7 +41,17 @@ public class DuiHuanListAdapter extends BaseRecyclerViewAdapter {
             } else {
                 binding.kuaidiNo.setText("快递单号：" + kuaiDiBean.getTrackingNumber());
             }
+            binding.cheakKuaidi.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(kuaiDiBean.getTrackingNumber()==null||kuaiDiBean.getTrackingNumber().equals("")){
+                        ToastUtils.showShortToast(view.getContext(),"还没有发货噢");
+                    }else{
+                        WebActivity.startSelf(view.getContext(), "物流查询", "https://m.kuaidi100.com/app/query/?com="+"顺丰"+"&nu="+kuaiDiBean.getTrackingNumber()+"&coname=九九招工");
+                    }
 
+                }
+            });
 //            binding.openAd.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View view) {

@@ -429,7 +429,7 @@ public interface ApiService {
      *
      * @return
      */
-    @POST("/appservice/app/alluser/inputInvit")
+    @POST("/appservice/app/alluser/inputInvite")
     Observable<ResponseBean<String>> inputInvit(@Query("thirdAccount") String thirdAccount, @Query("inviteCode") String inviteCode);
 
 

@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.TextView;
 
@@ -73,7 +74,7 @@ public class ProtocolDialog extends Dialog implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dialog_hint);
+        setContentView(R.layout.dialog_protocol);
         setCanceledOnTouchOutside(false);
 
         initView();
@@ -86,7 +87,7 @@ public class ProtocolDialog extends Dialog implements View.OnClickListener {
         submitTxt.setOnClickListener(this);
         cancelTxt = findViewById(R.id.cancel);
         cancelTxt.setOnClickListener(this);
-
+        contentTxt.setMovementMethod(ScrollingMovementMethod.getInstance());
         contentTxt.setText(content);
         if (!TextUtils.isEmpty(positiveName)) {
             submitTxt.setText(positiveName);

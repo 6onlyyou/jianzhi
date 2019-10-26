@@ -76,7 +76,7 @@ public class SocietyShareUtils {
         params.putString(QQShare.SHARE_TO_QQ_TITLE, title);
         params.putString(QQShare.SHARE_TO_QQ_SUMMARY,  description);
         params.putString(QQShare.SHARE_TO_QQ_TARGET_URL, url);
-        params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL,SPUtil.getString(activity, "headImg", "http://konkonyu.oss-cn-beijing.aliyuncs.com/moren.jpg"));
+        params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL,"https://jiujiuqihan.oss-cn-beijing.aliyuncs.com/default/ic_launcher_round.png");
 //        params.putString(QQShare.SHARE_TO_QQ_APP_NAME,  "测试应用222222");
         mTencent.shareToQQ(activity, params, new BaseUiListener());
 //        UMShare share = new UMShare(context);
@@ -109,7 +109,7 @@ public class SocietyShareUtils {
         params.putString(QzoneShare.SHARE_TO_QQ_TITLE, title);//必填
         params.putString(QzoneShare.SHARE_TO_QQ_SUMMARY,description);//选填
         params.putString(QzoneShare.SHARE_TO_QQ_TARGET_URL, url);//必填
-        params.putString(QzoneShare.SHARE_TO_QQ_IMAGE_URL, "http://konkonyu.oss-cn-beijing.aliyuncs.com/moren.jpg");
+        params.putString(QzoneShare.SHARE_TO_QQ_IMAGE_URL,"https://jiujiuqihan.oss-cn-beijing.aliyuncs.com/default/ic_launcher_round.png");
         mTencent.shareToQzone(activity, params, new BaseUiListener());
 //        UMShare share = new UMShare(context);
 //        UMWeb umWeb = new UMWeb(url);
@@ -137,7 +137,7 @@ public class SocietyShareUtils {
         WXWebpageObject webpage = new WXWebpageObject();
         webpage.webpageUrl = url;
         WXMediaMessage msg = new WXMediaMessage(webpage);
-        msg.title = title;
+        msg.title =title;
         msg.description = description;
         Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher);
         Bitmap thumbBmp = Bitmap.createScaledBitmap(bmp, THUMB_SIZE, THUMB_SIZE, true);

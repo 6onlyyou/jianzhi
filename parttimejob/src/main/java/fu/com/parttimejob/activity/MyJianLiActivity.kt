@@ -159,6 +159,8 @@ class MyJianLiActivity : BaseActivity() {
                     index++//自增
                     list.add(baseRecyclerModel)
                 }
+                adapter.clear()
+                adapter.notifyDataSetChanged()
                 adapter.addAll(list as List<BaseRecyclerModel>?)
             }
 

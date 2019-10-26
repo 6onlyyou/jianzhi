@@ -201,6 +201,8 @@ class MineFragment : Fragment() {
                         SPUtil.putString(activity, "jianliname","")
                         SPUtil.putString(activity, "contactInformationheadImg","")
                         SPUtil.putInt(activity, "vipLevel", 0)
+                        SPUtil.putString(activity, "protocol", "")
+
                         SPUtil.putString(activity, "cardHeadImg", "")
                         SPUtil.putString(activity, "protocol", "")
 

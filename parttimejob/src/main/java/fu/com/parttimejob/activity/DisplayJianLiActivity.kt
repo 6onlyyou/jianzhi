@@ -56,6 +56,7 @@ class DisplayJianLiActivity : BaseActivity() {
     var dialogPro: ProgressDialog? = null
     private var adapter: GridImageAdapter? = null
     var localMedia: LocalMedia? = null
+    var flages:Int = 0
     override fun getLayoutId(): Int {
         return R.layout.activity_display_jian_li
     }
@@ -104,6 +105,7 @@ class DisplayJianLiActivity : BaseActivity() {
                 if (listimg.size < 1) {
 
                 } else if (listimg.size == 1) {
+                    flages = 1
                     jina_pic.visibility = View.VISIBLE
                     Glide.with(this)
                             .load(listimg[0])
@@ -131,10 +133,13 @@ class DisplayJianLiActivity : BaseActivity() {
                 showToast("请输入正确的手机号")
                 return@setOnClickListener
             }
-            if (selectList.size == 0) {
-                ToastUtils.showLongToast(applicationContext, "请上传图片或者视频来介绍自己~")
-                return@setOnClickListener
+            if(flages ==0 ){
+                if (selectList.size == 0) {
+                    ToastUtils.showLongToast(applicationContext, "请上传图片或者视频来介绍自己~")
+                    return@setOnClickListener
+                }
             }
+
             if (TextUtils.isEmpty(jianliname.text) || TextUtils.isEmpty(jianlisex.text) || TextUtils.isEmpty(jianliage.text)  || TextUtils.isEmpty(phonenum.text)) {
                 ToastUtils.showLongToast(applicationContext, "请您把信息填写完整才能确定~")
             } else {
@@ -306,7 +311,7 @@ class DisplayJianLiActivity : BaseActivity() {
                     .circleDimmedLayer(true)// 是否圆形裁剪
                     .showCropFrame(false)// 是否显示裁剪矩形边框 圆形裁剪时建议设为false
                     .showCropGrid(false)// 是否显示裁剪矩形网格 圆形裁剪时建议设为false
-                    .openClickSound(true)// 是否开启点击声音
+                    .openClickSound(false)// 是否开启点击声音
 //                   .selectionMedia(selectList)// 是否传入已选图片
                     //.isDragFrame(false)// 是否可拖动裁剪框(固定)
                     //                        .videoMaxSecond(15)
