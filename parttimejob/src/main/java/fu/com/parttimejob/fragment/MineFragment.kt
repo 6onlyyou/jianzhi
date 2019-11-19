@@ -39,6 +39,7 @@ class MineFragment : Fragment() {
             SPUtil.putInt(activity, "loginType", it.loginType)
             SPUtil.putString(activity, "registrationDate", it.registrationDate)
             SPUtil.putString(activity, "city", it.city)
+            SPUtil.putInt(activity, "userid", it.id)
             SPUtil.putString(activity, "cardPhoneNum", it.cardPhoneNum)
             SPUtil.putString(activity, "longitude", it.longitude)
             SPUtil.putString(activity, "latitude", it.latitude)
@@ -76,7 +77,7 @@ class MineFragment : Fragment() {
             } else {
                 name.text = SPUtil.getString(context, "nickName", "")
             }
-            sex_age.text = SPUtil.getString(context, "phoneNumber", "")
+            sex_age.text = SPUtil.getInt(context, "userid", 0).toString()
         }, {
             ToastUtils.showLongToast(activity, it.message.toString())
         })
@@ -131,7 +132,7 @@ class MineFragment : Fragment() {
         } else {
             name.text = SPUtil.getString(context, "nickName", "")
         }
-        sex_age.text = SPUtil.getString(context, "phoneNumber", "")
+        sex_age.text = SPUtil.getInt(context, "userid", 0).toString()
         setsgil.setOnClickListener {
             val intent = Intent(context, ChooseJobActivity::class.java)
             intent.putExtra("starpage", "")

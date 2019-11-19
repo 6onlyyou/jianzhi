@@ -13,6 +13,7 @@ public class UserInfoBean {
     private String city;
     private String longitude;
     private String latitude;
+    private int id;
     private int totalCount;
     private String inviteCode;
     private String labelName;
@@ -25,6 +26,14 @@ public class UserInfoBean {
     private int vipLevel;
 
     private String cardPhoneNum;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getCardPhoneNum() {
         return cardPhoneNum;

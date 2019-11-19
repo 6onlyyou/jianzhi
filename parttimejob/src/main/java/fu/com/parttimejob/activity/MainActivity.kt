@@ -259,6 +259,7 @@ class MainActivity : BaseActivity() {
         if(SPUtil.getString(this@MainActivity, "longitude", "")!=null&&!SPUtil.getString(this@MainActivity, "longitude", "").equals("")){
             RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().getUserInfo(SPUtil.getString(this@MainActivity, "thirdAccount", ""), SPUtil.getInt(this@MainActivity, "Profession", 1), SPUtil.getString(this@MainActivity, "longitude", ""), SPUtil.getString(this@MainActivity, "latitude", ""), SPUtil.getString(this@MainActivity, "city", ""), SPUtil.getString(this@MainActivity, "token", ""))).subscribe({
                 SPUtil.putInt(this@MainActivity, "loginType", it.loginType)
+                SPUtil.putInt(this@MainActivity, "userid", it.id)
                 SPUtil.putString(this@MainActivity, "registrationDate", it.registrationDate)
                 SPUtil.putString(this@MainActivity, "city", it.city)
                 SPUtil.putString(this@MainActivity, "cardPhoneNum", it.cardPhoneNum)
