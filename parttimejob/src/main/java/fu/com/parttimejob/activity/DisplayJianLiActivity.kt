@@ -10,6 +10,7 @@ import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.os.AsyncTask
 import android.os.Environment
+import android.speech.tts.TextToSpeech
 import android.support.v7.widget.GridLayoutManager
 import android.text.TextUtils
 import android.util.Log
@@ -32,6 +33,7 @@ import fu.com.parttimejob.R
 import fu.com.parttimejob.adapter.GridImageAdapter
 import fu.com.parttimejob.base.BaseActivity
 import fu.com.parttimejob.bean.FileInfoEntilty
+import fu.com.parttimejob.bean.ResumeInfoBean
 import fu.com.parttimejob.retrofitNet.RxUtils
 import fu.com.parttimejob.utils.FullyGridLayoutManager
 import fu.com.parttimejob.utils.RegexUtils
@@ -56,10 +58,13 @@ class DisplayJianLiActivity : BaseActivity() {
     var dialogPro: ProgressDialog? = null
     private var adapter: GridImageAdapter? = null
     var localMedia: LocalMedia? = null
+    var resumeInfoBean: ResumeInfoBean? = ResumeInfoBean()
     var flages:Int = 0
     override fun getLayoutId(): Int {
         return R.layout.activity_display_jian_li
     }
+
+
     override fun initViewParams() {
         localMedia = LocalMedia()
         var strarr: List<String>
@@ -84,8 +89,10 @@ class DisplayJianLiActivity : BaseActivity() {
                 return false
             }
         })
+
         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().getResumeInfo(SPUtil.getString(this, "thirdAccount", ""), SPUtil.getString(this, "thirdAccount", ""))).subscribe({
             jianliname.setText(it.name)
+            resumeInfoBean = it
             var sexs = ""
             if (it.sex == 1) {
                 sexs = "男"
@@ -105,7 +112,6 @@ class DisplayJianLiActivity : BaseActivity() {
                 if (listimg.size < 1) {
 
                 } else if (listimg.size == 1) {
-                    flages = 1
                     jina_pic.visibility = View.VISIBLE
                     Glide.with(this)
                             .load(listimg[0])
@@ -129,22 +135,45 @@ class DisplayJianLiActivity : BaseActivity() {
 
         })
         pushjianli.setOnClickListener {
+
             if (!RegexUtils.isBasePhone(phonenum.text.toString())) {
                 showToast("请输入正确的手机号")
                 return@setOnClickListener
             }
-            if(flages ==0 ){
-                if (selectList.size == 0) {
-                    ToastUtils.showLongToast(applicationContext, "请上传图片或者视频来介绍自己~")
-                    return@setOnClickListener
-                }
-            }
+
+
 
             if (TextUtils.isEmpty(jianliname.text) || TextUtils.isEmpty(jianlisex.text) || TextUtils.isEmpty(jianliage.text)  || TextUtils.isEmpty(phonenum.text)) {
                 ToastUtils.showLongToast(applicationContext, "请您把信息填写完整才能确定~")
             } else {
-                dialogPro!!.show()
-                if (selectList!!.get(0).path.contains(".rmvb") || selectList!!.get(0).path.contains(".avi") || selectList!!.get(0).path.contains(".mkv") || selectList!!.get(0).path.contains(".mov") || selectList!!.get(0).path.contains(".flv") || selectList!!.get(0).path.contains(".3gp") || selectList!!.get(0).path.contains(".mp4")) {
+                    if (selectList.size == 0) {
+                        if(resumeInfoBean!!.picOrVedioSource.equals("")){
+                            ToastUtils.showLongToast(applicationContext, "请上传图片或者视频来介绍自己~")
+                            return@setOnClickListener
+                        }else{
+                            dialogPro!!.show()
+                                var sex = 0
+                                if (jianlisex.text.toString().equals("男")) {
+                                    sex = 1
+                                } else {
+                                    sex = 2
+                                }
+                                RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().createPRNoPic(SPUtil.getString(this, "thirdAccount", "111"), jianliname.text.toString(), sex, jianliage.text.toString(), jianlijianjie.text.toString(), SPUtil.getString(this@DisplayJianLiActivity, "city", "廊坊市"), phonenum.text.toString())).subscribe(Consumer<String> {
+                                    ToastUtils.showLongToast(applicationContext, it.toString())
+                                    dialogPro!!.dismiss()
+                                    RongIM.setUserInfoProvider({
+                                        //在这里，根据userId，使用同步的请求，去请求服务器，就可以完美做到显示用户的头像，昵称了
+                                        UserInfo(SPUtil.getString(this, "thirdAccount", "").toString(), SPUtil.getString(this, "nickname", "默认用户名"), Uri.parse(SPUtil.getString(this, "cardHeadImg", "")))
+                                    }, true)
+                                    finish()
+                                }, Consumer<Throwable> {
+                                    dialogPro!!.dismiss()
+                                    ToastUtils.showLongToast(applicationContext, it.message.toString())
+                                })
+                        }
+                    }else{
+                        dialogPro!!.show()
+                        if (selectList!!.get(0).path.contains(".rmvb") || selectList!!.get(0).path.contains(".avi") || selectList!!.get(0).path.contains(".mkv") || selectList!!.get(0).path.contains(".mov") || selectList!!.get(0).path.contains(".flv") || selectList!!.get(0).path.contains(".3gp") || selectList!!.get(0).path.contains(".mp4")) {
 //                    val folder = File(CameraApp.getInstance().getAllSdPaths(this@TakePictureActivity)[0] + "/CameraJXD")
 //                    if (!folder.exists()) {
 //                        folder.mkdirs()
@@ -159,39 +188,43 @@ class DisplayJianLiActivity : BaseActivity() {
 //                    } catch (e: Exception) {
 //                        e.printStackTrace()
 //                    }
-                    val f = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).toString() + "/compressor/videos")
-                    if (f.mkdirs() || f.isDirectory)
-                        VideoCompressAsyncTask(this).execute(selectList!!.get(0).path, f.path, fileInfoEntilty!!.get(0).filewidth, fileInfoEntilty!!.get(0).fileheight)
-                } else {
-                    val builder: MultipartBody.Builder = MultipartBody.Builder()
-                            .setType(MultipartBody.FORM)
-                    if (selectList!!.size < 1) {
-                        builder.addFormDataPart("picOrVedio", File(selectList!!.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList!!.get(0).compressPath)));
-                    } else {
-                        for (i in selectList!!.indices) {
-                            builder.addFormDataPart("picOrVedio", File(selectList!!.get(0).path).name, RequestBody.create(MediaType.parse("image/*"), File(selectList!!.get(0).path)));
+
+                            val f = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).toString() + "/compressor/videos")
+                            if (f.mkdirs() || f.isDirectory)
+                                VideoCompressAsyncTask(this).execute(selectList!!.get(0).path, f.path, fileInfoEntilty!!.get(0).filewidth, fileInfoEntilty!!.get(0).fileheight)
+                        } else {
+                            val builder: MultipartBody.Builder = MultipartBody.Builder()
+                                    .setType(MultipartBody.FORM)
+                            if (selectList!!.size < 1) {
+                                builder.addFormDataPart("picOrVedio", File(selectList!!.get(0).compressPath).name, RequestBody.create(MediaType.parse("image/*"), File(selectList!!.get(0).compressPath)));
+                            } else {
+                                for (i in selectList!!.indices) {
+                                    builder.addFormDataPart("picOrVedio", File(selectList!!.get(0).path).name, RequestBody.create(MediaType.parse("image/*"), File(selectList!!.get(0).path)));
+                                }
+                            }
+
+                            val requestBody: RequestBody = builder.build();
+                            var sex = 0
+                            if (jianlisex.text.toString().equals("男")) {
+                                sex = 1
+                            } else {
+                                sex = 2
+                            }
+                            RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().createPR(SPUtil.getString(this, "thirdAccount", "111"), jianliname.text.toString(), sex, jianliage.text.toString(), jianlijianjie.text.toString(), requestBody, SPUtil.getString(this@DisplayJianLiActivity, "city", "廊坊市"), phonenum.text.toString())).subscribe(Consumer<String> {
+                                ToastUtils.showLongToast(applicationContext, it.toString())
+                                dialogPro!!.dismiss()
+                                RongIM.setUserInfoProvider({
+                                    //在这里，根据userId，使用同步的请求，去请求服务器，就可以完美做到显示用户的头像，昵称了
+                                    UserInfo(SPUtil.getString(this, "thirdAccount", "").toString(), SPUtil.getString(this, "nickname", "默认用户名"), Uri.parse(SPUtil.getString(this, "cardHeadImg", "")))
+                                }, true)
+                                finish()
+                            }, Consumer<Throwable> {
+                                dialogPro!!.dismiss()
+                                ToastUtils.showLongToast(applicationContext, it.message.toString())
+                            })
                         }
                     }
-                    val requestBody: RequestBody = builder.build();
-                    var sex = 0
-                    if (jianlisex.text.toString().equals("男")) {
-                        sex = 1
-                    } else {
-                        sex = 2
-                    }
-                    RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().createPR(SPUtil.getString(this, "thirdAccount", "111"), jianliname.text.toString(), sex, jianliage.text.toString(), jianlijianjie.text.toString(), requestBody, SPUtil.getString(this@DisplayJianLiActivity, "city", "廊坊市"), phonenum.text.toString())).subscribe(Consumer<String> {
-                        ToastUtils.showLongToast(applicationContext, it.toString())
-                        dialogPro!!.dismiss()
-                        RongIM.setUserInfoProvider({
-                            //在这里，根据userId，使用同步的请求，去请求服务器，就可以完美做到显示用户的头像，昵称了
-                            UserInfo(SPUtil.getString(this, "thirdAccount", "").toString(), SPUtil.getString(this, "nickname", "默认用户名"), Uri.parse(SPUtil.getString(this, "cardHeadImg", "")))
-                        }, true)
-                        finish()
-                    }, Consumer<Throwable> {
-                        dialogPro!!.dismiss()
-                        ToastUtils.showLongToast(applicationContext, it.message.toString())
-                    })
-                }
+
 
 
             }
@@ -338,7 +371,8 @@ class DisplayJianLiActivity : BaseActivity() {
                     // 图片选择结果回调
 
                     selectList = PictureSelector.obtainMultipleResult(data)
-
+                   val fileSize =  File(selectList!!.get(0).path).length().toDouble()/1048576
+                    ToastUtils.showLongToast(this, "M"+fileSize)
                     getPlayTime(selectList.get(0).path, 0)
                     // 例如 LocalMedia 里面返回三种path
                     // 1.media.getPath(); 为原图path
@@ -405,7 +439,7 @@ class DisplayJianLiActivity : BaseActivity() {
                         width = paths[2].toInt() - 100
                     }
                 }
-                filePath = SiliCompressor.with(mContext).compressVideo(paths[0], paths[1], width!!, hight!!, 1800000)
+                filePath = SiliCompressor.with(mContext).compressVideo(paths[0], paths[1], width!!, hight!!, 1300000)
 
             } catch (e: URISyntaxException) {
                 e.printStackTrace()
@@ -431,6 +465,12 @@ class DisplayJianLiActivity : BaseActivity() {
                 sex = 1
             } else {
                 sex = 2
+            }
+            val fileSize =  File(compressedFilePath).length().toDouble()/1048576
+            ToastUtils.showLongToast(applicationContext, "H"+fileSize)
+            if(fileSize>20){
+                ToastUtils.showLongToast(applicationContext, "视频太大请重新上传")
+                return
             }
             RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().createPR(SPUtil.getString(this@DisplayJianLiActivity, "thirdAccount", "111"), jianliname.text.toString(), sex, jianliage.text.toString(), "", requestBody, SPUtil.getString(this@DisplayJianLiActivity, "city", "廊坊市"), phonenum.text.toString())).subscribe(Consumer<String> {
                 ToastUtils.showLongToast(applicationContext, it.toString())

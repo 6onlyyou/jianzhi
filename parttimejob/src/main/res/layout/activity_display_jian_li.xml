@@ -238,10 +238,12 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="20dp"
                     android:text="(点击查看视频例子)"
+                    android:visibility="gone"
                     android:textColor="@color/colorRed"
                     android:textSize="14sp" />
             </LinearLayout>
             <TextView
+                android:id="@+id/playstar"
                 android:layout_width="324dp"
                 android:layout_height="35dp"
                 android:layout_marginLeft="15dp"
