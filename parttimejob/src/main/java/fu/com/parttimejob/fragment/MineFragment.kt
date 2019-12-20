@@ -185,6 +185,7 @@ class MineFragment : Fragment() {
                 override fun onClick(dialog: Dialog, confirm: Boolean) {
                     if (confirm) {
                         RongIM.getInstance().logout()
+                        SPUtil.putBoolean(context,"register",true)
                         SPUtil.putString(context, "thirdAccount", "")
                         SPUtil.putInt(context, "loginType", 0)
                         SPUtil.putString(context, "registrationDate", "")
