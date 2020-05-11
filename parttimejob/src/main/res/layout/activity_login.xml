@@ -32,7 +32,7 @@
     android:textColor="@color/white"/>
     </LinearLayout>
     <TextView
-        android:layout_width="152dp"
+        android:layout_width="wrap_content"
         android:layout_height="42dp"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="59dp"
@@ -168,7 +168,7 @@
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:textColor="@color/black"
-            android:text="请点击右边园圈接受用户隐私协议"/>
+            android:text="请点击左边园圈接受服务协议和隐私政策"/>
         </LinearLayout>
 
     </LinearLayout>

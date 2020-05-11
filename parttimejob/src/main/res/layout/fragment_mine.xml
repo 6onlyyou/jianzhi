@@ -433,7 +433,40 @@
             android:layout_height="11dp"
             android:src="@mipmap/into" />
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorLine" />
 
+    <LinearLayout
+        android:id="@+id/xieyiLayout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="17dp"
+            android:src="@mipmap/ic_my_yaoqing" />
+
+        <TextView
+            android:layout_width="59dp"
+            android:layout_height="22dp"
+            android:layout_marginLeft="4dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="服务协议和隐私政策"
+            android:textColor="@color/colorGray"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="11dp"
+            android:layout_height="11dp"
+            android:src="@mipmap/into" />
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"

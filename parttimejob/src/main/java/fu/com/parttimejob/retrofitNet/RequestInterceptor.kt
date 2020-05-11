@@ -26,7 +26,7 @@ class RequestInterceptor(private val context: Context) : Interceptor {
         if (SPUtil.getString(context,SPContants.phone, "").isNotEmpty()) {
             builder.addHeader(SPContants.phone, SPUtil.getString(context,SPContants.phone, ""))
         }
-
+        Log.i("tokensssss", SPUtil.getString(context,"token", ""))
         val request = builder.build()
         val t1 = System.nanoTime()
         Log.i("RequestInterceptor", String.format("Sending request %s on %s%n%s", request.url(), chain.connection(), request.headers()))

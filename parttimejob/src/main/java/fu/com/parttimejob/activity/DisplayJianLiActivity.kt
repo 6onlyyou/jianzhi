@@ -188,9 +188,10 @@ class DisplayJianLiActivity : BaseActivity() {
 //                    } catch (e: Exception) {
 //                        e.printStackTrace()
 //                    }
-
+                            val fileSize11 =  File(selectList!!.get(0).path).length().toDouble()/1048576
                             val f = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).toString() + "/compressor/videos")
                             if (f.mkdirs() || f.isDirectory)
+
                                 VideoCompressAsyncTask(this).execute(selectList!!.get(0).path, f.path, fileInfoEntilty!!.get(0).filewidth, fileInfoEntilty!!.get(0).fileheight)
                         } else {
                             val builder: MultipartBody.Builder = MultipartBody.Builder()
@@ -372,7 +373,6 @@ class DisplayJianLiActivity : BaseActivity() {
 
                     selectList = PictureSelector.obtainMultipleResult(data)
                    val fileSize =  File(selectList!!.get(0).path).length().toDouble()/1048576
-                    ToastUtils.showLongToast(this, "M"+fileSize)
                     getPlayTime(selectList.get(0).path, 0)
                     // 例如 LocalMedia 里面返回三种path
                     // 1.media.getPath(); 为原图path
@@ -432,14 +432,14 @@ class DisplayJianLiActivity : BaseActivity() {
             try {
                 if (paths[2].toInt() > 300) {
                     if (paths[2].toInt() > 1000) {
-                        hight = paths[3].toInt() - 200
-                        width = paths[2].toInt() - 200
+                        hight = paths[3].toInt()/4
+                        width = paths[2].toInt() /4
                     } else {
-                        hight = paths[3].toInt() - 100
-                        width = paths[2].toInt() - 100
+                        hight = paths[3].toInt() /4
+                        width = paths[2].toInt() /4
                     }
                 }
-                filePath = SiliCompressor.with(mContext).compressVideo(paths[0], paths[1], width!!, hight!!, 1300000)
+                filePath = SiliCompressor.with(mContext).compressVideo(paths[0], paths[1], width!!, hight!!, 1000000)
 
             } catch (e: URISyntaxException) {
                 e.printStackTrace()
@@ -467,9 +467,11 @@ class DisplayJianLiActivity : BaseActivity() {
                 sex = 2
             }
             val fileSize =  File(compressedFilePath).length().toDouble()/1048576
-            ToastUtils.showLongToast(applicationContext, "H"+fileSize)
-            if(fileSize>20){
+//            ToastUtils.showLongToast(applicationContext, "H"+fileSize)
+            if(fileSize>30){
                 ToastUtils.showLongToast(applicationContext, "视频太大请重新上传")
+
+                dialogPro!!.dismiss()
                 return
             }
             RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().createPR(SPUtil.getString(this@DisplayJianLiActivity, "thirdAccount", "111"), jianliname.text.toString(), sex, jianliage.text.toString(), "", requestBody, SPUtil.getString(this@DisplayJianLiActivity, "city", "廊坊市"), phonenum.text.toString())).subscribe(Consumer<String> {

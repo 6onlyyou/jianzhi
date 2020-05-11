@@ -15,8 +15,8 @@ android {
         applicationId "fu.com.parttimejob"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.2"
         multiDexEnabled true
         ndk {
             //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
@@ -25,7 +25,10 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
-
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
     //配置keystore签名
     signingConfigs {
         release {
@@ -68,7 +71,7 @@ repositories {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support:support-v4:28.0.0'
     implementation 'io.reactivex.rxjava2:rxjava:2.1.10'
@@ -104,8 +107,10 @@ dependencies {
     implementation 'com.longsh:OptionFrame:1.0.0'
     implementation 'com.github.bumptech.glide:glide:3.7.0'
     implementation 'jp.wasabeef:glide-transformations:2.0.0'
-    implementation 'com.umeng.umsdk:analytics:8.0.0'
-    implementation 'com.umeng.umsdk:common:2.0.0'
+//    implementation 'com.umeng.umsdk:analytics:8.0.0'
+//    implementation 'com.umeng.umsdk:common:2.0.0'
+    compile 'com.umeng.sdk:common:latest.integration'
+    compile 'com.umeng.sdk:analytics:latest.integration'
     implementation 'com.iceteck.silicompressorr:silicompressor:2.2.1'
     implementation files('libs/umeng-sharetool-6.9.4.jar')
     implementation files('libs/umeng-shareboard-widget-6.9.4.jar')

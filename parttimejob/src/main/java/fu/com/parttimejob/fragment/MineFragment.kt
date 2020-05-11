@@ -142,6 +142,9 @@ class MineFragment : Fragment() {
         myDuiHuanLayout.setOnClickListener {
             startActivity(Intent(context, MyDuiHuanActivity::class.java))
         }
+        xieyiLayout.setOnClickListener{
+            WebActivity.startSelf(context, "隐私协议", "http://www.jjqhkj.com/appservice/user_agreement.html")
+        }
         historyLayout.setOnClickListener {
             var intent = Intent(context, CommunicateHistoryActivity::class.java)
             intent.putExtra("title", CommunicateHistoryActivity.CommuniHistory)

@@ -52,7 +52,7 @@
                 <TextView
                     android:id="@+id/label_job"
                     android:layout_width="wrap_content"
-                    android:layout_height="23dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:text="UI设计师"
                     android:textColor="@color/colorBlack"
@@ -66,7 +66,7 @@
                 <TextView
                     android:id="@+id/jobSalaryTv"
                     android:layout_width="wrap_content"
-                    android:layout_height="19dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
                     android:text="600～800元/天"
                     android:textColor="@color/colorPrimary"
@@ -87,7 +87,7 @@
                 <TextView
                     android:id="@+id/jobLocation"
                     android:layout_width="wrap_content"
-                    android:layout_height="14dp"
+                    android:layout_height="wrap_content"
                     android:text="杭州"
                     android:textColor="@color/colorGray"
                     android:textSize="12sp" />
@@ -106,6 +106,7 @@
                     android:textSize="13sp" />
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/coid_job"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
