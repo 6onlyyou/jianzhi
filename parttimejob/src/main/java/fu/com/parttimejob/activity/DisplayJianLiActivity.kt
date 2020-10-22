@@ -184,8 +184,8 @@ class DisplayJianLiActivity : BaseActivity() {
 //                    try {
 //                        val fos = FileOutputStream(picture.getPath()) // Get file output stream
 //                        fos.write(params[0]) // Written to the file
-//                        fos.close()
-//                    } catch (e: Exception) {
+////                        fos.close()
+////                    } catch (e: Exception) {
 //                        e.printStackTrace()
 //                    }
                             val fileSize11 =  File(selectList!!.get(0).path).length().toDouble()/1048576
