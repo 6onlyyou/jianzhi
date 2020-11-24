@@ -121,7 +121,7 @@ public class JurisdictionDialog extends Dialog implements View.OnClickListener {
                 }
                 break;
             case R.id.mine_content:
-                    WebActivity.startSelf(getContext(), "隐私协议", "http://www.jjqhkj.com/appservice/user_agreement.html");
+                    WebActivity.startSelf(getContext(), "隐私协议", "http://jiujiu.konkonyu.com/appservice/user_agreement.html");
                 break;
 
         }

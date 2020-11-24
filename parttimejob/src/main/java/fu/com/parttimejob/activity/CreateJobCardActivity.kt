@@ -105,6 +105,7 @@ class CreateJobCardActivity : BaseActivity() {
                         ToastUtils.showLongToast(applicationContext, it)
                         SPUtil.putBoolean(this@CreateJobCardActivity, "sfcreateCard",true )
 
+                        SPUtil.putString(this@CreateJobCardActivity, "phoneNumber", phoneEt.text.toString())
                         SPUtil.putString(this@CreateJobCardActivity, "redEnvelopeNumber", nameEt.text.toString())
                         startActivity(Intent(applicationContext, MainActivity::class.java))
                         finish()
@@ -120,6 +121,7 @@ class CreateJobCardActivity : BaseActivity() {
                     RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().createCard(SPUtil.getString(this,"thirdAccount",""),requestBody,nameEt.text.toString(),phoneEt.text.toString(),shopEt.text.toString())).subscribe({
                         ToastUtils.showLongToast(applicationContext, it)
                         SPUtil.putBoolean(this@CreateJobCardActivity, "sfcreateCard",true )
+                        SPUtil.putString(this@CreateJobCardActivity, "phoneNumber", phoneEt.text.toString())
                         SPUtil.putString(this@CreateJobCardActivity, "redEnvelopename", nameEt.text.toString())
                         startActivity(Intent(applicationContext, MainActivity::class.java))
                         finish()

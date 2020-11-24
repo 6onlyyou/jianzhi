@@ -1,8 +1,12 @@
 package fu.com.parttimejob.fragment
 
 
+import android.app.Dialog
 import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -14,8 +18,10 @@ import fu.com.parttimejob.R
 import fu.com.parttimejob.activity.*
 import fu.com.parttimejob.adapter.HomeJobListAdapter
 import fu.com.parttimejob.base.baseadapter.BaseRecyclerModel
+import fu.com.parttimejob.dialog.HintDialog
 import fu.com.parttimejob.retrofitNet.RxUtils
 import fu.com.parttimejob.utils.GlideImageLoader
+import fu.com.parttimejob.utils.NotificationUtil
 import fu.com.parttimejob.utils.SPUtil
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.util.*
@@ -42,7 +48,48 @@ class HomeFragment : Fragment() {
 //
 //        list.add(JobInfoBean())
 //        homeJobListAdapter.addAll(list as List<BaseRecyclerModel>?)
+        var k=false;
+        k= NotificationUtil.isNotifyEnabled(context);
+        if(!k) {
+            HintDialog(activity, R.style.dialog, "请前往设置打开通知权限，以便我们及时通知您", object : HintDialog.OnCloseListener {
+                override fun onClick(dialog: Dialog, confirm: Boolean) {
+                    if (confirm) {
+                        val localIntent = Intent()
+                        //直接跳转到应用通知设置的代码：
+                        //直接跳转到应用通知设置的代码：
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { //8.0及以上
+                            localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            localIntent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS")
+                            localIntent.setData(Uri.fromParts("package", activity!!.packageName, null))
+                        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) { //5.0以上到8.0以下
+                            localIntent.setAction("android.settings.APP_NOTIFICATION_SETTINGS")
+                            localIntent.putExtra("app_package", activity!!.packageName)
+                            localIntent.putExtra("app_uid", activity!!.applicationInfo.uid)
+                        } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) { //4.4
+                            localIntent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                            localIntent.addCategory(Intent.CATEGORY_DEFAULT)
+                            localIntent.setData(Uri.parse("package:$ activity!!.packageName"))
+                        } else {
+                            //4.4以下没有从app跳转到应用通知设置页面的Action，可考虑跳转到应用详情页面,
+                            localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            if (Build.VERSION.SDK_INT >= 9) {
+                                localIntent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS")
+                                localIntent.setData(Uri.fromParts("package", activity!!.packageName, null))
+                            } else if (Build.VERSION.SDK_INT <= 8) {
+                                localIntent.setAction(Intent.ACTION_VIEW)
+                                localIntent.setClassName("com.android.settings", "com.android.setting.InstalledAppDetails")
+                                localIntent.putExtra("com.android.settings.ApplicationPkgName", activity!!.packageName)
+                            }
+                        }
+                        startActivity(localIntent)
+                    } else {
 
+                    }
+                    dialog.dismiss()
+                }
+            })
+                    .setTitle("").show()
+        }
         initClickListener()
 
     }

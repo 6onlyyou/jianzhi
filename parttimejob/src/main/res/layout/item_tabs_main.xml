@@ -29,6 +29,13 @@
             android:textColor="@color/custom_tab"
             android:textSize="10sp" />
     </LinearLayout>
-
-
+    <TextView
+        android:id="@+id/numcon"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/colorRed"
+        android:textSize="10sp" />
 </FrameLayout>

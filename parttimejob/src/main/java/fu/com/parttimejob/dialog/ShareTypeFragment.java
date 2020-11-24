@@ -89,12 +89,12 @@ public class ShareTypeFragment extends DialogFragment {
             public void onClick(View v) {
                 if(orderid.equals("1")){
 
-                    new SocietyShareUtils().circleShare(getActivity(), api, "http://www.jjqhkj.com/part/#/detailsCopy?name="+name+"&address="+address+"&salaryAndWelfare="+salaryAndWelfare+"&workContent="+workContent+"&phone="+phone+"&code="+code+"&lon="+lon+"&lat="+lat+"&url="+url+"&recruitingNumbers="+recruitingNumbers+"&workTime="+workTime+"&contactAddress="+contactAddress, name, workContent);
+                    new SocietyShareUtils().circleShare(getActivity(), api, "http://jiujiu.konkonyu.com/part/#/detailsCopy?name="+name+"&address="+address+"&salaryAndWelfare="+salaryAndWelfare+"&workContent="+workContent+"&phone="+phone+"&code="+code+"&lon="+lon+"&lat="+lat+"&url="+url+"&recruitingNumbers="+recruitingNumbers+"&workTime="+workTime+"&contactAddress="+contactAddress, name, workContent);
 
                 }else if(orderid.equals("2")){
-                    new SocietyShareUtils().circleShare(getActivity(), api, "http://www.jjqhkj.com/part/#/advertisementCopy?name="+name+"&publichDate="+publichDate+"&city="+city+"&content="+content+"&imageUrl="+imageUrl+"&code="+code+"&headImg="+headImg, name, content);
+                    new SocietyShareUtils().circleShare(getActivity(), api, "http://jiujiu.konkonyu.com/part/#/advertisementCopy?name="+name+"&publichDate="+publichDate+"&city="+city+"&content="+content+"&imageUrl="+imageUrl+"&code="+code+"&headImg="+headImg, name, content);
                 }else if(orderid.equals("3")){
-                    new SocietyShareUtils().circleShare(getActivity(), api, "http://www.jjqhkj.com/part/#/invitationCopy?coin=60&code="+SPUtil.getString(getActivity(), "inviteCode", "")+"&url=http://www.jjqhkj.com/appservice/99zhaogon.apk", "好友拉你抢红包找工作", "下载填写邀请码即可获得红包噢等什么马上行动起来吧");
+                    new SocietyShareUtils().circleShare(getActivity(), api, "http://jiujiu.konkonyu.com/part/#/invitationCopy?coin=60&code="+SPUtil.getString(getActivity(), "inviteCode", "")+"&url=http://jiujiu.konkonyu.com/appservice/99zhaogon.apk", "好友拉你抢红包找工作", "下载填写邀请码即可获得红包噢等什么马上行动起来吧");
                 }
             }
         });
@@ -103,12 +103,12 @@ public class ShareTypeFragment extends DialogFragment {
             public void onClick(View v) {
                 if(orderid.equals("1")){
 
-                    new SocietyShareUtils().friendShare(getActivity(), api, "http://www.jjqhkj.com/part/#/detailsCopy?name="+name+"&address="+address+"&salaryAndWelfare="+salaryAndWelfare+"&workContent="+workContent+"&phone="+phone+"&code="+code+"&lon="+lon+"&lat="+lat+"&url="+url+"&recruitingNumbers="+recruitingNumbers+"&workTime="+workTime+"&contactAddress="+contactAddress, name, workContent);
+                    new SocietyShareUtils().friendShare(getActivity(), api, "http://jiujiu.konkonyu.com/part/#/detailsCopy?name="+name+"&address="+address+"&salaryAndWelfare="+salaryAndWelfare+"&workContent="+workContent+"&phone="+phone+"&code="+code+"&lon="+lon+"&lat="+lat+"&url="+url+"&recruitingNumbers="+recruitingNumbers+"&workTime="+workTime+"&contactAddress="+contactAddress, name, workContent);
 
                 }else if(orderid.equals("2")){
-                    new SocietyShareUtils().friendShare(getActivity(), api, "http://www.jjqhkj.com/part/#/advertisementCopy?name="+name+"&publichDate="+publichDate+"&city="+city+"&content="+content+"&imageUrl="+imageUrl+"&code="+code+"&headImg="+headImg, name, content);
+                    new SocietyShareUtils().friendShare(getActivity(), api, "http://jiujiu.konkonyu.com/part/#/advertisementCopy?name="+name+"&publichDate="+publichDate+"&city="+city+"&content="+content+"&imageUrl="+imageUrl+"&code="+code+"&headImg="+headImg, name, content);
                 }else if(orderid.equals("3")){
-                    new SocietyShareUtils().friendShare(getActivity(), api, "http://www.jjqhkj.com/part/#/invitationCopy?coin=60&code="+SPUtil.getString(getActivity(), "inviteCode", "")+"&url=http://www.jjqhkj.com/appservice/99zhaogon.apk", "好友拉你抢红包找工作", "下载填写邀请码即可获得红包噢等什么马上行动起来吧");
+                    new SocietyShareUtils().friendShare(getActivity(), api, "http://jiujiu.konkonyu.com/part/#/invitationCopy?coin=60&code="+SPUtil.getString(getActivity(), "inviteCode", "")+"&url=http://jiujiu.konkonyu.com/appservice/99zhaogon.apk", "好友拉你抢红包找工作", "下载填写邀请码即可获得红包噢等什么马上行动起来吧");
                 }
             }
         });
@@ -117,12 +117,12 @@ public class ShareTypeFragment extends DialogFragment {
             public void onClick(View v) {
                 if(orderid.equals("1")){
 
-                    new SocietyShareUtils().roomShare(getActivity(),  getActivity(), "http://www.jjqhkj.com/part/#/detailsCopy?name="+name+"&address="+address+"&salaryAndWelfare="+salaryAndWelfare+"&workContent="+workContent+"&phone="+phone+"&code="+code+"&lon="+lon+"&lat="+lat+"&url="+url+"&recruitingNumbers="+recruitingNumbers+"&workTime="+workTime+"&contactAddress="+contactAddress, name, workContent);
+                    new SocietyShareUtils().roomShare(getActivity(),  getActivity(), "http://jiujiu.konkonyu.com/part/#/detailsCopy?name="+name+"&address="+address+"&salaryAndWelfare="+salaryAndWelfare+"&workContent="+workContent+"&phone="+phone+"&code="+code+"&lon="+lon+"&lat="+lat+"&url="+url+"&recruitingNumbers="+recruitingNumbers+"&workTime="+workTime+"&contactAddress="+contactAddress, name, workContent);
 
                 }else if(orderid.equals("2")){
-                    new SocietyShareUtils().roomShare(getActivity(),  getActivity(), "http://www.jjqhkj.com/part/#/advertisementCopy?name="+name+"&publichDate="+publichDate+"&city="+city+"&content="+content+"&imageUrl="+imageUrl+"&code="+code+"&headImg="+headImg, name, content);
+                    new SocietyShareUtils().roomShare(getActivity(),  getActivity(), "http://jiujiu.konkonyu.com/part/#/advertisementCopy?name="+name+"&publichDate="+publichDate+"&city="+city+"&content="+content+"&imageUrl="+imageUrl+"&code="+code+"&headImg="+headImg, name, content);
                 }else if(orderid.equals("3")){
-                    new SocietyShareUtils().roomShare(getActivity(),  getActivity(), "http://www.jjqhkj.com/part/#/invitationCopy?coin=60&code="+SPUtil.getString(getActivity(), "inviteCode", "")+"&url=http://www.jjqhkj.com/appservice/99zhaogon.apk", "好友拉你抢红包找工作", "下载填写邀请码即可获得红包噢等什么马上行动起来吧");
+                    new SocietyShareUtils().roomShare(getActivity(),  getActivity(), "http://jiujiu.konkonyu.com/part/#/invitationCopy?coin=60&code="+SPUtil.getString(getActivity(), "inviteCode", "")+"&url=http://jiujiu.konkonyu.com/appservice/99zhaogon.apk", "好友拉你抢红包找工作", "下载填写邀请码即可获得红包噢等什么马上行动起来吧");
                 }
             }
         });
@@ -131,12 +131,12 @@ public class ShareTypeFragment extends DialogFragment {
             public void onClick(View v) {
                 if(orderid.equals("1")){
 
-                    new SocietyShareUtils().qqShare(getActivity(),  getActivity(), "http://www.jjqhkj.com/part/#/detailsCopy?name="+name+"&address="+address+"&salaryAndWelfare="+salaryAndWelfare+"&workContent="+workContent+"&phone="+phone+"&code="+code+"&lon="+lon+"&lat="+lat+"&url="+url+"&recruitingNumbers="+recruitingNumbers+"&workTime="+workTime+"&contactAddress="+contactAddress, name, workContent);
+                    new SocietyShareUtils().qqShare(getActivity(),  getActivity(), "http://jiujiu.konkonyu.com/part/#/detailsCopy?name="+name+"&address="+address+"&salaryAndWelfare="+salaryAndWelfare+"&workContent="+workContent+"&phone="+phone+"&code="+code+"&lon="+lon+"&lat="+lat+"&url="+url+"&recruitingNumbers="+recruitingNumbers+"&workTime="+workTime+"&contactAddress="+contactAddress, name, workContent);
 
                 }else if(orderid.equals("2")){
-                    new SocietyShareUtils().qqShare(getActivity(),  getActivity(), "http://www.jjqhkj.com/part/#/advertisementCopy?name="+name+"&publichDate="+publichDate+"&city="+city+"&content="+content+"&imageUrl="+imageUrl+"&code="+code+"&headImg="+headImg, name, content);
+                    new SocietyShareUtils().qqShare(getActivity(),  getActivity(), "http://jiujiu.konkonyu.com/part/#/advertisementCopy?name="+name+"&publichDate="+publichDate+"&city="+city+"&content="+content+"&imageUrl="+imageUrl+"&code="+code+"&headImg="+headImg, name, content);
                 }else if(orderid.equals("3")){
-                    new SocietyShareUtils().qqShare(getActivity(),  getActivity(), "http://www.jjqhkj.com/part/#/invitationCopy?coin=60&code="+SPUtil.getString(getActivity(), "inviteCode", "")+"&url=http://www.jjqhkj.com/appservice/99zhaogon.apk", "好友拉你抢红包找工作", "下载填写邀请码即可获得红包噢等什么马上行动起来吧");
+                    new SocietyShareUtils().qqShare(getActivity(),  getActivity(), "http://jiujiu.konkonyu.com/part/#/invitationCopy?coin=60&code="+SPUtil.getString(getActivity(), "inviteCode", "")+"&url=http://jiujiu.konkonyu.com/appservice/99zhaogon.apk", "好友拉你抢红包找工作", "下载填写邀请码即可获得红包噢等什么马上行动起来吧");
                 }
             }
         });

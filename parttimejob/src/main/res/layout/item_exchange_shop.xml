@@ -61,7 +61,7 @@
 
             <TextView
                 android:id="@+id/exchangeBtn"
-                android:layout_width="55dp"
+                android:layout_width="wrap_content"
                 android:layout_height="28dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"

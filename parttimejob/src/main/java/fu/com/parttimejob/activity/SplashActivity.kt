@@ -4,6 +4,9 @@ import android.Manifest
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
+import android.provider.Settings
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import com.amap.api.location.AMapLocation
@@ -34,6 +37,8 @@ class SplashActivity : BaseActivity() {
     }
 
     override fun initViewParams() {
+
+
         if(!SPUtil.getBoolean(this,"firstplat",false)){
             JurisdictionDialog(this, R.style.dialog, "请务必详细阅读，充分理解《服务协议和隐私政策》各条款；为了向提供更好的服务，会需要您授权地理位置和相机权限。你你可以在个人页查看和变更协议。" +
                     "你可阅读《服务协议和隐私政策》了解详细信息。如你同意，请点击同意开始接受我们的服务", object : JurisdictionDialog.OnCloseListener {

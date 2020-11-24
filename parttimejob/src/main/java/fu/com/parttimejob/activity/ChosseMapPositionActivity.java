@@ -53,6 +53,7 @@ import java.util.List;
 
 import fu.com.parttimejob.R;
 import fu.com.parttimejob.adapter.SearchResultAdapter;
+import fu.com.parttimejob.utils.SPUtil;
 import fu.com.parttimejob.view.SegmentedGroup;
 
 public class ChosseMapPositionActivity extends AppCompatActivity implements LocationSource,
@@ -210,7 +211,7 @@ public class ChosseMapPositionActivity extends AppCompatActivity implements Loca
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String newText = s.toString().trim();
                 if (newText.length() > 0) {
-                    InputtipsQuery inputquery = new InputtipsQuery(newText, "北京");
+                    InputtipsQuery inputquery = new InputtipsQuery(newText, SPUtil.getString(getApplicationContext(), "city", ""));
                     Inputtips inputTips = new Inputtips(ChosseMapPositionActivity.this, inputquery);
                     inputquery.setCityLimit(true);
                     inputTips.setInputtipsListener(inputtipsListener);
@@ -417,7 +418,7 @@ public class ChosseMapPositionActivity extends AppCompatActivity implements Loca
     protected void doSearchQuery() {
         Log.i("MY", "doSearchQuery");
         currentPage = 0;
-        query = new PoiSearch.Query(searchKey, searchType, "");// 第一个参数表示搜索字符串，第二个参数表示poi搜索类型，第三个参数表示poi搜索区域（空字符串代表全国）
+        query = new PoiSearch.Query(searchKey, searchType, "附近");// 第一个参数表示搜索字符串，第二个参数表示poi搜索类型，第三个参数表示poi搜索区域（空字符串代表全国）
         query.setCityLimit(true);
         query.setPageSize(20);
         query.setPageNum(currentPage);
@@ -433,6 +434,7 @@ public class ChosseMapPositionActivity extends AppCompatActivity implements Loca
     @Override
     public void onRegeocodeSearched(RegeocodeResult result, int rCode) {
         dismissDialog();
+        Log.i("MY", "doSearchQuery2233");
         if (rCode == AMapException.CODE_AMAP_SUCCESS) {
             if (result != null && result.getRegeocodeAddress() != null
                     && result.getRegeocodeAddress().getFormatAddress() != null) {
@@ -458,6 +460,7 @@ public class ChosseMapPositionActivity extends AppCompatActivity implements Loca
      */
     @Override
     public void onPoiSearched(PoiResult poiResult, int resultCode) {
+        Log.i("MY", "doSearchQuery22");
         if (resultCode == AMapException.CODE_AMAP_SUCCESS) {
             if (poiResult != null && poiResult.getQuery() != null) {
                 if (poiResult.getQuery().equals(query)) {

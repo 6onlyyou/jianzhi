@@ -6,7 +6,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Handler
+import android.provider.Settings
 import android.support.design.widget.TabLayout
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
@@ -30,6 +32,7 @@ import fu.com.parttimejob.base.ActivityManager
 import fu.com.parttimejob.base.BaseActivity
 import fu.com.parttimejob.bean.RxBusEntity
 import fu.com.parttimejob.dialog.DingPDialog
+import fu.com.parttimejob.dialog.HintDialog
 import fu.com.parttimejob.fragment.HomeFragment
 import fu.com.parttimejob.fragment.MessageFragment
 import fu.com.parttimejob.fragment.MineFragment
@@ -81,6 +84,9 @@ class MainActivity : BaseActivity() {
         return listFragment
     }
     override fun initViewParams() {
+
+
+
         subscribe = RxBus.getDefault().toObservable(RxBusEntity::class.java).subscribe(object : Consumer<RxBusEntity> {
             @Throws(Exception::class)
             override fun accept(catchDollUserInfoBean: RxBusEntity) {
@@ -111,23 +117,41 @@ class MainActivity : BaseActivity() {
         titles.add("我的")
 
         for (i in titles.indices) {
-            val tabView = LayoutInflater.from(this).inflate(R.layout.item_tab_main, null)
-            val tabImg: ImageView = tabView.findViewById(R.id.tabImg)
-            val tabTitle: TextView = tabView.findViewById(R.id.tab)
-            numcon = tabView.findViewById(R.id.numcon)
-            tabImg.setImageResource(imgs[i])
-            if (i == 0) {
-                tabImg.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary))
-            } else {
-                tabImg.setColorFilter(ContextCompat.getColor(this, R.color.colorLine))
+            if(i==2){
+                val tabView = LayoutInflater.from(this).inflate(R.layout.item_tabs_main, null)
+                val tabImg: ImageView = tabView.findViewById(R.id.tabImg)
+                val tabTitle: TextView = tabView.findViewById(R.id.tab)
+                numcon = tabView.findViewById(R.id.numcon)
+                tabImg.setImageResource(imgs[i])
+                if (i == 0) {
+                    tabImg.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary))
+                } else {
+                    tabImg.setColorFilter(ContextCompat.getColor(this, R.color.colorLine))
+                }
+                tabTitle.text = titles[i]
+                val tab = main_tab.newTab().setCustomView(tabView)
+                tab.tag = tabImg
+                main_tab.addTab(tab)
+            }else{
+                val tabView = LayoutInflater.from(this).inflate(R.layout.item_tab_main, null)
+                val tabImg: ImageView = tabView.findViewById(R.id.tabImg)
+                val tabTitle: TextView = tabView.findViewById(R.id.tab)
+                tabImg.setImageResource(imgs[i])
+                if (i == 0) {
+                    tabImg.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary))
+                } else {
+                    tabImg.setColorFilter(ContextCompat.getColor(this, R.color.colorLine))
+                }
+                tabTitle.text = titles[i]
+                val tab = main_tab.newTab().setCustomView(tabView)
+                tab.tag = tabImg
+                main_tab.addTab(tab)
             }
-            tabTitle.text = titles[i]
-            val tab = main_tab.newTab().setCustomView(tabView)
-            tab.tag = tabImg
 
-            main_tab.addTab(tab)
+
+
         }
-        main_vp.offscreenPageLimit = 3
+        main_vp.offscreenPageLimit =3
         main_vp.adapter = adapter
         main_vp.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
@@ -321,9 +345,7 @@ class MainActivity : BaseActivity() {
         })
     }
     private fun initRongMessage() {
-        if (SPUtil.getString(this, "phonenumber", "").equals("")) {
-            return
-        }
+      
         val conversationTypes = arrayOf(Conversation.ConversationType.PRIVATE, Conversation.ConversationType.DISCUSSION, Conversation.ConversationType.GROUP, Conversation.ConversationType.SYSTEM, Conversation.ConversationType.PUBLIC_SERVICE, Conversation.ConversationType.APP_PUBLIC_SERVICE)
         val handler = Handler()
         handler.postDelayed({
@@ -399,7 +421,7 @@ class MainActivity : BaseActivity() {
 
         /**
          * 当长按消息时执行。
-         *
+         *Notification
          * @param context 上下文。
          * @param view    触发点击的 View。
          * @param message 被长按的消息的实体信息。

@@ -6,6 +6,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import com.amap.api.maps.AMap
 import com.amap.api.maps.AMapOptions
@@ -22,7 +24,6 @@ import fu.com.parttimejob.R
 import fu.com.parttimejob.base.BaseActivity
 import fu.com.parttimejob.bean.RecruitInfoBean
 import fu.com.parttimejob.bean.RxBusEntity
-import fu.com.parttimejob.bean.UserInfoH
 import fu.com.parttimejob.dialog.HintDialog
 import fu.com.parttimejob.dialog.RadDialog
 import fu.com.parttimejob.dialog.ShareTypeFragment
@@ -71,6 +72,21 @@ class JobInfoActivity : BaseActivity() {
 
         }
         jobLocationMap.requestDisallowInterceptTouchEvent(true)
+        jobLocationMap.setOnTouchListener(View.OnTouchListener { v, event ->
+            Log.e("点击", "" + event.action)
+            if (event.action === MotionEvent.ACTION_UP) {
+                Log.e("点击", "到了")
+                //允许ScrollView截断点击事件，ScrollView可滑动
+                scr_info.requestDisallowInterceptTouchEvent(false)
+
+            } else {
+                Log.e("点击", "到了1")
+                //不允许ScrollView截断点击事件，点击事件由子View处理
+                scr_info.requestDisallowInterceptTouchEvent(true)
+            }
+            false
+        })
+
     }
 
     override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?) {
@@ -90,12 +106,12 @@ class JobInfoActivity : BaseActivity() {
             @Throws(Exception::class)
             override fun accept(catchDollUserInfoBean: RxBusEntity) {
                 if (catchDollUserInfoBean.msg.equals("101")) {
-                    if(SPUtil.getString(this@JobInfoActivity, "thirdAccount", "").equals(recruitInfoBean!!.thirdAccount)){
+                    if (SPUtil.getString(this@JobInfoActivity, "thirdAccount", "").equals(recruitInfoBean!!.thirdAccount)) {
 
-                    }else{
+                    } else {
                         RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().addNumberOfRecruitForwarding(SPUtil.getString(this@JobInfoActivity, "thirdAccount", ""), recruitInfoBean!!.id)).subscribe({
                             RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().receiveOfRecruitmentVirtual(SPUtil.getString(this@JobInfoActivity, "thirdAccount", ""), recruitInfoBean!!.id)).subscribe({
-                                RadDialog(this@JobInfoActivity, R.style.dialog, "恭喜抢到" +it + "金币", RadDialog.OnCloseListener { dialog, confirm ->
+                                RadDialog(this@JobInfoActivity, R.style.dialog, "恭喜抢到" + it + "金币", RadDialog.OnCloseListener { dialog, confirm ->
                                     ToastUtils.showLongToast(applicationContext, "已经存入您的钱包")
                                     dialog.dismiss()
                                 })
@@ -107,8 +123,6 @@ class JobInfoActivity : BaseActivity() {
                             ToastUtils.showLongToast(applicationContext, it.message.toString())
                         })
                     }
-
-
                 }
             }
         }, object : Consumer<Throwable> {
@@ -121,6 +135,7 @@ class JobInfoActivity : BaseActivity() {
 
     var recruitInfoBean: RecruitInfoBean? = null
     var jinbi = 0
+    var _phoneNum = ""
     var latLng: LatLng? = null
     override fun initViewClick() {
         recruitInfoBean = RecruitInfoBean()
@@ -132,102 +147,110 @@ class JobInfoActivity : BaseActivity() {
 //            shareTypeFragment!!.show(getFragmentManager(), "11", "sss")
 //        }
     }
-fun getDate(){
-    dialogPro!!.show()
-    RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().singleRecruitmentDetail(SPUtil.getString(this, "thirdAccount", ""), intent.getIntExtra("id", 0))).subscribe({
-        dialogPro!!.dismiss()
-        recruitInfoBean = it
-        if (SPUtil.getString(this, "thirdAccount", "").equals(it.thirdAccount)) {
-            if (it.state == 1||it.state == 2) {
-                ji_gouton.text = "关闭招聘"
+
+    fun getDate() {
+        dialogPro!!.show()
+        RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().singleRecruitmentDetail(SPUtil.getString(this, "thirdAccount", ""), intent.getIntExtra("id", 0))).subscribe({
+            dialogPro!!.dismiss()
+            recruitInfoBean = it
+            if (SPUtil.getString(this, "thirdAccount", "").equals(it.thirdAccount)) {
+                if (it.state == 1 || it.state == 2) {
+                    ji_gouton.text = "关闭招聘"
+                } else {
+                    ji_gouton.text = "开启招聘"
+                }
+
             } else {
-                ji_gouton.text = "开启招聘"
+                ji_gouton.text = "立即沟通"
             }
 
-        } else {
-            ji_gouton.text = "立即沟通"
-        }
-
-        if(it.latitude==null||it.latitude.equals("")||it.latitude.equals("0.0")){
-            jobLocationMap.visibility = View.GONE
-        }else{
-            latLng  = LatLng(java.lang.Double.valueOf(it.latitude), java.lang.Double.valueOf(it.longitude))
-            val marker = aMap?.addMarker(MarkerOptions().position(latLng).title("").snippet(it.contactAddress))
-            val LUJIAZUI = CameraPosition.Builder()
-                    .target(latLng).zoom(18f).bearing(0f).tilt(30f).build()
-            val aOptions =  AMapOptions()
-            aOptions.zoomGesturesEnabled(false)// 禁止通过手势缩放地图
-            aOptions.scrollGesturesEnabled(false)// 禁止通过手势移动地图
-            aOptions.tiltGesturesEnabled(false)// 禁止通过手势倾斜地图
-            aOptions.camera(LUJIAZUI)
-            val mCameraUpdate = CameraUpdateFactory.newCameraPosition(CameraPosition(latLng, 17f, 30f, 0f))
-            aMap?.moveCamera(mCameraUpdate)
-        }
-        pries_job.setOnClickListener {
-            RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().recruitmentLike(SPUtil.getString(this@JobInfoActivity, "thirdAccount", ""), intent.getIntExtra("id", 0))).subscribe({
-                ToastUtils.showShortToast(applicationContext, it)
+            if (it.latitude == null || it.latitude.equals("") || it.latitude.equals("0.0")) {
+                jobLocationMap.visibility = View.GONE
+            } else {
+                latLng = LatLng(java.lang.Double.valueOf(it.latitude), java.lang.Double.valueOf(it.longitude))
+                val marker = aMap?.addMarker(MarkerOptions().position(latLng).title("").snippet(it.contactAddress))
+                val LUJIAZUI = CameraPosition.Builder()
+                        .target(latLng).zoom(18f).bearing(0f).tilt(30f).build()
+                val aOptions = AMapOptions()
+                aOptions.zoomGesturesEnabled(false)// 禁止通过手势缩放地图
+                aOptions.scrollGesturesEnabled(false)// 禁止通过手势移动地图
+                aOptions.tiltGesturesEnabled(false)// 禁止通过手势倾斜地图
+                aOptions.camera(LUJIAZUI)
+                val mCameraUpdate = CameraUpdateFactory.newCameraPosition(CameraPosition(latLng, 17f, 30f, 0f))
+                aMap?.moveCamera(mCameraUpdate)
+            }
+            pries_job.setOnClickListener {
+                RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().recruitmentLike(SPUtil.getString(this@JobInfoActivity, "thirdAccount", ""), intent.getIntExtra("id", 0))).subscribe({
+                    ToastUtils.showShortToast(applicationContext, it)
+                    var drawable = getResources().getDrawable(R.mipmap.selecp);
+                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());// 设置边界
+                    pries_job.setCompoundDrawables(drawable, null, null, null);
+                    pries_job.setText((Integer.parseInt(recruitInfoBean!!.complimentCount.toString()) + 1).toString() + "个人赞了")
+                }, {
+                    ToastUtils.showShortToast(applicationContext, it.message.toString())
+                })
+            }
+            pries_job.setText(it.complimentCount.toString() + "个人赞了")
+            if (it.compliment) {
                 var drawable = getResources().getDrawable(R.mipmap.selecp);
                 drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());// 设置边界
-                pries_job.setCompoundDrawables(drawable,null,null,null);
-                pries_job.setText((Integer.parseInt(recruitInfoBean!!.complimentCount.toString())+1).toString()+"个人赞了")
-            }, {
-                ToastUtils.showShortToast(applicationContext, it.message.toString())
-            })
-        }
-        pries_job.setText(it.complimentCount.toString()+"个人赞了")
-        if(it.compliment){
-            var drawable = getResources().getDrawable(R.mipmap.selecp);
-            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());// 设置边界
-            pries_job.setCompoundDrawables(drawable,null,null,null);
-        }else{
-
-        }
-        jinbi = it.numberOfVirtualCoins
-        label_job.text = it.label
-        jobSalaryTv.text = it.salaryAndWelfare
-        jobLocation.text = it.city
-        content_job.text = "工作内容：" +"\n"+ it.workContent
-        location_job.text = "工作地点：" + it.contactAddress
-        phones.text = "手机号码："+it.phoneNumber
-        time_job.text = "工作时间："+ it.workTime
-        num_job.text = "招聘人数：" + it.recruitingNumbers
-        job_jbi.text = "分享群领取抢" + it.numberOfVirtualCoins + "金币红包"
-        coid_job.text = "分享成功后即可抢最高" + it.numberOfVirtualCoins + "金币的随机红包"
-        ji_gouton.setOnClickListener {
-            if (SPUtil.getString(this, "thirdAccount", "").equals("")) {
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                ToastUtils.showShortToast(this, "需要先登入才可以使用其他功能")
+                pries_job.setCompoundDrawables(drawable, null, null, null);
             } else {
-                when (ji_gouton.text.toString()) {
-                    "关闭招聘" -> clossD()
-                    "开启招聘" -> openD()
-                    "立即沟通" -> tallD()
 
+            }
+
+            jinbi = it.numberOfVirtualCoins
+            _phoneNum =  it.phoneNumber.toString()
+            label_job.text = it.label
+            jobSalaryTv.text = it.salaryAndWelfare
+            jobLocation.text = it.city
+            content_job.text = "工作内容：" + "\n" + it.workContent
+            location_job.text = "工作地点：" + it.contactAddress
+            phones.text = "手机号码(点击拨打)：" + it.phoneNumber
+            time_job.text = "工作时间：" + it.workTime
+            num_job.text = "招聘人数：" + it.recruitingNumbers
+            job_money.text = "工资待遇：" + it.salaryAndWelfare
+            job_jbi.text = "分享群领取抢" + it.numberOfVirtualCoins + "金币红包"
+            coid_job.text = "分享成功后即可抢最高" + it.numberOfVirtualCoins + "金币的随机红包"
+            ji_gouton.setOnClickListener {
+                if (SPUtil.getString(this, "thirdAccount", "").equals("")) {
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    ToastUtils.showShortToast(this, "需要先登入才可以使用其他功能")
+                } else {
+                    when (ji_gouton.text.toString()) {
+                        "关闭招聘" -> clossD()
+                        "开启招聘" -> openD()
+                        "立即沟通" -> tallD()
+
+                    }
                 }
             }
-        }
-        location_job.setOnClickListener {
-            //                MapUtils.goToBaiduMap(this@JobInfoActivity, latLng.latitude.toString(), latLng.longitude.toString(),"浙江省杭州市余杭区东莲街")
-            MapUtils.goToGaodeMap(this@JobInfoActivity,latLng,recruitInfoBean?.contactAddress)
-        }
-        aMap?.setOnMapClickListener {
-            MapUtils.goToGaodeMap(this@JobInfoActivity, latLng, recruitInfoBean?.contactAddress)
-        }
-    }, {
-        if(dialogPro!!.isShowing){
-            dialogPro!!.dismiss()
-        }
+            phones.setOnClickListener {
+                callPhone(_phoneNum);
+            }
+            location_job.setOnClickListener {
+                //                MapUtils.goToBaiduMap(this@JobInfoActivity, latLng.latitude.toString(), latLng.longitude.toString(),"浙江省杭州市余杭区东莲街")
+                MapUtils.goToGaodeMap(this@JobInfoActivity, latLng, recruitInfoBean?.contactAddress)
+            }
+            aMap?.setOnMapClickListener {
+                MapUtils.goToGaodeMap(this@JobInfoActivity, latLng, recruitInfoBean?.contactAddress)
+            }
+        }, {
+            if (dialogPro!!.isShowing) {
+                dialogPro!!.dismiss()
+            }
 
-        ToastUtils.showLongToast(this, it.message.toString())
-    })
-    back.setOnClickListener {
-        finish()
+            ToastUtils.showLongToast(this, it.message.toString())
+        })
+        back.setOnClickListener {
+            finish()
+        }
+        job_jbi.setOnClickListener {
+            shareTypeFragment!!.show(getFragmentManager(), "1", recruitInfoBean!!.label, recruitInfoBean!!.city, recruitInfoBean!!.salaryAndWelfare, recruitInfoBean!!.workContent, recruitInfoBean!!.phoneNumber, SPUtil.getString(this@JobInfoActivity, "inviteCode", ""), SPUtil.getString(this@JobInfoActivity, "longitude", ""), SPUtil.getString(this@JobInfoActivity, "latitude", ""), "http://jiujiu.konkonyu.com/appservice/99zhaogon.apk", recruitInfoBean!!.recruitingNumbers.toString(), recruitInfoBean!!.workTime, recruitInfoBean!!.contactAddress)
+        }
     }
-    job_jbi.setOnClickListener {
-        shareTypeFragment!!.show(getFragmentManager(), "1",recruitInfoBean!!.label,recruitInfoBean!!.city,recruitInfoBean!!.salaryAndWelfare,recruitInfoBean!!.workContent,recruitInfoBean!!.phoneNumber,SPUtil.getString(this@JobInfoActivity, "inviteCode", ""),SPUtil.getString(this@JobInfoActivity, "longitude", ""),SPUtil.getString(this@JobInfoActivity, "latitude", ""),"http://www.jjqhkj.com/appservice/99zhaogon.apk",recruitInfoBean!!.recruitingNumbers.toString(),recruitInfoBean!!.workTime,recruitInfoBean!!.contactAddress)
-    }
-}
+
     fun clossD() {
         HintDialog(this, R.style.dialog, "关闭招聘返还" + recruitInfoBean!!.numberOfVirtualCoins + "金币,是否继续？", object : HintDialog.OnCloseListener {
             override fun onClick(dialog: Dialog, confirm: Boolean) {
@@ -287,6 +310,17 @@ fun getDate(){
             ToastUtils.showLongToast(this, it.message.toString())
         })
 
+    }
+
+    /**
+     * 拨打电话（直接拨打电话）
+     * @param phoneNum 电话号码
+     */
+    fun callPhone(phoneNum: String) {
+        val intent = Intent(Intent.ACTION_DIAL)
+        val data = Uri.parse("tel:$phoneNum")
+        intent.data = data
+        startActivity(intent)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

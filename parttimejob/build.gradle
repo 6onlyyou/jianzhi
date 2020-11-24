@@ -30,15 +30,28 @@ android {
         abortOnError false
     }
     //配置keystore签名
+//    signingConfigs {
+//        release {
+//            keyAlias 'heixiu'
+//            keyPassword 'fushuaige'
+//            storeFile file('D:\\AndroidStudioProjects\\jianzhinew\\parttimejob\\heixiu.jks')
+//            storePassword 'fushuaige'
+//        }
+//    }
     signingConfigs {
         release {
-            keyAlias 'heixiu'
-            keyPassword 'fushuaige'
-            storeFile file('D:\\AndroidStudioProjects\\jianzhinew\\parttimejob\\heixiu.jks')
-            storePassword 'fushuaige'
+            storeFile file("D:\\AndroidStudioProjects\\jianzhi\\parttimejob\\heixiu.jks")
+            storePassword "fushuaige"
+            keyAlias "heixiu"
+            keyPassword "fushuaige"
+        }
+        debug {//debug版签名配置
+            storeFile file("D:\\AndroidStudioProjects\\jianzhi\\parttimejob\\heixiu.jks")
+            storePassword "fushuaige"
+            keyAlias "heixiu"
+            keyPassword "fushuaige"
         }
     }
-
     buildTypes {
         release {
             minifyEnabled false

@@ -147,7 +147,7 @@ class DisplayJianLiActivity : BaseActivity() {
                 ToastUtils.showLongToast(applicationContext, "请您把信息填写完整才能确定~")
             } else {
                     if (selectList.size == 0) {
-                        if(resumeInfoBean!!.picOrVedioSource.equals("")){
+                        if(resumeInfoBean!!.picOrVedioSource==null){
                             ToastUtils.showLongToast(applicationContext, "请上传图片或者视频来介绍自己~")
                             return@setOnClickListener
                         }else{
@@ -189,6 +189,7 @@ class DisplayJianLiActivity : BaseActivity() {
 //                        e.printStackTrace()
 //                    }
                             val fileSize11 =  File(selectList!!.get(0).path).length().toDouble()/1048576
+                            Log.d("视频大小：",fileSize11.toString());
                             val f = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).toString() + "/compressor/videos")
                             if (f.mkdirs() || f.isDirectory)
 
@@ -440,7 +441,7 @@ class DisplayJianLiActivity : BaseActivity() {
                     }
                 }
                 filePath = SiliCompressor.with(mContext).compressVideo(paths[0], paths[1], width!!, hight!!, 1000000)
-
+                Log.e("视频大小", filePath.toString());
             } catch (e: URISyntaxException) {
                 e.printStackTrace()
             }

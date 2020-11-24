@@ -118,7 +118,7 @@ class LoginActivity : BaseActivity() {
             }
         }
         radyhxieyi.setOnClickListener {
-            WebActivity.startSelf(this, "隐私协议", "http://www.jjqhkj.com/appservice/user_agreement.html")
+            WebActivity.startSelf(this, "隐私协议", "http://jiujiu.konkonyu.com/appservice/user_agreement.html")
         }
         login_with_qq.setOnClickListener {
             if (radioButton2.isChecked) {

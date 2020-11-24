@@ -141,7 +141,7 @@
                 android:layout_height="22dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="20dp"
-                android:text="选择地址(选填用于推广店铺)"
+                android:text="选择地址(便于客户直接导航找到)"
                 android:textColor="#ff8b8b8b"
                 android:textSize="15sp" />
 

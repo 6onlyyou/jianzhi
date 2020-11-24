@@ -127,7 +127,7 @@ class PublishAdActivity : BaseActivity() {
                                                 ToastUtils.showLongToast(this@PublishAdActivity, it.message.toString())
                                             })
                                         }else{
-                                            RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().publichAdvertisement(SPUtil.getString(this@PublishAdActivity, "thirdAccount", "111"), jianliname.text.toString(), hongbaoSize.text.toString(), jiangliMoney.text.toString(), SPUtil.getString(this@PublishAdActivity, "city", "廊坊市"), poiItem!!.latLonPoint.latitude.toString(), poiItem!!.latLonPoint.longitude.toString(), guanggaoContent.text.toString())).subscribe({
+                                            RxUtils.wrapRestCall(RetrofitFactory.getRetrofit().publichAdvertisement(SPUtil.getString(this@PublishAdActivity, "thirdAccount", "111"), jianliname.text.toString(), hongbaoSize.text.toString(), jiangliMoney.text.toString(), SPUtil.getString(this@PublishAdActivity, "city", "廊坊市"), poiItem!!.latLonPoint.latitude.toString(), poiItem!!.latLonPoint.longitude.toString(), guanggaoContent.text.toString(), location.text.toString())).subscribe({
                                                 ToastUtils.showLongToast(this@PublishAdActivity, it)
                                                 SPUtil.putInt(this@PublishAdActivity, "totalCount", SPUtil.getInt(this@PublishAdActivity, "totalCount", 0) - Integer.parseInt(jiangliMoney.text.toString()))
                                                 finish()

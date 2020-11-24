@@ -109,13 +109,13 @@ class AdInfoActivity : BaseActivity() {
             if (status) {
                 GlideUtil.load(this, it.cardHeadImg, ava)
             } else {
-                GlideUtil.load(this, it.getHeadImg(), ava)
+                GlideUtil.load(this, it.cardHeadImg, ava)
             }
             ava.setOnClickListener {
                 DlgForBigPhto(advertisingInfoBean!!.getHeadImg())
             }
             zhuanfa_ad.setOnClickListener {
-                shareTypeFragment!!.show(getFragmentManager(), "2", advertisingInfoBean!!.companyName, advertisingInfoBean!!.publichDate, advertisingInfoBean!!.city, advertisingInfoBean!!.advertisementContent, advertisingInfoBean!!.advertisementImg, SPUtil.getString(this@AdInfoActivity, "inviteCode", ""), "http://www.jjqhkj.com/appservice/99zhaogon.apk", advertisingInfoBean!!.headImg)
+                shareTypeFragment!!.show(getFragmentManager(), "2", advertisingInfoBean!!.companyName, advertisingInfoBean!!.publichDate, advertisingInfoBean!!.city, advertisingInfoBean!!.advertisementContent, advertisingInfoBean!!.advertisementImg, SPUtil.getString(this@AdInfoActivity, "inviteCode", ""), "http://jiujiu.konkonyu.com/appservice/99zhaogon.apk", advertisingInfoBean!!.headImg)
             }
             name.setText(it.companyName)
             time.setText("发布时间：" + it.publichDate)
